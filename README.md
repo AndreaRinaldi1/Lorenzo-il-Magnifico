@@ -1,4 +1,4 @@
-# Project Template - Prova Finale (Ingegneria del Software)
+# Project Template - Prova Finale (Ingegneria del Software) mod.
 
 ## Project Setup
 In order to set up your project, follow these steps
