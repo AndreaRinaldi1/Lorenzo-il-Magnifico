@@ -1,7 +1,7 @@
 package it.polimi.ingsw.GC_28;
 
 
-public class App 
+public class Last 
 {
 	    public static void main( String[] args )
 		        {
