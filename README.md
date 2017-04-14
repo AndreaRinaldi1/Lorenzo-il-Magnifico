@@ -1,4 +1,5 @@
-# Project Template - Prova Finale (Ingegneria del Software) mod.
+# Project Template - Prova Finale (Ingegneria del Software)
+I modified the README file 
 
 ## Project Setup
 In order to set up your project, follow these steps
