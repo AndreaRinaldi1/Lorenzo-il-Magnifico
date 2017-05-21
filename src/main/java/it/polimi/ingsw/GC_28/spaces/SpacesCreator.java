@@ -15,7 +15,6 @@ import it.polimi.ingsw.GC_28.cards.ResourceType;
 import it.polimi.ingsw.GC_28.spaces.MarketSpace;
 
 
-@SuppressWarnings("restriction")
 public class SpacesCreator {
 	Scanner scanner = new Scanner(System.in);
 	int coin, servants, militaryPoints;
