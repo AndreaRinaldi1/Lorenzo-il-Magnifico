@@ -28,10 +28,10 @@ public class CardReader{
         	
         	
         	JsonObject c = gson.fromJson(reader2, JsonObject.class);
-        	JsonArray array = c.get("characters").getAsJsonArray();
+        	JsonArray arrayCharacter = c.get("characters").getAsJsonArray();
         	
-        	for(int i = 0; i < array.size(); i++){
-            	JsonObject j = array.get(i).getAsJsonObject();
+        	for(int i = 0; i < arrayCharacter.size(); i++){
+            	JsonObject j = arrayCharacter.get(i).getAsJsonObject();
             	deck.getCharacters().get(i).setPermanentEffect(gson, j);
             	deck.getCharacters().get(i).setImmediateEffect(gson, j);
             	//Character character = new Character(j);

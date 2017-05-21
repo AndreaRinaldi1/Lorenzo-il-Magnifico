@@ -9,7 +9,7 @@ import it.polimi.ingsw.GC_28.spaces.CouncilPalace;
 import it.polimi.ingsw.GC_28.spaces.MarketSpace;
 import it.polimi.ingsw.GC_28.spaces.ProductionAndHarvestSpace;
 import it.polimi.ingsw.GC_28.spaces.TwoPrivilegesSpace;
-import spaces.GameBoard;
+
 
 public class GameBoard {
 	private final int N_DICE = 3;
