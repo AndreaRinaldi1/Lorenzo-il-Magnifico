@@ -1,0 +1,300 @@
+{
+  "territories": [
+    {
+      "immediateEffect": [
+        {
+          "resourceBonus": {
+            "resource": {
+              "COIN": 1,
+              "WOOD": 1,
+              "STONE": 0,
+              "SERVANT": 0,
+              "MILITARYPOINT": 0,
+              "VICTORYPOINT": 2,
+              "FAITHPOINT": 0
+            }
+          },
+          "type": "RESOURCEEFFECT"
+        }
+      ],
+      "permanentEffect": {
+        "harvestValue": 3,
+        "resourceHarvestBonus": {
+          "resource": {
+            "COIN": 1,
+            "WOOD": 2,
+            "STONE": 0,
+            "SERVANT": 0,
+            "MILITARYPOINT": 0,
+            "VICTORYPOINT": 0,
+            "FAITHPOINT": 0
+          }
+        },
+        "type": "HARVESTEFFECT"
+      },
+      "name": "a",
+      "IDNumber": 1,
+      "era": 1,
+      "color": {
+        "value": -16711936,
+        "falpha": 0.0
+      },
+      "cost": {
+        "resource": {}
+      }
+    },
+    {
+      "immediateEffect": [
+        {
+          "resourceBonus": {
+            "resource": {
+              "COIN": 0,
+              "WOOD": 2,
+              "STONE": 9,
+              "SERVANT": 3,
+              "MILITARYPOINT": 0,
+              "VICTORYPOINT": 8,
+              "FAITHPOINT": 0
+            }
+          },
+          "type": "RESOURCEEFFECT"
+        },
+        {
+          "numberOfCouncilPrivileges": 1,
+          "type": "PRIVILEGESEFFECT"
+        }
+      ],
+      "permanentEffect": {
+        "harvestValue": 3,
+        "resourceHarvestBonus": {
+          "resource": {
+            "COIN": 4,
+            "WOOD": 1,
+            "STONE": 0,
+            "SERVANT": 3,
+            "MILITARYPOINT": 0,
+            "VICTORYPOINT": 0,
+            "FAITHPOINT": 0
+          }
+        },
+        "type": "HARVESTEFFECT"
+      },
+      "name": "f",
+      "IDNumber": 5,
+      "era": 1,
+      "color": {
+        "value": -16711936,
+        "falpha": 0.0
+      },
+      "cost": {
+        "resource": {}
+      }
+    }
+  ],
+  "buildings": [
+    {
+      "immediateEffect": {
+        "resourceBonus": {
+          "resource": {
+            "COIN": 5,
+            "WOOD": 0,
+            "STONE": 0,
+            "SERVANT": 0,
+            "MILITARYPOINT": 0,
+            "VICTORYPOINT": 0,
+            "FAITHPOINT": 0
+          }
+        },
+        "type": "RESOURCEEFFECT"
+      },
+      "permanentEffect": {
+        "productionValue": 2,
+        "multiplierEffect": {
+          "resourceBonus": {
+            "resource": {
+              "COIN": 3,
+              "WOOD": 2,
+              "STONE": 0,
+              "SERVANT": 0,
+              "MILITARYPOINT": 0,
+              "VICTORYPOINT": 0,
+              "FAITHPOINT": 0
+            }
+          },
+          "cardType": "VENTURE",
+          "type": "MULTIPLIEREFFECT"
+        },
+        "type": "PRODUCTIONEFFECT"
+      },
+      "name": "s",
+      "IDNumber": 2,
+      "era": 1,
+      "color": {
+        "value": -256,
+        "falpha": 0.0
+      },
+      "cost": {
+        "resource": {
+          "COIN": 3,
+          "WOOD": 0,
+          "STONE": 0,
+          "SERVANT": 0
+        }
+      }
+    }
+  ],
+  "characters": [
+    {
+      "immediateEffect": [
+        {
+          "actionValue": 4,
+          "cardType": "TERRITORY",
+          "discountPresence": false,
+          "type": "TAKECARDEFFECT"
+        }
+      ],
+      "permanentEffect": {
+        "presence": true,
+        "type": "NOCELLBONUS"
+      },
+      "name": "d",
+      "IDNumber": 3,
+      "era": 1,
+      "color": {
+        "value": -16776961,
+        "falpha": 0.0
+      },
+      "cost": {
+        "resource": {
+          "COIN": 4
+        }
+      }
+    },
+    {
+      "immediateEffect": [
+        {
+          "actionValue": 1,
+          "discountPresence": true,
+          "discount": {
+            "alternativeDiscountPresence": false,
+            "discount": {
+              "resource": {
+                "COIN": 0,
+                "WOOD": 1,
+                "STONE": 1,
+                "SERVANT": 0,
+                "MILITARYPOINT": 0,
+                "VICTORYPOINT": 0,
+                "FAITHPOINT": 0
+              }
+            },
+            "type": "DISCOUNTEFFECT"
+          },
+          "type": "TAKECARDEFFECT"
+        }
+      ],
+      "permanentEffect": {
+        "increment": 2,
+        "cardType": "CHARACTER",
+        "discountPresence": false,
+        "type": "INCREMENTCARDEFFECT"
+      },
+      "name": "g",
+      "IDNumber": 6,
+      "era": 2,
+      "color": {
+        "value": -16776961,
+        "falpha": 0.0
+      },
+      "cost": {
+        "resource": {
+          "COIN": 4
+        }
+      }
+    }
+  ],
+  "ventures": [
+    {
+      "immediateEffect": [
+        {
+          "actionValue": 4,
+          "production": false,
+          "harvest": true,
+          "type": "GOTOHP"
+        },
+        {
+          "resourceBonus": {
+            "resource": {
+              "COIN": 2,
+              "WOOD": 0,
+              "STONE": 2,
+              "SERVANT": 0,
+              "MILITARYPOINT": 0,
+              "VICTORYPOINT": 3,
+              "FAITHPOINT": 0
+            }
+          },
+          "type": "RESOURCEEFFECT"
+        }
+      ],
+      "permanentEffect": {
+        "resourceBonus": {
+          "resource": {
+            "VICTORYPOINT": 5
+          }
+        },
+        "type": "RESOURCEEFFECT"
+      },
+      "alternativeCostPresence": false,
+      "minimumRequiredMilitaryPoints": 0,
+      "name": "venture",
+      "IDNumber": 4,
+      "era": 1,
+      "color": {
+        "value": -20561,
+        "falpha": 0.0
+      },
+      "cost": {
+        "resource": {
+          "COIN": 3,
+          "WOOD": 2,
+          "STONE": 0,
+          "SERVANT": 0
+        }
+      }
+    },
+    {
+      "immediateEffect": [
+        {
+          "numberOfCouncilPrivileges": 2,
+          "type": "PRIVILEGESEFFECT"
+        }
+      ],
+      "permanentEffect": {
+        "resourceBonus": {
+          "resource": {
+            "VICTORYPOINT": 9
+          }
+        },
+        "type": "RESOURCEEFFECT"
+      },
+      "alternativeCostPresence": false,
+      "minimumRequiredMilitaryPoints": 0,
+      "name": "h",
+      "IDNumber": 7,
+      "era": 2,
+      "color": {
+        "value": -20561,
+        "falpha": 0.0
+      },
+      "cost": {
+        "resource": {
+          "COIN": 3,
+          "WOOD": 1,
+          "STONE": 0,
+          "SERVANT": 0
+        }
+      }
+    }
+  ]
+}
