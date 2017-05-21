@@ -3,7 +3,8 @@ package it.polimi.ingsw.GC_28.spaces;
 import java.io.IOException;
 import java.util.ArrayList;
 
-import boards.FamilyMember;
+import it.polimi.ingsw.GC_28.core.FamilyMember;
+
 
 public abstract class Space {
 	private boolean free;

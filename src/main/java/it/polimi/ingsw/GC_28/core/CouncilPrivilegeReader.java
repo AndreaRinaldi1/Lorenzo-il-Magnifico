@@ -1,5 +1,5 @@
-package core;
-import cards.*;
+package it.polimi.ingsw.GC_28.core;
+import it.polimi.ingsw.GC_28.cards.*;
 
 import java.io.FileNotFoundException;
 import java.io.FileReader;
@@ -9,6 +9,7 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.stream.JsonReader;
 
+@SuppressWarnings("restriction")
 public class CouncilPrivilegeReader {
 	
 

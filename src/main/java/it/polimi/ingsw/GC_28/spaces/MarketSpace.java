@@ -1,6 +1,6 @@
 package it.polimi.ingsw.GC_28.spaces;
 
-import cards.Resource;
+import it.polimi.ingsw.GC_28.cards.Resource;
 
 public class MarketSpace extends Space{
 	private Resource bonus;
