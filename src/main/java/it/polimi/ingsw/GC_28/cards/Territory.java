@@ -1,17 +1,16 @@
-package it.polimi.ingsw.GC_28;
+package it.polimi.ingsw.GC_28.cards;
 
-import java.awt.Color;
 import java.util.ArrayList;
+import java.awt.Color;
 
-import effects.Effect;
-import effects.HarvestEffect;
+import effects.*;
 
 public class Territory extends Card{
-	private ArrayList<Effect> immediateEffect = new ArrayList<Effect>();
+	private ArrayList<Effect> immediateEffect = new ArrayList<>();
 	private HarvestEffect permanentEffect;
 	
-	public Territory(){
-		super();
+	public Territory(String name, int IDNumber, int era, CardType cardType){
+		super(name, IDNumber, era, cardType);
 		this.setColor(Color.green);
 	}
 

@@ -1,6 +1,7 @@
-package it.polimi.ingsw.GC_28;
+package it.polimi.ingsw.GC_28.cards;
 
 import java.util.ArrayList;
+import java.awt.Color;
 
 import effects.Effect;
 import effects.ResourceEffect;
@@ -12,8 +13,11 @@ public class Venture extends Card{
 	private Resource alternativeCost;
 	private int minimumRequiredMilitaryPoints;
 	
-	public Venture(){
-		super();
+
+
+	public Venture(String name, int IDNumber, int era) {
+		super(name, IDNumber, era);
+		this.setColor(Color.pink);
 	}
 
 	public ArrayList<Effect> getImmediateEffect() {
@@ -54,5 +58,8 @@ public class Venture extends Card{
 
 	public void setMinimumRequiredMilitaryPoints(int minimumRequiredMilitaryPoints) {
 		this.minimumRequiredMilitaryPoints = minimumRequiredMilitaryPoints;
-	}	
+	}
+	
+	
+	
 }

@@ -1,21 +1,18 @@
-package cards;
+package it.polimi.ingsw.GC_28.cards;
 
 import java.awt.Color;
-import java.util.Scanner;
 
 public class Card {
 	private String name;
 	private int IDNumber;
 	private int era;
 	private Color color;
-	private CardType cardType;
 	private Resource cost;
 	
-	public Card(String name, int IDNumber, int era, CardType cardType){
+	public Card(String name, int IDNumber, int era){
 		this.setName(name);
 		this.setIDNumber(IDNumber);
 		this.setEra(era);
-		this.setCardType(cardType);
 	}
 	
 	public String getName() {
@@ -38,9 +35,6 @@ public class Card {
 		this.color = color;
 	}
 
-	public void setCardType(CardType cardType) {
-		this.cardType = cardType;
-	}
 
 	public void setCost(Resource cost) {
 		this.cost = cost;
@@ -58,9 +52,6 @@ public class Card {
 		return color;
 	}
 
-	public CardType getCardType() {
-		return cardType;
-	}
 
 	public Resource getCost() {
 		return cost;
@@ -68,7 +59,6 @@ public class Card {
 	@Override
 	public String toString(){
 		return "Name: " + this.name + "\n" +
-				"CardType: " + this.cardType.name() + "\n" +
 				"Color: " + this.color.toString() + "\n" + 
 				this.cost.toString();
 	}
