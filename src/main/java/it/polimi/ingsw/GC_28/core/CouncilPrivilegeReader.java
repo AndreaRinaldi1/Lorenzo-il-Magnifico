@@ -24,7 +24,6 @@ public class CouncilPrivilegeReader {
         try{
         	CouncilPrivilege cp = gson.fromJson(reader, CouncilPrivilege.class);
         	
-        	GameBoard.setCouncilPalace();
         	//System.out.println(x.get("a").toString());
         	//System.out.println(d.toString());    		
 	        reader.close();
