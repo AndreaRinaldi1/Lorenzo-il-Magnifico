@@ -1,9 +1,9 @@
 package it.polimi.ingsw.GC_28.spaces;
 
 import java.util.ArrayList;
-import cards.Resource;
-import cards.CouncilPrivilege;
-import boards.FamilyMember;
+import it.polimi.ingsw.GC_28.cards.Resource;
+import it.polimi.ingsw.GC_28.cards.CouncilPrivilege;
+import it.polimi.ingsw.GC_28.core.FamilyMember;
 
 
 public class CouncilPalace extends Space{
@@ -43,12 +43,13 @@ public class CouncilPalace extends Space{
 		this.bonus2 = bonus2;
 	}
 	
-	public ArrayList<FamilyMember> getPlayerOrder(){
-		return this.getPlayer();
-	}
-	
 	@Override
 	public void addPlayer(FamilyMember player){
 		this.getPlayer().add(player);
 	}
+	
+	public ArrayList<FamilyMember> getPlayerOrder(){
+		return this.getPlayer();
+	}
+	
 }

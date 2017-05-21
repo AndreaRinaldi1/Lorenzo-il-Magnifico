@@ -1,5 +1,5 @@
-package core;
-import cards.*;
+package it.polimi.ingsw.GC_28.core;
+import it.polimi.ingsw.GC_28.cards.*;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.EnumMap;
@@ -10,6 +10,7 @@ import java.lang.Character;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
+@SuppressWarnings("restriction")
 public class CouncilPrivilegeCreator {
 	Scanner scanner = new Scanner(System.in);
 	Resource resourceCost;

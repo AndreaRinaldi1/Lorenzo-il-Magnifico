@@ -8,13 +8,14 @@ import java.util.Scanner;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
-import cards.CouncilPrivilege;
-import cards.Resource;
-import cards.ResourceType;
+import it.polimi.ingsw.GC_28.cards.CouncilPrivilege;
+import it.polimi.ingsw.GC_28.cards.Resource;
+import it.polimi.ingsw.GC_28.cards.ResourceType;
 
-import spaces.MarketSpace;
+import it.polimi.ingsw.GC_28.spaces.MarketSpace;
 
 
+@SuppressWarnings("restriction")
 public class SpacesCreator {
 	Scanner scanner = new Scanner(System.in);
 	int coin, servants, militaryPoints;
