@@ -1,10 +1,8 @@
-package it.polimi.ingsw.GC_28.cards;
+package cards;
+import effects.*;
 
-import java.util.ArrayList;
 import java.awt.Color;
-
-import effects.Effect;
-import effects.ResourceEffect;
+import java.util.ArrayList;
 
 public class Venture extends Card{
 	private ArrayList<Effect> immediateEffect = new ArrayList<Effect>();

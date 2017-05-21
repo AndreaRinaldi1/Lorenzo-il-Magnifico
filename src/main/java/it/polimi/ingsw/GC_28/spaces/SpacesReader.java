@@ -1,4 +1,4 @@
-package spaces;
+package it.polimi.ingsw.GC_28.spaces;
 
 import java.io.FileNotFoundException;
 import java.io.FileReader;

@@ -1,4 +1,4 @@
-package it.polimi.ingsw.GC_28.cards;
+package cards;
 
 import java.awt.Color;
 
@@ -8,6 +8,8 @@ public class Card {
 	private int era;
 	private Color color;
 	private Resource cost;
+	
+	public Card(){};
 	
 	public Card(String name, int IDNumber, int era){
 		this.setName(name);
