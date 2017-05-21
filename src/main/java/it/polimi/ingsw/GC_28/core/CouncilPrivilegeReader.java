@@ -21,9 +21,10 @@ public class CouncilPrivilegeReader {
     public static void startRead() throws FileNotFoundException{
     	Gson gson = new GsonBuilder().create();
         JsonReader reader = new JsonReader(new FileReader("priv.json"));
+        GameBoard gameBoard = GameBoard.instance();
         try{
         	CouncilPrivilege cp = gson.fromJson(reader, CouncilPrivilege.class);
-        	
+        	gameBoard.getCouncilPalace().setBonus2(cp);
         	//System.out.println(x.get("a").toString());
         	//System.out.println(d.toString());    		
 	        reader.close();
