@@ -1,4 +1,4 @@
-package cards;
+package it.polimi.ingsw.GC_28.cards;
 
 
 import com.google.gson.*;

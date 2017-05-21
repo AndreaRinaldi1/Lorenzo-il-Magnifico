@@ -1,11 +1,10 @@
-package cards;
-import effects.*;
+package it.polimi.ingsw.GC_28.cards;
+import it.polimi.ingsw.GC_28.effects.*;
 
 import java.awt.Color;
 import java.util.ArrayList;
 
 import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 

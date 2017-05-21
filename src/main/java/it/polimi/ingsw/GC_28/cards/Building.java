@@ -1,7 +1,7 @@
-package cards;
+package it.polimi.ingsw.GC_28.cards;
 import java.awt.Color;
 
-import effects.*;
+import it.polimi.ingsw.GC_28.effects.*;
 
 public class Building extends Card{
 	private ResourceEffect immediateEffect;
