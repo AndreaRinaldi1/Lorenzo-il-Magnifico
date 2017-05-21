@@ -21,6 +21,10 @@ public class Territory extends Card{
 		return immediateEffect;
 	}
 
+	public void setImmediateEffect(ArrayList<Effect> immediateEffect) {
+		this.immediateEffect = immediateEffect;
+	}
+
 	public void setImmediateEffect(Gson gson, JsonObject j) {
 		JsonArray array = j.get("immediateEffect").getAsJsonArray();
 		for(int i = 0; i<array.size(); i++){
