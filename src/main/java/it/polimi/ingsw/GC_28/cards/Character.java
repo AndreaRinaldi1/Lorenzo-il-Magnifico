@@ -1,4 +1,5 @@
 package it.polimi.ingsw.GC_28.cards;
+
 import it.polimi.ingsw.GC_28.effects.*;
 
 import java.awt.Color;
@@ -56,6 +57,27 @@ public class Character extends Card{
 	        	v = immediateEffect.get(i);
 	    		v = gson.fromJson(e.toString(), GoToHPEffect.class);
 	    		immediateEffect.set(i, v);
+        		System.out.println(immediateEffect.get(i).getClass());
+        		break;
+        	case("MULTIPLIEREFFECT"):
+        		System.out.println("cambio il tipo di immediate effect #" + i + " in MultiplierEffect");
+        		v = immediateEffect.get(i);
+        		v = gson.fromJson(e.toString(), MultiplierEffect.class);
+        		immediateEffect.set(i, v);
+        		System.out.println(immediateEffect.get(i).getClass());
+        		break;
+        	case("PRIVILEGESEFFECT"):
+        		System.out.println("cambio il tipo di immediate effect #" + i + " in PrivilegesEffect");
+        		v = immediateEffect.get(i);
+        		v = gson.fromJson(e.toString(), PrivilegesEffect.class);
+        		immediateEffect.set(i, v);
+        		System.out.println(immediateEffect.get(i).getClass());
+        		break;
+        	case("TAKECARDEFFECT"):
+        		System.out.println("cambio il tipo di immediate effect #" + i + " in TakeCardEffect");
+        		v = immediateEffect.get(i);
+        		v = gson.fromJson(e.toString(), TakeCardEffect.class);
+        		immediateEffect.set(i, v);
         		System.out.println(immediateEffect.get(i).getClass());
         		break;
         	}
