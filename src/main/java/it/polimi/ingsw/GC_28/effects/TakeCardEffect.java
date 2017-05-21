@@ -1,6 +1,6 @@
-package effects;
+package it.polimi.ingsw.GC_28.effects;
 
-import cards.CardType;
+import it.polimi.ingsw.GC_28.cards.CardType;
 
 public class TakeCardEffect extends Effect{
 	private int actionValue;

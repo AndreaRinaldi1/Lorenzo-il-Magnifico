@@ -1,5 +1,5 @@
-package spaces;
-import cards.*;
+package it.polimi.ingsw.GC_28.spaces;
+
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.EnumMap;
@@ -8,8 +8,10 @@ import java.util.Scanner;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
-import cards.ResourceType;
-import core.GameBoard;
+import it.polimi.ingsw.GC_28.cards.CouncilPrivilege;
+import it.polimi.ingsw.GC_28.cards.Resource;
+import it.polimi.ingsw.GC_28.cards.ResourceType;
+import it.polimi.ingsw.GC_28.core.GameBoard;
 
 public class SpacesCreator {
 	Scanner scanner = new Scanner(System.in);
@@ -58,10 +60,10 @@ public class SpacesCreator {
 					String pht = enterProdHarvType();
 					ProductionAndHarvestSpace phSpace = new ProductionAndHarvestSpace(true, 1);
 					if(pht.equals("harvest")){
-						gameBoard.setHarvest(phSpace);	
+						gameBoard.setHarvestSpace(phSpace);	
 						}
 					else{
-						gameBoard.setProduction(phSpace);	
+						gameBoard.setProductionSpace(phSpace);	
 					}
 					break;
 				}

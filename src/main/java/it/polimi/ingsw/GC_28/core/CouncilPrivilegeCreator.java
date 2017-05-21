@@ -10,7 +10,7 @@ import java.lang.Character;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
-@SuppressWarnings("restriction")
+
 public class CouncilPrivilegeCreator {
 	Scanner scanner = new Scanner(System.in);
 	Resource resourceCost;

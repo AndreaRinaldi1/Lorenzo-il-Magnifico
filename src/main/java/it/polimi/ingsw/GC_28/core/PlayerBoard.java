@@ -1,9 +1,8 @@
-package core;
+package it.polimi.ingsw.GC_28.core;
 
 import java.util.EnumMap;
 
-import cards.Resource;
-import cards.ResourceType;
+import it.polimi.ingsw.GC_28.cards.*;
 
 public class PlayerBoard {
 	public Resource res = Resource.of(new EnumMap<ResourceType, Integer>(ResourceType.class));

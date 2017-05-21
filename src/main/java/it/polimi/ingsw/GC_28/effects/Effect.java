@@ -1,6 +1,8 @@
-package effects;
-import spaces.*;
-import core.*;
+package it.polimi.ingsw.GC_28.effects;
+
+
+import it.polimi.ingsw.GC_28.core.*;
+
 public class Effect {	
 	public static GameBoard gameBoard;
 

@@ -1,5 +1,5 @@
-package spaces;
-import core.*;
+package it.polimi.ingsw.GC_28.spaces;
+import it.polimi.ingsw.GC_28.core.*;
 
 
 public class ProductionAndHarvestSpace extends Space{

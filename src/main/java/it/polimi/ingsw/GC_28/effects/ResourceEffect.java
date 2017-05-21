@@ -1,7 +1,8 @@
-package effects;
+package it.polimi.ingsw.GC_28.effects;
 
-import cards.*;
-import core.*;
+import it.polimi.ingsw.GC_28.cards.*;
+import it.polimi.ingsw.GC_28.core.*;
+
 public class ResourceEffect extends Effect{	
 	private Resource resourceBonus;
 	public final EffectType type = EffectType.RESOURCEEFFECT;

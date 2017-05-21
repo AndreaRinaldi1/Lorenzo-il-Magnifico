@@ -1,14 +1,11 @@
-package core;
-import cards.*;
-import cards.Character;
+package it.polimi.ingsw.GC_28.core;
+
+import it.polimi.ingsw.GC_28.cards.*;
 
 import java.io.FileNotFoundException;
 
-import effects.Effect;
-import effects.NoCellBonusEffect;
-import effects.PrivilegesEffect;
-import spaces.GameBoard;
-import spaces.SpacesReader;
+import it.polimi.ingsw.GC_28.effects.*;
+import it.polimi.ingsw.GC_28.spaces.*;
 
 public class Prova {
 	public static void main(String[] args) throws FileNotFoundException {
@@ -44,7 +41,7 @@ public class Prova {
 
 		//Character x = new Character("ciao", 1,1);
 		//x.setPermanentEffect(e);
-		for(Character x : deck.getCharacters()){
+		for(it.polimi.ingsw.GC_28.cards.Character x : deck.getCharacters()){
 			x.getPermanentEffect().apply(p);
 			//System.out.println(p.res.toString());
 			for(int i = 0; i < x.getImmediateEffect().size(); i++){

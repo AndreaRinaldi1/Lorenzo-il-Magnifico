@@ -1,6 +1,7 @@
-package spaces;
-import cards.*;
-import core.*;
+package it.polimi.ingsw.GC_28.spaces;
+
+import it.polimi.ingsw.GC_28.cards.*;
+import it.polimi.ingsw.GC_28.core.*;
 import java.util.ArrayList;
 import java.lang.Character;
 

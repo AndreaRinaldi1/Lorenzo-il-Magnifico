@@ -1,4 +1,4 @@
-package cards;
+package it.polimi.ingsw.GC_28.cards;
 
 import java.io.FileWriter;
 import java.io.IOException;
@@ -14,7 +14,7 @@ import java.util.EnumMap;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
-import effects.*;
+import it.polimi.ingsw.GC_28.effects.*;
 
 public class CardWriter1 {
 	Scanner scanner = new Scanner(System.in);

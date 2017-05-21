@@ -1,5 +1,6 @@
-package spaces;
-import core.*;
+package it.polimi.ingsw.GC_28.spaces;
+
+import it.polimi.ingsw.GC_28.core.*;
 
 import java.io.IOException;
 import java.util.ArrayList;

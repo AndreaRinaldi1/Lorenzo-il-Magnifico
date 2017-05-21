@@ -1,4 +1,4 @@
-package spaces;
+package it.polimi.ingsw.GC_28.spaces;
 
 import java.io.FileNotFoundException;
 import java.io.FileReader;
@@ -8,8 +8,7 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.stream.JsonReader;
 
-import core.GameBoard;
-
+import it.polimi.ingsw.GC_28.core.GameBoard;;
 
 public class SpacesReader {
 	 Gson gson = new GsonBuilder().create();

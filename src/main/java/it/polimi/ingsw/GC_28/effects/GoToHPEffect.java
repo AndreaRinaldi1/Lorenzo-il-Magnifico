@@ -1,6 +1,6 @@
-package effects;
+package it.polimi.ingsw.GC_28.effects;
 
-import core.PlayerBoard;
+import it.polimi.ingsw.GC_28.core.PlayerBoard;
 
 public class GoToHPEffect extends Effect{
 	private int actionValue;

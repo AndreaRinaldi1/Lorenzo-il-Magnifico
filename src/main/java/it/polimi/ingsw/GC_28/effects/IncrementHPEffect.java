@@ -1,4 +1,4 @@
-package effects;
+package it.polimi.ingsw.GC_28.effects;
 
 public class IncrementHPEffect extends Effect{
 	private int increment;

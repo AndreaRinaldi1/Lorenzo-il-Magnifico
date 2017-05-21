@@ -9,7 +9,7 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.stream.JsonReader;
 
-@SuppressWarnings("restriction")
+
 public class CouncilPrivilegeReader {
 	
 
@@ -24,7 +24,7 @@ public class CouncilPrivilegeReader {
         try{
         	CouncilPrivilege cp = gson.fromJson(reader, CouncilPrivilege.class);
         	
-        	GameBoardProva.setCouncilPrivilege(cp);
+        	GameBoard.setCouncilPalace();
         	//System.out.println(x.get("a").toString());
         	//System.out.println(d.toString());    		
 	        reader.close();

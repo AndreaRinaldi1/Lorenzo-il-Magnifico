@@ -1,5 +1,6 @@
-package effects;
-import cards.*;
+package it.polimi.ingsw.GC_28.effects;
+
+import it.polimi.ingsw.GC_28.cards.*;
 
 public class MultiplierEffect extends Effect{
 	private Resource resourceBonus;
