@@ -9,6 +9,7 @@ import it.polimi.ingsw.GC_28.spaces.CouncilPalace;
 import it.polimi.ingsw.GC_28.spaces.MarketSpace;
 import it.polimi.ingsw.GC_28.spaces.ProductionAndHarvestSpace;
 import it.polimi.ingsw.GC_28.spaces.TwoPrivilegesSpace;
+import spaces.GameBoard;
 
 public class GameBoard {
 	private final int N_DICE = 3;
@@ -28,9 +29,18 @@ public class GameBoard {
 	private ArrayList<it.polimi.ingsw.GC_28.cards.Character> characters = new ArrayList<it.polimi.ingsw.GC_28.cards.Character>();
 	private ArrayList<Venture> ventures = new ArrayList<Venture>();
 	
-	public GameBoard(){
-		
+	private static GameBoard instance;
+	
+	private GameBoard(){
 	}
+	
+	public static GameBoard instance(){
+		if(instance == null){
+			instance = new GameBoard();
+		}
+		return instance;
+	}
+	
 	
 	
 	public String display(){
