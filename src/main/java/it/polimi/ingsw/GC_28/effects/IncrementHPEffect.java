@@ -1,5 +1,7 @@
 package it.polimi.ingsw.GC_28.effects;
 
+import it.polimi.ingsw.GC_28.core.PlayerBoard;
+
 public class IncrementHPEffect extends Effect{
 	private int increment;
 	private boolean production;
@@ -32,6 +34,11 @@ public class IncrementHPEffect extends Effect{
 
 	public void setHarvest(boolean harvest) {
 		this.harvest = harvest;
+	}
+	
+	@Override
+	public void apply(PlayerBoard p){
+		System.out.println("apply di IncrementHPEffect");
 	}
 	
 	

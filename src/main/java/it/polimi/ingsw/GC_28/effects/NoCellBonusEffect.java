@@ -26,14 +26,6 @@ public class NoCellBonusEffect extends Effect{
 	@Override
 	public void apply(PlayerBoard p){
 		System.out.println("apply di NoCellBonus");
-		if(presence == true){
-			p.res.getResource().put(ResourceType.COIN, 8);
-		}
-		else{
-			p.res.getResource().put(ResourceType.COIN, 9);
-		}
-		System.out.println(p.res.toString());
-
 	}
 
 }

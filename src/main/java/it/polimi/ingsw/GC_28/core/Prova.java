@@ -1,7 +1,7 @@
 package it.polimi.ingsw.GC_28.core;
 
 import it.polimi.ingsw.GC_28.cards.*;
-
+import it.polimi.ingsw.GC_28.cards.Character;
 import java.io.FileNotFoundException;
 
 import it.polimi.ingsw.GC_28.effects.*;
@@ -19,7 +19,7 @@ public class Prova {
 		
 		PlayerBoard p = new PlayerBoard();
 		for(ResourceType rt : ResourceType.values()){
-			p.res.getResource().put(rt, 0);
+			p.getResource().getResource().put(rt, 0);
 		}
 		
 		CardReader c = new CardReader();
@@ -30,7 +30,7 @@ public class Prova {
 		
 		
 		System.out.println("Prima");
-		System.out.println(p.res.toString());
+		System.out.println(p.getResource().toString());
 		//System.out.println(gb.getCoinSpace().getActionValue());
 		//e.apply(p);
 		//g.getImmediateEffect().apply(p);
@@ -41,17 +41,36 @@ public class Prova {
 
 		//Character x = new Character("ciao", 1,1);
 		//x.setPermanentEffect(e);
-		for(it.polimi.ingsw.GC_28.cards.Character x : deck.getCharacters()){
+		
+		System.out.println("Characters");
+		for(Character x : deck.getCharacters()){
 			x.getPermanentEffect().apply(p);
-			//System.out.println(p.res.toString());
 			for(int i = 0; i < x.getImmediateEffect().size(); i++){
 				x.getImmediateEffect().get(i).apply(p);
 			}
 		}
 		
+		System.out.println("Territories");
+		for(Territory x : deck.getTerritories()){
+			x.getPermanentEffect().apply(p);
+			for(int i = 0; i < x.getImmediateEffect().size(); i++){
+				x.getImmediateEffect().get(i).apply(p);
+			}
+		}
 		
+		System.out.println("Buildings");
+		for(Building x : deck.getBuildings()){
+			x.getPermanentEffect().apply(p);
+			x.getImmediateEffect().apply(p);
+		}
 		
-
+		System.out.println("Ventures");
+		for(Venture x : deck.getVentures()){
+			x.getPermanentEffect().apply(p);
+			for(int i = 0; i < x.getImmediateEffect().size(); i++){
+				x.getImmediateEffect().get(i).apply(p);
+			}
+		}
 		/*if(e instanceof PrivilegesEffect)
 		{
 			System.out.println("dentro");

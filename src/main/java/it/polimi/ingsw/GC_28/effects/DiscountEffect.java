@@ -1,6 +1,7 @@
 package it.polimi.ingsw.GC_28.effects;
 
 import it.polimi.ingsw.GC_28.cards.*;
+import it.polimi.ingsw.GC_28.core.PlayerBoard;
 
 public class DiscountEffect extends Effect{
 	private boolean alternativeDiscountPresence;
@@ -36,6 +37,11 @@ public class DiscountEffect extends Effect{
 
 	public void setDiscount(Resource discount) {
 		this.discount = discount;
+	}
+	
+	@Override
+	public void apply(PlayerBoard p){
+		System.out.println("apply di DiscoutEffect");
 	}
 	
 }

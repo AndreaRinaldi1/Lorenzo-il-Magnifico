@@ -1,6 +1,7 @@
 package it.polimi.ingsw.GC_28.effects;
 
 import it.polimi.ingsw.GC_28.cards.*;
+import it.polimi.ingsw.GC_28.core.PlayerBoard;
 
 public class ProductionEffect extends Effect{
 	private int productionValue;
@@ -46,5 +47,10 @@ public class ProductionEffect extends Effect{
 
 	public void setExchangeBonus(ExchangeEffect exchangeBonus) {
 		this.exchangeBonus = exchangeBonus;
+	}
+	
+	@Override
+	public void apply(PlayerBoard p){
+		System.out.println("apply di PrivilegesEffect");
 	}
 }
