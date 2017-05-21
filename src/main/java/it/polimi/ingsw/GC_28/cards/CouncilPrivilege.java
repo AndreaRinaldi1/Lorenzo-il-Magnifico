@@ -1,4 +1,4 @@
-package cards;
+package it.polimi.ingsw.GC_28.cards;
 
 import java.util.HashMap;
 import java.lang.Character;
