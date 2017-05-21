@@ -10,7 +10,7 @@ import com.google.gson.stream.JsonReader;
 
 //import cards.Deck;
 
-@SuppressWarnings("restriction")
+
 public class SpacesReader {
 	 Gson gson = new GsonBuilder().create();
 
