@@ -1,5 +1,5 @@
-package cards;
-import effects.*;
+package it.polimi.ingsw.GC_28.cards;
+import it.polimi.ingsw.GC_28.effects.*;
 
 import java.awt.Color;
 import java.util.ArrayList;
