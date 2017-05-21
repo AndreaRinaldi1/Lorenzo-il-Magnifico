@@ -1,6 +1,6 @@
-package spaces;
+package it.polimi.ingsw.GC_28.spaces;
 
-import cards.CouncilPrivilege;
+import it.polimi.ingsw.GC_28.cards.CouncilPrivilege;
 import cards.Resource;
 
 public class TwoPrivilegesSpace extends Space{

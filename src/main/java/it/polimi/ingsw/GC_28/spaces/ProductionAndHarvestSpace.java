@@ -1,6 +1,6 @@
-package spaces;
+package it.polimi.ingsw.GC_28.spaces;
 
-import boards.FamilyMember;
+import it.polimi.ingsw.GC_28.core.FamilyMember;
 
 public class ProductionAndHarvestSpace extends Space{
 	private FamilyMember firstPlayer;

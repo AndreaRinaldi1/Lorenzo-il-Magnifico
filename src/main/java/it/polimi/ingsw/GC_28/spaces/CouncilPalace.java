@@ -1,9 +1,10 @@
-package spaces;
+package it.polimi.ingsw.GC_28.spaces;
 
 import java.util.ArrayList;
 import cards.Resource;
 import cards.CouncilPrivilege;
 import boards.FamilyMember;
+
 
 public class CouncilPalace extends Space{
 	private Resource bonus1;

@@ -1,4 +1,4 @@
-package spaces;
+package it.polimi.ingsw.GC_28.spaces;
 
 import java.io.FileWriter;
 import java.io.IOException;
