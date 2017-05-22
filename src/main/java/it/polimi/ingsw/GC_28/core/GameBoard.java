@@ -2,9 +2,10 @@ package it.polimi.ingsw.GC_28.core;
 
 import java.util.ArrayList;
 import java.util.EnumMap;
-import java.util.HashMap;
+
 
 import it.polimi.ingsw.GC_28.cards.*;
+import it.polimi.ingsw.GC_28.cards.Character;
 import it.polimi.ingsw.GC_28.spaces.CouncilPalace;
 import it.polimi.ingsw.GC_28.spaces.MarketSpace;
 import it.polimi.ingsw.GC_28.spaces.ProductionAndHarvestSpace;
@@ -14,9 +15,10 @@ import it.polimi.ingsw.GC_28.spaces.TwoPrivilegesSpace;
 public class GameBoard {
 	private final int N_DICE = 3;
 	private final int N_EXCOMMUNICATIONTILE = 3;
-	//private EnumMap<CardType, Tower> towers = new EnumMap<CardType, Tower>(CardType.class);
-	//private Dice[] dices = new Dice[N_DICE];
-	//private ExcommunicationTile[] excommunications = new ExcommunicationTile[N_EXCOMMUNICATIONTILE];
+	private EnumMap<CardType, Tower> towers = new EnumMap<CardType, Tower>(CardType.class);
+	private Dice[] dices = new Dice[N_DICE];
+	private ExcommunicationTile[] excommunications = new ExcommunicationTile[N_EXCOMMUNICATIONTILE];
+	
 	private ProductionAndHarvestSpace harvestSpace, productionSpace;
 	private MarketSpace coinSpace, servantSpace, mixedSpace;
 	private TwoPrivilegesSpace twoPrivilegesSpace;
@@ -26,23 +28,17 @@ public class GameBoard {
 	private ArrayList<FamilyMember> membersCoucilPalace = new ArrayList<FamilyMember>(); 
 	private ArrayList<Territory> territory = new ArrayList<Territory>();
 	private ArrayList<Building> buildings = new ArrayList<Building>();
-	private ArrayList<it.polimi.ingsw.GC_28.cards.Character> characters = new ArrayList<it.polimi.ingsw.GC_28.cards.Character>();
+	private ArrayList<Character> characters = new ArrayList<Character>();
 	private ArrayList<Venture> ventures = new ArrayList<Venture>();
 	
-	private static GameBoard instance;
 	
-	private GameBoard(){
-	}
-	
-	public static GameBoard instance(){
-		if(instance == null){
-			instance = new GameBoard();
-		}
-		return instance;
+	public GameBoard(){
 	}
 	
 	
-/*
+	
+	
+
 	public String display(){
 		String ret = "GAME BOARD\n";
 		
@@ -143,7 +139,7 @@ public class GameBoard {
 	public void setExcommunications(ExcommunicationTile[] excommunications) {
 		this.excommunications = excommunications;
 	}
-*/
+
 	public ProductionAndHarvestSpace getHarvestSpace() {
 		return harvestSpace;
 	}

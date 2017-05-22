@@ -1,7 +1,9 @@
 package it.polimi.ingsw.GC_28.cards;
 
 import java.util.HashMap;
+
 import java.lang.Character;
+
 public class CouncilPrivilege {
 	private HashMap<Character, Resource> options = new HashMap<Character, Resource>();
 	private static CouncilPrivilege instance;
@@ -23,8 +25,15 @@ public class CouncilPrivilege {
 	public HashMap<Character, Resource> getOptions() {
 		return options;
 	}
+	
 	public void setOptions(HashMap<Character, Resource> options) {
 		this.options = options;
+	}
+	
+	public static void setCouncilPrivilege(CouncilPrivilege cp){
+		if(instance == null){
+			instance = cp;
+		}
 	}
 	
 }

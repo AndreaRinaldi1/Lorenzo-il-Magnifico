@@ -19,10 +19,10 @@ public class SpacesReader {
 	    }
 
 	    public GameBoard startRead() throws FileNotFoundException{
-	    	GameBoard gameBoard = GameBoard.instance();
+	    	GameBoard everySpace = new GameBoard();
 	        JsonReader reader = new JsonReader(new FileReader("spaces.json"));
 	        try{
-	        	gameBoard = gson.fromJson(reader, GameBoard.class);
+	        	everySpace = gson.fromJson(reader, GameBoard.class);
 	        	//d.getDeck().get(CardType.VENTURE).get(0).
 	        	//System.out.println(gameBoard.);   
 	        	//System.out.println(d.getVentures().get(0).getAlternativeCostPresence());
@@ -32,7 +32,7 @@ public class SpacesReader {
 	    		e.printStackTrace();
 	    	}
 	        finally{
-	        	return gameBoard;
+	        	return everySpace ;
 	        }
 	    }
 }
