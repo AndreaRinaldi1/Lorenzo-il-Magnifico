@@ -221,11 +221,19 @@ public class CardWriter1 {
 		wood = enterCost(ResourceType.WOOD.name());
 		stone = enterCost(ResourceType.STONE.name());
 		servant = enterCost(ResourceType.SERVANT.name());
+		victoryPoint = enterCost(ResourceType.VICTORYPOINT.name());
+		militaryPoint = enterCost(ResourceType.MILITARYPOINT.name());
+		faithPoint = enterCost(ResourceType.FAITHPOINT.name());
+
 		
 		cost.put(ResourceType.COIN, coin);
 		cost.put(ResourceType.WOOD, wood);
 		cost.put(ResourceType.STONE, stone);
 		cost.put(ResourceType.SERVANT, servant);
+		cost.put(ResourceType.VICTORYPOINT, victoryPoint);
+		cost.put(ResourceType.MILITARYPOINT, militaryPoint);
+		cost.put(ResourceType.FAITHPOINT, faithPoint);
+
 	}
 	
 private void enterResourceBonus(EnumMap<ResourceType, Integer> bonus){
