@@ -80,8 +80,11 @@ public class Character extends Card{
         		immediateEffect.set(i, v);
         		System.out.println(immediateEffect.get(i).getClass());
         		break;
+        	default:
+        		System.out.println("lascio il tipo di immediate effect a effect");
+        		System.out.println(immediateEffect.get(i).getClass());
+        		break;
         	}
-    		
     	}
 	}
 
@@ -107,7 +110,11 @@ public class Character extends Card{
 	    	permanentEffect = gson.fromJson(j.get("permanentEffect").toString(), IncrementCardEffect.class);
 	    	System.out.println(permanentEffect.getClass());
 	    	break;
+	    default:
+	    	System.out.println("lascio il tipo di permanent effect a effect");
+	    	System.out.println(permanentEffect.getClass());
     	}
+		
 		
 	}
 

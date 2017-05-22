@@ -138,6 +138,7 @@ public class CardWriter1 {
 		System.out.println("Type 'incrcard' for INCREMENTCARDEFFECT" );
 		System.out.println("Type 'incrhp' for INCREMENTHPFFECT" );
 		System.out.println("Type 'nc' for NOCELLBONUS" );
+		System.out.println("Type 'null' if there is no bonus");
 		String et = scanner.nextLine();
 		//EffectType et = enterEffect();
 		if(et.equals("incrcard")){
@@ -159,6 +160,12 @@ public class CardWriter1 {
 			//noCell.setPresence(true);
 			//character.type = EffectType.NOCELLBONUS;
 			character.setPermanentEffect(noCell);
+			deck.getCharacters().add(character);
+			z = true;
+		}
+		else if(et.equals("null")){
+			Effect noEffect = new Effect();
+			character.setPermanentEffect(noEffect);
 			deck.getCharacters().add(character);
 			z = true;
 		}
@@ -359,7 +366,7 @@ private void enterResourceBonus(EnumMap<ResourceType, Integer> bonus){
 			System.out.println("Type 'm' for MultiplierEffect");
 			System.out.println("Type 'h' for GoToHPEffect");
 			System.out.println("Type 't' for TakeCardEffect");
-
+			System.out.println("Type 'n' if there is no effect");
 
 			scanner.hasNextLine();//exec this till user input and add the user's input to the returned array
 			String effectType = scanner.nextLine();
@@ -375,6 +382,10 @@ private void enterResourceBonus(EnumMap<ResourceType, Integer> bonus){
 						Resource resourceBonus = Resource.of(bonus);
 						re.setResourceBonus(resourceBonus);
 						effects.add(re);
+					}
+					else if(effectType.equals("n")){
+						Effect e = new Effect();
+						effects.add(e);
 					}
 					else if(effectType.equals("p")){
 						PrivilegesEffect pe = new PrivilegesEffect();

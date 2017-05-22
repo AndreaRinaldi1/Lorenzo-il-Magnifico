@@ -17,6 +17,7 @@ public class Prova {
 		GameBoard gb = r.startRead();
 		Effect.gameBoard = gb;
 		
+		System.out.println(gb.getCoinSpace().getActionValue());
 		PlayerBoard p = new PlayerBoard();
 		for(ResourceType rt : ResourceType.values()){
 			p.getResource().getResource().put(rt, 0);

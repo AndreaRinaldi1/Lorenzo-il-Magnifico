@@ -51,6 +51,6 @@ public class ProductionEffect extends Effect{
 	
 	@Override
 	public void apply(PlayerBoard p){
-		System.out.println("apply di PrivilegesEffect");
+		System.out.println("apply di ProductionEffect");
 	}
 }

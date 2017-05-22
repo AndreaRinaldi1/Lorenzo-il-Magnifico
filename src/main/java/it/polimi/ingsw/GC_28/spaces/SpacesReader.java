@@ -24,7 +24,7 @@ public class SpacesReader {
 	        try{
 	        	gameBoard = gson.fromJson(reader, GameBoard.class);
 	        	//d.getDeck().get(CardType.VENTURE).get(0).
-	        	//System.out.println(gameBoard.getCoinSpace().getActionValue());   
+	        	//System.out.println(gameBoard.);   
 	        	//System.out.println(d.getVentures().get(0).getAlternativeCostPresence());
 		        reader.close();
 	    	}

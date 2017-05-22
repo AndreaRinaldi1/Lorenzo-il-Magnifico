@@ -14,9 +14,9 @@ import it.polimi.ingsw.GC_28.spaces.TwoPrivilegesSpace;
 public class GameBoard {
 	private final int N_DICE = 3;
 	private final int N_EXCOMMUNICATIONTILE = 3;
-	private EnumMap<CardType, Tower> towers = new EnumMap<CardType, Tower>(CardType.class);
-	private Dice[] dices = new Dice[N_DICE];
-	private ExcommunicationTile[] excommunications = new ExcommunicationTile[N_EXCOMMUNICATIONTILE];
+	//private EnumMap<CardType, Tower> towers = new EnumMap<CardType, Tower>(CardType.class);
+	//private Dice[] dices = new Dice[N_DICE];
+	//private ExcommunicationTile[] excommunications = new ExcommunicationTile[N_EXCOMMUNICATIONTILE];
 	private ProductionAndHarvestSpace harvestSpace, productionSpace;
 	private MarketSpace coinSpace, servantSpace, mixedSpace;
 	private TwoPrivilegesSpace twoPrivilegesSpace;
@@ -42,7 +42,7 @@ public class GameBoard {
 	}
 	
 	
-	
+/*
 	public String display(){
 		String ret = "GAME BOARD\n";
 		
@@ -103,7 +103,7 @@ public class GameBoard {
 			ret+="( )";
 		}
 		ret+="\n";
-		
+	
 		//Dice Space
 		ret+="Dice Values ";
 		for(int i = 0; i < N_DICE; i++){
@@ -143,7 +143,7 @@ public class GameBoard {
 	public void setExcommunications(ExcommunicationTile[] excommunications) {
 		this.excommunications = excommunications;
 	}
-
+*/
 	public ProductionAndHarvestSpace getHarvestSpace() {
 		return harvestSpace;
 	}
