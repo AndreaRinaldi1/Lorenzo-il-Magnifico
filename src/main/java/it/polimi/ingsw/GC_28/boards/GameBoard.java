@@ -21,11 +21,11 @@ public class GameBoard {
 	private Dice[] dices = new Dice[N_DICE];
 	private ExcommunicationTile[] excommunications = new ExcommunicationTile[N_EXCOMMUNICATIONTILE];
 	
-	private ProductionAndHarvestSpace harvestSpace, productionSpace;
-	private MarketSpace coinSpace, servantSpace, mixedSpace;
-	private TwoPrivilegesSpace twoPrivilegesSpace;
+	private static ProductionAndHarvestSpace harvestSpace, productionSpace;
+	private static MarketSpace coinSpace, servantSpace, mixedSpace;
+	private static TwoPrivilegesSpace twoPrivilegesSpace;
 	private Resource bonusFaithPoints;
-	private CouncilPalace councilPalace;
+	private static CouncilPalace councilPalace;
 	
 	private ArrayList<FamilyMember> membersCoucilPalace = new ArrayList<FamilyMember>(); 
 	private ArrayList<Territory> territory = new ArrayList<Territory>();
@@ -146,48 +146,48 @@ public class GameBoard {
 		return harvestSpace;
 	}
 
-	public void setHarvestSpace(ProductionAndHarvestSpace harvestSpace) {
-		this.harvestSpace = harvestSpace;
+	public void setHarvestSpace(ProductionAndHarvestSpace harvestSpace2) {
+		harvestSpace = harvestSpace2;
 	}
 
 	public ProductionAndHarvestSpace getProductionSpace() {
 		return productionSpace;
 	}
 
-	public void setProductionSpace(ProductionAndHarvestSpace productionSpace) {
-		this.productionSpace = productionSpace;
+	public void setProductionSpace(ProductionAndHarvestSpace productionSpace2) {
+		productionSpace = productionSpace2;
 	}
 
 	public MarketSpace getCoinSpace() {
 		return coinSpace;
 	}
 
-	public void setCoinSpace(MarketSpace coinSpace) {
-		this.coinSpace = coinSpace;
+	public void setCoinSpace(MarketSpace coinSpace2) {
+		coinSpace = coinSpace2;
 	}
 
 	public MarketSpace getServantSpace() {
 		return servantSpace;
 	}
 
-	public void setServantSpace(MarketSpace servantSpace) {
-		this.servantSpace = servantSpace;
+	public void setServantSpace(MarketSpace servantSpace2) {
+		servantSpace = servantSpace2;
 	}
 
 	public MarketSpace getMixedSpace() {
 		return mixedSpace;
 	}
 
-	public void setMixedSpace(MarketSpace mixedSpace) {
-		this.mixedSpace = mixedSpace;
+	public void setMixedSpace(MarketSpace mixedSpace2) {
+		mixedSpace = mixedSpace2;
 	}
 
 	public TwoPrivilegesSpace getTwoPrivilegesSpace() {
 		return twoPrivilegesSpace;
 	}
 
-	public void setTwoPrivilegesSpace(TwoPrivilegesSpace twoPrivilegesSpace) {
-		this.twoPrivilegesSpace = twoPrivilegesSpace;
+	public void setTwoPrivilegesSpace(TwoPrivilegesSpace twoPrivilegesSpace2) {
+		twoPrivilegesSpace = twoPrivilegesSpace2;
 	}
 
 	public Resource getBonusFaithPoints() {
@@ -202,8 +202,8 @@ public class GameBoard {
 		return councilPalace;
 	}
 
-	public void setCouncilPalace(CouncilPalace councilPalace) {
-		this.councilPalace = councilPalace;
+	public void setCouncilPalace(CouncilPalace councilPalace2) {
+		councilPalace = councilPalace2;
 	}
 	
 }
