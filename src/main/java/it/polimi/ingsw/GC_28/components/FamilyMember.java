@@ -1,5 +1,5 @@
 package it.polimi.ingsw.GC_28.components;
-import java.awt.Color;
+
 
 import it.polimi.ingsw.GC_28.model.Player;
 
