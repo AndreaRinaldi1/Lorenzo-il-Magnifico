@@ -1,0 +1,26 @@
+{
+  "options": {
+    "c": {
+      "resource": {
+        "COIN": 1,
+        "WOOD": 1,
+        "STONE": 0,
+        "SERVANT": 0,
+        "MILITARYPOINT": 0,
+        "VICTORYPOINT": 0,
+        "FAITHPOINT": 0
+      }
+    },
+    "s": {
+      "resource": {
+        "COIN": 0,
+        "WOOD": 0,
+        "STONE": 0,
+        "SERVANT": 0,
+        "MILITARYPOINT": 0,
+        "VICTORYPOINT": 9,
+        "FAITHPOINT": 9
+      }
+    }
+  }
+}

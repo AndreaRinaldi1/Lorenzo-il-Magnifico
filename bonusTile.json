@@ -1,0 +1,30 @@
+{
+  "productionEffect": {
+    "productionValue": 3,
+    "resourceProductionBonus": {
+      "resource": {
+        "COIN": 3,
+        "WOOD": 2,
+        "STONE": 0,
+        "SERVANT": 0,
+        "MILITARYPOINT": 0,
+        "VICTORYPOINT": 0,
+        "FAITHPOINT": 0
+      }
+    }
+  },
+  "harvestEffect": {
+    "harvestValue": 1,
+    "resourceHarvestBonus": {
+      "resource": {
+        "COIN": 2,
+        "WOOD": 1,
+        "STONE": 0,
+        "SERVANT": 0,
+        "MILITARYPOINT": 0,
+        "VICTORYPOINT": 0,
+        "FAITHPOINT": 0
+      }
+    }
+  }
+}

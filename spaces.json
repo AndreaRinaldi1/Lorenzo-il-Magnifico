@@ -2,7 +2,7 @@
   "coinSpace": {
     "bonus": {
       "resource": {
-        "COIN": 3
+        "COIN": 5
       }
     },
     "free": true,
@@ -12,7 +12,18 @@
   "servantSpace": {
     "bonus": {
       "resource": {
-        "SERVANT": 3
+        "SERVANT": 5
+      }
+    },
+    "free": true,
+    "players": [],
+    "actionValue": 1
+  },
+  "mixedSpace": {
+    "bonus": {
+      "resource": {
+        "COIN": 1,
+        "MILITARYPOINT": 3
       }
     },
     "free": true,
@@ -23,6 +34,32 @@
     "bonus": {
       "options": {}
     },
+    "free": true,
+    "players": [],
+    "actionValue": 1
+  },
+  "councilPalace": {
+    "bonus1": {
+      "resource": {
+        "COIN": 1,
+        "MILITARYPOINT": 3
+      }
+    },
+    "bonus2": {
+      "options": {}
+    },
+    "free": true,
+    "players": [],
+    "actionValue": 1
+  },
+  "productionSpace": {
+    "secondarySpace": false,
+    "free": true,
+    "players": [],
+    "actionValue": 1
+  },
+  "harvestSpace": {
+    "secondarySpace": false,
     "free": true,
     "players": [],
     "actionValue": 1
