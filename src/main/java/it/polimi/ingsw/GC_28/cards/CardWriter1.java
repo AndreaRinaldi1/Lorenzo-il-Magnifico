@@ -377,7 +377,7 @@ private void enterResourceBonus(EnumMap<ResourceType, Integer> bonus){
 							/*
 							 * Next 3 lines used to create a resource to instance the ResourceEffect
 							 * */
-						EnumMap<ResourceType, Integer>bonus = new EnumMap<ResourceType, Integer>(ResourceType.class);
+						EnumMap<ResourceType, Integer> bonus = new EnumMap<ResourceType, Integer>(ResourceType.class);
 						enterResourceBonus(bonus);
 						Resource resourceBonus = Resource.of(bonus);
 						re.setResourceBonus(resourceBonus);
@@ -397,7 +397,17 @@ private void enterResourceBonus(EnumMap<ResourceType, Integer> bonus){
 						effects.add(pe);
 					}else if(effectType.equals("m")){
 						MultiplierEffect me = new MultiplierEffect();
-						me.setCardType(enterCardType());
+						System.out.println("Type 'r' if the multiplier has two resources");
+						
+						if(scanner.nextLine().equals("r")){
+							EnumMap<ResourceType, Integer> multRes = new EnumMap<ResourceType, Integer>(ResourceType.class);
+							enterResourceCost(multRes);
+							Resource resourceCost = Resource.of(multRes);
+							me.setResourceCost(resourceCost);
+						}
+						else{
+							me.setCardType(enterCardType());
+						}	
 						EnumMap<ResourceType, Integer>bonus = new EnumMap<ResourceType, Integer>(ResourceType.class);
 						enterResourceBonus(bonus);
 						Resource resourceBonus = Resource.of(bonus);
