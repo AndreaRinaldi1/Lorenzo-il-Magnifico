@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 {
   "coinSpace": {
     "bonus": {
@@ -29,47 +28,3 @@
     "actionValue": 1
   }
 }
-=======
-{
-  "N_DICE": 3,
-  "N_EXCOMMUNICATIONTILE": 3,
-  "towers": {},
-  "dices": [
-    null,
-    null,
-    null
-  ],
-  "excommunications": [
-    null,
-    null,
-    null
-  ],
-  "harvestSpace": {
-    "secondarySpace": false,
-    "free": true,
-    "players": [],
-    "actionValue": 1
-  },
-  "productionSpace": {
-    "secondarySpace": false,
-    "free": true,
-    "players": [],
-    "actionValue": 1
-  },
-  "coinSpace": {
-    "bonus": {
-      "resource": {
-        "COIN": 5
-      }
-    },
-    "free": true,
-    "players": [],
-    "actionValue": 1
-  },
-  "membersCoucilPalace": [],
-  "territory": [],
-  "buildings": [],
-  "characters": [],
-  "ventures": []
-}
->>>>>>> 20dcc05fba1ab87a51cfa4fe234750278fecf8cb
