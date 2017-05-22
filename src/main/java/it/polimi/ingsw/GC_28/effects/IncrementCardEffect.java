@@ -47,8 +47,9 @@ public class IncrementCardEffect extends Effect{
 		this.discount = discount;
 	}
 	
-	public void apply(PlayerBoard p){System.out.println("spec");};
-
-	
+	@Override
+	public void apply(PlayerBoard p){
+		System.out.println("apply di IncrementCardEffect");
+	}
 	
 }

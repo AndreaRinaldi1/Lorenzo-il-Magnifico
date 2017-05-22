@@ -138,6 +138,7 @@ public class CardWriter1 {
 		System.out.println("Type 'incrcard' for INCREMENTCARDEFFECT" );
 		System.out.println("Type 'incrhp' for INCREMENTHPFFECT" );
 		System.out.println("Type 'nc' for NOCELLBONUS" );
+		System.out.println("Type 'null' if there is no bonus");
 		String et = scanner.nextLine();
 		//EffectType et = enterEffect();
 		if(et.equals("incrcard")){
@@ -159,6 +160,12 @@ public class CardWriter1 {
 			//noCell.setPresence(true);
 			//character.type = EffectType.NOCELLBONUS;
 			character.setPermanentEffect(noCell);
+			deck.getCharacters().add(character);
+			z = true;
+		}
+		else if(et.equals("null")){
+			Effect noEffect = new Effect();
+			character.setPermanentEffect(noEffect);
 			deck.getCharacters().add(character);
 			z = true;
 		}
@@ -214,11 +221,19 @@ public class CardWriter1 {
 		wood = enterCost(ResourceType.WOOD.name());
 		stone = enterCost(ResourceType.STONE.name());
 		servant = enterCost(ResourceType.SERVANT.name());
+		victoryPoint = enterCost(ResourceType.VICTORYPOINT.name());
+		militaryPoint = enterCost(ResourceType.MILITARYPOINT.name());
+		faithPoint = enterCost(ResourceType.FAITHPOINT.name());
+
 		
 		cost.put(ResourceType.COIN, coin);
 		cost.put(ResourceType.WOOD, wood);
 		cost.put(ResourceType.STONE, stone);
 		cost.put(ResourceType.SERVANT, servant);
+		cost.put(ResourceType.VICTORYPOINT, victoryPoint);
+		cost.put(ResourceType.MILITARYPOINT, militaryPoint);
+		cost.put(ResourceType.FAITHPOINT, faithPoint);
+
 	}
 	
 private void enterResourceBonus(EnumMap<ResourceType, Integer> bonus){
@@ -359,7 +374,7 @@ private void enterResourceBonus(EnumMap<ResourceType, Integer> bonus){
 			System.out.println("Type 'm' for MultiplierEffect");
 			System.out.println("Type 'h' for GoToHPEffect");
 			System.out.println("Type 't' for TakeCardEffect");
-
+			System.out.println("Type 'n' if there is no effect");
 
 			scanner.hasNextLine();//exec this till user input and add the user's input to the returned array
 			String effectType = scanner.nextLine();
@@ -370,11 +385,15 @@ private void enterResourceBonus(EnumMap<ResourceType, Integer> bonus){
 							/*
 							 * Next 3 lines used to create a resource to instance the ResourceEffect
 							 * */
-						EnumMap<ResourceType, Integer>bonus = new EnumMap<ResourceType, Integer>(ResourceType.class);
+						EnumMap<ResourceType, Integer> bonus = new EnumMap<ResourceType, Integer>(ResourceType.class);
 						enterResourceBonus(bonus);
 						Resource resourceBonus = Resource.of(bonus);
 						re.setResourceBonus(resourceBonus);
 						effects.add(re);
+					}
+					else if(effectType.equals("n")){
+						Effect e = new Effect();
+						effects.add(e);
 					}
 					else if(effectType.equals("p")){
 						PrivilegesEffect pe = new PrivilegesEffect();
@@ -386,7 +405,17 @@ private void enterResourceBonus(EnumMap<ResourceType, Integer> bonus){
 						effects.add(pe);
 					}else if(effectType.equals("m")){
 						MultiplierEffect me = new MultiplierEffect();
-						me.setCardType(enterCardType());
+						System.out.println("Type 'r' if the multiplier has two resources");
+						
+						if(scanner.nextLine().equals("r")){
+							EnumMap<ResourceType, Integer> multRes = new EnumMap<ResourceType, Integer>(ResourceType.class);
+							enterResourceCost(multRes);
+							Resource resourceCost = Resource.of(multRes);
+							me.setResourceCost(resourceCost);
+						}
+						else{
+							me.setCardType(enterCardType());
+						}	
 						EnumMap<ResourceType, Integer>bonus = new EnumMap<ResourceType, Integer>(ResourceType.class);
 						enterResourceBonus(bonus);
 						Resource resourceBonus = Resource.of(bonus);
@@ -439,19 +468,19 @@ private void enterResourceBonus(EnumMap<ResourceType, Integer> bonus){
 		System.out.println("Enter 'e' for exchange.");
 		System.out.println("Enter 'm' for multiplier.");
 		System.out.println("Enter 'r' for resource.");
-
+		System.out.println("Enter 'p' for privilege");
 		
 		
 		boolean y = false;
 		char productionEffectType = scanner.nextLine().toLowerCase().charAt(0);
-		if(productionEffectType=='e' || productionEffectType=='m' || productionEffectType=='r'){
+		if(productionEffectType=='e' || productionEffectType=='m' || productionEffectType=='r' || productionEffectType == 'p'){
 			return productionEffectType;
 		}
 		while(!y){
 			System.out.println("Not valid input!");
 			System.out.print("Enter SpaceType: ");
 			productionEffectType = scanner.nextLine().toLowerCase().charAt(0);
-			if(productionEffectType=='m' || productionEffectType=='t' || productionEffectType=='c' || productionEffectType=='x'){
+			if(productionEffectType=='m' || productionEffectType=='t' || productionEffectType=='c' || productionEffectType=='x' || productionEffectType == 'p'){
 				return productionEffectType;
 			}
 		}
@@ -487,6 +516,14 @@ private void enterResourceBonus(EnumMap<ResourceType, Integer> bonus){
 			enterResourceBonus(bonus);
 			resourceBonus = Resource.of(bonus);
 			pe.setResourceProductionBonus(resourceBonus);
+			break;
+		case('p'):
+			PrivilegesEffect privEffect = new PrivilegesEffect();
+			System.out.println("Enter number of privileges: ");
+			int numOfPriv = scanner.nextInt();
+			scanner.nextLine();
+			privEffect.setNumberOfCouncilPrivileges(numOfPriv);
+			pe.setPrivilegeEffect(privEffect);
 			break;
 		}
 		return pe;

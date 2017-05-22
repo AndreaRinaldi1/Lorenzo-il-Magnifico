@@ -1,6 +1,7 @@
 package it.polimi.ingsw.GC_28.effects;
 
 import it.polimi.ingsw.GC_28.cards.CardType;
+import it.polimi.ingsw.GC_28.core.PlayerBoard;
 
 public class TakeCardEffect extends Effect{
 	private int actionValue;
@@ -43,5 +44,10 @@ public class TakeCardEffect extends Effect{
 
 	public void setDiscount(DiscountEffect discount) {
 		this.discount = discount;
+	}
+	
+	@Override
+	public void apply(PlayerBoard p){
+		System.out.println("apply di TakeCardEffect");
 	}
 }

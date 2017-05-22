@@ -29,13 +29,25 @@ public class CardReader{
         	
         	JsonObject c = gson.fromJson(reader2, JsonObject.class);
         	JsonArray arrayCharacter = c.get("characters").getAsJsonArray();
-        	
+        	JsonArray arrayVentures = c.get("ventures").getAsJsonArray();
+        	JsonArray arrayTerritories = c.get("territories").getAsJsonArray();
+
         	for(int i = 0; i < arrayCharacter.size(); i++){
             	JsonObject j = arrayCharacter.get(i).getAsJsonObject();
             	deck.getCharacters().get(i).setPermanentEffect(gson, j);
             	deck.getCharacters().get(i).setImmediateEffect(gson, j);
             	//Character character = new Character(j);
             	//deck.getCharacters().add(character);
+        	}
+        	
+        	for(int i = 0; i < arrayVentures.size(); i++){
+            	JsonObject j = arrayVentures.get(i).getAsJsonObject();
+            	deck.getVentures().get(i).setImmediateEffect(gson, j);
+        	}
+        	
+        	for(int i = 0; i < arrayTerritories.size(); i++){
+            	JsonObject j = arrayTerritories.get(i).getAsJsonObject();
+            	deck.getTerritories().get(i).setImmediateEffect(gson, j);
         	}
         	//System.out.println(e.getClass());
         	

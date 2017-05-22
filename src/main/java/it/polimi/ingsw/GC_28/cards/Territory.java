@@ -45,6 +45,9 @@ public class Territory extends Card{
         		immediateEffect.set(i, v);
         		System.out.println(immediateEffect.get(i).getClass());
         		break;
+			default:
+		    	System.out.println("lascio il tipo di immediate effect a effect");
+		    	System.out.println(permanentEffect.getClass());
 			}
 		}
 	}

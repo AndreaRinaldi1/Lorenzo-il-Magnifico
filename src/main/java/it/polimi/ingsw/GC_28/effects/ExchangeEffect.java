@@ -1,5 +1,6 @@
 package it.polimi.ingsw.GC_28.effects;
 import it.polimi.ingsw.GC_28.cards.*;
+import it.polimi.ingsw.GC_28.core.PlayerBoard;
 
 
 public class ExchangeEffect extends Effect{
@@ -74,26 +75,8 @@ public class ExchangeEffect extends Effect{
 		this.privilegeBonus = privilegeBonus;
 	}
 
-	/*private HashMap<Resource, Resource> exchangeResources = new HashMap<Resource, Resource>();
-	private HashMap<Resource, CouncilPrivilege> exchangePriviliges = new HashMap<Resource, CouncilPrivilege>();
-	
-	
-	
-	public HashMap<Resource, Resource> getExchangeResources() {
-		return exchangeResources;
+	@Override
+	public void apply(PlayerBoard p){
+		System.out.println("apply di ExchangeEffect");
 	}
-
-	public void setExchangeResources(HashMap<Resource, Resource> exchangeResources) {
-		this.exchangeResources = exchangeResources;
-	}
-
-	public HashMap<Resource, CouncilPrivilege> getExchangePriviliges() {
-		return exchangePriviliges;
-	}
-
-	public void setExchangePriviliges(HashMap<Resource, CouncilPrivilege> exchangePriviliges) {
-		this.exchangePriviliges = exchangePriviliges;
-	}
-*/
-	
 }

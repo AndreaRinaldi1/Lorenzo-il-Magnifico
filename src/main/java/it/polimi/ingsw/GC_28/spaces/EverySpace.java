@@ -1,0 +1,58 @@
+package it.polimi.ingsw.GC_28.spaces;
+
+public class EverySpace {
+	private MarketSpace coinSpace;
+	private MarketSpace servantSpace;
+	private MarketSpace mixedSpace;
+	private TwoPrivilegesSpace twoPrivilegesSpace;
+	private CouncilPalace councilPalace;
+	private ProductionAndHarvestSpace productionSpace;
+	private ProductionAndHarvestSpace harvestSpace;
+
+	
+	public TwoPrivilegesSpace getTwoPrivilegesSpace() {
+		return twoPrivilegesSpace;
+	}
+	public void setTwoPrivilegesSpace(TwoPrivilegesSpace twoPrivilegesSpace) {
+		this.twoPrivilegesSpace = twoPrivilegesSpace;
+	}
+	public CouncilPalace getCouncilPalace() {
+		return councilPalace;
+	}
+	public void setCouncilPalace(CouncilPalace councilPalace) {
+		this.councilPalace = councilPalace;
+	}
+	public ProductionAndHarvestSpace getProduction() {
+		return productionSpace;
+	}
+	public void setProduction(ProductionAndHarvestSpace production) {
+		this.productionSpace = production;
+	}
+	public ProductionAndHarvestSpace getHarvest() {
+		return harvestSpace;
+	}
+	public void setHarvest(ProductionAndHarvestSpace harvest) {
+		this.harvestSpace = harvest;
+	}
+
+	public MarketSpace getCoinSpace() {
+		return coinSpace;
+	}
+	public MarketSpace getServantSpace() {
+		return servantSpace;
+	}
+	public MarketSpace getMixedSpace() {
+		return mixedSpace;
+	}
+	public void setCoinSpace(MarketSpace coinSpace) {
+		this.coinSpace = coinSpace;
+	}
+	public void setServantSpace(MarketSpace servantSpace) {
+		this.servantSpace = servantSpace;
+	}
+	public void setMixedSpace(MarketSpace mixedSpace) {
+		this.mixedSpace = mixedSpace;
+	}
+	
+	
+}

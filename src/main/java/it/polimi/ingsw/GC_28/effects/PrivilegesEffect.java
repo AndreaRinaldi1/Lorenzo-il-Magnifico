@@ -21,6 +21,6 @@ public class PrivilegesEffect extends Effect{
 	
 	@Override
 	public void apply(PlayerBoard p){
-		p.res.getResource().put(ResourceType.COIN, 18);
+		System.out.println("apply di PrivilegesEffect");
 	}
 }

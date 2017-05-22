@@ -1,12 +1,14 @@
 package it.polimi.ingsw.GC_28.effects;
 
 import it.polimi.ingsw.GC_28.cards.*;
+import it.polimi.ingsw.GC_28.core.PlayerBoard;
 
 public class ProductionEffect extends Effect{
 	private int productionValue;
 	private Resource resourceProductionBonus;
 	private ExchangeEffect exchangeBonus;
 	private MultiplierEffect multiplierEffect;
+	private PrivilegesEffect privilegeEffect;
 	public final EffectType type = EffectType.PRODUCTIONEFFECT;
 
 	
@@ -14,6 +16,20 @@ public class ProductionEffect extends Effect{
 		super();
 	}
 	
+	
+
+	public PrivilegesEffect getPrivilegeEffect() {
+		return privilegeEffect;
+	}
+
+
+
+	public void setPrivilegeEffect(PrivilegesEffect privilegeEffect) {
+		this.privilegeEffect = privilegeEffect;
+	}
+
+
+
 	public MultiplierEffect getMultiplierEffect() {
 		return multiplierEffect;
 	}
@@ -46,5 +62,10 @@ public class ProductionEffect extends Effect{
 
 	public void setExchangeBonus(ExchangeEffect exchangeBonus) {
 		this.exchangeBonus = exchangeBonus;
+	}
+	
+	@Override
+	public void apply(PlayerBoard p){
+		System.out.println("apply di ProductionEffect");
 	}
 }
