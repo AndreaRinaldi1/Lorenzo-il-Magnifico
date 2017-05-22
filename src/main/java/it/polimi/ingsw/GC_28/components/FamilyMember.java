@@ -5,29 +5,38 @@ import it.polimi.ingsw.GC_28.model.Player;
 
 public class FamilyMember {
 	private Player Player;
-	private Color DiceColor;
 	private int value;
 	private boolean used;
+	private final boolean NEUTRAL;
+	private DiceColor diceColor;
 	
-	public FamilyMember(Player player, Color diceColor){
+	public FamilyMember(Player player, boolean neutral, DiceColor diceColor){
 		this.Player = player;
-		this.DiceColor = diceColor;
+		this.NEUTRAL = neutral;
+		this.diceColor = diceColor;
+		if(this.NEUTRAL == true){
+			value = 0;
+		}
 	}
 
 	public Player getPlayer() {
 		return Player;
 	}
-
-	public Color getDiceColor() {
-		return DiceColor;
+	
+	public boolean isNEUTRAL() {
+		return NEUTRAL;
 	}
 
 	public int getValue() {
 		return value;
 	}
 
-	public void setValue(int value) {
-		this.value = value;
+	public void setValue(Dice[] dices) {
+		for(Dice dice : dices){
+			if(dice.getColor() == this.diceColor){
+				this.value = dice.getValue();
+			}
+		}
 	}
 
 	public boolean isUsed() {

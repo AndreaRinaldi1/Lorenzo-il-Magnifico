@@ -16,6 +16,7 @@ import javax.management.timer.Timer;
 import it.polimi.ingsw.GC_28.cards.CardType;
 import it.polimi.ingsw.GC_28.components.CouncilPrivilege;
 import it.polimi.ingsw.GC_28.components.Dice;
+import it.polimi.ingsw.GC_28.components.DiceColor;
 import it.polimi.ingsw.GC_28.components.Resource;
 import it.polimi.ingsw.GC_28.model.Player;
 import it.polimi.ingsw.GC_28.spaces.EverySpace;
@@ -159,9 +160,8 @@ public class BoardsInitializer {
 	}
 	
 	private static void initDices(){
-		Color[] diceColor = new Color[] {Color.black,Color.orange,Color.white};
 		for(int i = 0; i < 3 ; i++){
-			dices[i] = new Dice(diceColor[i]);
+			dices[i] = new Dice(DiceColor.values()[i]);
 		}
 	}
 	

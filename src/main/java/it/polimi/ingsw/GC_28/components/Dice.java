@@ -1,17 +1,16 @@
 package it.polimi.ingsw.GC_28.components;
 
-import java.awt.Color;
 import java.util.Random;
 
 public class Dice {
-	private Color color;
+	private DiceColor color;
 	private int value;
 	
-	public Dice(Color color){
+	public Dice(DiceColor color){
 		this.color = color;
 	}
 
-	public Color getColor() {
+	public DiceColor getColor() {
 		return color;
 	}
 

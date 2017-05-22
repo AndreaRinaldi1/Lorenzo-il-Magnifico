@@ -1,21 +1,20 @@
 package it.polimi.ingsw.GC_28.model;
 
-import java.awt.Color;
-
 public class Player {
-	private Color color;
-	
-	public Player (Color color){
+	private PlayerColor color;
+
+	public Player(PlayerColor color) {
 		this.color = color;
 	}
 
-	public Color getColor() {
+	public PlayerColor getColor() {
 		return color;
 	}
 
-	public void setColor(Color color) {
+	public void setColor(PlayerColor color) {
 		this.color = color;
 	}
+	
 	
 	
 }
