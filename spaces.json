@@ -1,0 +1,30 @@
+{
+  "coinSpace": {
+    "bonus": {
+      "resource": {
+        "COIN": 3
+      }
+    },
+    "free": true,
+    "players": [],
+    "actionValue": 1
+  },
+  "servantSpace": {
+    "bonus": {
+      "resource": {
+        "SERVANT": 3
+      }
+    },
+    "free": true,
+    "players": [],
+    "actionValue": 1
+  },
+  "twoPrivilegesSpace": {
+    "bonus": {
+      "options": {}
+    },
+    "free": true,
+    "players": [],
+    "actionValue": 1
+  }
+}
