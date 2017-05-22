@@ -1,4 +1,4 @@
-package components;
+package it.polimi.ingsw.GC_28.components;
 
 import java.util.EnumMap;
 import java.util.Map;

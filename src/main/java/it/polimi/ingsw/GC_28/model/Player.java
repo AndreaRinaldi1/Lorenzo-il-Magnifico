@@ -1,4 +1,4 @@
-package model;
+package it.polimi.ingsw.GC_28.model;
 
 import java.awt.Color;
 

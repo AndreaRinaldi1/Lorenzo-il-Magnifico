@@ -14,18 +14,16 @@ import java.util.Map;
 import javax.management.timer.Timer;
 
 import it.polimi.ingsw.GC_28.cards.CardType;
+import it.polimi.ingsw.GC_28.components.CouncilPrivilege;
+import it.polimi.ingsw.GC_28.components.Dice;
+import it.polimi.ingsw.GC_28.components.Resource;
+import it.polimi.ingsw.GC_28.model.Player;
 import it.polimi.ingsw.GC_28.spaces.EverySpace;
-import model.Player;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.InstanceCreator;
 import com.google.gson.stream.JsonReader;
-
-import components.CouncilPrivilege;
-import components.Dice;
-import components.Resource;
-
 import com.google.gson.reflect.TypeToken;
 
 

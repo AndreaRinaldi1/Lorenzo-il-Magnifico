@@ -1,10 +1,9 @@
 package it.polimi.ingsw.GC_28.spaces;
 import it.polimi.ingsw.GC_28.cards.*;
+import it.polimi.ingsw.GC_28.components.CouncilPrivilege;
+import it.polimi.ingsw.GC_28.components.Resource;
 
 import java.lang.Character;
-
-import components.CouncilPrivilege;
-import components.Resource;
 
 public class TwoPrivilegesSpace extends Space{
 	private CouncilPrivilege bonus;

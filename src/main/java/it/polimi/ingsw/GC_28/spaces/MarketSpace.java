@@ -1,6 +1,6 @@
 package it.polimi.ingsw.GC_28.spaces;
-import components.Resource;
 import it.polimi.ingsw.GC_28.cards.*;
+import it.polimi.ingsw.GC_28.components.Resource;
 
 
 public class MarketSpace extends Space{

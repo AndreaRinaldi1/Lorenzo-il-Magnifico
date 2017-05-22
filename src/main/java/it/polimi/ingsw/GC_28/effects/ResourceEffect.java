@@ -1,9 +1,9 @@
 package it.polimi.ingsw.GC_28.effects;
 
-import components.Resource;
-import components.ResourceType;
 import it.polimi.ingsw.GC_28.boards.*;
 import it.polimi.ingsw.GC_28.cards.*;
+import it.polimi.ingsw.GC_28.components.Resource;
+import it.polimi.ingsw.GC_28.components.ResourceType;
 
 public class ResourceEffect extends Effect{	
 	private Resource resourceBonus;

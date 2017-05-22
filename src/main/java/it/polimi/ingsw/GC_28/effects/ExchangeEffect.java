@@ -1,8 +1,8 @@
 package it.polimi.ingsw.GC_28.effects;
-import components.CouncilPrivilege;
-import components.Resource;
 import it.polimi.ingsw.GC_28.boards.PlayerBoard;
 import it.polimi.ingsw.GC_28.cards.*;
+import it.polimi.ingsw.GC_28.components.CouncilPrivilege;
+import it.polimi.ingsw.GC_28.components.Resource;
 
 
 public class ExchangeEffect extends Effect{

@@ -2,13 +2,11 @@ package it.polimi.ingsw.GC_28.spaces;
 
 import it.polimi.ingsw.GC_28.boards.*;
 import it.polimi.ingsw.GC_28.cards.*;
+import it.polimi.ingsw.GC_28.components.CouncilPrivilege;
+import it.polimi.ingsw.GC_28.components.FamilyMember;
+import it.polimi.ingsw.GC_28.components.Resource;
 
 import java.util.ArrayList;
-
-import components.CouncilPrivilege;
-import components.FamilyMember;
-import components.Resource;
-
 import java.lang.Character;
 
 public class CouncilPalace extends Space{

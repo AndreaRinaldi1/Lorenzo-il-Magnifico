@@ -1,6 +1,6 @@
 package it.polimi.ingsw.GC_28.spaces;
-import components.FamilyMember;
 import it.polimi.ingsw.GC_28.boards.*;
+import it.polimi.ingsw.GC_28.components.FamilyMember;
 
 
 public class ProductionAndHarvestSpace extends Space{

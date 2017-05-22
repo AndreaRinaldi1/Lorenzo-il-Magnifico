@@ -1,5 +1,6 @@
 package it.polimi.ingsw.GC_28.cards;
 
+import it.polimi.ingsw.GC_28.components.Resource;
 import it.polimi.ingsw.GC_28.effects.*;
 
 import java.awt.Color;
@@ -8,8 +9,6 @@ import java.util.ArrayList;
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
-
-import components.Resource;
 
 public class Venture extends Card{
 	private ArrayList<Effect> immediateEffect = new ArrayList<Effect>();

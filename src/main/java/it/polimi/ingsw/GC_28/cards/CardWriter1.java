@@ -14,9 +14,9 @@ import java.util.EnumMap;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
-import components.CouncilPrivilege;
-import components.Resource;
-import components.ResourceType;
+import it.polimi.ingsw.GC_28.components.CouncilPrivilege;
+import it.polimi.ingsw.GC_28.components.Resource;
+import it.polimi.ingsw.GC_28.components.ResourceType;
 import it.polimi.ingsw.GC_28.effects.*;
 
 public class CardWriter1 {

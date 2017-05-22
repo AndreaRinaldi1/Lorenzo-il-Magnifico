@@ -1,8 +1,8 @@
 package it.polimi.ingsw.GC_28.boards;
 
-import components.FamilyMember;
-import components.Resource;
 import it.polimi.ingsw.GC_28.cards.*;
+import it.polimi.ingsw.GC_28.components.FamilyMember;
+import it.polimi.ingsw.GC_28.components.Resource;
 
 
 public class Cell {

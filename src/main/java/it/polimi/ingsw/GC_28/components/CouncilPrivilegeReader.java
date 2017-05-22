@@ -1,4 +1,4 @@
-package components;
+package it.polimi.ingsw.GC_28.components;
 import it.polimi.ingsw.GC_28.cards.*;
 
 import java.io.FileNotFoundException;

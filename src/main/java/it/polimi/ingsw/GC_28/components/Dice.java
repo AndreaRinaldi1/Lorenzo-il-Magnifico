@@ -1,4 +1,4 @@
-package components;
+package it.polimi.ingsw.GC_28.components;
 
 import java.awt.Color;
 import java.util.Random;
