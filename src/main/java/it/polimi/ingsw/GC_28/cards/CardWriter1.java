@@ -468,19 +468,19 @@ private void enterResourceBonus(EnumMap<ResourceType, Integer> bonus){
 		System.out.println("Enter 'e' for exchange.");
 		System.out.println("Enter 'm' for multiplier.");
 		System.out.println("Enter 'r' for resource.");
-
+		System.out.println("Enter 'p' for privilege");
 		
 		
 		boolean y = false;
 		char productionEffectType = scanner.nextLine().toLowerCase().charAt(0);
-		if(productionEffectType=='e' || productionEffectType=='m' || productionEffectType=='r'){
+		if(productionEffectType=='e' || productionEffectType=='m' || productionEffectType=='r' || productionEffectType == 'p'){
 			return productionEffectType;
 		}
 		while(!y){
 			System.out.println("Not valid input!");
 			System.out.print("Enter SpaceType: ");
 			productionEffectType = scanner.nextLine().toLowerCase().charAt(0);
-			if(productionEffectType=='m' || productionEffectType=='t' || productionEffectType=='c' || productionEffectType=='x'){
+			if(productionEffectType=='m' || productionEffectType=='t' || productionEffectType=='c' || productionEffectType=='x' || productionEffectType == 'p'){
 				return productionEffectType;
 			}
 		}
@@ -516,6 +516,14 @@ private void enterResourceBonus(EnumMap<ResourceType, Integer> bonus){
 			enterResourceBonus(bonus);
 			resourceBonus = Resource.of(bonus);
 			pe.setResourceProductionBonus(resourceBonus);
+			break;
+		case('p'):
+			PrivilegesEffect privEffect = new PrivilegesEffect();
+			System.out.println("Enter number of privileges: ");
+			int numOfPriv = scanner.nextInt();
+			scanner.nextLine();
+			privEffect.setNumberOfCouncilPrivileges(numOfPriv);
+			pe.setPrivilegeEffect(privEffect);
 			break;
 		}
 		return pe;
