@@ -11,7 +11,7 @@ import com.google.gson.GsonBuilder;
 import it.polimi.ingsw.GC_28.cards.CouncilPrivilege;
 import it.polimi.ingsw.GC_28.cards.Resource;
 import it.polimi.ingsw.GC_28.cards.ResourceType;
-import it.polimi.ingsw.GC_28.core.GameBoard;
+
 
 public class SpacesCreator {
 	Scanner scanner = new Scanner(System.in);
@@ -19,7 +19,7 @@ public class SpacesCreator {
 	EnumMap<ResourceType, Integer> bonus = new EnumMap<ResourceType, Integer>(ResourceType.class);
 	Resource resource;
 	CouncilPrivilege cp;
-	GameBoard gameBoard = new GameBoard();
+	EverySpace everySpace = new EverySpace();
 	
 	public static void main(String[] args) {
 		SpacesCreator sc = new SpacesCreator();
@@ -42,7 +42,7 @@ public class SpacesCreator {
 				case('t'):
 					cp = CouncilPrivilege.instance();
 					TwoPrivilegesSpace tps = new TwoPrivilegesSpace(true, 1, cp);
-					gameBoard.setTwoPrivilegesSpace(tps);
+					everySpace.setTwoPrivilegesSpace(tps);
 					break;
 				case('c'):
 					CouncilPalace palace = CouncilPalace.instance();
@@ -54,16 +54,16 @@ public class SpacesCreator {
 					palace.setBonus2(cp);
 					palace.setActionValue(1);
 					palace.setFree(true);
-					gameBoard.setCouncilPalace(palace);
+					everySpace.setCouncilPalace(palace);
 					break;
 				case('x'):
 					String pht = enterProdHarvType();
 					ProductionAndHarvestSpace phSpace = new ProductionAndHarvestSpace(true, 1);
 					if(pht.equals("harvest")){
-						gameBoard.setHarvestSpace(phSpace);	
+						everySpace.setHarvest(phSpace);	
 						}
 					else{
-						gameBoard.setProductionSpace(phSpace);	
+						everySpace.setProduction(phSpace);	
 					}
 					break;
 				}
@@ -72,7 +72,7 @@ public class SpacesCreator {
 				proceed = scanner.nextLine();
 			}while(!(proceed.equals("end")));
 			
-			String tmp = obj.toJson(gameBoard);
+			String tmp = obj.toJson(everySpace);
 			file.write(tmp);
 			file.flush();
 			file.close();
@@ -120,14 +120,14 @@ public class SpacesCreator {
 			bonus.put(ResourceType.COIN, coin);
 			resource = Resource.of(bonus);
 			m.setBonus(resource);
-			gameBoard.setCoinSpace(m);
+			everySpace.setCoinSpace(m);
 			break;
 		case "servantspace":
 			servants = enterBonus("servant");
 			bonus.put(ResourceType.SERVANT, servants);
 			resource = Resource.of(bonus);
 			m.setBonus(resource);
-			gameBoard.setServantSpace(m);
+			everySpace.setServantSpace(m);
 			break;
 		case "mixedspace":
 			coin = enterBonus("coin");
@@ -136,7 +136,7 @@ public class SpacesCreator {
 			bonus.put(ResourceType.MILITARYPOINT, militaryPoints);
 			resource = Resource.of(bonus);
 			m.setBonus(resource);
-			gameBoard.setMixedSpace(m);
+			everySpace.setMixedSpace(m);
 			break;
 		}
 	}

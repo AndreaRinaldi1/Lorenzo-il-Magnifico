@@ -2,7 +2,7 @@ package it.polimi.ingsw.GC_28.core;
 
 import java.util.ArrayList;
 import java.util.EnumMap;
-import java.util.HashMap;
+
 
 import it.polimi.ingsw.GC_28.cards.*;
 import it.polimi.ingsw.GC_28.cards.Character;
