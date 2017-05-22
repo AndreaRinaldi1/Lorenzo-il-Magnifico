@@ -1,4 +1,4 @@
-package it.polimi.ingsw.GC_28.core;
+package it.polimi.ingsw.GC_28.boards;
 
 import java.awt.Color;
 

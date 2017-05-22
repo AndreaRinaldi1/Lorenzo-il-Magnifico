@@ -1,7 +1,7 @@
 package it.polimi.ingsw.GC_28.effects;
 
+import it.polimi.ingsw.GC_28.boards.PlayerBoard;
 import it.polimi.ingsw.GC_28.cards.*;
-import it.polimi.ingsw.GC_28.core.PlayerBoard;
 
 
 public class IncrementCardEffect extends Effect{

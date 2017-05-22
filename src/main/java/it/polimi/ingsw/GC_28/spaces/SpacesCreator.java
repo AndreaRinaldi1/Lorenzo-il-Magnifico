@@ -8,9 +8,9 @@ import java.util.Scanner;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
-import it.polimi.ingsw.GC_28.cards.CouncilPrivilege;
-import it.polimi.ingsw.GC_28.cards.Resource;
-import it.polimi.ingsw.GC_28.cards.ResourceType;
+import components.CouncilPrivilege;
+import components.Resource;
+import components.ResourceType;
 
 
 public class SpacesCreator {

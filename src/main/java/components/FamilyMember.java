@@ -1,5 +1,7 @@
-package it.polimi.ingsw.GC_28.core;
+package components;
 import java.awt.Color;
+
+import model.Player;
 
 public class FamilyMember {
 	private Player Player;

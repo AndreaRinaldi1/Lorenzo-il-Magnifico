@@ -1,7 +1,9 @@
-package it.polimi.ingsw.GC_28.core;
+package it.polimi.ingsw.GC_28.boards;
 
 import java.util.EnumMap;
 
+import components.Resource;
+import components.ResourceType;
 import it.polimi.ingsw.GC_28.cards.*;
 
 public class PlayerBoard {

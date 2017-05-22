@@ -1,7 +1,7 @@
 package it.polimi.ingsw.GC_28.effects;
 
-import it.polimi.ingsw.GC_28.cards.ResourceType;
-import it.polimi.ingsw.GC_28.core.PlayerBoard;
+import components.ResourceType;
+import it.polimi.ingsw.GC_28.boards.PlayerBoard;
 
 public class NoCellBonusEffect extends Effect{
 	private boolean presence;

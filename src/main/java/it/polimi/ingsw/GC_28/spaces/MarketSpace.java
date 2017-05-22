@@ -1,4 +1,5 @@
 package it.polimi.ingsw.GC_28.spaces;
+import components.Resource;
 import it.polimi.ingsw.GC_28.cards.*;
 
 

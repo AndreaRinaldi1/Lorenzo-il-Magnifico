@@ -2,6 +2,8 @@ package it.polimi.ingsw.GC_28.cards;
 
 import java.awt.Color;
 
+import components.Resource;
+
 public class Card {
 	private String name;
 	private int IDNumber;

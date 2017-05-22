@@ -1,9 +1,11 @@
-package it.polimi.ingsw.GC_28.core;
+package it.polimi.ingsw.GC_28.boards;
 
 import java.util.ArrayList;
 import java.util.EnumMap;
 
-
+import components.Dice;
+import components.FamilyMember;
+import components.Resource;
 import it.polimi.ingsw.GC_28.cards.*;
 import it.polimi.ingsw.GC_28.cards.Character;
 import it.polimi.ingsw.GC_28.spaces.CouncilPalace;

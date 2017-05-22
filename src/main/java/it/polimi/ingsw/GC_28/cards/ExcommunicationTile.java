@@ -1,4 +1,4 @@
-package it.polimi.ingsw.GC_28.core;
+package it.polimi.ingsw.GC_28.cards;
 
 import it.polimi.ingsw.GC_28.effects.Effect;
 

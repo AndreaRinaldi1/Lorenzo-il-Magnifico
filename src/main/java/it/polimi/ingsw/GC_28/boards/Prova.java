@@ -1,9 +1,10 @@
-package it.polimi.ingsw.GC_28.core;
+package it.polimi.ingsw.GC_28.boards;
 
 import it.polimi.ingsw.GC_28.cards.*;
 import it.polimi.ingsw.GC_28.cards.Character;
 import java.io.FileNotFoundException;
 
+import components.ResourceType;
 import it.polimi.ingsw.GC_28.effects.*;
 import it.polimi.ingsw.GC_28.spaces.*;
 
@@ -14,10 +15,11 @@ public class Prova {
     		System.out.println(c + "\n" + GameBoardProva.getCouncilPrivilege().getOptions().get(c).toString());
     	}*/
 		SpacesReader r = new SpacesReader();
-		GameBoard gb = r.startRead();
-		Effect.gameBoard = gb;
+		EverySpace everySpace = r.startRead();
+		GameBoard gameBoard = new GameBoard();
+		Effect.gameBoard = gameBoard;
 		
-		System.out.println(gb.getCoinSpace().getActionValue());
+		System.out.println(gameBoard.getCoinSpace().getActionValue());
 		PlayerBoard p = new PlayerBoard();
 		for(ResourceType rt : ResourceType.values()){
 			p.getResource().getResource().put(rt, 0);

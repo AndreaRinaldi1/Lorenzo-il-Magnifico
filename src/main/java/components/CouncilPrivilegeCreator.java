@@ -1,4 +1,4 @@
-package it.polimi.ingsw.GC_28.core;
+package components;
 import it.polimi.ingsw.GC_28.cards.*;
 import java.io.FileWriter;
 import java.io.IOException;

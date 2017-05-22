@@ -1,7 +1,6 @@
-package it.polimi.ingsw.GC_28.cards;
+package components;
 
 import java.util.HashMap;
-
 import java.lang.Character;
 
 public class CouncilPrivilege {

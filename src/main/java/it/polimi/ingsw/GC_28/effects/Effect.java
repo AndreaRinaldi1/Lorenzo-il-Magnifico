@@ -1,7 +1,7 @@
 package it.polimi.ingsw.GC_28.effects;
 
 
-import it.polimi.ingsw.GC_28.core.*;
+import it.polimi.ingsw.GC_28.boards.*;
 
 public class Effect {	
 	public static GameBoard gameBoard;

@@ -1,5 +1,7 @@
-package it.polimi.ingsw.GC_28.core;
+package it.polimi.ingsw.GC_28.boards;
 
+import components.FamilyMember;
+import components.Resource;
 import it.polimi.ingsw.GC_28.cards.*;
 
 

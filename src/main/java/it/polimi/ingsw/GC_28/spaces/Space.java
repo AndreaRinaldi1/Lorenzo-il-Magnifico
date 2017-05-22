@@ -1,9 +1,10 @@
 package it.polimi.ingsw.GC_28.spaces;
 
-import it.polimi.ingsw.GC_28.core.*;
-
 import java.io.IOException;
 import java.util.ArrayList;
+
+import components.FamilyMember;
+import it.polimi.ingsw.GC_28.boards.*;
 
 public abstract class Space {
 	private boolean free;

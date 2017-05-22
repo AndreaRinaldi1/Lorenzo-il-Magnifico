@@ -1,6 +1,6 @@
 package it.polimi.ingsw.GC_28.effects;
 
-import it.polimi.ingsw.GC_28.core.PlayerBoard;
+import it.polimi.ingsw.GC_28.boards.PlayerBoard;
 
 public class IncrementHPEffect extends Effect{
 	private int increment;

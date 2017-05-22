@@ -1,4 +1,4 @@
-package it.polimi.ingsw.GC_28.core;
+package it.polimi.ingsw.GC_28.boards;
 
 import java.awt.Color;
 import java.io.FileNotFoundException;
@@ -14,19 +14,23 @@ import java.util.Map;
 import javax.management.timer.Timer;
 
 import it.polimi.ingsw.GC_28.cards.CardType;
-import it.polimi.ingsw.GC_28.cards.CouncilPrivilege;
-import it.polimi.ingsw.GC_28.cards.Resource;
 import it.polimi.ingsw.GC_28.spaces.EverySpace;
+import model.Player;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.InstanceCreator;
 import com.google.gson.stream.JsonReader;
+
+import components.CouncilPrivilege;
+import components.Dice;
+import components.Resource;
+
 import com.google.gson.reflect.TypeToken;
 
 
 
-public class GameInit {
+public class BoardsInitializer {
 	
 	private static BonusTile bonusTile;
 	private static Dice[] dices =  new Dice[3]; //ask if dice could be static,anyway the colors will not change during the game

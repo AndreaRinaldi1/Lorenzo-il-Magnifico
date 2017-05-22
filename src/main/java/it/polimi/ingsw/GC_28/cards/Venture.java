@@ -9,6 +9,8 @@ import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 
+import components.Resource;
+
 public class Venture extends Card{
 	private ArrayList<Effect> immediateEffect = new ArrayList<Effect>();
 	private ResourceEffect permanentEffect;
