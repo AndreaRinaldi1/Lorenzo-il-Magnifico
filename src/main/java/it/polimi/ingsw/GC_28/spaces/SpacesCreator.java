@@ -19,7 +19,7 @@ public class SpacesCreator {
 	EnumMap<ResourceType, Integer> bonus = new EnumMap<ResourceType, Integer>(ResourceType.class);
 	Resource resource;
 	CouncilPrivilege cp;
-	GameBoard gameBoard = GameBoard.instance();
+	GameBoard gameBoard = new GameBoard();
 	
 	public static void main(String[] args) {
 		SpacesCreator sc = new SpacesCreator();

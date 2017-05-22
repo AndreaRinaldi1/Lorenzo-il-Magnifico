@@ -18,6 +18,7 @@ public class GameBoard {
 	private EnumMap<CardType, Tower> towers = new EnumMap<CardType, Tower>(CardType.class);
 	private Dice[] dices = new Dice[N_DICE];
 	private ExcommunicationTile[] excommunications = new ExcommunicationTile[N_EXCOMMUNICATIONTILE];
+	
 	private ProductionAndHarvestSpace harvestSpace, productionSpace;
 	private MarketSpace coinSpace, servantSpace, mixedSpace;
 	private TwoPrivilegesSpace twoPrivilegesSpace;
@@ -37,7 +38,7 @@ public class GameBoard {
 	
 	
 	
-/*
+
 	public String display(){
 		String ret = "GAME BOARD\n";
 		
@@ -138,7 +139,7 @@ public class GameBoard {
 	public void setExcommunications(ExcommunicationTile[] excommunications) {
 		this.excommunications = excommunications;
 	}
-*/
+
 	public ProductionAndHarvestSpace getHarvestSpace() {
 		return harvestSpace;
 	}

@@ -19,7 +19,7 @@ public class SpacesReader {
 	    }
 
 	    public GameBoard startRead() throws FileNotFoundException{
-	    	GameBoard gameBoard = GameBoard.instance();
+	    	GameBoard gameBoard = new GameBoard();
 	        JsonReader reader = new JsonReader(new FileReader("spaces.json"));
 	        try{
 	        	gameBoard = gson.fromJson(reader, GameBoard.class);
