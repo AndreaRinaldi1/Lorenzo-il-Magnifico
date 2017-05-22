@@ -1,3 +1,5 @@
+package it.polimi.ingsw.GC_28.core;
+
 import java.awt.Color;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
@@ -11,21 +13,14 @@ import java.util.Map;
 
 import javax.management.timer.Timer;
 
-import boards.BonusTile;
-import boards.Cell;
-import boards.Dice;
-import boards.GameBoard;
-import boards.Player;
-import boards.PlayerBoard;
-import boards.Tower;
-import cards.CardType;
-import cards.CouncilPrivilege;
-import cards.Deck;
-import cards.Resource;
-import spaces.EverySpace;
+import it.polimi.ingsw.GC_28.cards.CardType;
+import it.polimi.ingsw.GC_28.cards.CouncilPrivilege;
+import it.polimi.ingsw.GC_28.cards.Resource;
+import it.polimi.ingsw.GC_28.spaces.EverySpace;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.google.gson.InstanceCreator;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.reflect.TypeToken;
 
@@ -182,7 +177,7 @@ public class GameInit {
 	
 }
 
-/*class EnumMapInstanceCreator<K extends Enum<K>, V> implements InstanceCreator<EnumMap<K, V>> {
+class EnumMapInstanceCreator<K extends Enum<K>, V> implements InstanceCreator<EnumMap<K, V>> {
 private final Class<K> enumClazz;
 
 	public EnumMapInstanceCreator(final Class<K> enumClazz) {
@@ -194,4 +189,4 @@ private final Class<K> enumClazz;
 	public EnumMap<K, V> createInstance(final Type type) {
 		return new EnumMap<K, V>(enumClazz);
 	}
-}*/
+}
