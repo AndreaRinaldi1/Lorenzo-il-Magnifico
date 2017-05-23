@@ -102,7 +102,7 @@ public class Prova {
 		
 		CardReader reader = new CardReader();
 		Deck d = reader.startRead();
-		//d.toString();
+		d.toString();
 		//d.getCharacters().get(19).getImmediateEffect().get(0).apply(pb, gb, g);
 			
 		/*

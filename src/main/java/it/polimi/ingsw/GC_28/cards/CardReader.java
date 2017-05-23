@@ -17,8 +17,8 @@ public class CardReader{
     }
 
     public Deck startRead() throws FileNotFoundException{
-        JsonReader reader = new JsonReader(new FileReader("cards2.json"));
-        JsonReader reader2 = new JsonReader(new FileReader("cards2.json"));
+        JsonReader reader = new JsonReader(new FileReader("cards.json"));
+        JsonReader reader2 = new JsonReader(new FileReader("cards.json"));
         //JsonReader reader3 = new JsonReader(new FileReader("cards.json"));
 
         Deck deck = new Deck();
@@ -31,26 +31,25 @@ public class CardReader{
         	JsonArray arrayVentures = c.get("ventures").getAsJsonArray();
         	JsonArray arrayTerritories = c.get("territories").getAsJsonArray();
         	
-        	for(int i = 0; i < arrayTerritories.size(); i++){
-            	JsonObject j = arrayTerritories.get(i).getAsJsonObject();
-            	deck.getTerritories().get(i).setImmediateEffect(gson, j);
-        	}
-        	
-        	for(int i = 0; i < arrayCharacter.size(); i++){
-            	JsonObject j = arrayCharacter.get(i).getAsJsonObject();
-            	deck.getCharacters().get(i).setPermanentEffect(gson, j);
-            	deck.getCharacters().get(i).setImmediateEffect(gson, j);
-            	System.out.println("character");
-            	//Character character = new Character(j);
-            	//deck.getCharacters().add(character);
-        	}
-
         	for(int i = 0; i < arrayVentures.size(); i++){
             	JsonObject j = arrayVentures.get(i).getAsJsonObject();
             	deck.getVentures().get(i).setImmediateEffect(gson, j);
         	}
+
+        	for(int i = 0; i < arrayCharacter.size(); i++){
+            	JsonObject j = arrayCharacter.get(i).getAsJsonObject();
+            	deck.getCharacters().get(i).setPermanentEffect(gson, j);
+            	deck.getCharacters().get(i).setImmediateEffect(gson, j);
+            	//Character character = new Character(j);
+            	//deck.getCharacters().add(character);
+        	}
         	
+        
         	
+        	for(int i = 0; i < arrayTerritories.size(); i++){
+            	JsonObject j = arrayTerritories.get(i).getAsJsonObject();
+            	deck.getTerritories().get(i).setImmediateEffect(gson, j);
+        	}
         	//System.out.println(e.getClass());
         	
         	//System.out.println(deck.getCharacters().get(0).getPermanentEffect().getClass());
