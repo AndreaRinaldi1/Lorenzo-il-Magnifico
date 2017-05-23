@@ -26,7 +26,6 @@ public class CardReader{
         	deck = gson.fromJson(reader, Deck.class);
         	
         	
-        	
         	JsonObject c = gson.fromJson(reader2, JsonObject.class);
         	JsonArray arrayCharacter = c.get("characters").getAsJsonArray();
         	JsonArray arrayVentures = c.get("ventures").getAsJsonArray();
