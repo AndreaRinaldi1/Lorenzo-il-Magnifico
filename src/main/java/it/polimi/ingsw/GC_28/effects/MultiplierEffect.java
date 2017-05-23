@@ -44,10 +44,10 @@ public class MultiplierEffect extends Effect{
 		this.cardType = cardType;
 	}
 	
-	private Resource multiplyResource(Resource res, int times){
+	private Resource multiplyResource(int times){
 		EnumMap<ResourceType, Integer> resource = new EnumMap<ResourceType, Integer>(ResourceType.class);
-		for(ResourceType resType : res.getResource().keySet()){
-			resource.put(resType, res.getResource().get(resType) * times);
+		for(ResourceType resType : resourceBonus.getResource().keySet()){
+			resource.put(resType, resourceBonus.getResource().get(resType) * times);
 		}
 		Resource amount = Resource.of(resource);
 		return amount;
@@ -59,16 +59,16 @@ public class MultiplierEffect extends Effect{
 		if(resourceCost == null){
 			switch(cardType){
 			case TERRITORY:
-				playerBoard.addResource(multiplyResource(resourceBonus, playerBoard.getTerritories().size()));
+				playerBoard.addResource(multiplyResource(playerBoard.getTerritories().size()));
 				break;
 			case BUILDING:
-				playerBoard.addResource(multiplyResource(resourceBonus, playerBoard.getBuildings().size()));
+				playerBoard.addResource(multiplyResource(playerBoard.getBuildings().size()));
 				break;
 			case CHARACTER:
-				playerBoard.addResource(multiplyResource(resourceBonus, playerBoard.getCharacters().size()));
+				playerBoard.addResource(multiplyResource(playerBoard.getCharacters().size()));
 				break;
 			case VENTURE:
-				playerBoard.addResource(multiplyResource(resourceBonus, playerBoard.getVentures().size()));
+				playerBoard.addResource(multiplyResource(playerBoard.getVentures().size()));
 				break;
 			}
 		}
@@ -80,7 +80,7 @@ public class MultiplierEffect extends Effect{
 					break;
 				}
 			}
-			playerBoard.addResource(multiplyResource(resourceBonus, times));
+			playerBoard.addResource(multiplyResource(times));
 		}
 		
 	}

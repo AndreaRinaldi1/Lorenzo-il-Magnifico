@@ -18,6 +18,7 @@ import it.polimi.ingsw.GC_28.components.CouncilPrivilege;
 import it.polimi.ingsw.GC_28.components.Resource;
 import it.polimi.ingsw.GC_28.components.ResourceType;
 import it.polimi.ingsw.GC_28.effects.ExchangeEffect;
+import it.polimi.ingsw.GC_28.effects.MultiplierEffect;
 import it.polimi.ingsw.GC_28.model.Game;
 
 public class Prova {
@@ -29,11 +30,11 @@ public class Prova {
 		
 		
 		EnumMap<ResourceType, Integer> m = new EnumMap<ResourceType, Integer>(ResourceType.class);
-		m.put(ResourceType.COIN, 12);
-		m.put(ResourceType.WOOD, 19);
-		m.put(ResourceType.MILITARYPOINT, 1);
-		m.put(ResourceType.FAITHPOINT, 2);
-		m.put(ResourceType.VICTORYPOINT, 3);
+		m.put(ResourceType.COIN, 0);
+		m.put(ResourceType.WOOD, 0);
+		m.put(ResourceType.MILITARYPOINT, 0);
+		m.put(ResourceType.FAITHPOINT, 3);
+		m.put(ResourceType.VICTORYPOINT, 0);
 		Resource res1 = Resource.of(m);
 	
 		EnumMap<ResourceType, Integer> p = new EnumMap<ResourceType, Integer>(ResourceType.class);
@@ -64,11 +65,8 @@ public class Prova {
 		EnumMap<ResourceType, Integer> w = new EnumMap<ResourceType, Integer>(ResourceType.class);
 
 		PlayerBoard pb = new PlayerBoard();
-		for(ResourceType rt : ResourceType.values()){
-			w.put(rt, 0);
-		}
-		Resource r = Resource.of(w);
-		pb.setResources(r);
+		pb.setResources(res2);
+
 		System.out.println(pb.getResources().toString());
 
 		Game g = new Game();
@@ -100,9 +98,17 @@ public class Prova {
 		e.apply(pb, gb, g);
 		System.out.println(pb.getResources().toString());*/
 		
-		CardReader reader = new CardReader();
-		Deck d = reader.startRead();
-		d.toString();
+		MultiplierEffect me = new MultiplierEffect();
+		me.setResourceCost(res1);
+		me.setResourceBonus(res3);
+		pb.addCard(new Building("cis", 1, 2));
+		pb.addCard(new Building("cfsais", 4, 2));
+
+		me.apply(pb, gb, g);
+		System.out.println(pb.getResources().toString());
+		//CardReader reader = new CardReader();
+		//Deck d = reader.startRead();
+		//d.toString();
 		//d.getCharacters().get(19).getImmediateEffect().get(0).apply(pb, gb, g);
 			
 		/*

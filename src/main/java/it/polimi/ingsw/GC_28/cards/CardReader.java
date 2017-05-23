@@ -44,8 +44,6 @@ public class CardReader{
             	//deck.getCharacters().add(character);
         	}
         	
-        
-        	
         	for(int i = 0; i < arrayTerritories.size(); i++){
             	JsonObject j = arrayTerritories.get(i).getAsJsonObject();
             	deck.getTerritories().get(i).setImmediateEffect(gson, j);
