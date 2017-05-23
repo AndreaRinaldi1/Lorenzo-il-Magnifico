@@ -2,7 +2,9 @@
   "territories": [
     {
       "immediateEffect": [
-        {}
+        {
+        	"type": "NOEFFECT"
+        }
       ],
       "permanentEffect": {
         "harvestValue": 1,
@@ -75,7 +77,9 @@
     },
     {
       "immediateEffect": [
-        {}
+        {
+        	"type": "NOEFFECT"        
+        }
       ],
       "permanentEffect": {
         "harvestValue": 3,
@@ -234,7 +238,9 @@
     },
     {
       "immediateEffect": [
-        {}
+        {
+        	"type": "NOEFFECT"        
+        }
       ],
       "permanentEffect": {
         "harvestValue": 5,
@@ -557,7 +563,9 @@
     },
     {
       "immediateEffect": [
-        {}
+        {
+        	"type": "NOEFFECT"        
+        }
       ],
       "permanentEffect": {
         "harvestValue": 5,
@@ -2488,7 +2496,9 @@
     },
     {
       "immediateEffect": [
-        {}
+        {
+        	"type": "NOEFFECT"
+        }
       ],
       "permanentEffect": {
         "increment": 2,
@@ -2537,7 +2547,9 @@
     },
     {
       "immediateEffect": [
-        {}
+        {
+        	"type": "NOEFFECT"
+        }
       ],
       "permanentEffect": {
         "increment": 2,
@@ -2601,7 +2613,9 @@
     },
     {
       "immediateEffect": [
-        {}
+        {
+        	"type": "NOEFFECT"
+        }
       ],
       "permanentEffect": {
         "increment": 2,
@@ -2624,7 +2638,9 @@
     },
     {
       "immediateEffect": [
-        {}
+        {
+        	"type": "NOEFFECT"
+        }
       ],
       "permanentEffect": {
         "increment": 2,
@@ -2701,7 +2717,10 @@
           "type": "RESOURCEEFFECT"
         }
       ],
-      "permanentEffect": {},
+      "permanentEffect": 
+      {
+        	"type": "NOEFFECT"      
+      },
       "name": "Badessa",
       "IDNumber": 56,
       "era": 1,
@@ -2738,7 +2757,10 @@
           "type": "RESOURCEEFFECT"
         }
       ],
-      "permanentEffect": {},
+      "permanentEffect": 
+      {
+        	"type": "NOEFFECT"      
+      },
       "name": "Capitano",
       "IDNumber": 57,
       "era": 2,
@@ -2776,7 +2798,10 @@
           "type": "TAKECARDEFFECT"
         }
       ],
-      "permanentEffect": {},
+      "permanentEffect": 
+      {
+        	"type": "NOEFFECT"      
+      },
       "name": "Architetto",
       "IDNumber": 58,
       "era": 2,
@@ -2814,7 +2839,10 @@
           "type": "TAKECARDEFFECT"
         }
       ],
-      "permanentEffect": {},
+      "permanentEffect": 
+      {
+        	"type": "NOEFFECT"      
+      },
       "name": "Mecenate",
       "IDNumber": 59,
       "era": 2,
@@ -2841,7 +2869,10 @@
           "type": "PRIVILEGESEFFECT"
         }
       ],
-      "permanentEffect": {},
+      "permanentEffect": 
+      {
+        	"type": "NOEFFECT"      
+      },
       "name": "Eroe",
       "IDNumber": 60,
       "era": 2,
@@ -2857,7 +2888,9 @@
     },
     {
       "immediateEffect": [
-        {}
+        {
+        	"type": "NOEFFECT"        
+        }
       ],
       "permanentEffect": {
         "increment": 3,
@@ -2880,7 +2913,9 @@
     },
     {
       "immediateEffect": [
-        {}
+        {
+        	"type": "NOEFFECT"        
+        }
       ],
       "permanentEffect": {
         "increment": 3,
@@ -2918,7 +2953,10 @@
           "type": "RESOURCEEFFECT"
         }
       ],
-      "permanentEffect": {},
+      "permanentEffect": 
+      {
+        	"type": "NOEFFECT"      
+      },
       "name": "Messo Papale",
       "IDNumber": 63,
       "era": 2,
@@ -2939,7 +2977,10 @@
           "type": "PRIVILEGESEFFECT"
         }
       ],
-      "permanentEffect": {},
+      "permanentEffect": 
+      {
+        	"type": "NOEFFECT"      
+      },
       "name": "Messo Reale",
       "IDNumber": 64,
       "era": 2,
@@ -2971,7 +3012,10 @@
           "type": "MULTIPLIEREFFECT"
         }
       ],
-      "permanentEffect": {},
+      "permanentEffect": 
+      {
+        	"type": "NOEFFECT"
+      },
       "name": "Nobile",
       "IDNumber": 65,
       "era": 3,
@@ -3003,7 +3047,10 @@
           "type": "MULTIPLIEREFFECT"
         }
       ],
-      "permanentEffect": {},
+      "permanentEffect": 
+      {
+        	"type": "NOEFFECT"      
+      },
       "name": "Governatore",
       "IDNumber": 66,
       "era": 3,
@@ -3035,7 +3082,10 @@
           "type": "MULTIPLIEREFFECT"
         }
       ],
-      "permanentEffect": {},
+      "permanentEffect": 
+      {
+        	"type": "NOEFFECT"      
+      },
       "name": "Cortigiana",
       "IDNumber": 67,
       "era": 3,
@@ -3067,7 +3117,10 @@
           "type": "MULTIPLIEREFFECT"
         }
       ],
-      "permanentEffect": {},
+      "permanentEffect": 
+      {
+        	"type": "NOEFFECT"      
+      },
       "name": "Araldo",
       "IDNumber": 68,
       "era": 3,
@@ -3104,7 +3157,10 @@
           "type": "RESOURCEEFFECT"
         }
       ],
-      "permanentEffect": {},
+      "permanentEffect": 
+      {
+        	"type": "NOEFFECT"      
+      },
       "name": "Cardinale",
       "IDNumber": 69,
       "era": 3,
@@ -3141,7 +3197,10 @@
           "type": "RESOURCEEFFECT"
         }
       ],
-      "permanentEffect": {},
+      "permanentEffect": 
+      {
+        	"type": "NOEFFECT"      
+      },
       "name": "Vescovo",
       "IDNumber": 70,
       "era": 3,
@@ -3183,7 +3242,10 @@
           "type": "MULTIPLIEREFFECT"
         }
       ],
-      "permanentEffect": {},
+      "permanentEffect": 
+      {
+        	"type": "NOEFFECT"      
+      },
       "name": "Generale",
       "IDNumber": 71,
       "era": 3,
@@ -3209,7 +3271,10 @@
           "type": "PRIVILEGESEFFECT"
         }
       ],
-      "permanentEffect": {},
+      "permanentEffect": 
+      {
+        	"type": "NOEFFECT"      
+      },
       "name": "Ambasciatore",
       "IDNumber": 72,
       "era": 3,
