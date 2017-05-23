@@ -38,22 +38,19 @@ public class BoardsInitializer {
 	private static Dice[] dices =  new Dice[3]; //ask if dice could be static,anyway the colors will not change during the game
 	private Timer timer = new Timer();
 	private static CouncilPrivilege councilPrivilege;// = CouncilPrivilege.instance();
-	private static ArrayList<Player> players;
+	public static ArrayList<Player> players = ProvaSetUp.getPlayer();
 	static Deck deck = new Deck();
 	public static GameBoard gameBoard = new GameBoard();
 	
-	public static void main(String[] args){
+	public static void initializeBoard(){
 		try {
 			initDices();
 			initCouncilPrivilege();
 			setDeck();
 			initGameBoard();
-			//initSpaces();
+			initSpaces();
 			initBonusTile();
 			initPlayerBoard();
-			//BonusTile bonusT = BonusTile.instance();
-			//CouncilPrivilege p = CouncilPrivilege.instance();
-			//System.out.println(p.getOptions().toString());
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		}
@@ -100,16 +97,9 @@ public class BoardsInitializer {
 	}
 	
 	private static Tower prepareTower(CardType ct){
-		//Gson gson = new GsonBuilder().create();
 		Tower tower = null;
 		try{
 			tower = new Tower(prepareCell(ct),false);
-			//System.out.println(tower.getCells()[3].getBonus().toString());
-			/*JsonReader reader = new JsonReader(new FileReader("cards.json"));
-			Deck d = gson.fromJson(reader, Deck.class);
-			int randomNum = ThreadLocalRandom.current().nextInt(0,4);
-			for(int i = 0; i <4 ; i++)
-			tower.getCells()[i].setCard(d.getBuildings().get(randomNum));*/
 		}catch(FileNotFoundException e){
 			e.printStackTrace();
 		}
@@ -117,29 +107,11 @@ public class BoardsInitializer {
 	}
 	
 	private static void initGameBoard()throws FileNotFoundException{
-		//TODO add a method for reading card from a file
-		//Gson gson = new GsonBuilder().create();
-		//JsonReader reader = new JsonReader(new FileReader("cards.json"));
 		EnumMap<CardType,Tower> mapTower = new EnumMap<CardType,Tower>(CardType.class);
 		for(CardType ct : CardType.values()){
 			mapTower.put(ct, prepareTower(ct));			
 		}
 		gameBoard.setTowers(mapTower);
-		//System.out.println(gameBoard.getTowers().get(CardType.TERRITORY).getCells()[0].getActionValue());
-		/*try{
-			//Deck deck = gson.fromJson(reader, Deck.class);
-			//reader.close();
-			EnumMap<CardType,Tower> mapTower = new EnumMap<CardType,Tower>(CardType.class);
-			for(CardType ct : CardType.values()){
-				mapTower.put(ct, prepareTower(ct));
-				
-			}
-			gameBoard.setTowers(mapTower);
-		}
-		catch(IOException e){
-			e.printStackTrace();
-		}*/
-		
 	}
 	
 
@@ -155,33 +127,45 @@ public class BoardsInitializer {
 		}
 	}
 	
-	/*private static void initSpaces()throws FileNotFoundException{
+	private static void initSpaces()throws FileNotFoundException{
 		Gson gson = new GsonBuilder().create();
 		JsonReader reader = new JsonReader(new FileReader("spaces.json"));
         try{
         	EverySpace everySpace = gson.fromJson(reader, EverySpace.class);
-        	System.out.println(everySpace.getCouncilPalace().getActionValue());
         	gameBoard.setCouncilPalace(everySpace.getCouncilPalace());
         	gameBoard.getCouncilPalace().setFree(true);
+        	
         	gameBoard.setCoinSpace(everySpace.getCoinSpace());
         	gameBoard.getCoinSpace().setFree(true);
+        	
         	gameBoard.setServantSpace(everySpace.getServantSpace());
         	gameBoard.getServantSpace().setFree(true);
-        	if(players.size() > 2){//FIXME set the condition to players.size() > 2
+        	if(players.size() > 2){ 
         		//checking if other spaces are available according to the game rules
         		gameBoard.setProductionSpace(everySpace.getProduction());
             	gameBoard.setHarvestSpace(everySpace.getHarvest());
             	gameBoard.getProductionSpace().setSecondarySpace(true);
             	gameBoard.getHarvestSpace().setSecondarySpace(true);
-            	if(players.size() == 4){//FIXME set the condition to players.size() == 4
+            	if(players.size() == 4){ 
             		gameBoard.setMixedSpace(everySpace.getMixedSpace());
             		gameBoard.getMixedSpace().setFree(true);
+            		
             		gameBoard.setTwoPrivilegesSpace(everySpace.getTwoPrivilegesSpace());
             		gameBoard.getTwoPrivilegesSpace().setFree(true);
-            	}
+            	}else{
+            		gameBoard.setMixedSpace(everySpace.getMixedSpace());
+            		gameBoard.getMixedSpace().setFree(false);
+            		
+            		gameBoard.setTwoPrivilegesSpace(everySpace.getTwoPrivilegesSpace());
+            		gameBoard.getTwoPrivilegesSpace().setFree(false);
+            		}
         	}else{
+        		gameBoard.setMixedSpace(everySpace.getMixedSpace());
         		gameBoard.getMixedSpace().setFree(false);
+        		
+        		gameBoard.setTwoPrivilegesSpace(everySpace.getTwoPrivilegesSpace());
         		gameBoard.getTwoPrivilegesSpace().setFree(false);
+        		
         		gameBoard.setProductionSpace(everySpace.getProduction());
         		gameBoard.setHarvestSpace(everySpace.getHarvest());
         		gameBoard.getProductionSpace().setFree(true);
@@ -193,14 +177,25 @@ public class BoardsInitializer {
     	}catch(IOException e){
     		e.printStackTrace();
     	}
-	}*/
+	}
 	
 	private static void initDices(){
 		for(int i = 0; i < 3 ; i++){
 			dices[i] = new Dice(DiceColor.values()[i]);
+			dices[i].rollDice();
 		}
 	}
 	
+	public static void rollDices(){
+		for(int i = 0; i < 3; i++){
+			dices[i].setValue();
+		}
+	}
+	
+	public static Dice[] getDices() {
+		return dices;
+	}
+
 	private static void initBonusTile(){
 		Gson gson = new GsonBuilder().create();
 		try {

@@ -1,9 +1,12 @@
 package it.polimi.ingsw.GC_28.model;
 
+
 import java.util.ArrayList;
 import java.util.Scanner;
 
+import it.polimi.ingsw.GC_28.boards.BoardsInitializer;
 import it.polimi.ingsw.GC_28.boards.GameBoard;
+import it.polimi.ingsw.GC_28.boards.ProvaSetUp;
 import it.polimi.ingsw.GC_28.components.CouncilPrivilege;
 import it.polimi.ingsw.GC_28.components.Resource;
 
@@ -15,6 +18,12 @@ public class Game {
 	
 	public Game(){
 		//lasciare costruttore vuoto per prove
+	}
+	
+	public static void main(String[] args) {
+		ProvaSetUp.prova();
+		Game g1 = new Game(BoardsInitializer.gameBoard, ProvaSetUp.getPlayer());
+		System.out.println(g1.getGameBoard().display());
 	}
 	
 	

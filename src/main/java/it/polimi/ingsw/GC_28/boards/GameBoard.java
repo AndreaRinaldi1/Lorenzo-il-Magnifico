@@ -15,10 +15,10 @@ import it.polimi.ingsw.GC_28.spaces.TwoPrivilegesSpace;
 
 
 public class GameBoard {
-	private final int N_DICE = 3;
-	private final int N_EXCOMMUNICATIONTILE = 3;
+	private static final int N_DICE = 3;
+	private static final int N_EXCOMMUNICATIONTILE = 3;
 	private EnumMap<CardType, Tower> towers = new EnumMap<CardType, Tower>(CardType.class);
-	private Dice[] dices = new Dice[N_DICE];
+	private Dice[] dices = BoardsInitializer.getDices();
 	private ExcommunicationTile[] excommunications = new ExcommunicationTile[N_EXCOMMUNICATIONTILE];
 	
 	private static ProductionAndHarvestSpace harvestSpace, productionSpace;
@@ -28,10 +28,6 @@ public class GameBoard {
 	private static CouncilPalace councilPalace;
 	
 	private ArrayList<FamilyMember> membersCoucilPalace = new ArrayList<FamilyMember>(); 
-	private ArrayList<Territory> territory = new ArrayList<Territory>();
-	private ArrayList<Building> buildings = new ArrayList<Building>();
-	private ArrayList<Character> characters = new ArrayList<Character>();
-	private ArrayList<Venture> ventures = new ArrayList<Venture>();
 	
 	
 	public GameBoard(){
@@ -46,9 +42,11 @@ public class GameBoard {
 		
 		//Towers
 		ret+="----------\n";
-		for(int i = 4;i > 0 ;i--){
-			ret+="|" + territory.get(i).getName() + " |"+ buildings.get(i).getName() + " |" + 
-					characters.get(i).getName() + " |" + ventures.get(i).getName() + " |\n";
+		for(int i = 3;i >= 0 ;i--){
+			ret+="|" + towers.get(CardType.TERRITORY).getCells()[i].getCard().getName() + 
+				" |"+ towers.get(CardType.BUILDING).getCells()[i].getCard().getName() + 
+				" |" + towers.get(CardType.CHARACTER).getCells()[i].getCard().getName() +
+				" |" + towers.get(CardType.VENTURE).getCells()[i].getCard().getName()+ " |\n";
 			ret+="----------\n";	
 		}
 		
@@ -103,18 +101,18 @@ public class GameBoard {
 		ret+="\n";
 	
 		//Dice Space
-		ret+="Dice Values ";
-		for(int i = 0; i < N_DICE; i++){
-			dices[i].toString();
+		ret+="Dice Values \n";
+		for(int j = 0; j < N_DICE; j++){
+			ret += (dices[j].getColor().toString()+": " + dices[j].getValue() + '\n');
 		}
 		return ret;
 	}
 	
-	public void rollDices(){
-		for(int i = 0; i<N_DICE; i++){
+	/*public void rollDices(){
+		for(int i = 0; i< N_DICE; i++){
 			dices[i].setValue();
 		}
-	}
+	}*/
 
 	public EnumMap<CardType, Tower> getTowers() {
 		return towers;

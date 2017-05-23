@@ -46,42 +46,31 @@ public class Character extends Card{
         	Effect v;
         	switch(e.get("type").getAsString()){
         	case("RESOURCEEFFECT"):
-        		System.out.println("cambio il tipo di immediate effect #" + i + " in ResourceEffect");
         		v = immediateEffect.get(i);
         		v = gson.fromJson(e.toString(), ResourceEffect.class);
         		immediateEffect.set(i, v);
-        		System.out.println(immediateEffect.get(i).getClass());
         		break;
         	case("GOTOHP"):
-        		System.out.println("cambio il tipo di immediate effect #" + i + " in GoToHP");
 	        	v = immediateEffect.get(i);
 	    		v = gson.fromJson(e.toString(), GoToHPEffect.class);
 	    		immediateEffect.set(i, v);
-        		System.out.println(immediateEffect.get(i).getClass());
         		break;
         	case("MULTIPLIEREFFECT"):
-        		System.out.println("cambio il tipo di immediate effect #" + i + " in MultiplierEffect");
         		v = immediateEffect.get(i);
         		v = gson.fromJson(e.toString(), MultiplierEffect.class);
         		immediateEffect.set(i, v);
-        		System.out.println(immediateEffect.get(i).getClass());
         		break;
         	case("PRIVILEGESEFFECT"):
-        		System.out.println("cambio il tipo di immediate effect #" + i + " in PrivilegesEffect");
         		v = immediateEffect.get(i);
         		v = gson.fromJson(e.toString(), PrivilegesEffect.class);
         		immediateEffect.set(i, v);
-        		System.out.println(immediateEffect.get(i).getClass());
         		break;
         	case("TAKECARDEFFECT"):
-        		System.out.println("cambio il tipo di immediate effect #" + i + " in TakeCardEffect");
         		v = immediateEffect.get(i);
         		v = gson.fromJson(e.toString(), TakeCardEffect.class);
         		immediateEffect.set(i, v);
-        		System.out.println(immediateEffect.get(i).getClass());
         		break;
         	default:
-        		System.out.println("lascio il tipo di immediate effect a effect");
         		System.out.println(immediateEffect.get(i).getClass());
         		break;
         	}
@@ -101,17 +90,12 @@ public class Character extends Card{
     		//permanentEffect = new NoCellBonusEffect(j.get("permanentEffect").getAsJsonObject().get("presence").getAsBoolean());
 			break;
 		case("INCREMENTCARDEFFECT"):
-    		System.out.println("cambio il tipo di permanent effect della carta in IncrementCardEffect");
 	    	permanentEffect = gson.fromJson(j.get("permanentEffect").toString(), IncrementCardEffect.class);
-	    	System.out.println(permanentEffect.getClass());
 	    	break;
 		case("INCREMENTHPEFFECT"):
-    		System.out.println("cambio il tipo di permanent effect della carta in IncrementHPEffect");
 	    	permanentEffect = gson.fromJson(j.get("permanentEffect").toString(), IncrementCardEffect.class);
-	    	System.out.println(permanentEffect.getClass());
 	    	break;
 	    default:
-	    	System.out.println("lascio il tipo di permanent effect a effect");
 	    	System.out.println(permanentEffect.getClass());
     	}
 		
