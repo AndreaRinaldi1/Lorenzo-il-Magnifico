@@ -13,7 +13,9 @@ import java.util.LinkedList;
 
 import javax.management.timer.Timer;
 
+import it.polimi.ingsw.GC_28.cards.CardReader;
 import it.polimi.ingsw.GC_28.cards.CardType;
+import it.polimi.ingsw.GC_28.cards.Deck;
 import it.polimi.ingsw.GC_28.components.CouncilPrivilege;
 import it.polimi.ingsw.GC_28.components.Dice;
 import it.polimi.ingsw.GC_28.components.DiceColor;
@@ -37,17 +39,16 @@ public class BoardsInitializer {
 	private Timer timer = new Timer();
 	private static CouncilPrivilege councilPrivilege;// = CouncilPrivilege.instance();
 	private static ArrayList<Player> players;
-	/*The Following hashMap is not necessary, because for each player is generated a playerBoard
-	 * and associate to it in the player class*/
-	//private Map<Player,PlayerBoard> playerBoard = new HashMap<Player,PlayerBoard>(); 
+	static Deck deck = new Deck();
 	public static GameBoard gameBoard = new GameBoard();
 	
 	public static void main(String[] args){
 		try {
 			initDices();
 			initCouncilPrivilege();
+			setDeck();
 			initGameBoard();
-			initSpaces();
+			//initSpaces();
 			initBonusTile();
 			initPlayerBoard();
 			//BonusTile bonusT = BonusTile.instance();
@@ -56,6 +57,15 @@ public class BoardsInitializer {
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		}
+	}
+	
+	private static void setDeck(){
+		try{
+			CardReader cardReader = new CardReader();
+			deck = cardReader.startRead();
+			}catch(FileNotFoundException e){
+				e.printStackTrace();
+			}
 	}
 	
 	private static Cell[] prepareCell(CardType ct) throws FileNotFoundException{ //LinkedList allow the order of elements
@@ -145,7 +155,7 @@ public class BoardsInitializer {
 		}
 	}
 	
-	private static void initSpaces()throws FileNotFoundException{
+	/*private static void initSpaces()throws FileNotFoundException{
 		Gson gson = new GsonBuilder().create();
 		JsonReader reader = new JsonReader(new FileReader("spaces.json"));
         try{
@@ -183,7 +193,7 @@ public class BoardsInitializer {
     	}catch(IOException e){
     		e.printStackTrace();
     	}
-	}
+	}*/
 	
 	private static void initDices(){
 		for(int i = 0; i < 3 ; i++){
@@ -216,7 +226,9 @@ public class BoardsInitializer {
 			p.setBoard(pb);
 			i++;
 		}
-	}		
+	}
+	
+	
 }
 
 class EnumMapInstanceCreator<K extends Enum<K>, V> implements InstanceCreator<EnumMap<K, V>> {

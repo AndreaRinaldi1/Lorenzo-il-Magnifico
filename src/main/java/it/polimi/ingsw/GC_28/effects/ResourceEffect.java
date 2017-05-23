@@ -25,6 +25,5 @@ public class ResourceEffect extends Effect{
 	@Override
 	public void apply(PlayerBoard p, GameBoard gameBoard, Game game) {
 		System.out.println("apply di ResourceEffect");
-		
 	}
 }
