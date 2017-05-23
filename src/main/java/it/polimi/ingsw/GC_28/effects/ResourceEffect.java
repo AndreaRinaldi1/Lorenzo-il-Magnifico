@@ -25,9 +25,11 @@ public class ResourceEffect extends Effect{
 	public void apply(PlayerBoard p){
 		System.out.println("apply di ResourceEffect");
 		for(ResourceType rt : resourceBonus.getResource().keySet()){
-			int x = p.getResource().getResource().get(rt);
+			//int x = p.getResources().getResource().get(rt);
+			int x = p.getResources().getResource().get(rt);
 			x += resourceBonus.getResource().get(rt);
-			p.getResource().getResource().put(rt, x);
+			//p.getResources().getResource().put(rt, x);
+			p.getResources().getResource().put(rt, x);
 		}
 	}
 }
