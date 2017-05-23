@@ -31,9 +31,11 @@ public class PlayerBoard {
 		this.resources = resources;
 	}
 	
-	/*public PlayerBoard(){
-		
-	}*/
+	
+	//per il momento lasciare anche il costruttore vuoto per fare le prove 
+	public PlayerBoard(){
+		this.bonusTile = BonusTile.instance();
+	}
 	
 	public String display(){
 		String ret = "PLAYER BOARD\n";
@@ -117,19 +119,25 @@ public class PlayerBoard {
 	}
 	
 	public void addResource(Resource amount){
-		for(ResourceType resourceType : this.resources.getResource().keySet()){
-			Integer x = resources.getResource().get(resourceType);
-			 x += amount.getResource().get(resourceType);
-			 resources.getResource().put(resourceType, x);
+		for(ResourceType resourceType : amount.getResource().keySet()){
+			Integer x = 0;
+			if(resources.getResource().containsKey(resourceType)){
+				x = resources.getResource().get(resourceType);
+			}
+			x += amount.getResource().get(resourceType);
+			resources.getResource().put(resourceType, x);
 		}
 	}
 	
 	public void reduceResources(Resource amount){
 		//TODO check disponibilità risorse in un altro metodo prima di chiamare questo metodo
-		for(ResourceType resourceType : this.resources.getResource().keySet()){
-			Integer x = resources.getResource().get(resourceType);
-			 x -= amount.getResource().get(resourceType);
-			 resources.getResource().put(resourceType, x);
+		for(ResourceType resourceType : amount.getResource().keySet()){
+			Integer x = 0;
+			if(resources.getResource().containsKey(resourceType)){
+				x = resources.getResource().get(resourceType);
+			}
+			x -= amount.getResource().get(resourceType);
+			resources.getResource().put(resourceType, x);
 		}
 	}
 	

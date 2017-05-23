@@ -7,7 +7,9 @@ import java.util.Set;
 public class Resource {
 	//attributes and methods parameters in class Resource need Map and not EnumMap (fromJson's fault)
 	
-	private final Map<ResourceType, Integer> resource; 
+	private Map<ResourceType, Integer> resource; 
+	
+	public Resource(){}; //per le prove, al massimo dopo si toglie o private
 	
 	private Resource(Map<ResourceType, Integer> resource){
 		this.resource = resource;
@@ -29,5 +31,32 @@ public class Resource {
 			s.append(resType.name() + ": " + resource.get(resType) +"\n");
 		}
 		return s.toString();
+	}
+	
+	
+	public boolean equals(Resource otherResource){
+		Resource shorterResource;
+		Resource longerResource;
+		if(resource.size() > otherResource.getResource().size()){
+			shorterResource = otherResource;
+			longerResource = this;
+		}
+		else{
+			shorterResource = this;
+			longerResource = otherResource;
+		}
+		for(ResourceType resType : longerResource.getResource().keySet()){
+			if(shorterResource.getResource().containsKey(resType)){
+				if(!(longerResource.getResource().get(resType).equals(shorterResource.getResource().get(resType)))){
+					return false;
+				}
+			}
+			else{
+				if(!(longerResource.getResource().get(resType).equals(0))){
+					return false;
+				}
+			}
+		}
+		return true;
 	}
 }

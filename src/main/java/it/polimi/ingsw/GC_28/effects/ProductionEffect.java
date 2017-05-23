@@ -1,8 +1,10 @@
 package it.polimi.ingsw.GC_28.effects;
 
+import it.polimi.ingsw.GC_28.boards.GameBoard;
 import it.polimi.ingsw.GC_28.boards.PlayerBoard;
 import it.polimi.ingsw.GC_28.cards.*;
 import it.polimi.ingsw.GC_28.components.Resource;
+import it.polimi.ingsw.GC_28.model.Game;
 
 public class ProductionEffect extends Effect{
 	private int productionValue;
@@ -65,8 +67,10 @@ public class ProductionEffect extends Effect{
 		this.exchangeBonus = exchangeBonus;
 	}
 	
+
 	@Override
-	public void apply(PlayerBoard p){
+	public void apply(PlayerBoard p, GameBoard gameBoard, Game game) {
 		System.out.println("apply di ProductionEffect");
+		
 	}
 }

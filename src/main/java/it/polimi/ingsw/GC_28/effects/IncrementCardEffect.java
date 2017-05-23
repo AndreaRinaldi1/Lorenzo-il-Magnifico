@@ -1,7 +1,9 @@
 package it.polimi.ingsw.GC_28.effects;
 
+import it.polimi.ingsw.GC_28.boards.GameBoard;
 import it.polimi.ingsw.GC_28.boards.PlayerBoard;
 import it.polimi.ingsw.GC_28.cards.*;
+import it.polimi.ingsw.GC_28.model.Game;
 
 
 public class IncrementCardEffect extends Effect{
@@ -48,7 +50,7 @@ public class IncrementCardEffect extends Effect{
 	}
 	
 	@Override
-	public void apply(PlayerBoard p){
+	public void apply(PlayerBoard playerBoard, GameBoard gameBoard, Game Game){
 		System.out.println("apply di IncrementCardEffect");
 	}
 	

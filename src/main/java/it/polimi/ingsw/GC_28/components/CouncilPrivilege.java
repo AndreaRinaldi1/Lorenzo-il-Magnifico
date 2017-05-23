@@ -17,7 +17,7 @@ public class CouncilPrivilege {
 		return instance;
 	}
 	
-	public Resource choose(Character c){
+	public Resource choose(Character c){ //forse non necessario
 		return options.get(c); 
 	}
 	
