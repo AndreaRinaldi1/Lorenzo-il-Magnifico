@@ -1,7 +1,8 @@
 package it.polimi.ingsw.GC_28.effects;
 
 
-import it.polimi.ingsw.GC_28.boards.*;
+import it.polimi.ingsw.GC_28.boards.GameBoard;
+import it.polimi.ingsw.GC_28.components.FamilyMember;
 import it.polimi.ingsw.GC_28.model.Game;
 
 public class Effect {
@@ -14,7 +15,7 @@ public class Effect {
 	}
 
 	
-	public void apply(PlayerBoard p, GameBoard gameBoard, Game game){
+	public void apply(FamilyMember familyMember, GameBoard gameBoard, Game game){
 		System.out.println("apply di Effect");
 	}
 }

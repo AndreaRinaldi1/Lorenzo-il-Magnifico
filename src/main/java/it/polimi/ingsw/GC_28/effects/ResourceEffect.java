@@ -2,6 +2,7 @@ package it.polimi.ingsw.GC_28.effects;
 
 import it.polimi.ingsw.GC_28.boards.*;
 import it.polimi.ingsw.GC_28.cards.*;
+import it.polimi.ingsw.GC_28.components.FamilyMember;
 import it.polimi.ingsw.GC_28.components.Resource;
 import it.polimi.ingsw.GC_28.components.ResourceType;
 import it.polimi.ingsw.GC_28.model.Game;
@@ -23,7 +24,8 @@ public class ResourceEffect extends Effect{
 	}
 
 	@Override
-	public void apply(PlayerBoard p, GameBoard gameBoard, Game game) {
+	public void apply(FamilyMember familyMember, GameBoard gameBoard, Game game) {
 		System.out.println("apply di ResourceEffect");
+		familyMember.getPlayer().getBoard().addResource(resourceBonus);
 	}
 }

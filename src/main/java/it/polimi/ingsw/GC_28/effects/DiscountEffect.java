@@ -1,8 +1,8 @@
 package it.polimi.ingsw.GC_28.effects;
 
 import it.polimi.ingsw.GC_28.boards.GameBoard;
-import it.polimi.ingsw.GC_28.boards.PlayerBoard;
 import it.polimi.ingsw.GC_28.cards.*;
+import it.polimi.ingsw.GC_28.components.FamilyMember;
 import it.polimi.ingsw.GC_28.components.Resource;
 import it.polimi.ingsw.GC_28.model.Game;
 
@@ -43,13 +43,13 @@ public class DiscountEffect extends Effect{
 	}
 	
 	@Override
-	public void apply(PlayerBoard playerBoard, GameBoard gameBoard, Game game){
+	public void apply(FamilyMember familyMember, GameBoard gameBoard, Game game){
 		System.out.println("apply di DiscountEffect");
 		if(alternativeDiscountPresence == true){
-			playerBoard.addResource(game.askAlternativeDiscount(discount, alternativeDiscount)); //Considero il discount come aumento risorse nella playerboard (?)
+			familyMember.getPlayer().getBoard().addResource(game.askAlternativeDiscount(discount, alternativeDiscount)); //Considero il discount come aumento risorse nella playerboard (?)
 		}
 		else{
-			playerBoard.addResource(discount);
+			familyMember.getPlayer().getBoard().addResource(discount);
 		}
 	}
 	

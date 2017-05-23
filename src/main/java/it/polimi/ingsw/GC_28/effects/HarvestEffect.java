@@ -4,6 +4,7 @@ import it.polimi.ingsw.GC_28.boards.GameBoard;
 import it.polimi.ingsw.GC_28.boards.PlayerBoard;
 import it.polimi.ingsw.GC_28.cards.*;
 import it.polimi.ingsw.GC_28.components.CouncilPrivilege;
+import it.polimi.ingsw.GC_28.components.FamilyMember;
 import it.polimi.ingsw.GC_28.components.Resource;
 import it.polimi.ingsw.GC_28.model.Game;
 
@@ -42,8 +43,13 @@ public class HarvestEffect extends Effect{
 	}
 	
 	@Override
-	public void apply(PlayerBoard p, GameBoard gameBoard, Game game) {
+	public void apply(FamilyMember familyMember, GameBoard gameBoard, Game game) {
 		System.out.println("apply di HarvestEffect");
-		
+		if(councilPrivilegeBonus != null){
+			familyMember.getPlayer().getBoard().addResource(CouncilPrivilege.instance().getOptions().get(game.askPrivilege()));
+		}
+		else{
+			familyMember.getPlayer().getBoard().addResource(resourceHarvestBonus);
+		}
 	}
 }

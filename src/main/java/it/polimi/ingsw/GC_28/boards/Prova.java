@@ -6,28 +6,16 @@ import java.util.EnumMap;
 import java.util.HashMap;
 //import java.lang.Character;
 
-import it.polimi.ingsw.GC_28.cards.Building;
-import it.polimi.ingsw.GC_28.cards.Card;
-import it.polimi.ingsw.GC_28.cards.CardReader;
-import it.polimi.ingsw.GC_28.cards.CardType;
-import it.polimi.ingsw.GC_28.cards.Territory;
-import it.polimi.ingsw.GC_28.cards.Venture;
+import it.polimi.ingsw.GC_28.cards.*;
 import it.polimi.ingsw.GC_28.cards.Character;
-import it.polimi.ingsw.GC_28.cards.Deck;
-import it.polimi.ingsw.GC_28.components.CouncilPrivilege;
-import it.polimi.ingsw.GC_28.components.Resource;
-import it.polimi.ingsw.GC_28.components.ResourceType;
-import it.polimi.ingsw.GC_28.effects.ExchangeEffect;
-import it.polimi.ingsw.GC_28.effects.MultiplierEffect;
+import it.polimi.ingsw.GC_28.components.*;
+import it.polimi.ingsw.GC_28.effects.*;
 import it.polimi.ingsw.GC_28.model.Game;
+import it.polimi.ingsw.GC_28.model.Player;
+import it.polimi.ingsw.GC_28.model.PlayerColor;
 
 public class Prova {
 	public static void main(String[] args) throws FileNotFoundException {
-		/*CouncilPrivilegeReader.startRead() ;
-		for(Character c : GameBoardProva.getCouncilPrivilege().getOptions().keySet()){
-    		System.out.println(c + "\n" + GameBoardProva.getCouncilPrivilege().getOptions().get(c).toString());
-    	}*/
-		
 		
 		EnumMap<ResourceType, Integer> m = new EnumMap<ResourceType, Integer>(ResourceType.class);
 		m.put(ResourceType.COIN, 0);
@@ -61,88 +49,85 @@ public class Prova {
 		c.put(ResourceType.VICTORYPOINT, 93);
 		Resource res4 = Resource.of(c);
 		
-		//System.out.println(res1.equals(res2));
 		EnumMap<ResourceType, Integer> w = new EnumMap<ResourceType, Integer>(ResourceType.class);
-
+		for(ResourceType resType : ResourceType.values()){
+			w.put(resType, 0);
+		}
+		Resource res = Resource.of(w);
 		PlayerBoard pb = new PlayerBoard();
-		pb.setResources(res2);
-
-		System.out.println(pb.getResources().toString());
-
+		pb.setResources(res);
+		
+		CouncilPrivilege cp = CouncilPrivilege.instance();
+		HashMap<java.lang.Character, Resource> hm = new HashMap<java.lang.Character, Resource>();
+		hm.put(java.lang.Character.valueOf('a'), res3);
+		hm.put(java.lang.Character.valueOf('b'), res2);
+		cp.setOptions(hm);
+		
 		Game g = new Game();
 		GameBoard gb = new GameBoard();
-		//Effect.setGame(g);
-		//Resource res = g.askAlternativeDiscount(res1, res2);
-		//System.out.println(res.toString());
 		
-		/*
-		DiscountEffect d = new DiscountEffect();
+		
+		Player player = new Player(PlayerColor.BLUE);
+		player.setBoard(pb);
+		FamilyMember fm = new FamilyMember(player, false, DiceColor.ORANGE);
+		
+		
+		//PROVA DI DISCOUNTEFFECT
+		/*DiscountEffect d = new DiscountEffect();
 		d.setDiscount(res1);
 		d.setAlternativeDiscount(res2);
 		d.setAlternativeDiscountPresence(true);
+		d.apply(fm, gb, g);
+		System.out.println(pb.getResources().toString());*/
 		
-		d.apply(pb, gb, g);
-		System.out.println(pb.getResources().toString());
-		*/
-		/*CouncilPrivilege cp = CouncilPrivilege.instance();
-		HashMap<Character, Resource> hm = new HashMap<Character, Resource>();
-		hm.put(Character.valueOf('a'), res3);
-		hm.put(Character.valueOf('b'), res2);
-		cp.setOptions(hm);
-		ExchangeEffect e = new ExchangeEffect();
+
+		//PROVA DI EXCHANGEEFFECT
+		/*ExchangeEffect e = new ExchangeEffect();
 		e.setAlternative(true);
 		e.setFirstBonus(res1);
 		e.setFirstCost(res2);
 		e.setSecondCost(res3);
 		e.setSecondBonus(res4);
-		e.apply(pb, gb, g);
+		e.apply(fm, gb, g);
 		System.out.println(pb.getResources().toString());*/
 		
-		MultiplierEffect me = new MultiplierEffect();
+		
+		//PROVA DI MULTIPLIEREFFECT
+		/*MultiplierEffect me = new MultiplierEffect();
 		me.setResourceCost(res1);
 		me.setResourceBonus(res3);
 		pb.addCard(new Building("cis", 1, 2));
 		pb.addCard(new Building("cfsais", 4, 2));
-
-		me.apply(pb, gb, g);
+		me.apply(fm, gb, g);		
+		System.out.println(pb.getResources().toString());*/
+		
+		
+		//PROVA DI HARVESTEFFECT
+		/*HarvestEffect he = new HarvestEffect();
+		he.setHarvestValue(3);
+		he.setResourceHarvestBonus(res3);
+		he.setCouncilPrivilegeBonus(CouncilPrivilege.instance());
+		he.apply(fm, gb, g);
+		System.out.println(pb.getResources().toString());*/
+		
+		//PROVA DI INCREMENTCARDEFFECT
+		/*System.out.println(fm.getValue());
 		System.out.println(pb.getResources().toString());
-		//CardReader reader = new CardReader();
-		//Deck d = reader.startRead();
-		//d.toString();
-		//d.getCharacters().get(19).getImmediateEffect().get(0).apply(pb, gb, g);
-			
-		/*
-		SpacesReader r = new SpacesReader();
-		EverySpace everySpace = r.startRead();
-		GameBoard gameBoard = new GameBoard();
-		Effect e = new Effect();
-		e.gameBoard = gameBoard;
+		IncrementCardEffect ic = new IncrementCardEffect();
+		ic.setDiscountPresence(true);
+		ic.setDiscount(d);
+		ic.setIncrement(2);
+		ic.apply(fm, gb, g);
+		System.out.println(fm.getValue());
+		System.out.println(pb.getResources().toString());*/
+
 		
-		System.out.println(gameBoard.getCoinSpace().getActionValue());
-		PlayerBoard p = new PlayerBoard();
-		for(ResourceType rt : ResourceType.values()){
-			p.getResources().getResource().put(rt, 0);
-		}
+		//TODO: TESTARE PRODUCTIONEFFECT
 		
-		CardReader c = new CardReader();
+		
+		
+		/*CardReader c = new CardReader();
 		Deck deck = c.startRead();
-		//System.out.println(deck.getBuildings().get(0).toString());
-		//Building g = deck.getBuildings().get(0);
-		
-		
-		
-		System.out.println("Prima");
-		System.out.println(p.getResources().toString());
-		//System.out.println(gb.getCoinSpace().getActionValue());
-		//e.apply(p);
-		//g.getImmediateEffect().apply(p);
-		//System.out.println(p.res.toString());
-		//System.out.println(gb.getCoinSpace().getActionValue());
-
-		//Effect e = new NoCellBonusEffect();
-
-		//Character x = new Character("ciao", 1,1);
-		//x.setPermanentEffect(e);
 		
 		System.out.println("Characters");
 		for(Character x : deck.getCharacters()){
@@ -175,13 +160,5 @@ public class Prova {
 		}
 		
 		*/
-		/*if(e instanceof PrivilegesEffect)
-		{
-			System.out.println("dentro");
-			PrivilegesEffect ee = (PrivilegesEffect) e;
-			ee.apply(p);
-			System.out.println(p.res.toString());
-		}*/
-
 	}
 }
