@@ -15,6 +15,15 @@ public class ProvaSetUp {
 		BoardSetup.firstSetUpCards();
 	}
 	
+	public static void prova2(){
+		try {
+			Thread.sleep(2000);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
+		BoardSetup.setUpBoard();
+	}
+	
 	private static void completePlayer(){
 		Player p1 = new Player("Nick", PlayerColor.BLUE);
 		Player p2 = new Player("Andrea", PlayerColor.GREEN);

@@ -11,6 +11,8 @@ import it.polimi.ingsw.GC_28.cards.Deck;
 import it.polimi.ingsw.GC_28.cards.Territory;
 import it.polimi.ingsw.GC_28.cards.Venture;
 import it.polimi.ingsw.GC_28.components.FamilyMember;
+
+import it.polimi.ingsw.GC_28.model.Game;
 import it.polimi.ingsw.GC_28.model.Player;
 import it.polimi.ingsw.GC_28.cards.Building;
 import it.polimi.ingsw.GC_28.cards.Character;
@@ -22,11 +24,20 @@ public class BoardSetup {
 	static Deck deck = new Deck(); //once initialize it will not change
 	private static ArrayList<Card> usedCard = new ArrayList<Card>();
 	private static int era = 1;
+	private static int period = 1;
+
 	
 	public static void firstSetUpCards() {
-		BoardSetup.prepareDeck();
-		BoardSetup.prepareTowers();
+		prepareDeck();
+		prepareTowers();
 		//System.out.println(deck.getTerritories().toString());
+	}
+	
+	public static void setUpBoard(){
+		Game.setPlayers(getNextPlayerOrder());
+		freeFamilyMember();
+		freeSpace();
+		prepareTowers();
 	}
 	
 	private static void prepareDeck(){
@@ -120,10 +131,16 @@ public class BoardSetup {
 		setUpBuildingsTower();
 		setUpCharacterTower();
 		setUpVentureTower();
+		if(period == 2){
+			era = era + 1;
+			period = 1;
+		}else{
+			period = 2;
+		}
 	}
 	
-	private ArrayList<Player> getNextPlayerOrder(){
-		ArrayList<FamilyMember> inCouncil = gameBoard.getCouncilPalace().getPlayer();
+	private static ArrayList<Player> getNextPlayerOrder(){
+		ArrayList<FamilyMember> inCouncil = gameBoard.getCouncilPalace().getPlayerOrder();
 		ArrayList<Player> nextOrder = new ArrayList<Player>();
 		for(FamilyMember fm : inCouncil){
 			if(!(nextOrder.contains(fm))){
@@ -132,8 +149,60 @@ public class BoardSetup {
 		}
 		if(nextOrder.size() == 0){
 			nextOrder = BoardsInitializer.players; //FIXME set nextOrder to the actual game order
-		}
+		} 
 		return nextOrder;
+	}
+	
+	private static void freeSpace(){
+		if(!gameBoard.getCoinSpace().isFree()){
+			gameBoard.getCoinSpace().getPlayer().remove(0);
+			gameBoard.getCoinSpace().setFree(true);
+		}
+		
+		if(!gameBoard.getServantSpace().isFree()){
+			gameBoard.getServantSpace().getPlayer().remove(0);
+			gameBoard.getServantSpace().setFree(true);
+		}
+		
+		if(!gameBoard.getProductionSpace().isFree()){
+			gameBoard.getProductionSpace().freeFirstPlayer();
+			gameBoard.getProductionSpace().setFree(true);
+		}
+		if(!gameBoard.getHarvestSpace().isFree()){
+			gameBoard.getHarvestSpace().freeFirstPlayer();
+			gameBoard.getHarvestSpace().setFree(true);
+		}
+		
+		for(FamilyMember fm : gameBoard.getCouncilPalace().getPlayerOrder()){
+			gameBoard.getCouncilPalace().getPlayerOrder().remove(fm);
+		}
+		
+		if(Game.getPlayers().size() > 2){
+			for(FamilyMember fm : gameBoard.getProductionSpace().getPlayer()){
+				gameBoard.getProductionSpace().getPlayer().remove(fm);
+			}
+			for(FamilyMember fm : gameBoard.getHarvestSpace().getPlayer()){
+				gameBoard.getHarvestSpace().getPlayer().remove(fm);
+			}
+		}
+		if(Game.getPlayers().size() == 4){
+			if(!gameBoard.getMixedSpace().isFree()){
+				gameBoard.getMixedSpace().getPlayer().remove(0);
+				gameBoard.getMixedSpace().setFree(true);
+			}
+			if(!gameBoard.getTwoPrivilegesSpace().isFree()){
+				gameBoard.getTwoPrivilegesSpace().getPlayer().remove(0);
+				gameBoard.getTwoPrivilegesSpace().setFree(true);
+			}
+		}
+	}
+		
+	private static void freeFamilyMember(){
+		for(Player p : Game.getPlayers()){
+			for(int i = 0; i < p.getBoard().getFamilyMember().size(); i++){
+				p.getBoard().getFamilyMember().get(i).setUsed(false);
+			}
+		}
 	}
 	
 }

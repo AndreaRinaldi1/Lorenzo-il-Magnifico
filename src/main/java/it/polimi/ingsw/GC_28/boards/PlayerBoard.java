@@ -17,12 +17,15 @@ public class PlayerBoard {
 	private ArrayList<Building> buildings = new ArrayList<Building>();
 	private ArrayList<Character> characters = new ArrayList<Character>();
 	private ArrayList<Venture> ventures = new ArrayList<Venture>();
+	
+
+	
 	private final BonusTile bonusTile;//TODO ask if bonusTile final is ok
 	private HashMap<Integer, Resource> finalBonusTerritories = new HashMap<Integer, Resource>();
 	private HashMap<Integer, Resource> finalBonusCharacters = new HashMap<Integer, Resource>();
 	private Resource resources;
 	private ArrayList<ExcommunicationTile> excommunicationTile = new ArrayList<ExcommunicationTile>();
-	//FIXME ho provato ad aggiungere anche un indicatore per il numero e il valore dei family members (N?)
+	//FIXME ho provato ad aggiungere anche un indicatore per il numero e il valore dei family members
 	private ArrayList<FamilyMember> familyMember = new ArrayList<FamilyMember>();
 	
 	
@@ -102,11 +105,11 @@ public class PlayerBoard {
 	}
 	
 	//methods in overloading
-	public void addCard(Territory t){
+	public void addCard(Territory t){ //TODO controllare il numero di punti military richiesti e che non abbia gia tot=MAX carte territorio
 		territories.add(t);
 	}
 	
-	public void addCard(Building b){
+	public void addCard(Building b){//TODO controllare che non abbia gia tot=MAX carte building
 		buildings.add(b);
 	}
 	
@@ -192,5 +195,15 @@ public class PlayerBoard {
 		return excommunicationTile;
 	}
 
+
+	public ArrayList<FamilyMember> getFamilyMember() {
+		return familyMember;
+	}
+
+
+	public void setFamilyMember(ArrayList<FamilyMember> familyMember) {
+		this.familyMember = familyMember;
+	}
+	
 	
 }

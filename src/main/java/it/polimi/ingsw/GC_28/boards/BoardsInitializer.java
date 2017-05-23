@@ -19,9 +19,11 @@ import it.polimi.ingsw.GC_28.cards.Deck;
 import it.polimi.ingsw.GC_28.components.CouncilPrivilege;
 import it.polimi.ingsw.GC_28.components.Dice;
 import it.polimi.ingsw.GC_28.components.DiceColor;
+import it.polimi.ingsw.GC_28.components.FamilyMember;
 import it.polimi.ingsw.GC_28.components.Resource;
 import it.polimi.ingsw.GC_28.components.ResourceType;
 import it.polimi.ingsw.GC_28.model.Player;
+import it.polimi.ingsw.GC_28.model.PlayerColor;
 import it.polimi.ingsw.GC_28.spaces.EverySpace;
 
 import com.google.gson.Gson;
@@ -33,6 +35,7 @@ import com.google.gson.reflect.TypeToken;
 
 
 public class BoardsInitializer {
+	
 	
 	private static BonusTile bonusTile;
 	private static Dice[] dices =  new Dice[3]; //ask if dice could be static,anyway the colors will not change during the game
@@ -51,6 +54,7 @@ public class BoardsInitializer {
 			initSpaces();
 			initBonusTile();
 			initPlayerBoard();
+			initFamilyMember();
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		}
@@ -140,10 +144,14 @@ public class BoardsInitializer {
         	
         	gameBoard.setServantSpace(everySpace.getServantSpace());
         	gameBoard.getServantSpace().setFree(true);
+        	
+        	gameBoard.setProductionSpace(everySpace.getProduction());
+        	gameBoard.setHarvestSpace(everySpace.getHarvest());
+        	gameBoard.getProductionSpace().setFree(true);
+    		gameBoard.getHarvestSpace().setFree(true);
+    		
         	if(players.size() > 2){ 
         		//checking if other spaces are available according to the game rules
-        		gameBoard.setProductionSpace(everySpace.getProduction());
-            	gameBoard.setHarvestSpace(everySpace.getHarvest());
             	gameBoard.getProductionSpace().setSecondarySpace(true);
             	gameBoard.getHarvestSpace().setSecondarySpace(true);
             	if(players.size() == 4){ 
@@ -166,10 +174,6 @@ public class BoardsInitializer {
         		gameBoard.setTwoPrivilegesSpace(everySpace.getTwoPrivilegesSpace());
         		gameBoard.getTwoPrivilegesSpace().setFree(false);
         		
-        		gameBoard.setProductionSpace(everySpace.getProduction());
-        		gameBoard.setHarvestSpace(everySpace.getHarvest());
-        		gameBoard.getProductionSpace().setFree(true);
-        		gameBoard.getHarvestSpace().setFree(true);
         		gameBoard.getProductionSpace().setSecondarySpace(false);
         		gameBoard.getHarvestSpace().setSecondarySpace(false);
         	}
@@ -186,7 +190,7 @@ public class BoardsInitializer {
 		}
 	}
 	
-	public static void rollDices(){
+	public void rollDices(){
 		for(int i = 0; i < 3; i++){
 			dices[i].setValue();
 		}
@@ -207,7 +211,21 @@ public class BoardsInitializer {
 		}
 	}
 	
+	private static void initFamilyMember(){
+		for(Player p : players){
+			ArrayList<FamilyMember> fm = new ArrayList<FamilyMember>();
+			for(DiceColor dc : DiceColor.values()){
+				FamilyMember member = new FamilyMember(p, false, dc);
+				fm.add(member);
+			}
+			FamilyMember neutral = new FamilyMember(p, true, null);
+			fm.add(neutral);
+			p.getBoard().setFamilyMember(fm);
+		}
+	}
+	
 	private static void initPlayerBoard(){
+		//TODO set all family member for every player
 		int i = 0;
 		EnumMap<ResourceType,Integer> resourceMap = new EnumMap<ResourceType,Integer>(ResourceType.class);
 		resourceMap.put(ResourceType.STONE, 2);

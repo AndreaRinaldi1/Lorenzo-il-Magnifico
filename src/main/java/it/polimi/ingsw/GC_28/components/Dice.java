@@ -23,7 +23,7 @@ public class Dice {
 		this.value = new Random().nextInt(6) + 1;
 	}
 	public void rollDice(){
-		int randomInt = ThreadLocalRandom.current().nextInt(0, 7);
+		int randomInt = ThreadLocalRandom.current().nextInt(1, 7);
 		this.value = randomInt;
 	}
 	

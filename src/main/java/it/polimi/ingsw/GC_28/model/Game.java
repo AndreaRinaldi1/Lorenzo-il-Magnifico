@@ -7,12 +7,13 @@ import java.util.Scanner;
 import it.polimi.ingsw.GC_28.boards.BoardsInitializer;
 import it.polimi.ingsw.GC_28.boards.GameBoard;
 import it.polimi.ingsw.GC_28.boards.ProvaSetUp;
+import it.polimi.ingsw.GC_28.cards.CardType;
 import it.polimi.ingsw.GC_28.components.CouncilPrivilege;
 import it.polimi.ingsw.GC_28.components.Resource;
 
 public class Game {
 	private GameBoard gameBoard;
-	private ArrayList<Player> players;
+	private static ArrayList<Player> players; //it's static because is the only way i can access to it from another class in a useful way
 	private int currentEra;
 	Scanner input = new Scanner(System.in);
 	
@@ -24,12 +25,19 @@ public class Game {
 		ProvaSetUp.prova();
 		Game g1 = new Game(BoardsInitializer.gameBoard, ProvaSetUp.getPlayer());
 		System.out.println(g1.getGameBoard().display());
+		System.out.println("era:" + g1.getGameBoard().getTowers().get(CardType.TERRITORY).getCells()[0].getCard().getEra());
+		ProvaSetUp.prova2();
+		System.out.println(g1.getGameBoard().display());
+		System.out.println("era:" + g1.getGameBoard().getTowers().get(CardType.TERRITORY).getCells()[0].getCard().getEra());
+		ProvaSetUp.prova2();
+		System.out.println(g1.getGameBoard().display());
+		System.out.println("era:" + g1.getGameBoard().getTowers().get(CardType.TERRITORY).getCells()[0].getCard().getEra());
 	}
 	
 	
-	public Game(GameBoard gameBoard, ArrayList<Player> players) {
+	public Game(GameBoard gameBoard, ArrayList<Player> players2) {
 		this.gameBoard = gameBoard;
-		this.players = players;
+		players = players2;
 	}
 
 	public int getCurrentEra() {
@@ -44,10 +52,13 @@ public class Game {
 		return gameBoard;
 	}
 
-	public ArrayList<Player> getPlayers() {
+	public static ArrayList<Player> getPlayers() {
 		return players;
 	}
 	
+	public static void setPlayers(ArrayList<Player> p){
+		players = p;
+	}
 	
 	public Resource askPrivilege(){
 		System.out.println("Which council privilege do you want?");

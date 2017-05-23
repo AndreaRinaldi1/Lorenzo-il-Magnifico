@@ -1,10 +1,19 @@
 package it.polimi.ingsw.GC_28.boards;
 
 import java.io.FileNotFoundException;
+import java.util.ArrayList;
 import java.util.EnumMap;
 import java.util.HashMap;
-import java.lang.Character;
+//import java.lang.Character;
 
+import it.polimi.ingsw.GC_28.cards.Building;
+import it.polimi.ingsw.GC_28.cards.Card;
+import it.polimi.ingsw.GC_28.cards.CardReader;
+import it.polimi.ingsw.GC_28.cards.CardType;
+import it.polimi.ingsw.GC_28.cards.Territory;
+import it.polimi.ingsw.GC_28.cards.Venture;
+import it.polimi.ingsw.GC_28.cards.Character;
+import it.polimi.ingsw.GC_28.cards.Deck;
 import it.polimi.ingsw.GC_28.components.CouncilPrivilege;
 import it.polimi.ingsw.GC_28.components.Resource;
 import it.polimi.ingsw.GC_28.components.ResourceType;
@@ -77,7 +86,7 @@ public class Prova {
 		d.apply(pb, gb, g);
 		System.out.println(pb.getResources().toString());
 		*/
-		CouncilPrivilege cp = CouncilPrivilege.instance();
+		/*CouncilPrivilege cp = CouncilPrivilege.instance();
 		HashMap<Character, Resource> hm = new HashMap<Character, Resource>();
 		hm.put(Character.valueOf('a'), res3);
 		hm.put(Character.valueOf('b'), res2);
@@ -89,7 +98,13 @@ public class Prova {
 		e.setSecondCost(res3);
 		e.setSecondBonus(res4);
 		e.apply(pb, gb, g);
-		System.out.println(pb.getResources().toString());
+		System.out.println(pb.getResources().toString());*/
+		
+		CardReader reader = new CardReader();
+		Deck d = reader.startRead();
+		//d.toString();
+		//d.getCharacters().get(19).getImmediateEffect().get(0).apply(pb, gb, g);
+			
 		/*
 		SpacesReader r = new SpacesReader();
 		EverySpace everySpace = r.startRead();

@@ -63,6 +63,7 @@ public class Card {
 	@Override
 	public String toString(){
 		return "Name: " + this.name + "\n" +
+				"IDNumber" + this.IDNumber + "\n" +
 				"Color: " + this.color.toString() + "\n" + 
 				this.cost.toString();
 	}
