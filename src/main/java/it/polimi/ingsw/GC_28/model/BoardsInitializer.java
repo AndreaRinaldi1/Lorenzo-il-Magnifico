@@ -136,9 +136,11 @@ public class BoardsInitializer {
 	
 	private void initSpaces()throws FileNotFoundException{
 		Gson gson = new GsonBuilder().create();
-		JsonReader reader = new JsonReader(new FileReader("spaces.json"));
+		FileReader spaceReader = new FileReader("spaces.json");
+		JsonReader reader = new JsonReader(spaceReader);
         try{
         	EverySpace everySpace = gson.fromJson(reader, EverySpace.class);
+        	spaceReader.close();
         	reader.close();
         	gameBoard.setCouncilPalace(everySpace.getCouncilPalace());
         	gameBoard.getCouncilPalace().setFree(true);

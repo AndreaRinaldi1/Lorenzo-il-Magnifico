@@ -1,13 +1,18 @@
 package it.polimi.ingsw.GC_28.model;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import it.polimi.ingsw.GC_28.model.Player;
 import it.polimi.ingsw.GC_28.model.PlayerColor;
 
 public class ProvaSetUp {
 	
-	private static ArrayList<Player> player = new ArrayList<Player>();
+	private ProvaSetUp(){
+		
+	}
+	
+	private static ArrayList<Player> player = new ArrayList<>();
 	private static BoardsInitializer bi = new BoardsInitializer();
 	private static BoardSetup bs = new BoardSetup();
 	

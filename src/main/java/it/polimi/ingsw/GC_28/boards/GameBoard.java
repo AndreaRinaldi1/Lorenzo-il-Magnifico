@@ -21,16 +21,20 @@ public class GameBoard {
 	private Dice[] dices = BoardsInitializer.getDices();
 	private ExcommunicationTile[] excommunications = new ExcommunicationTile[N_EXCOMMUNICATIONTILE];
 	
-	private ProductionAndHarvestSpace harvestSpace, productionSpace;
-	private MarketSpace coinSpace, servantSpace, mixedSpace;
+	private ProductionAndHarvestSpace harvestSpace;
+	private ProductionAndHarvestSpace productionSpace;
+	private MarketSpace coinSpace;
+	private MarketSpace servantSpace;
+	private MarketSpace mixedSpace;
 	private TwoPrivilegesSpace twoPrivilegesSpace;
 	private Resource bonusFaithPoints;
 	private CouncilPalace councilPalace;
 	
-	private ArrayList<FamilyMember> membersCoucilPalace = new ArrayList<FamilyMember>(); 
+	private ArrayList<FamilyMember> membersCoucilPalace = new ArrayList<>(); 
 	
 	
 	public GameBoard(){
+		/*empty for testing*/
 	}
 	
 
