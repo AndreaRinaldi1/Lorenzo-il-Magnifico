@@ -1,4 +1,4 @@
-package it.polimi.ingsw.GC_28.core;
+package it.polimi.ingsw.GC_28.model;
 
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
