@@ -60,7 +60,7 @@ public class BoardsInitializer {
 			initPlayerBoard();
 			initFamilyMember();
 		} catch (FileNotFoundException e) {
-			e.printStackTrace();
+			throw new RuntimeException(e);
 		}
 	}
 	
