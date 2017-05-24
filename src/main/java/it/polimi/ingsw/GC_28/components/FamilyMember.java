@@ -51,4 +51,8 @@ public class FamilyMember {
 	public void setUsed(boolean used) {
 		this.used = used;
 	}	
+	
+	public DiceColor getDiceColor(){
+		return this.diceColor;
+	}
 }

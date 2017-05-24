@@ -214,10 +214,12 @@ public class BoardsInitializer {
 			ArrayList<FamilyMember> fm = new ArrayList<>();
 			for(DiceColor dc : DiceColor.values()){
 				FamilyMember member = new FamilyMember(p, false, dc);
+				if(dc.equals(DiceColor.NEUTRAL)){
+					member = new FamilyMember(p, true, DiceColor.NEUTRAL);
+					}
+				member.setValue(dices);
 				fm.add(member);
 			}
-			FamilyMember neutral = new FamilyMember(p, true, null);
-			fm.add(neutral);
 			p.getBoard().setFamilyMember(fm);
 		}
 	}
@@ -229,6 +231,9 @@ public class BoardsInitializer {
 		resourceMap.put(ResourceType.WOOD, 2);
 		resourceMap.put(ResourceType.SERVANT, 3);
 		resourceMap.put(ResourceType.COIN, 5);
+		resourceMap.put(ResourceType.MILITARYPOINT, 0);
+		resourceMap.put(ResourceType.VICTORYPOINT, 0);
+		resourceMap.put(ResourceType.FAITHPOINT, 0);
 		for(Player p: players){
 			resourceMap.put(ResourceType.COIN, resourceMap.get(ResourceType.COIN)+i);
 			Resource resource = Resource.of(resourceMap);

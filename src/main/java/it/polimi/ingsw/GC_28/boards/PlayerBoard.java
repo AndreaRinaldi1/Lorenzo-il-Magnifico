@@ -20,12 +20,12 @@ public class PlayerBoard {
 	
 
 	
-	private final BonusTile bonusTile;//TODO ask if bonusTile final is ok
+	private final BonusTile bonusTile;
 	private HashMap<Integer, Resource> finalBonusTerritories = new HashMap<Integer, Resource>();
 	private HashMap<Integer, Resource> finalBonusCharacters = new HashMap<Integer, Resource>();
 	private Resource resources;
 	private ArrayList<ExcommunicationTile> excommunicationTile = new ArrayList<ExcommunicationTile>();
-	//FIXME ho provato ad aggiungere anche un indicatore per il numero e il valore dei family members
+
 	private ArrayList<FamilyMember> familyMember = new ArrayList<FamilyMember>();
 	
 	
@@ -82,17 +82,18 @@ public class PlayerBoard {
 		
 		ret+="Resources: ";
 		
-		for(ResourceType rscType : resources.getResource().keySet()){
+		//for(ResourceType rscType : resources.getResource().keySet()){
 			ret+= resources.toString(); //ask Rob because probably he wants to use rscType instead of resource
 			ret+=" | ";
-		}
+		//}
 		ret+="\n";
 		ret+="---------------------------";
 		ret +="------------------------\n";
 		
 		ret+="Family Members: ";
 		for(int j = 0; j < familyMember.size(); j++){
-			ret+= familyMember.get(j).toString();
+			ret+= familyMember.get(j).getDiceColor().name() + ": ";
+			ret+= familyMember.get(j).getValue();
 			ret+= " | ";
 		}
 		ret+="\n";
@@ -105,11 +106,11 @@ public class PlayerBoard {
 	}
 	
 	//methods in overloading
-	public void addCard(Territory t){ //TODO controllare il numero di punti military richiesti e che non abbia gia tot=MAX carte territorio
+	public void addCard(Territory t){ 
 		territories.add(t);
 	}
 	
-	public void addCard(Building b){//TODO controllare che non abbia gia tot=MAX carte building
+	public void addCard(Building b){
 		buildings.add(b);
 	}
 	
@@ -133,7 +134,6 @@ public class PlayerBoard {
 	}
 	
 	public void reduceResources(Resource amount){
-		//TODO check disponibilità risorse in un altro metodo prima di chiamare questo metodo
 		for(ResourceType resourceType : amount.getResource().keySet()){
 			Integer x = 0;
 			if(resources.getResource().containsKey(resourceType)){
