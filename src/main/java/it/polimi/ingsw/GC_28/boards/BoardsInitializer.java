@@ -133,7 +133,8 @@ public class BoardsInitializer {
 	
 	private static void initSpaces()throws FileNotFoundException{
 		Gson gson = new GsonBuilder().create();
-		JsonReader reader = new JsonReader(new FileReader("spaces.json"));
+		FileReader spaceFile = new FileReader("spaces.json");
+		JsonReader reader = new JsonReader(spaceFile);
         try{
         	EverySpace everySpace = gson.fromJson(reader, EverySpace.class);
         	gameBoard.setCouncilPalace(everySpace.getCouncilPalace());
@@ -177,6 +178,7 @@ public class BoardsInitializer {
         		gameBoard.getProductionSpace().setSecondarySpace(false);
         		gameBoard.getHarvestSpace().setSecondarySpace(false);
         	}
+        	spaceFile.close();
 	        reader.close();
     	}catch(IOException e){
     		e.printStackTrace();
