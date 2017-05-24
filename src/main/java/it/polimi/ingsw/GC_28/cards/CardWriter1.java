@@ -399,13 +399,8 @@ private void enterResourceBonus(EnumMap<ResourceType, Integer> bonus){
 						effects.add(e);
 					}
 					else if(effectType.equals("p")){
-						PrivilegesEffect pe = new PrivilegesEffect();
-						System.out.println("Enter number of privileges: ");
-						int numOfPriv = scanner.nextInt();
-						scanner.nextLine();
-						pe.setNumberOfCouncilPrivileges(numOfPriv);
-						//pe.setEffectType(et);
-						effects.add(pe);
+						PrivilegesEffect privEff = new PrivilegesEffect();
+						effects.add(enterPrivilegesEffect(privEff));
 					}else if(effectType.equals("m")){
 						MultiplierEffect me = new MultiplierEffect();
 						System.out.println("Type 'r' if the multiplier has two resources");
@@ -518,18 +513,37 @@ private void enterResourceBonus(EnumMap<ResourceType, Integer> bonus){
 			bonus = new EnumMap<ResourceType, Integer>(ResourceType.class);
 			enterResourceBonus(bonus);
 			resourceBonus = Resource.of(bonus);
-			pe.setResourceBonus(resourceBonus);
+			ResourceEffect re = new ResourceEffect();
+			re.setResourceBonus(resourceBonus);
+			pe.setResourceBonus(re);
 			break;
 		case('p'):
 			PrivilegesEffect privEffect = new PrivilegesEffect();
-			System.out.println("Enter number of privileges: ");
-			int numOfPriv = scanner.nextInt();
-			scanner.nextLine();
-			privEffect.setNumberOfCouncilPrivileges(numOfPriv);
-			pe.setPrivilegeEffect(privEffect);
+			pe.setPrivilegeEffect(enterPrivilegesEffect(privEffect));
 			break;
 		}
 		return pe;
+	}
+	
+	
+	private PrivilegesEffect enterPrivilegesEffect(PrivilegesEffect privEffect){
+		System.out.println("Enter number of privileges: ");
+		int numOfPriv = scanner.nextInt();
+		scanner.nextLine();
+		privEffect.setNumberOfCouncilPrivileges(numOfPriv);
+		if(numOfPriv == 1){
+			privEffect.setDifferent(false);
+		}
+		else{
+			System.out.println("Are they different one from the others?[y/n]");
+			if(scanner.nextLine().equalsIgnoreCase("y")){
+				privEffect.setDifferent(true);
+			}
+			else{
+				privEffect.setDifferent(false);
+			}
+		}
+		return privEffect;
 	}
 	
 	private HarvestEffect enterHarvestEffect(HarvestEffect harvEff){		
@@ -542,13 +556,16 @@ private void enterResourceBonus(EnumMap<ResourceType, Integer> bonus){
 
 		switch(harvestEffectType){
 		case('c'):
-			harvEff.setCouncilPrivilegeBonus(CouncilPrivilege.instance()); 
+			PrivilegesEffect privEff = new PrivilegesEffect();
+			harvEff.setCouncilPrivilegeBonus(enterPrivilegesEffect(privEff)); 
 			break;
 		case('r'):
 			EnumMap<ResourceType, Integer> bonus = new EnumMap<ResourceType, Integer>(ResourceType.class);
 			enterResourceBonus(bonus);
 			Resource resourceBonus = Resource.of(bonus);
-			harvEff.setResourceHarvestBonus(resourceBonus);
+			ResourceEffect re = new ResourceEffect();
+			re.setResourceBonus(resourceBonus);
+			harvEff.setResourceHarvestBonus(re);
 		}
 		return harvEff;
 	}
@@ -646,7 +663,8 @@ private void enterResourceBonus(EnumMap<ResourceType, Integer> bonus){
 			enterResourceCost(cost);
 			Resource costForPrivBonus = Resource.of(cost);		
 			exEff.setPrivilegeCost(costForPrivBonus);
-			exEff.setPrivilegeBonus(CouncilPrivilege.instance());
+			PrivilegesEffect privEff = new PrivilegesEffect();
+			exEff.setPrivilegeBonus(enterPrivilegesEffect(privEff));
 		}
 		else{
 			System.out.println("Enter resource Cost:");

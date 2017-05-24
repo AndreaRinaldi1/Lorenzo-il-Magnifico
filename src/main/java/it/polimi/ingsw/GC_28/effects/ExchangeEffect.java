@@ -16,7 +16,7 @@ public class ExchangeEffect extends Effect{
 	private Resource firstBonus;
 	private Resource secondBonus;
 	private Resource privilegeCost;
-	private CouncilPrivilege privilegeBonus;
+	private PrivilegesEffect privilegeBonus;
 	public final EffectType type = EffectType.EXCHANGEEFFECT;
 
 	
@@ -73,13 +73,16 @@ public class ExchangeEffect extends Effect{
 		this.privilegeCost = privilegeCost;
 	}
 
-	public CouncilPrivilege getPrivilegeBonus() {
+
+	public PrivilegesEffect getPrivilegeBonus() {
 		return privilegeBonus;
 	}
 
-	public void setPrivilegeBonus(CouncilPrivilege privilegeBonus) {
+
+	public void setPrivilegeBonus(PrivilegesEffect privilegeBonus) {
 		this.privilegeBonus = privilegeBonus;
 	}
+
 
 	@Override
 	public void apply(FamilyMember familyMember, GameBoard gameBoard, Game game){
@@ -88,7 +91,7 @@ public class ExchangeEffect extends Effect{
 			if(this.privilegeBonus != null){
 				familyMember.getPlayer().getBoard().reduceResources(privilegeCost);
 				System.out.println(familyMember.getPlayer().getBoard().getResources().toString());
-				familyMember.getPlayer().getBoard().addResource(CouncilPrivilege.instance().getOptions().get(game.askPrivilege()));
+				privilegeBonus.apply(familyMember, gameBoard, game);
 			}
 			else{
 				familyMember.getPlayer().getBoard().reduceResources(firstCost);
@@ -105,7 +108,6 @@ public class ExchangeEffect extends Effect{
 			else{
 				familyMember.getPlayer().getBoard().reduceResources(secondCost);
 				System.out.println(familyMember.getPlayer().getBoard().getResources().toString());
-
 				familyMember.getPlayer().getBoard().addResource(secondBonus);
 			}
 		}

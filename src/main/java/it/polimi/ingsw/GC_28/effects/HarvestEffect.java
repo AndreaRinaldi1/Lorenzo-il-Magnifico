@@ -10,8 +10,8 @@ import it.polimi.ingsw.GC_28.model.Game;
 
 public class HarvestEffect extends Effect{
 	private int harvestValue;
-	private Resource resourceHarvestBonus;
-	private CouncilPrivilege councilPrivilegeBonus;
+	private ResourceEffect resourceHarvestBonus;
+	private PrivilegesEffect councilPrivilegeBonus;
 	public final EffectType type = EffectType.HARVESTEFFECT;
 
 	public HarvestEffect() {
@@ -26,30 +26,31 @@ public class HarvestEffect extends Effect{
 		this.harvestValue = harvestValue;
 	}
 
-	public Resource getResourceHarvestBonus() {
+	
+	public ResourceEffect getResourceHarvestBonus() {
 		return resourceHarvestBonus;
 	}
 
-	public void setResourceHarvestBonus(Resource resourceHarvestBonus) {
+	public void setResourceHarvestBonus(ResourceEffect resourceHarvestBonus) {
 		this.resourceHarvestBonus = resourceHarvestBonus;
 	}
 
-	public CouncilPrivilege getCouncilPrivilegeBonus() {
+	public PrivilegesEffect getCouncilPrivilegeBonus() {
 		return councilPrivilegeBonus;
 	}
 
-	public void setCouncilPrivilegeBonus(CouncilPrivilege councilPrivilegeBonus) {
+	public void setCouncilPrivilegeBonus(PrivilegesEffect councilPrivilegeBonus) {
 		this.councilPrivilegeBonus = councilPrivilegeBonus;
 	}
-	
+
 	@Override
 	public void apply(FamilyMember familyMember, GameBoard gameBoard, Game game) {
 		System.out.println("apply di HarvestEffect");
 		if(councilPrivilegeBonus != null){
-			familyMember.getPlayer().getBoard().addResource(CouncilPrivilege.instance().getOptions().get(game.askPrivilege()));
+			councilPrivilegeBonus.apply(familyMember, gameBoard, game);
 		}
 		else{
-			familyMember.getPlayer().getBoard().addResource(resourceHarvestBonus);
+			resourceHarvestBonus.apply(familyMember, gameBoard, game);
 		}
 	}
 }

@@ -3223,8 +3223,8 @@
               "WOOD": 0,
               "STONE": 0,
               "SERVANT": 0,
-              "MILITARYPOINT": 2,
-              "VICTORYPOINT": 0,
+              "MILITARYPOINT": 0,
+              "VICTORYPOINT": 1,
               "FAITHPOINT": 0
             }
           },
@@ -3234,8 +3234,8 @@
               "WOOD": 0,
               "STONE": 0,
               "SERVANT": 0,
-              "MILITARYPOINT": 0,
-              "VICTORYPOINT": 1,
+              "MILITARYPOINT": 2,
+              "VICTORYPOINT": 0,
               "FAITHPOINT": 0
             }
           },

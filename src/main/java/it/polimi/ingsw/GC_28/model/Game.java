@@ -40,7 +40,12 @@ public class Game {
 	}
 	
 	
-	public ArrayList<Character> askPrivilege(int numberOfCouncilPrivileges){
+	public ArrayList<Character> askPrivilege(int numberOfCouncilPrivileges, boolean different){
+		System.out.println("Which council privilege do you want?");
+		for(Character key : CouncilPrivilege.instance().getOptions().keySet()){
+			System.out.println("Type " + key + " if you want:");
+			System.out.println(CouncilPrivilege.instance().getOptions().get(key).toString());
+		}
 		ArrayList<Character> choices = new ArrayList<Character>();
 		int counter = 0;
 		while(counter < numberOfCouncilPrivileges){
@@ -50,18 +55,19 @@ public class Game {
 				counter++;
 			}
 			else{
-				System.out.println("Not valid choice"); 
+				if(different){
+					System.out.println("Not valid choice"); 
+				}
+				else{
+					choices.add(c);
+					counter++;
+				}
 			}
 		}
 		return choices;
 	}
 	
 	public Character askPrivilege(){
-		System.out.println("Which council privilege do you want?");
-		for(Character key : CouncilPrivilege.instance().getOptions().keySet()){
-			System.out.println("Type " + key + " if you want");
-			System.out.println(CouncilPrivilege.instance().getOptions().get(key).toString());
-		}
 		Character c = (Character) input.nextLine().charAt(0);
 		while(!(CouncilPrivilege.instance().getOptions().containsKey(c))){
 			System.out.println("Not valid input!");

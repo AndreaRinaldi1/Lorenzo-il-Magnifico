@@ -4,6 +4,13 @@ package it.polimi.ingsw.GC_28.cards;
 import com.google.gson.*;
 import com.google.gson.stream.JsonReader;
 
+import it.polimi.ingsw.GC_28.boards.GameBoard;
+import it.polimi.ingsw.GC_28.components.DiceColor;
+import it.polimi.ingsw.GC_28.components.FamilyMember;
+import it.polimi.ingsw.GC_28.model.Game;
+import it.polimi.ingsw.GC_28.model.Player;
+import it.polimi.ingsw.GC_28.model.PlayerColor;
+
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
@@ -48,6 +55,8 @@ public class CardReader{
             	JsonObject j = arrayTerritories.get(i).getAsJsonObject();
             	deck.getTerritories().get(i).setImmediateEffect(gson, j);
         	}
+        	
+        	deck.getTerritories().get(0).getPermanentEffect().apply(new FamilyMember(new Player(PlayerColor.BLUE), true, DiceColor.BLACK), new GameBoard(), new Game());
         	//System.out.println(e.getClass());
         	
         	//System.out.println(deck.getCharacters().get(0).getPermanentEffect().getClass());

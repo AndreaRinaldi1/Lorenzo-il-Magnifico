@@ -7,6 +7,7 @@ import it.polimi.ingsw.GC_28.model.Game;
 
 public class Effect {
 
+
 	//public GameBoard gameBoard; //non va bene perche se non è messo static gli altri sottoeffetti non riescono a vederlo (NullPointerException)
 								// mentre se static allora secondo me farà conflitto nel caso di piu partite
 								// Bisogna passarlo come parametro degli apply
