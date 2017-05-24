@@ -8,11 +8,13 @@ import it.polimi.ingsw.GC_28.model.PlayerColor;
 public class ProvaSetUp {
 	
 	private static ArrayList<Player> player = new ArrayList<Player>();
+	private static BoardsInitializer bi = new BoardsInitializer();
+	private static BoardSetup bs = new BoardSetup();
 	
 	public static void prova() {
 		completePlayer();
-		BoardsInitializer.initializeBoard();
-		BoardSetup.firstSetUpCards();
+		bi.initializeBoard();
+		bs.firstSetUpCards();
 	}
 	
 	public static void prova2(){
@@ -21,7 +23,7 @@ public class ProvaSetUp {
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
-		BoardSetup.setUpBoard();
+		bs.setUpBoard();
 	}
 	
 	private static void completePlayer(){

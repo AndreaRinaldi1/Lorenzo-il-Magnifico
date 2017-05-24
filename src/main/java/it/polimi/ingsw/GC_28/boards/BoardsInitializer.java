@@ -23,7 +23,6 @@ import it.polimi.ingsw.GC_28.components.FamilyMember;
 import it.polimi.ingsw.GC_28.components.Resource;
 import it.polimi.ingsw.GC_28.components.ResourceType;
 import it.polimi.ingsw.GC_28.model.Player;
-import it.polimi.ingsw.GC_28.model.PlayerColor;
 import it.polimi.ingsw.GC_28.spaces.EverySpace;
 
 import com.google.gson.Gson;
@@ -40,12 +39,12 @@ public class BoardsInitializer {
 	private static BonusTile bonusTile;
 	private static Dice[] dices =  new Dice[3]; //ask if dice could be static,anyway the colors will not change during the game
 	private Timer timer = new Timer();
-	private static CouncilPrivilege councilPrivilege;// = CouncilPrivilege.instance();
-	public static ArrayList<Player> players = ProvaSetUp.getPlayer();
+	private static CouncilPrivilege councilPrivilege;
+	public static final ArrayList<Player> players = ProvaSetUp.getPlayer();
 	static Deck deck = new Deck();
-	public static GameBoard gameBoard = new GameBoard();
+	public static final GameBoard gameBoard = new GameBoard();
 	
-	public static void initializeBoard(){
+	public  void initializeBoard(){
 		try {
 			initDices();
 			initCouncilPrivilege();
@@ -80,7 +79,7 @@ public class BoardsInitializer {
 		JsonReader reader = new JsonReader(new FileReader("cell.json"));
 		Type cellResourceBonus = new TypeToken<EnumMap<CardType,ArrayList<Resource>>>() {}.getType();
 		EnumMap<CardType,ArrayList<Resource>> cellsBonus = gsonForEnum.fromJson(reader, cellResourceBonus);
-		LinkedList<Cell> cells = new LinkedList<Cell>();
+		LinkedList<Cell> cells = new LinkedList<>();
 		for(int i = 1; i < 8; i += 2){
 			if(i == 5 ){
 				/*the first line take the CardType of the tower and set the bonus as asked*/
@@ -96,8 +95,7 @@ public class BoardsInitializer {
 				cells.addLast(cell);
 			}
 		}
-		Cell[] cellsArray = cells.toArray(new Cell[cells.size()]); // convert the linkedList in Array
-		return cellsArray;
+		 return cells.toArray(new Cell[cells.size()]); // convert the linkedList in Array
 	}
 	
 	private static Tower prepareTower(CardType ct){
@@ -111,7 +109,7 @@ public class BoardsInitializer {
 	}
 	
 	private static void initGameBoard()throws FileNotFoundException{
-		EnumMap<CardType,Tower> mapTower = new EnumMap<CardType,Tower>(CardType.class);
+		EnumMap<CardType,Tower> mapTower = new EnumMap<>(CardType.class);
 		for(CardType ct : CardType.values()){
 			mapTower.put(ct, prepareTower(ct));			
 		}
@@ -127,16 +125,16 @@ public class BoardsInitializer {
 			CouncilPrivilege.setCouncilPrivilege(councilPrivilege);
 			reader.close();
 		}catch(IOException e){
-			e.printStackTrace();
+			
 		}
 	}
 	
-	private static void initSpaces()throws FileNotFoundException{
+	private void initSpaces()throws FileNotFoundException{
 		Gson gson = new GsonBuilder().create();
-		FileReader spaceFile = new FileReader("spaces.json");
-		JsonReader reader = new JsonReader(spaceFile);
+		JsonReader reader = new JsonReader(new FileReader("spaces.json"));
         try{
         	EverySpace everySpace = gson.fromJson(reader, EverySpace.class);
+        	reader.close();
         	gameBoard.setCouncilPalace(everySpace.getCouncilPalace());
         	gameBoard.getCouncilPalace().setFree(true);
         	
@@ -178,8 +176,6 @@ public class BoardsInitializer {
         		gameBoard.getProductionSpace().setSecondarySpace(false);
         		gameBoard.getHarvestSpace().setSecondarySpace(false);
         	}
-        	spaceFile.close();
-	        reader.close();
     	}catch(IOException e){
     		e.printStackTrace();
     	}
@@ -215,7 +211,7 @@ public class BoardsInitializer {
 	
 	private static void initFamilyMember(){
 		for(Player p : players){
-			ArrayList<FamilyMember> fm = new ArrayList<FamilyMember>();
+			ArrayList<FamilyMember> fm = new ArrayList<>();
 			for(DiceColor dc : DiceColor.values()){
 				FamilyMember member = new FamilyMember(p, false, dc);
 				fm.add(member);
@@ -227,9 +223,8 @@ public class BoardsInitializer {
 	}
 	
 	private static void initPlayerBoard(){
-		//TODO set all family member for every player
 		int i = 0;
-		EnumMap<ResourceType,Integer> resourceMap = new EnumMap<ResourceType,Integer>(ResourceType.class);
+		EnumMap<ResourceType,Integer> resourceMap = new EnumMap<>(ResourceType.class);
 		resourceMap.put(ResourceType.STONE, 2);
 		resourceMap.put(ResourceType.WOOD, 2);
 		resourceMap.put(ResourceType.SERVANT, 3);
@@ -256,6 +251,6 @@ private final Class<K> enumClazz;
 
 	@Override
 	public EnumMap<K, V> createInstance(final Type type) {
-		return new EnumMap<K, V>(enumClazz);
+		return new EnumMap<>(enumClazz);
 	}
 }

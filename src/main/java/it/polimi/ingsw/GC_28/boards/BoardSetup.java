@@ -19,24 +19,27 @@ import it.polimi.ingsw.GC_28.cards.Character;
 
 public class BoardSetup {
 	
-	//CardReader cardReader = new CardReader();
-	public static GameBoard gameBoard = BoardsInitializer.gameBoard;
+	public static final GameBoard gameBoard = BoardsInitializer.gameBoard;
 	static Deck deck = new Deck(); //once initialize it will not change
-	private static ArrayList<Card> usedCard = new ArrayList<Card>();
+	private static ArrayList<Card> usedCard = new ArrayList<>();
 	private static int era = 1;
 	private static int period = 1;
 
-	
-	public static void firstSetUpCards() {
-		prepareDeck();
-		prepareTowers();
-		//System.out.println(deck.getTerritories().toString());
+	public BoardSetup(){
 	}
 	
-	public static void setUpBoard(){
+	public void firstSetUpCards() {
+		prepareDeck();
+		prepareTowers();
+	}
+	
+	public void setUpBoard(){
 		Game.setPlayers(getNextPlayerOrder());
 		freeFamilyMember();
 		freeSpace();
+		if(Game.getPlayers().size() > 2){
+			freeSpaceMoreThanTwoPlayer();
+		}
 		prepareTowers();
 	}
 	
@@ -57,7 +60,6 @@ public class BoardSetup {
 				int randomInt = ThreadLocalRandom.current().nextInt(0, deck.getTerritories().size());
 				/*the condition check if the era of the randomly selected card is correct and
 				 *  if the card has already been drafted, otherwise the choice of the card is repeated*/
-				//System.out.println(randomInt);
 				if(deck.getTerritories().get(randomInt).getEra() == era && 
 						!(usedCard.contains(deck.getTerritories().get(randomInt))) ){ 
 					Territory t = deck.getTerritories().get(randomInt);
@@ -141,19 +143,21 @@ public class BoardSetup {
 	
 	private static ArrayList<Player> getNextPlayerOrder(){
 		ArrayList<FamilyMember> inCouncil = gameBoard.getCouncilPalace().getPlayerOrder();
-		ArrayList<Player> nextOrder = new ArrayList<Player>();
-		for(FamilyMember fm : inCouncil){
-			if(!(nextOrder.contains(fm))){
-				nextOrder.add(fm.getPlayer());
+		ArrayList<Player> nextOrder = new ArrayList<>();
+		if(!(inCouncil.isEmpty())){
+			for(FamilyMember fm : inCouncil){
+				if(!(nextOrder.contains(fm.getPlayer()))){
+					nextOrder.add(fm.getPlayer());
+				}
 			}
 		}
-		if(nextOrder.size() == 0){
+		if(nextOrder.isEmpty()){
 			nextOrder = BoardsInitializer.players; //FIXME set nextOrder to the actual game order
 		} 
 		return nextOrder;
 	}
 	
-	private static void freeSpace(){
+	public void freeSpace(){
 		if(!gameBoard.getCoinSpace().isFree()){
 			gameBoard.getCoinSpace().getPlayer().remove(0);
 			gameBoard.getCoinSpace().setFree(true);
@@ -176,6 +180,9 @@ public class BoardSetup {
 		for(FamilyMember fm : gameBoard.getCouncilPalace().getPlayerOrder()){
 			gameBoard.getCouncilPalace().getPlayerOrder().remove(fm);
 		}
+	}
+	
+	private static void freeSpaceMoreThanTwoPlayer(){
 		
 		if(Game.getPlayers().size() > 2){
 			for(FamilyMember fm : gameBoard.getProductionSpace().getPlayer()){

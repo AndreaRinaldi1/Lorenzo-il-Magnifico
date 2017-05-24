@@ -200,7 +200,7 @@ public class GameBoard {
 		return councilPalace;
 	}
 
-	public static void setCouncilPalace(CouncilPalace councilPalace2) {
+	public void setCouncilPalace(CouncilPalace councilPalace2) {
 		councilPalace = councilPalace2;
 	}
 	
