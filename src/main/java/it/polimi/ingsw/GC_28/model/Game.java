@@ -60,7 +60,23 @@ public class Game {
 		players = p;
 	}
 	
-	public Resource askPrivilege(){
+	public ArrayList<Character> askPrivilege(int numberOfCouncilPrivileges){
+		ArrayList<Character> choices = new ArrayList<Character>();
+		int counter = 0;
+		while(counter < numberOfCouncilPrivileges){
+			Character c = askPrivilege();
+			if(!(choices.contains(c))){
+				choices.add(c);
+				counter++;
+			}
+			else{
+				System.out.println("Not valid choice"); 
+			}
+		}
+		return choices;
+	}
+	
+	public Character askPrivilege(){
 		System.out.println("Which council privilege do you want?");
 		for(Character key : CouncilPrivilege.instance().getOptions().keySet()){
 			System.out.println("Type " + key + " if you want");
@@ -72,7 +88,7 @@ public class Game {
 			System.out.println("Which council privilege do you want?");
 			c = (Character) input.nextLine().charAt(0);
 		}
-		return CouncilPrivilege.instance().getOptions().get(c);
+		return c;
 	} 
 	
 	

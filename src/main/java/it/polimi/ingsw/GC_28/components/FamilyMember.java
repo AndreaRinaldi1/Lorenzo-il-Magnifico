@@ -30,7 +30,12 @@ public class FamilyMember {
 	public int getValue() {
 		return value;
 	}
-
+	
+	public void incrementValue(int amount){
+		this.value += amount;
+	}
+	
+	
 	public void setValue(Dice[] dices) {
 		for(Dice dice : dices){
 			if(dice.getColor() == this.diceColor){

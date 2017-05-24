@@ -1,14 +1,15 @@
 package it.polimi.ingsw.GC_28.effects;
 
 import it.polimi.ingsw.GC_28.boards.GameBoard;
-import it.polimi.ingsw.GC_28.boards.PlayerBoard;
+
+import it.polimi.ingsw.GC_28.components.FamilyMember;
 
 import it.polimi.ingsw.GC_28.components.Resource;
 import it.polimi.ingsw.GC_28.model.Game;
 
 public class ProductionEffect extends Effect{
 	private int productionValue;
-	private Resource resourceProductionBonus;
+	private Resource resourceBonus;
 	private ExchangeEffect exchangeBonus;
 	private MultiplierEffect multiplierEffect;
 	private PrivilegesEffect privilegeEffect;
@@ -18,20 +19,14 @@ public class ProductionEffect extends Effect{
 	public ProductionEffect(){
 		super();
 	}
-	
-	
 
 	public PrivilegesEffect getPrivilegeEffect() {
 		return privilegeEffect;
 	}
 
-
-
 	public void setPrivilegeEffect(PrivilegesEffect privilegeEffect) {
 		this.privilegeEffect = privilegeEffect;
 	}
-
-
 
 	public MultiplierEffect getMultiplierEffect() {
 		return multiplierEffect;
@@ -50,12 +45,12 @@ public class ProductionEffect extends Effect{
 		this.productionValue = productionValue;
 	}
 
-	public Resource getResourceProductionBonus() {
-		return resourceProductionBonus;
+	public Resource getResourceBonus() {
+		return resourceBonus;
 	}
 
-	public void setResourceProductionBonus(Resource resourceProductionBonus) {
-		this.resourceProductionBonus = resourceProductionBonus;
+	public void setResourceBonus(Resource resourceBonus) {
+		this.resourceBonus = resourceBonus;
 	}
 
 
@@ -69,8 +64,19 @@ public class ProductionEffect extends Effect{
 	
 
 	@Override
-	public void apply(PlayerBoard p, GameBoard gameBoard, Game game) {
+	public void apply(FamilyMember familyMember, GameBoard gameBoard, Game game) {
 		System.out.println("apply di ProductionEffect");
-		
+		if(resourceBonus != null){
+			familyMember.getPlayer().getBoard().addResource(resourceBonus);
+		}
+		if(privilegeEffect != null){
+			privilegeEffect.apply(familyMember, gameBoard, game);
+		}
+		if(multiplierEffect != null){
+			multiplierEffect.apply(familyMember, gameBoard, game);
+		}
+		if(exchangeBonus != null){
+			exchangeBonus.apply(familyMember, gameBoard, game);
+		}
 	}
 }

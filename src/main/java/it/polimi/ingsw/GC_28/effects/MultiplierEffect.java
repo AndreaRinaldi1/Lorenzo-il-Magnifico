@@ -3,8 +3,8 @@ package it.polimi.ingsw.GC_28.effects;
 import java.util.EnumMap;
 
 import it.polimi.ingsw.GC_28.boards.GameBoard;
-import it.polimi.ingsw.GC_28.boards.PlayerBoard;
 import it.polimi.ingsw.GC_28.cards.*;
+import it.polimi.ingsw.GC_28.components.FamilyMember;
 import it.polimi.ingsw.GC_28.components.Resource;
 import it.polimi.ingsw.GC_28.components.ResourceType;
 import it.polimi.ingsw.GC_28.model.Game;
@@ -44,31 +44,32 @@ public class MultiplierEffect extends Effect{
 		this.cardType = cardType;
 	}
 	
-	private Resource multiplyResource(Resource res, int times){
+
+	private Resource multiplyResource(int times){
 		EnumMap<ResourceType, Integer> resource = new EnumMap<ResourceType, Integer>(ResourceType.class);
-		for(ResourceType resType : res.getResource().keySet()){
-			resource.put(resType, res.getResource().get(resType) * times);
+		for(ResourceType resType : resourceBonus.getResource().keySet()){
+			resource.put(resType, resourceBonus.getResource().get(resType) * times);
 		}
 		Resource amount = Resource.of(resource);
 		return amount;
 	}
 	
 	@Override
-	public void apply(PlayerBoard playerBoard, GameBoard gameBoard, Game game) {
+	public void apply(FamilyMember familyMember, GameBoard gameBoard, Game game) {
 		System.out.println("apply di MultiplierEffect");
 		if(resourceCost == null){
 			switch(cardType){
 			case TERRITORY:
-				playerBoard.addResource(multiplyResource(resourceBonus, playerBoard.getTerritories().size()));
+				familyMember.getPlayer().getBoard().addResource(multiplyResource(familyMember.getPlayer().getBoard().getTerritories().size()));
 				break;
 			case BUILDING:
-				playerBoard.addResource(multiplyResource(resourceBonus, playerBoard.getBuildings().size()));
+				familyMember.getPlayer().getBoard().addResource(multiplyResource(familyMember.getPlayer().getBoard().getBuildings().size()));
 				break;
 			case CHARACTER:
-				playerBoard.addResource(multiplyResource(resourceBonus, playerBoard.getCharacters().size()));
+				familyMember.getPlayer().getBoard().addResource(multiplyResource(familyMember.getPlayer().getBoard().getCharacters().size()));
 				break;
 			case VENTURE:
-				playerBoard.addResource(multiplyResource(resourceBonus, playerBoard.getVentures().size()));
+				familyMember.getPlayer().getBoard().addResource(multiplyResource(familyMember.getPlayer().getBoard().getVentures().size()));
 				break;
 			}
 		}
@@ -76,11 +77,11 @@ public class MultiplierEffect extends Effect{
 			int times = 0;
 			for(ResourceType resType : resourceCost.getResource().keySet()){
 				if(!(resourceCost.getResource().get(resType).equals(0))){
-					times = playerBoard.getResources().getResource().get(resType) / 2;
+					times = familyMember.getPlayer().getBoard().getResources().getResource().get(resType) / 2;
 					break;
 				}
 			}
-			playerBoard.addResource(multiplyResource(resourceBonus, times));
+			familyMember.getPlayer().getBoard().addResource(multiplyResource(times));
 		}
 		
 	}

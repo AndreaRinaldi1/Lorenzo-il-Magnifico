@@ -1,8 +1,9 @@
 package it.polimi.ingsw.GC_28.effects;
 
+import java.util.ArrayList;
+
 import it.polimi.ingsw.GC_28.boards.GameBoard;
-import it.polimi.ingsw.GC_28.boards.PlayerBoard;
-import it.polimi.ingsw.GC_28.components.ResourceType;
+import it.polimi.ingsw.GC_28.components.*;
 import it.polimi.ingsw.GC_28.model.Game;
 
 public class PrivilegesEffect extends Effect{
@@ -22,8 +23,11 @@ public class PrivilegesEffect extends Effect{
 	}
 	
 	@Override
-	public void apply(PlayerBoard p, GameBoard gameBoard, Game game) {
+	public void apply(FamilyMember familyMember, GameBoard gameBoard, Game game) {
 		System.out.println("apply di PrivilegesEffect");
-		
+		ArrayList<Character> choices = game.askPrivilege(numberOfCouncilPrivileges);
+		for(int i = 0; i < choices.size(); i++){
+			familyMember.getPlayer().getBoard().addResource(CouncilPrivilege.instance().getOptions().get(choices.get(i)));
+		}
 	}
 }

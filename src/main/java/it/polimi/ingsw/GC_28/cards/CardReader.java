@@ -30,6 +30,11 @@ public class CardReader{
         	JsonArray arrayCharacter = c.get("characters").getAsJsonArray();
         	JsonArray arrayVentures = c.get("ventures").getAsJsonArray();
         	JsonArray arrayTerritories = c.get("territories").getAsJsonArray();
+        	
+        	for(int i = 0; i < arrayVentures.size(); i++){
+            	JsonObject j = arrayVentures.get(i).getAsJsonObject();
+            	deck.getVentures().get(i).setImmediateEffect(gson, j);
+        	}
 
         	for(int i = 0; i < arrayCharacter.size(); i++){
             	JsonObject j = arrayCharacter.get(i).getAsJsonObject();
@@ -37,11 +42,6 @@ public class CardReader{
             	deck.getCharacters().get(i).setImmediateEffect(gson, j);
             	//Character character = new Character(j);
             	//deck.getCharacters().add(character);
-        	}
-        	
-        	for(int i = 0; i < arrayVentures.size(); i++){
-            	JsonObject j = arrayVentures.get(i).getAsJsonObject();
-            	deck.getVentures().get(i).setImmediateEffect(gson, j);
         	}
         	
         	for(int i = 0; i < arrayTerritories.size(); i++){

@@ -518,7 +518,7 @@ private void enterResourceBonus(EnumMap<ResourceType, Integer> bonus){
 			bonus = new EnumMap<ResourceType, Integer>(ResourceType.class);
 			enterResourceBonus(bonus);
 			resourceBonus = Resource.of(bonus);
-			pe.setResourceProductionBonus(resourceBonus);
+			pe.setResourceBonus(resourceBonus);
 			break;
 		case('p'):
 			PrivilegesEffect privEffect = new PrivilegesEffect();
