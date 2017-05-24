@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.EnumMap;
 
 import it.polimi.ingsw.GC_28.cards.*;
-import it.polimi.ingsw.GC_28.cards.Character;
 import it.polimi.ingsw.GC_28.components.Dice;
 import it.polimi.ingsw.GC_28.components.FamilyMember;
 import it.polimi.ingsw.GC_28.components.Resource;
@@ -21,20 +20,17 @@ public class GameBoard {
 	private Dice[] dices = BoardsInitializer.getDices();
 	private ExcommunicationTile[] excommunications = new ExcommunicationTile[N_EXCOMMUNICATIONTILE];
 	
-	private static ProductionAndHarvestSpace harvestSpace, productionSpace;
-	private static MarketSpace coinSpace, servantSpace, mixedSpace;
-	private static TwoPrivilegesSpace twoPrivilegesSpace;
+	private ProductionAndHarvestSpace harvestSpace, productionSpace;
+	private MarketSpace coinSpace, servantSpace, mixedSpace;
+	private TwoPrivilegesSpace twoPrivilegesSpace;
 	private Resource bonusFaithPoints;
-	private static CouncilPalace councilPalace;
+	private CouncilPalace councilPalace;
 	
 	private ArrayList<FamilyMember> membersCoucilPalace = new ArrayList<FamilyMember>(); 
 	
 	
 	public GameBoard(){
 	}
-	
-	
-	
 	
 
 	public String display(){
@@ -144,48 +140,48 @@ public class GameBoard {
 		return harvestSpace;
 	}
 
-	public static void setHarvestSpace(ProductionAndHarvestSpace harvestSpace2) {
-		harvestSpace = harvestSpace2;
+	public void setHarvestSpace(ProductionAndHarvestSpace harvestSpace2) {
+		this.harvestSpace = harvestSpace2;
 	}
 
 	public ProductionAndHarvestSpace getProductionSpace() {
 		return productionSpace;
 	}
 
-	public static void setProductionSpace(ProductionAndHarvestSpace productionSpace2) {
-		productionSpace = productionSpace2;
+	public void setProductionSpace(ProductionAndHarvestSpace productionSpace2) {
+		this.productionSpace = productionSpace2;
 	}
 
 	public MarketSpace getCoinSpace() {
 		return coinSpace;
 	}
 
-	public static void setCoinSpace(MarketSpace coinSpace2) {
-		coinSpace = coinSpace2;
+	public void setCoinSpace(MarketSpace coinSpace2) {
+		this.coinSpace = coinSpace2;
 	}
 
 	public MarketSpace getServantSpace() {
 		return servantSpace;
 	}
 
-	public static void setServantSpace(MarketSpace servantSpace2) {
-		servantSpace = servantSpace2;
+	public void setServantSpace(MarketSpace servantSpace2) {
+		this.servantSpace = servantSpace2;
 	}
 
 	public MarketSpace getMixedSpace() {
 		return mixedSpace;
 	}
 
-	public static void setMixedSpace(MarketSpace mixedSpace2) {
-		mixedSpace = mixedSpace2;
+	public void setMixedSpace(MarketSpace mixedSpace2) {
+		this.mixedSpace = mixedSpace2;
 	}
 
 	public TwoPrivilegesSpace getTwoPrivilegesSpace() {
 		return twoPrivilegesSpace;
 	}
 
-	public static void setTwoPrivilegesSpace(TwoPrivilegesSpace twoPrivilegesSpace2) {
-		twoPrivilegesSpace = twoPrivilegesSpace2;
+	public void setTwoPrivilegesSpace(TwoPrivilegesSpace twoPrivilegesSpace2) {
+		this.twoPrivilegesSpace = twoPrivilegesSpace2;
 	}
 
 	public Resource getBonusFaithPoints() {
@@ -201,7 +197,7 @@ public class GameBoard {
 	}
 
 	public void setCouncilPalace(CouncilPalace councilPalace2) {
-		councilPalace = councilPalace2;
+		this.councilPalace = councilPalace2;
 	}
 	
 }

@@ -40,7 +40,7 @@ public class BoardsInitializer {
 	private static Dice[] dices =  new Dice[3]; //ask if dice could be static,anyway the colors will not change during the game
 	private Timer timer = new Timer();
 	private static CouncilPrivilege councilPrivilege;
-	public static final ArrayList<Player> players = ProvaSetUp.getPlayer();
+	public ArrayList<Player> players = ProvaSetUp.getPlayer();
 	static Deck deck = new Deck();
 	public static final GameBoard gameBoard = new GameBoard();
 	
@@ -209,7 +209,7 @@ public class BoardsInitializer {
 		}
 	}
 	
-	private static void initFamilyMember(){
+	private void initFamilyMember(){
 		for(Player p : players){
 			ArrayList<FamilyMember> fm = new ArrayList<>();
 			for(DiceColor dc : DiceColor.values()){
@@ -222,7 +222,7 @@ public class BoardsInitializer {
 		}
 	}
 	
-	private static void initPlayerBoard(){
+	private void initPlayerBoard(){
 		int i = 0;
 		EnumMap<ResourceType,Integer> resourceMap = new EnumMap<>(ResourceType.class);
 		resourceMap.put(ResourceType.STONE, 2);

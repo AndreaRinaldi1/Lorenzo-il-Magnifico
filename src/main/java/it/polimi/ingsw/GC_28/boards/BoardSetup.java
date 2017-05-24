@@ -141,7 +141,7 @@ public class BoardSetup {
 		}
 	}
 	
-	private static ArrayList<Player> getNextPlayerOrder(){
+	private ArrayList<Player> getNextPlayerOrder(){
 		ArrayList<FamilyMember> inCouncil = gameBoard.getCouncilPalace().getPlayerOrder();
 		ArrayList<Player> nextOrder = new ArrayList<>();
 		if(!(inCouncil.isEmpty())){
@@ -152,7 +152,7 @@ public class BoardSetup {
 			}
 		}
 		if(nextOrder.isEmpty()){
-			nextOrder = BoardsInitializer.players; //FIXME set nextOrder to the actual game order
+			nextOrder = Game.getPlayers();
 		} 
 		return nextOrder;
 	}
