@@ -1,4 +1,4 @@
-package it.polimi.ingsw.GC_28.boards;
+package it.polimi.ingsw.GC_28.core;
 
 import java.io.FileNotFoundException;
 import java.io.FileReader;
@@ -13,6 +13,11 @@ import java.util.LinkedList;
 
 import javax.management.timer.Timer;
 
+import it.polimi.ingsw.GC_28.boards.BonusTile;
+import it.polimi.ingsw.GC_28.boards.Cell;
+import it.polimi.ingsw.GC_28.boards.GameBoard;
+import it.polimi.ingsw.GC_28.boards.PlayerBoard;
+import it.polimi.ingsw.GC_28.boards.Tower;
 import it.polimi.ingsw.GC_28.cards.CardReader;
 import it.polimi.ingsw.GC_28.cards.CardType;
 import it.polimi.ingsw.GC_28.cards.Deck;

@@ -1,4 +1,4 @@
-package it.polimi.ingsw.GC_28.boards;
+package it.polimi.ingsw.GC_28.core;
 
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
@@ -14,6 +14,8 @@ import it.polimi.ingsw.GC_28.components.FamilyMember;
 
 import it.polimi.ingsw.GC_28.model.Game;
 import it.polimi.ingsw.GC_28.model.Player;
+import it.polimi.ingsw.GC_28.boards.Cell;
+import it.polimi.ingsw.GC_28.boards.GameBoard;
 import it.polimi.ingsw.GC_28.cards.Building;
 import it.polimi.ingsw.GC_28.cards.Character;
 

@@ -1,4 +1,4 @@
-package it.polimi.ingsw.GC_28.boards;
+package it.polimi.ingsw.GC_28.core;
 
 import java.util.ArrayList;
 

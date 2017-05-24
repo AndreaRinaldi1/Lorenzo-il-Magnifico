@@ -4,9 +4,8 @@ package it.polimi.ingsw.GC_28.model;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-import it.polimi.ingsw.GC_28.boards.BoardsInitializer;
+import it.polimi.ingsw.GC_28.core.*;
 import it.polimi.ingsw.GC_28.boards.GameBoard;
-import it.polimi.ingsw.GC_28.boards.ProvaSetUp;
 import it.polimi.ingsw.GC_28.cards.CardType;
 import it.polimi.ingsw.GC_28.components.CouncilPrivilege;
 import it.polimi.ingsw.GC_28.components.Resource;
