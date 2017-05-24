@@ -2,6 +2,7 @@ package it.polimi.ingsw.GC_28.boards;
 
 import java.util.ArrayList;
 import java.util.EnumMap;
+import java.util.Map;
 
 import it.polimi.ingsw.GC_28.cards.*;
 import it.polimi.ingsw.GC_28.components.Dice;
@@ -17,7 +18,7 @@ import it.polimi.ingsw.GC_28.spaces.TwoPrivilegesSpace;
 public class GameBoard {
 	private static final int N_DICE = 3;
 	private static final int N_EXCOMMUNICATIONTILE = 3;
-	private EnumMap<CardType, Tower> towers = new EnumMap<CardType, Tower>(CardType.class);
+	private Map<CardType, Tower> towers = new EnumMap<>(CardType.class);
 	private Dice[] dices = BoardsInitializer.getDices();
 	private ExcommunicationTile[] excommunications = new ExcommunicationTile[N_EXCOMMUNICATIONTILE];
 	
@@ -108,18 +109,12 @@ public class GameBoard {
 		}
 		return ret;
 	}
-	
-	/*public void rollDices(){
-		for(int i = 0; i< N_DICE; i++){
-			dices[i].setValue();
-		}
-	}*/
 
-	public EnumMap<CardType, Tower> getTowers() {
+	public Map<CardType, Tower> getTowers() {
 		return towers;
 	}
 	
-	public void setTowers(EnumMap<CardType,Tower> towers){
+	public void setTowers(Map<CardType,Tower> towers){
 		this.towers = towers;
 	}
 
