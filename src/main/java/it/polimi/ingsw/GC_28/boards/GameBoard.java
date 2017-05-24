@@ -144,7 +144,7 @@ public class GameBoard {
 		return harvestSpace;
 	}
 
-	public void setHarvestSpace(ProductionAndHarvestSpace harvestSpace2) {
+	public static void setHarvestSpace(ProductionAndHarvestSpace harvestSpace2) {
 		harvestSpace = harvestSpace2;
 	}
 
@@ -152,7 +152,7 @@ public class GameBoard {
 		return productionSpace;
 	}
 
-	public void setProductionSpace(ProductionAndHarvestSpace productionSpace2) {
+	public static void setProductionSpace(ProductionAndHarvestSpace productionSpace2) {
 		productionSpace = productionSpace2;
 	}
 
@@ -160,7 +160,7 @@ public class GameBoard {
 		return coinSpace;
 	}
 
-	public void setCoinSpace(MarketSpace coinSpace2) {
+	public static void setCoinSpace(MarketSpace coinSpace2) {
 		coinSpace = coinSpace2;
 	}
 
@@ -168,7 +168,7 @@ public class GameBoard {
 		return servantSpace;
 	}
 
-	public void setServantSpace(MarketSpace servantSpace2) {
+	public static void setServantSpace(MarketSpace servantSpace2) {
 		servantSpace = servantSpace2;
 	}
 
@@ -176,7 +176,7 @@ public class GameBoard {
 		return mixedSpace;
 	}
 
-	public void setMixedSpace(MarketSpace mixedSpace2) {
+	public static void setMixedSpace(MarketSpace mixedSpace2) {
 		mixedSpace = mixedSpace2;
 	}
 
@@ -184,7 +184,7 @@ public class GameBoard {
 		return twoPrivilegesSpace;
 	}
 
-	public void setTwoPrivilegesSpace(TwoPrivilegesSpace twoPrivilegesSpace2) {
+	public static void setTwoPrivilegesSpace(TwoPrivilegesSpace twoPrivilegesSpace2) {
 		twoPrivilegesSpace = twoPrivilegesSpace2;
 	}
 
@@ -200,7 +200,7 @@ public class GameBoard {
 		return councilPalace;
 	}
 
-	public void setCouncilPalace(CouncilPalace councilPalace2) {
+	public static void setCouncilPalace(CouncilPalace councilPalace2) {
 		councilPalace = councilPalace2;
 	}
 	
