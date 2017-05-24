@@ -37,7 +37,6 @@ import com.google.gson.stream.JsonReader;
 import com.google.gson.reflect.TypeToken;
 
 
-
 public class BoardsInitializer {
 	
 	
@@ -48,6 +47,7 @@ public class BoardsInitializer {
 	public ArrayList<Player> players = ProvaSetUp.getPlayer();
 	static Deck deck = new Deck();
 	public static final GameBoard gameBoard = new GameBoard();
+	
 	
 	public  void initializeBoard(){
 		try {
@@ -60,11 +60,11 @@ public class BoardsInitializer {
 			initPlayerBoard();
 			initFamilyMember();
 		} catch (FileNotFoundException e) {
-			throw new RuntimeException(e);
+			throw new RuntimeException(e.getMessage());
 		}
 	}
 	
-	private static void setDeck(){
+	private void setDeck(){
 		try{
 			CardReader cardReader = new CardReader();
 			deck = cardReader.startRead();
@@ -184,7 +184,7 @@ public class BoardsInitializer {
         		gameBoard.getHarvestSpace().setSecondarySpace(false);
         	}
     	}catch(IOException e){
-    		e.printStackTrace();
+    		throw new IllegalStateException("Error in spaces.json",e);
     	}
 	}
 	

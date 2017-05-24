@@ -27,7 +27,7 @@ public class FamilyMember {
 		return NEUTRAL;
 	}
 
-	public int getValue() {
+	public Integer getValue() {
 		return value;
 	}
 	

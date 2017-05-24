@@ -94,7 +94,7 @@ public class PlayerBoard {
 		ret+="Family Members: ";
 		for(int j = 0; j < familyMember.size(); j++){
 			ret+= familyMember.get(j).getDiceColor().name() + ": ";
-			ret+= familyMember.get(j).getValue();
+			ret+= familyMember.get(j).getValue().toString();
 			ret+= " | ";
 		}
 		ret+="\n";

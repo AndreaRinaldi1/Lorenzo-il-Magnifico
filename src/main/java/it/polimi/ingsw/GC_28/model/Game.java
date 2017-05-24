@@ -25,6 +25,7 @@ public class Game {
 		Game g1 = new Game(BoardsInitializer.gameBoard, ProvaSetUp.getPlayer());
 		System.out.println(g1.getGameBoard().display());
 		System.out.println("era:" + g1.getGameBoard().getTowers().get(CardType.TERRITORY).getCells()[0].getCard().getEra());
+		System.out.println(players.get(0).getBoard().display());
 		ProvaSetUp.prova2();
 		System.out.println(g1.getGameBoard().display());
 		System.out.println("era:" + g1.getGameBoard().getTowers().get(CardType.TERRITORY).getCells()[0].getCard().getEra());
