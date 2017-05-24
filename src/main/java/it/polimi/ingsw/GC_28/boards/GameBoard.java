@@ -7,6 +7,7 @@ import it.polimi.ingsw.GC_28.cards.*;
 import it.polimi.ingsw.GC_28.components.Dice;
 import it.polimi.ingsw.GC_28.components.FamilyMember;
 import it.polimi.ingsw.GC_28.components.Resource;
+import it.polimi.ingsw.GC_28.model.BoardsInitializer;
 import it.polimi.ingsw.GC_28.spaces.CouncilPalace;
 import it.polimi.ingsw.GC_28.spaces.MarketSpace;
 import it.polimi.ingsw.GC_28.spaces.ProductionAndHarvestSpace;
