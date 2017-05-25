@@ -64,7 +64,7 @@ public class BoardsInitializer {
 		}
 	}
 	
-	private void setDeck(){
+	private static void setDeck(){
 		try{
 			CardReader cardReader = new CardReader();
 			deck = cardReader.startRead();
@@ -135,12 +135,10 @@ public class BoardsInitializer {
 	}
 	
 	private void initSpaces()throws FileNotFoundException{
-		Gson gson = new GsonBuilder().create();
-		FileReader spaceReader = new FileReader("spaces.json");
-		JsonReader reader = new JsonReader(spaceReader);
+		Gson gson = new GsonBuilder().create(); 
         try{
+        	JsonReader reader = new JsonReader(new FileReader("spaces.json"));
         	EverySpace everySpace = gson.fromJson(reader, EverySpace.class);
-        	spaceReader.close();
         	reader.close();
         	gameBoard.setCouncilPalace(everySpace.getCouncilPalace());
         	gameBoard.getCouncilPalace().setFree(true);

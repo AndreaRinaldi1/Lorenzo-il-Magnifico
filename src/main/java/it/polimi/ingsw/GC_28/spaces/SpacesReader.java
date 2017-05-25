@@ -8,7 +8,6 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.stream.JsonReader;
 
-import it.polimi.ingsw.GC_28.boards.GameBoard;;
 
 public class SpacesReader {
 	 Gson gson = new GsonBuilder().create();
@@ -20,8 +19,8 @@ public class SpacesReader {
 
 	    public EverySpace startRead() throws FileNotFoundException{
 	    	EverySpace everySpace = new EverySpace();
-	        JsonReader reader = new JsonReader(new FileReader("spaces.json"));
 	        try{
+	        	JsonReader reader = new JsonReader(new FileReader("spaces.json"));
 	        	everySpace = gson.fromJson(reader, EverySpace.class);
 	        	//d.getDeck().get(CardType.VENTURE).get(0).
 	        	//System.out.println(gameBoard.);   
@@ -31,8 +30,6 @@ public class SpacesReader {
 	    	catch(IOException e){
 	    		e.printStackTrace();
 	    	}
-	        finally{
-	        	return everySpace ;
-	        }
+	        return everySpace ;
 	    }
 }
