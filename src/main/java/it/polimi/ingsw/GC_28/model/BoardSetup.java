@@ -3,6 +3,8 @@ package it.polimi.ingsw.GC_28.model;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.concurrent.ThreadLocalRandom;
+import java.util.logging.Logger;
+import java.util.logging.Level;
 
 import it.polimi.ingsw.GC_28.cards.Card;
 import it.polimi.ingsw.GC_28.cards.CardReader;
@@ -50,7 +52,7 @@ public class BoardSetup {
 			CardReader cardReader = new CardReader();
 			deck =  cardReader.startRead();
 			}catch(FileNotFoundException e){
-				e.printStackTrace();
+				Logger.getAnonymousLogger().log(Level.SEVERE, "deck not found" + e);
 			}
 	}
 	

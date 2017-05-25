@@ -9,7 +9,8 @@ import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.EnumMap;
 import java.util.LinkedList;
-
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import javax.management.timer.Timer;
 
@@ -48,7 +49,6 @@ public class BoardsInitializer {
 	static Deck deck = new Deck();
 	public static final GameBoard gameBoard = new GameBoard();
 	
-	
 	public  void initializeBoard(){
 		try {
 			initDices();
@@ -60,7 +60,7 @@ public class BoardsInitializer {
 			initPlayerBoard();
 			initFamilyMember();
 		} catch (FileNotFoundException e) {
-			throw new RuntimeException(e.getMessage());
+			Logger.getAnonymousLogger().log(Level.SEVERE, "cannot start initialize" + e);
 		}
 	}
 	
@@ -69,7 +69,7 @@ public class BoardsInitializer {
 			CardReader cardReader = new CardReader();
 			deck = cardReader.startRead();
 			}catch(FileNotFoundException e){
-				e.printStackTrace();
+				Logger.getAnonymousLogger().log(Level.SEVERE, "Deck file not found" + e);
 			}
 	}
 	
@@ -108,7 +108,7 @@ public class BoardsInitializer {
 		try{
 			tower = new Tower(prepareCell(ct),false);
 		}catch(FileNotFoundException e){
-			e.printStackTrace();
+			Logger.getAnonymousLogger().log(Level.SEVERE, "cannot start initialize" + e);
 		}
 		return tower;		
 	}
@@ -130,7 +130,7 @@ public class BoardsInitializer {
 			CouncilPrivilege.setCouncilPrivilege(councilPrivilege);
 			reader.close();
 		}catch(IOException e){
-			
+			Logger.getAnonymousLogger().log(Level.SEVERE, "cannot start initialize" + e);
 		}
 	}
 	
@@ -210,7 +210,7 @@ public class BoardsInitializer {
 			bonusTile = gson.fromJson(jRead, BonusTile.class);
 			BonusTile.setBonusTile(bonusTile);
 		}catch(FileNotFoundException e){
-			e.printStackTrace();
+			Logger.getAnonymousLogger().log(Level.SEVERE, "cannot start initialize" + e);
 		}
 	}
 	

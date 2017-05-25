@@ -3,6 +3,8 @@ package it.polimi.ingsw.GC_28.spaces;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -28,7 +30,7 @@ public class SpacesReader {
 		        reader.close();
 	    	}
 	    	catch(IOException e){
-	    		e.printStackTrace();
+	    		Logger.getAnonymousLogger().log(Level.SEVERE, "space file not found" + e);
 	    	}
 	        return everySpace ;
 	    }

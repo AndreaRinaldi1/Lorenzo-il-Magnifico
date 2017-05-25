@@ -1,10 +1,12 @@
 package it.polimi.ingsw.GC_28.components;
-import it.polimi.ingsw.GC_28.cards.*;
+
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.EnumMap;
 import java.util.HashMap;
 import java.util.Scanner;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import java.lang.Character;
 
 import com.google.gson.Gson;
@@ -72,7 +74,7 @@ public class CouncilPrivilegeCreator {
 			file.close();
 			
 		}catch(IOException e){
-			e.printStackTrace();
+			Logger.getAnonymousLogger().log(Level.INFO, "input not valide" + e);
 		}
 		scanner.close();
 	}

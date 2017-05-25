@@ -7,6 +7,8 @@ import com.google.gson.stream.JsonReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class CardReader{
     Gson gson = new GsonBuilder().create();
@@ -65,7 +67,7 @@ public class CardReader{
 	        reader2.close();
     	}
     	catch(IOException e){
-    		e.printStackTrace();
+    		Logger.getAnonymousLogger().log(Level.SEVERE, "Deck file not found" + e);
     	}
         return deck;
 

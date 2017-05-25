@@ -4,6 +4,8 @@ import it.polimi.ingsw.GC_28.cards.*;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -29,7 +31,7 @@ public class CouncilPrivilegeReader {
 	        reader.close();
     	}
     	catch(IOException e){
-    		e.printStackTrace();
+    		Logger.getAnonymousLogger().log(Level.INFO, "input not valide" + e);
     	}
     }
 }
