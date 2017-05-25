@@ -2885,14 +2885,10 @@
           "type": "TAKECARDEFFECT"
         }
       ],
-<<<<<<< HEAD
-      "permanentEffect": {},
-=======
       "permanentEffect":
       {
         	"type": "NOEFFECT"
       },
->>>>>>> master
       "name": "Eroe",
       "IDNumber": 60,
       "era": 2,
@@ -2998,14 +2994,10 @@
           "type": "PRIVILEGESEFFECT"
         }
       ],
-<<<<<<< HEAD
-      "permanentEffect": {},
-=======
       "permanentEffect":
       {
         	"type": "NOEFFECT"
       },
->>>>>>> master
       "name": "Messo Reale",
       "IDNumber": 64,
       "era": 2,
@@ -3297,14 +3289,10 @@
           "type": "PRIVILEGESEFFECT"
         }
       ],
-<<<<<<< HEAD
-      "permanentEffect": {},
-=======
       "permanentEffect":
       {
         	"type": "NOEFFECT"
       },
->>>>>>> master
       "name": "Ambasciatore",
       "IDNumber": 72,
       "era": 3,
