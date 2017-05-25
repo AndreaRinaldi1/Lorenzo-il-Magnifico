@@ -356,3 +356,110 @@
     }
   ]
 }
+{
+  "territories": [],
+  "buildings": [
+    {
+      "immediateEffect": {
+        "resourceBonus": {
+          "resource": {
+            "COIN": 6,
+            "WOOD": 6,
+            "STONE": 6,
+            "SERVANT": 6,
+            "MILITARYPOINT": 6,
+            "VICTORYPOINT": 6,
+            "FAITHPOINT": 6
+          }
+        },
+        "type": "RESOURCEEFFECT"
+      },
+      "permanentEffect": {
+        "productionValue": 5,
+        "resourceBonus": {
+          "resourceBonus": {
+            "resource": {
+              "COIN": 4,
+              "WOOD": 3,
+              "STONE": 3,
+              "SERVANT": 3,
+              "MILITARYPOINT": 5,
+              "VICTORYPOINT": 5,
+              "FAITHPOINT": 5
+            }
+          },
+          "type": "RESOURCEEFFECT"
+        },
+        "privilegeEffect": {
+          "numberOfCouncilPrivileges": 4,
+          "different": false,
+          "type": "PRIVILEGESEFFECT"
+        },
+        "type": "PRODUCTIONEFFECT"
+      },
+      "name": "gwe",
+      "IDNumber": 4,
+      "era": 6,
+      "color": {
+        "value": -256,
+        "falpha": 0.0
+      },
+      "cost": {
+        "resource": {
+          "COIN": 56,
+          "WOOD": 6,
+          "STONE": 6,
+          "SERVANT": 6,
+          "MILITARYPOINT": 6,
+          "VICTORYPOINT": 6,
+          "FAITHPOINT": 66
+        }
+      }
+    },
+    {
+      "immediateEffect": {
+        "resourceBonus": {
+          "resource": {
+            "COIN": 4,
+            "WOOD": 3,
+            "STONE": 3,
+            "SERVANT": 5,
+            "MILITARYPOINT": 6,
+            "VICTORYPOINT": 6,
+            "FAITHPOINT": 6
+          }
+        },
+        "type": "RESOURCEEFFECT"
+      },
+      "permanentEffect": {
+        "productionValue": 5,
+        "privilegeEffect": {
+          "numberOfCouncilPrivileges": 4,
+          "different": true,
+          "type": "PRIVILEGESEFFECT"
+        },
+        "type": "PRODUCTIONEFFECT"
+      },
+      "name": "fda",
+      "IDNumber": 5,
+      "era": 5,
+      "color": {
+        "value": -256,
+        "falpha": 0.0
+      },
+      "cost": {
+        "resource": {
+          "COIN": 4,
+          "WOOD": 3,
+          "STONE": 5,
+          "SERVANT": 6,
+          "MILITARYPOINT": 6,
+          "VICTORYPOINT": 6,
+          "FAITHPOINT": 4
+        }
+      }
+    }
+  ],
+  "characters": [],
+  "ventures": []
+}
