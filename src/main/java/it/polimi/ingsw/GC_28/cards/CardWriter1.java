@@ -492,36 +492,44 @@ private void enterResourceBonus(EnumMap<ResourceType, Integer> bonus){
 		scanner.nextLine();
 		EnumMap<ResourceType, Integer> bonus;
 		Resource resourceBonus;
-		
-		char productionEffectType = enterProductionEffectType();
-		switch(productionEffectType){
-		case('e'):
-			ExchangeEffect exEff = new ExchangeEffect();
-			enterExchangeEffect(exEff);
-			pe.setExchangeBonus(exEff);
-			break;
-		case('m'):
-			MultiplierEffect me = new MultiplierEffect();
-			me.setCardType(enterCardType());
-			bonus = new EnumMap<ResourceType, Integer>(ResourceType.class);
-			enterResourceBonus(bonus);
-			resourceBonus = Resource.of(bonus);
-			me.setResourceBonus(resourceBonus);
-			pe.setMultiplierEffect(me);
-			break;
-		case('r'):
-			bonus = new EnumMap<ResourceType, Integer>(ResourceType.class);
-			enterResourceBonus(bonus);
-			resourceBonus = Resource.of(bonus);
-			ResourceEffect re = new ResourceEffect();
-			re.setResourceBonus(resourceBonus);
-			pe.setResourceBonus(re);
-			break;
-		case('p'):
-			PrivilegesEffect privEffect = new PrivilegesEffect();
-			pe.setPrivilegeEffect(enterPrivilegesEffect(privEffect));
-			break;
-		}
+		boolean x = false;
+		do{
+			
+			char productionEffectType = enterProductionEffectType();
+			switch(productionEffectType){
+			case('e'):
+				ExchangeEffect exEff = new ExchangeEffect();
+				enterExchangeEffect(exEff);
+				pe.setExchangeBonus(exEff);
+				break;
+			case('m'):
+				MultiplierEffect me = new MultiplierEffect();
+				me.setCardType(enterCardType());
+				bonus = new EnumMap<ResourceType, Integer>(ResourceType.class);
+				enterResourceBonus(bonus);
+				resourceBonus = Resource.of(bonus);
+				me.setResourceBonus(resourceBonus);
+				pe.setMultiplierEffect(me);
+				break;
+			case('r'):
+				bonus = new EnumMap<ResourceType, Integer>(ResourceType.class);
+				enterResourceBonus(bonus);
+				resourceBonus = Resource.of(bonus);
+				ResourceEffect re = new ResourceEffect();
+				re.setResourceBonus(resourceBonus);
+				pe.setResourceBonus(re);
+				break;
+			case('p'):
+				PrivilegesEffect privEffect = new PrivilegesEffect();
+				pe.setPrivilegeEffect(enterPrivilegesEffect(privEffect));
+				break;
+			}
+			System.out.println("Do you want to enter another effect[y/n]");
+			if(scanner.nextLine().equals("n")){
+				x = true;
+			}
+		}while(!x);
+			
 		return pe;
 	}
 	
