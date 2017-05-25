@@ -18,6 +18,10 @@ public class FamilyMember {
 			value = 0;
 		}
 	}
+	
+	public void setValue(int value){
+		this.value = value;
+	}
 
 	public Player getPlayer() {
 		return Player;
@@ -31,7 +35,7 @@ public class FamilyMember {
 		return value;
 	}
 	
-	public void incrementValue(int amount){
+	public void modifyValue(int amount){
 		this.value += amount;
 	}
 	

@@ -52,6 +52,6 @@ public class TakeCardEffect extends Effect{
 	@Override
 	public void apply(FamilyMember familyMember, GameBoard gameBoard, Game game) {
 		System.out.println("apply di TakeCardEffect");
-		
+		game.askCard(this);
 	}
 }

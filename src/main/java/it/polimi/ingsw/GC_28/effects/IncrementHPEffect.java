@@ -47,7 +47,7 @@ public class IncrementHPEffect extends Effect{
 		//Quando un controller, prima di effettuare l'azione di harvest o production, deve controllare se ci sono incrementhpeffects
 		//chiama (per ogni IncrementHPEffect che trova) getProduction o getHarvest a seconda dell'azione scelta dal giocatore e guarda se è true o false. 
 		//Se true chiama questo apply (che quindi non fa controlli sui boolean ma aumenta solo actionValue del familyMember), se no non lo chiama.
-		familyMember.incrementValue(increment);
+		familyMember.modifyValue(increment);
 	}
 	
 	

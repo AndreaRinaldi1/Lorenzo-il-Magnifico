@@ -10,6 +10,8 @@ public class DiscountEffect extends Effect{
 	private boolean alternativeDiscountPresence;
 	private Resource discount;
 	private Resource alternativeDiscount;
+	private Resource chosenAlternativeDiscount;
+	
 	public final EffectType type = EffectType.DISCOUNTEFFECT;
 	
 	public DiscountEffect(){
@@ -42,6 +44,17 @@ public class DiscountEffect extends Effect{
 		this.discount = discount;
 	}
 	
+	
+	public Resource getChosenAlternativeDiscount() {
+		return chosenAlternativeDiscount;
+	}
+
+
+	public void setChosenAlternativeDiscount(Resource chosenAlternativeDiscount) {
+		this.chosenAlternativeDiscount = chosenAlternativeDiscount;
+	}
+
+
 	@Override
 	public void apply(FamilyMember familyMember, GameBoard gameBoard, Game game){
 		System.out.println("apply di DiscountEffect");

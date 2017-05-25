@@ -1,21 +1,25 @@
 package it.polimi.ingsw.GC_28.model;
 
 import java.util.ArrayList;
+import java.util.EnumMap;
 import java.util.Scanner;
 
 import it.polimi.ingsw.GC_28.boards.GameBoard;
 import it.polimi.ingsw.GC_28.components.CouncilPrivilege;
+import it.polimi.ingsw.GC_28.components.DiceColor;
+import it.polimi.ingsw.GC_28.components.FamilyMember;
 import it.polimi.ingsw.GC_28.components.Resource;
+import it.polimi.ingsw.GC_28.components.ResourceType;
 import it.polimi.ingsw.GC_28.core.TakeCardAction;
+import it.polimi.ingsw.GC_28.effects.TakeCardEffect;
 
 public class Game {
 	private GameBoard gameBoard;
 	private ArrayList<Player> players;
 	private int currentEra;
 	Scanner input = new Scanner(System.in);
-		
-	
-	private TakeCardAction takeCardAction = new TakeCardAction(this, gameBoard);
+	private Player currentPlayer;
+	boolean modifiedWithServants = false;
 	
 	public Game(){
 		//lasciare costruttore vuoto per prove
@@ -71,6 +75,127 @@ public class Game {
 			}
 		}
 		return choices;
+	}
+	
+	
+	
+	public boolean askCard(TakeCardEffect throughEffect){ //throughEffect = null se non è un askcard che viene da effetto ma da mossa normale
+		FamilyMember familyMember;
+		int incrementThroughServants;
+		TakeCardAction takeCardAction = new TakeCardAction(this, gameBoard);
+		
+		if(!(throughEffect.equals(null))){ //se viene da effetto gli dico cosa può prendere 
+			if(throughEffect.getCardType().equals(null)){
+				System.out.println("You can take another card of any type");
+			}
+			else{
+				System.out.println("You can take a card of type: " + throughEffect.getCardType().name());
+			}
+		}
+		
+		String name = askCardName();
+		
+		if((throughEffect.equals(null))){ //se viene da mossa gli chiedo quale fm vuole usare
+			familyMember = askFamilyMember();
+		}
+		else{
+			familyMember = new FamilyMember(currentPlayer, false, null); //altrimenti uno fittizio
+			familyMember.setValue(throughEffect.getActionValue());
+		}
+		incrementThroughServants = askForServantsIncrement();
+		familyMember.modifyValue(incrementThroughServants);
+		
+		if(takeCardAction.isApplicable(name, familyMember, throughEffect)){
+			takeCardAction.apply(name, familyMember, throughEffect);
+			return true;
+		}
+		else{
+			if(modifiedWithServants){
+				familyMember.modifyValue((-1)*(incrementThroughServants));
+				EnumMap<ResourceType, Integer> decrement = new EnumMap<>(ResourceType.class);
+				decrement.put(ResourceType.SERVANT, incrementThroughServants);
+				Resource res = Resource.of(decrement);
+				currentPlayer.getBoard().getResources().modifyResource(res, true);
+			}
+			System.out.println("Not valid action!");
+			return false;
+		}
+	}
+	
+	public String askCardName(){
+		System.out.println("Enter the name of the card you would like to take: ");
+		while(input.hasNextInt()){
+			System.out.println("Not valid input!");
+		}
+		return input.nextLine();
+	}
+	
+	/*public CardType askCardType(){
+		do{
+			System.out.println("Enter CardType [ Territory / Building / Character / Venture ]");
+			String choice = input.nextLine();
+			for(CardType ct : CardType.values()){
+				if(choice.toUpperCase().equals(ct.name()))
+					return ct;
+			}
+			System.out.println("Not valid input!");
+		}while(true);
+	}*/
+	
+	public FamilyMember askFamilyMember(){
+		boolean x = true;
+		do{
+			System.out.println("Enter which familyMember you would like to use: [ Orange / Black / White / Neutral ]");
+			String choice = input.nextLine();
+			for(DiceColor color : DiceColor.values()){
+				if(choice.toUpperCase().equals(color.name())){
+					for(FamilyMember familyMember : currentPlayer.getFamilyMembers()){
+						if(!familyMember.isUsed()){
+							return familyMember;
+						}
+					}
+					System.out.println("The specified family member has already been used!");
+					x = false;
+					continue;
+				}
+			}
+			if(x){
+				System.out.println("Not valid input!");
+			}
+		}while(true);
+	}
+	
+	public int askForServantsIncrement(){
+		while(true){
+			System.out.println("Would you like to pay servants in order to increment the family member action value? [y/n]");
+			if(input.hasNextInt()){
+				System.out.println("Not valid input!");
+				continue;
+			}
+			else if(input.hasNextLine()){
+				if(input.nextLine().equals("y")){
+					System.out.println("How many servants would you like to pay?");
+					if(input.hasNextInt()){
+						int increment = input.nextInt();
+						int numberOfServants = currentPlayer.getBoard().getResources().getResource().get(ResourceType.SERVANT);
+						if(increment <= numberOfServants){
+							currentPlayer.getBoard().getResources().getResource().put(ResourceType.SERVANT, (numberOfServants-increment));
+							modifiedWithServants = true;
+							return increment;
+						}
+						else{
+							System.out.println("You don't have so many servants!");
+						}
+					}
+					else{
+						System.out.println("Not valid inupt!");
+					}
+				}
+				else{
+					return 0;
+				}
+			}
+		}
 	}
 	
 	public Character askPrivilege(){
