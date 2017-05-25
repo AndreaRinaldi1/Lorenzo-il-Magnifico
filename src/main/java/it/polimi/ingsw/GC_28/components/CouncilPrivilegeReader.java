@@ -20,8 +20,9 @@ public class CouncilPrivilegeReader {
 
     public static void startRead() throws FileNotFoundException{
     	Gson gson = new GsonBuilder().create();
-        JsonReader reader = new JsonReader(new FileReader("priv.json"));
+        
         try{
+        	JsonReader reader = new JsonReader(new FileReader("priv.json"));
         	CouncilPrivilege cp = gson.fromJson(reader, CouncilPrivilege.class);
         	//System.out.println(x.get("a").toString());
         	//System.out.println(d.toString());    		
