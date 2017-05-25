@@ -23,11 +23,6 @@ public class ProvaSetUp {
 	}
 	
 	public static void prova2(){
-		try {
-			Thread.sleep(2000);
-		} catch (InterruptedException e) {
-			e.printStackTrace();
-		}
 		bs.setUpBoard();
 	}
 	

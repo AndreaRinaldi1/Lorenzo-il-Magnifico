@@ -37,23 +37,25 @@ public class Resource {
 	public boolean equals(Resource otherResource){
 		Resource shorterResource;
 		Resource longerResource;
-		if(resource.size() > otherResource.getResource().size()){
-			shorterResource = otherResource;
-			longerResource = this;
-		}
-		else{
-			shorterResource = this;
-			longerResource = otherResource;
-		}
-		for(ResourceType resType : longerResource.getResource().keySet()){
-			if(shorterResource.getResource().containsKey(resType)){
-				if(!(longerResource.getResource().get(resType).equals(shorterResource.getResource().get(resType)))){
-					return false;
-				}
+		if(!(otherResource.getResource().isEmpty())){
+			if(resource.size() > otherResource.getResource().size()){
+				shorterResource = otherResource;
+				longerResource = this;
 			}
 			else{
-				if(!(longerResource.getResource().get(resType).equals(0))){
-					return false;
+				shorterResource = this;
+				longerResource = otherResource;
+			}
+			for(ResourceType resType : longerResource.getResource().keySet()){
+				if(shorterResource.getResource().containsKey(resType)){
+					if(!(longerResource.getResource().get(resType).equals(shorterResource.getResource().get(resType)))){
+						return false;
+					}
+				}
+				else{
+					if(!(longerResource.getResource().get(resType).equals(0))){
+						return false;
+					}
 				}
 			}
 		}

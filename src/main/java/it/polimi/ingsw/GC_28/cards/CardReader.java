@@ -7,6 +7,8 @@ import com.google.gson.stream.JsonReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class CardReader{
     Gson gson = new GsonBuilder().create();
@@ -17,12 +19,15 @@ public class CardReader{
     }
 
     public Deck startRead() throws FileNotFoundException{
-        JsonReader reader = new JsonReader(new FileReader("cards.json"));
-        JsonReader reader2 = new JsonReader(new FileReader("cards.json"));
+        //JsonReader reader = new JsonReader(new FileReader("cards.json"));
+        //JsonReader reader2 = new JsonReader(new FileReader("cards.json"));
         //JsonReader reader3 = new JsonReader(new FileReader("cards.json"));
 
         Deck deck = new Deck();
         try{
+        	JsonReader reader = new JsonReader(new FileReader("cards.json"));
+            JsonReader reader2 = new JsonReader(new FileReader("cards.json"));
+        	
         	deck = gson.fromJson(reader, Deck.class);
         	
         	
@@ -59,13 +64,13 @@ public class CardReader{
         //	System.out.println(d.toString());   
         	//System.out.println(d.getVentures().get(0).getAlternativeCostPresence());
 	        reader.close();
+	        reader2.close();
     	}
     	catch(IOException e){
-    		e.printStackTrace();
+    		Logger.getAnonymousLogger().log(Level.SEVERE, "Deck file not found" + e);
     	}
-        finally{
-        	return deck;
-        }
+        return deck;
+
        
     }
 }

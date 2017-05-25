@@ -3,12 +3,13 @@ package it.polimi.ingsw.GC_28.spaces;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.stream.JsonReader;
 
-import it.polimi.ingsw.GC_28.boards.GameBoard;;
 
 public class SpacesReader {
 	 Gson gson = new GsonBuilder().create();
@@ -20,8 +21,8 @@ public class SpacesReader {
 
 	    public EverySpace startRead() throws FileNotFoundException{
 	    	EverySpace everySpace = new EverySpace();
-	        JsonReader reader = new JsonReader(new FileReader("spaces.json"));
 	        try{
+	        	JsonReader reader = new JsonReader(new FileReader("spaces.json"));
 	        	everySpace = gson.fromJson(reader, EverySpace.class);
 	        	//d.getDeck().get(CardType.VENTURE).get(0).
 	        	//System.out.println(gameBoard.);   
@@ -29,10 +30,8 @@ public class SpacesReader {
 		        reader.close();
 	    	}
 	    	catch(IOException e){
-	    		e.printStackTrace();
+	    		Logger.getAnonymousLogger().log(Level.SEVERE, "space file not found" + e);
 	    	}
-	        finally{
-	        	return everySpace ;
-	        }
+	        return everySpace ;
 	    }
 }
