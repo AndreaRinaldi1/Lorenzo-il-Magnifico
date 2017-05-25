@@ -18,7 +18,7 @@ import it.polimi.ingsw.GC_28.cards.Character;
 public class TakeCardController {
 
 	private GameBoard gameBoard;
-	private CardType cardType;
+	protected CardType cardType;
 	//private Cell cell;
 	
 	public TakeCardController(GameBoard gameBoard){
@@ -40,7 +40,7 @@ public class TakeCardController {
 		if(!(checkCardExistance(name, throughEffect))){
 			return false;
 		}
-		if(!(throughEffect.equals(null))){
+		if(throughEffect.equals(null)){
 			if(checkThisPlayerPresent(familyMember)){
 				return false;
 			}
@@ -85,6 +85,7 @@ public class TakeCardController {
 		return false;
 	}
 	
+	
 	/**
 	 * @param cardType
 	 * @param familyMember
@@ -122,55 +123,17 @@ public class TakeCardController {
 		Resource tmp = Resource.of(res);
 		tmp.modifyResource(familyMember.getPlayer().getBoard().getResources(), true);
 		
-		if(checkAnyPlayerPresent()){
-			EnumMap<ResourceType, Integer> minus3Coin = new EnumMap<>(ResourceType.class);
-			minus3Coin.put(ResourceType.COIN, 3);
-			Resource r = Resource.of(minus3Coin);
-			tmp.modifyResource(r, false);
-		}
+		reduce3Coins(familyMember, true, tmp);
 		
 		if(tmp.getResource().get(ResourceType.COIN) < 0){
 			return false;
 		}
 		
-		boolean noCellBonus = false;
-		for(Character character : familyMember.getPlayer().getBoard().getCharacters()){
-			if(character.getPermanentEffect() instanceof NoCellBonusEffect){
-				noCellBonus = true;
-			}
-		}
-		if(!noCellBonus){
-			tmp.modifyResource(gameBoard.getTowers().get(cardType).findCard(cardName).getBonus(), true);
-		}
+		lookForNoCellBonus(familyMember, true, tmp, cardName);
 		
-		if(!(throughEffect.equals(null))){
-			if(throughEffect.isDiscountPresence()){ //discount di takecardeffect
-				if(throughEffect.getDiscount().getAlternativeDiscountPresence()){
-					throughEffect.getDiscount().setChosenAlternativeDiscount(game.askAlternativeDiscount(throughEffect.getDiscount().getDiscount(), throughEffect.getDiscount().getAlternativeDiscount()));
-					tmp.modifyResource(throughEffect.getDiscount().getChosenAlternativeDiscount(), true);
-				}
-				else{
-					tmp.modifyResource(throughEffect.getDiscount().getDiscount(), true);
-				}
-			}
-		}
+		lookForTakeCardDiscount(familyMember, true, tmp, game, throughEffect);
 		
-		for(Character character : familyMember.getPlayer().getBoard().getCharacters()){
-			if(character.getPermanentEffect() instanceof IncrementCardEffect){
-				IncrementCardEffect eff = (IncrementCardEffect) character.getPermanentEffect();
-				if(eff.getCardType().equals(cardType)){
-					if(eff.isDiscountPresence()){ //discount di incrementCardEffect
-						if(eff.getDiscount().getAlternativeDiscountPresence()){ 
-							eff.getDiscount().setChosenAlternativeDiscount(game.askAlternativeDiscount(eff.getDiscount().getDiscount(), eff.getDiscount().getAlternativeDiscount()));
-							tmp.modifyResource(eff.getDiscount().getChosenAlternativeDiscount(), true);
-						}
-						else{
-							tmp.modifyResource(eff.getDiscount().getDiscount(), true);
-						}
-					}
-				}
-			}
-		}
+		lookForIncrementCardDiscount(familyMember, true, tmp, game);
 		
 		tmp.modifyResource(gameBoard.getTowers().get(cardType).findCard(cardName).getCard().getCost(), false);
 		
@@ -180,6 +143,97 @@ public class TakeCardController {
 			}
 		}
 		return true;
+	}
+	
+	
+	protected void reduce3Coins(FamilyMember familyMember, boolean check, Resource tmp){
+		if(checkAnyPlayerPresent()){
+			EnumMap<ResourceType, Integer> minus3Coin = new EnumMap<>(ResourceType.class);
+			minus3Coin.put(ResourceType.COIN, 3);
+			Resource r = Resource.of(minus3Coin);
+			if(check){
+				tmp.modifyResource(r, false);
+			}
+			else{
+				familyMember.getPlayer().getBoard().getResources().modifyResource(r, false);
+			}
+		}
+
+	}
+	
+	protected void lookForNoCellBonus(FamilyMember familyMember, boolean check, Resource tmp, String cardName){
+		boolean noCellBonus = false;
+		for(Character character : familyMember.getPlayer().getBoard().getCharacters()){
+			if(character.getPermanentEffect() instanceof NoCellBonusEffect){
+				noCellBonus = true;
+			}
+		}
+		if(!noCellBonus){
+			Resource bonus = gameBoard.getTowers().get(cardType).findCard(cardName).getBonus();
+			if(check){
+				tmp.modifyResource(bonus, true);
+			}
+			else{
+				familyMember.getPlayer().getBoard().getResources().modifyResource(bonus, true);
+			}
+		}
+		
+	}
+	
+	
+	protected void lookForTakeCardDiscount(FamilyMember familyMember, boolean check, Resource tmp, Game game, TakeCardEffect throughEffect){
+		if(!(throughEffect.equals(null))){
+			if(throughEffect.isDiscountPresence()){ //discount di takecardeffect
+				if(throughEffect.getDiscount().getAlternativeDiscountPresence()){
+					if(check){
+						throughEffect.getDiscount().setChosenAlternativeDiscount(game.askAlternativeDiscount(throughEffect.getDiscount().getDiscount(), throughEffect.getDiscount().getAlternativeDiscount()));
+						tmp.modifyResource(throughEffect.getDiscount().getChosenAlternativeDiscount(), true);
+					}
+					else{
+						familyMember.getPlayer().getBoard().getResources().modifyResource(throughEffect.getDiscount().getChosenAlternativeDiscount(), true);
+					}
+				}
+				else{
+					if(check){
+						tmp.modifyResource(throughEffect.getDiscount().getDiscount(), true);
+					}
+					else{
+						familyMember.getPlayer().getBoard().getResources().modifyResource(throughEffect.getDiscount().getDiscount(), true);
+					}
+				}
+			}
+		}
+	}
+	
+	protected void lookForIncrementCardDiscount(FamilyMember familyMember, boolean check, Resource tmp, Game game){
+		for(Character character : familyMember.getPlayer().getBoard().getCharacters()){
+			if(character.getPermanentEffect() instanceof IncrementCardEffect){
+				IncrementCardEffect eff = (IncrementCardEffect) character.getPermanentEffect();
+				if(cardType.equals(eff.getCardType()) || eff.getCardType().equals(null)){
+					if(eff.isDiscountPresence()){ //discount di incrementCardEffect
+						if(eff.getDiscount().getAlternativeDiscountPresence()){ 
+							if(check){
+								eff.getDiscount().setChosenAlternativeDiscount(game.askAlternativeDiscount(eff.getDiscount().getDiscount(), eff.getDiscount().getAlternativeDiscount()));
+								tmp.modifyResource(eff.getDiscount().getChosenAlternativeDiscount(), true);
+							}
+							else{
+								familyMember.getPlayer().getBoard().getResources().modifyResource(eff.getDiscount().getChosenAlternativeDiscount(), true);
+							}
+							
+						}
+						else{
+							if(check){
+								tmp.modifyResource(eff.getDiscount().getDiscount(), true);
+							}
+							else{
+								familyMember.getPlayer().getBoard().getResources().modifyResource(eff.getDiscount().getDiscount(), true);
+							}
+						}
+					}
+				}
+			}
+		}
+		
 	}
 	
 	/**

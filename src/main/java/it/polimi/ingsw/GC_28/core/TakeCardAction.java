@@ -1,7 +1,15 @@
 package it.polimi.ingsw.GC_28.core;
 
+import it.polimi.ingsw.GC_28.boards.Cell;
 import it.polimi.ingsw.GC_28.boards.GameBoard;
+import it.polimi.ingsw.GC_28.cards.Building;
+import it.polimi.ingsw.GC_28.cards.Character;
+import it.polimi.ingsw.GC_28.cards.Card;
+import it.polimi.ingsw.GC_28.cards.Territory;
+import it.polimi.ingsw.GC_28.cards.Venture;
 import it.polimi.ingsw.GC_28.components.FamilyMember;
+import it.polimi.ingsw.GC_28.components.Resource;
+import it.polimi.ingsw.GC_28.effects.Effect;
 import it.polimi.ingsw.GC_28.effects.TakeCardEffect;
 import it.polimi.ingsw.GC_28.model.Game;
 
@@ -20,6 +28,40 @@ public class TakeCardAction {
 	}
 	
 	public void apply(String name, FamilyMember familyMember, TakeCardEffect throughEffect){
+		takeCardController.reduce3Coins(familyMember, false, null);
+		takeCardController.lookForNoCellBonus(familyMember, false, null, name);
+		takeCardController.lookForTakeCardDiscount(familyMember, false, null, game, throughEffect);
+		takeCardController.lookForIncrementCardDiscount(familyMember, false, null, game);
+		Cell cell = gameBoard.getTowers().get(takeCardController.cardType).findCard(name);
+		Resource cardCost = cell.getCard().getCost();
+		familyMember.getPlayer().getBoard().getResources().modifyResource(cardCost, false);
+		if(throughEffect.equals(null)){
+			cell.setFamilyMember(familyMember);
+		}
+		Card card = cell.getCard();
+		if(card instanceof Territory){ 
+			Territory territory = (Territory) card;
+			for(Effect e : territory.getImmediateEffect()){
+				e.apply(familyMember, gameBoard, game);
+			}
+		}
+		else if(card instanceof Building){ 
+			Building building = (Building) card;
+			building.getImmediateEffect().apply(familyMember, gameBoard, game);
+		}
+		else if(card instanceof Character){ 
+			Character character = (Character) card;
+			for(Effect e : character.getImmediateEffect()){
+				e.apply(familyMember, gameBoard, game);
+			}
+		}
+		else if(card instanceof Territory){ 
+			Venture venture = (Venture) card;
+			for(Effect e : venture.getImmediateEffect()){
+				e.apply(familyMember, gameBoard, game);
+			}
+		}
+		
 	}
 	
 	
