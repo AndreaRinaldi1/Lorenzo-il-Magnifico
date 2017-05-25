@@ -15,16 +15,11 @@ public class Tower {
 	}
 
 	public Cell findCard(String cardName){
-		for(Cell c : cells){
-			if(c.getCard().getName().equals(cardName)){
-				return c;
+		for(Cell cell : cells){
+			if(cell.getCard().getName().equals(cardName)){
+				return cell;
 			}
 		}
-		/*for(int i = 0; i < MAX_SIZE; i++){
-			if(cells[i].getCard().getName().equals(cardName)){
-				return cells[i];
-			}
-		}*/
 		return null;
 	}
 	

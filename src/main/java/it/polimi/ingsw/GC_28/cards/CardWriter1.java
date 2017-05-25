@@ -36,7 +36,7 @@ public class CardWriter1 {
 		
 		Gson obj = new GsonBuilder().setPrettyPrinting().create();
 		try{
-			FileWriter file = new FileWriter("cards.json", true);
+			FileWriter file = new FileWriter("cards2.json", true);
 			
 
 			String name;

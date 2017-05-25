@@ -8,7 +8,7 @@ import it.polimi.ingsw.GC_28.model.Game;
 
 public class NoCellBonusEffect extends Effect{
 	private boolean presence;
-	public final EffectType type = EffectType.NOCELLBONUS;
+	private final EffectType type = EffectType.NOCELLBONUS;
 
 	public NoCellBonusEffect(){
 		super();

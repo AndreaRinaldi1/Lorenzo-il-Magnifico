@@ -122,7 +122,13 @@ public class Prova {
 		System.out.println(pb.getResources().toString());*/
 
 		
-		//TODO: TESTARE PRODUCTIONEFFECT
+		//PROVA DI PRIVILEGESEFFECT
+		/*PrivilegesEffect pe = new PrivilegesEffect();
+		pe.setDifferent(false);
+		pe.setNumberOfCouncilPrivileges(2);
+		pe.apply(fm, gb, g);*/
+		
+		
 		
 		
 		

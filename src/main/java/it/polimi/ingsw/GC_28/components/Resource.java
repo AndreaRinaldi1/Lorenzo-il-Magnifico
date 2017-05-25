@@ -23,6 +23,26 @@ public class Resource {
 		return this.resource;
 	}
 	
+	public void modifyResource(Resource amount, boolean sum){
+		int i;
+		if(sum){
+			i = 1;
+		}
+		else{
+			i = -1;
+		}
+		for(ResourceType resourceType : amount.getResource().keySet()){
+			Integer x = 0;
+			if(this.getResource().containsKey(resourceType)){
+				x = this.getResource().get(resourceType);
+			}
+			x = x + i*amount.getResource().get(resourceType);
+			this.getResource().put(resourceType, x);
+		}
+	}
+	
+	
+	
 	public String toString(){
 		Set<ResourceType> keySet = resource.keySet();
 		StringBuilder s = new StringBuilder();

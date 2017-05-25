@@ -6,12 +6,16 @@ import java.util.Scanner;
 import it.polimi.ingsw.GC_28.boards.GameBoard;
 import it.polimi.ingsw.GC_28.components.CouncilPrivilege;
 import it.polimi.ingsw.GC_28.components.Resource;
+import it.polimi.ingsw.GC_28.core.TakeCardAction;
 
 public class Game {
 	private GameBoard gameBoard;
 	private ArrayList<Player> players;
 	private int currentEra;
 	Scanner input = new Scanner(System.in);
+		
+	
+	private TakeCardAction takeCardAction = new TakeCardAction(this, gameBoard);
 	
 	public Game(){
 		//lasciare costruttore vuoto per prove
@@ -40,6 +44,7 @@ public class Game {
 	}
 	
 	
+	
 	public ArrayList<Character> askPrivilege(int numberOfCouncilPrivileges, boolean different){
 		System.out.println("Which council privilege do you want?");
 		for(Character key : CouncilPrivilege.instance().getOptions().keySet()){
@@ -49,6 +54,7 @@ public class Game {
 		ArrayList<Character> choices = new ArrayList<Character>();
 		int counter = 0;
 		while(counter < numberOfCouncilPrivileges){
+			System.out.println("Choose your council privilege #" + (counter+1));
 			Character c = askPrivilege();
 			if(!(choices.contains(c))){
 				choices.add(c);

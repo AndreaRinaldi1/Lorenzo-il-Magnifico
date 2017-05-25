@@ -122,26 +122,12 @@ public class PlayerBoard {
 	}
 	
 	public void addResource(Resource amount){
-		for(ResourceType resourceType : amount.getResource().keySet()){
-			Integer x = 0;
-			if(resources.getResource().containsKey(resourceType)){
-				x = resources.getResource().get(resourceType);
-			}
-			x += amount.getResource().get(resourceType);
-			resources.getResource().put(resourceType, x);
-		}
+		this.getResources().modifyResource(amount, true);
 	}
 	
 	public void reduceResources(Resource amount){
 		//TODO check disponibilità risorse in un altro metodo prima di chiamare questo metodo
-		for(ResourceType resourceType : amount.getResource().keySet()){
-			Integer x = 0;
-			if(resources.getResource().containsKey(resourceType)){
-				x = resources.getResource().get(resourceType);
-			}
-			x -= amount.getResource().get(resourceType);
-			resources.getResource().put(resourceType, x);
-		}
+		this.getResources().modifyResource(amount, false);
 	}
 	
 	
