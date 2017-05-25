@@ -4,10 +4,20 @@ import it.polimi.ingsw.GC_28.boards.PlayerBoard;
 import it.polimi.ingsw.GC_28.components.FamilyMember;
 
 public class Player {
+	private String name;
 	private PlayerColor color;
 	private PlayerBoard board;
 	private FamilyMember familyMembers[] = new FamilyMember[4];
 	
+
+	public Player(String name, PlayerColor color){
+		this.name = name;
+		this.color = color;
+	}
+		
+	public String getName() {
+		return name;
+	}
 
 	public PlayerBoard getBoard() {
 		return board;

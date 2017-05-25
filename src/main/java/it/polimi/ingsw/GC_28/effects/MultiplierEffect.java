@@ -3,7 +3,6 @@ package it.polimi.ingsw.GC_28.effects;
 import java.util.EnumMap;
 
 import it.polimi.ingsw.GC_28.boards.GameBoard;
-import it.polimi.ingsw.GC_28.boards.PlayerBoard;
 import it.polimi.ingsw.GC_28.cards.*;
 import it.polimi.ingsw.GC_28.components.FamilyMember;
 import it.polimi.ingsw.GC_28.components.Resource;
@@ -45,6 +44,7 @@ public class MultiplierEffect extends Effect{
 		this.cardType = cardType;
 	}
 	
+
 	private Resource multiplyResource(int times){
 		EnumMap<ResourceType, Integer> resource = new EnumMap<ResourceType, Integer>(ResourceType.class);
 		for(ResourceType resType : resourceBonus.getResource().keySet()){

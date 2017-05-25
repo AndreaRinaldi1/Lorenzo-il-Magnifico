@@ -13,21 +13,23 @@ import it.polimi.ingsw.GC_28.components.Resource;
 import it.polimi.ingsw.GC_28.components.ResourceType;
 
 public class PlayerBoard {
-	private ArrayList<Territory> territories = new ArrayList<Territory>();
-	private ArrayList<Building> buildings = new ArrayList<Building>();
-	private ArrayList<Character> characters = new ArrayList<Character>();
-	private ArrayList<Venture> ventures = new ArrayList<Venture>();
+	private ArrayList<Territory> territories = new ArrayList<>();
+	private ArrayList<Building> buildings = new ArrayList<>();
+	private ArrayList<Character> characters = new ArrayList<>();
+	private ArrayList<Venture> ventures = new ArrayList<>();
 	
 
 	
-	private final BonusTile bonusTile;//TODO ask if bonusTile final is ok
-	private HashMap<Integer, Resource> finalBonusTerritories = new HashMap<Integer, Resource>();
-	private HashMap<Integer, Resource> finalBonusCharacters = new HashMap<Integer, Resource>();
+	private final BonusTile bonusTile;
+	private HashMap<Integer, Resource> finalBonusTerritories = new HashMap<>();
+	private HashMap<Integer, Resource> finalBonusCharacters = new HashMap<>();
 	private Resource resources;
-	private ArrayList<ExcommunicationTile> excommunicationTile = new ArrayList<ExcommunicationTile>();
-	//FIXME ho provato ad aggiungere anche un indicatore per il numero e il valore dei family members (N?)
-	private ArrayList<FamilyMember> familyMember = new ArrayList<FamilyMember>();
+	private ArrayList<ExcommunicationTile> excommunicationTile = new ArrayList<>();
+
+	private ArrayList<FamilyMember> familyMember = new ArrayList<>();
 	
+	private String line = "---------------------------";
+	private String retLine = "------------------------\n";
 	
 	public PlayerBoard(BonusTile bonusTile, Resource resources){
 		this.bonusTile = bonusTile;
@@ -35,7 +37,7 @@ public class PlayerBoard {
 	}
 	
 	
-	//per il momento lasciare anche il costruttore vuoto per fare le prove 
+	//fix builder
 	public PlayerBoard(){
 		this.bonusTile = BonusTile.instance();
 	}
@@ -48,17 +50,17 @@ public class PlayerBoard {
 			ret+=" | ";
 		}
 		ret+="\n";
-		ret+="---------------------------";
-		ret+="------------------------\n";
+		ret+= line;
+		ret+= retLine;
 		ret+="Building Cards: ";
 		
 		for(int j = 0; j < buildings.size(); j++){
 			ret+= buildings.get(j).toString();
 			ret+=" | ";
 		}
-		ret+="\n";
-		ret+="---------------------------";
-		ret +="------------------------\n";
+		ret +="\n";
+		ret += line; 
+		ret += retLine;
 		
 		ret+="Character Cards: ";
 		
@@ -66,9 +68,9 @@ public class PlayerBoard {
 			ret+= characters.get(j).toString();
 			ret+=" | ";
 		}
-		ret+="\n";
-		ret+="---------------------------";
-		ret +="------------------------\n";
+		ret +="\n";
+		ret += line;
+		ret += retLine;
 		
 		ret+="Ventures Cards: ";
 		
@@ -77,27 +79,27 @@ public class PlayerBoard {
 			ret+=" | ";
 		}
 		ret+="\n";
-		ret+="---------------------------";
-		ret +="------------------------\n";
+		ret += line;
+		ret += retLine;
 		
 		ret+="Resources: ";
 		
-		for(ResourceType rscType : resources.getResource().keySet()){
-			ret+= resources.toString(); //ask Rob because probably he wants to use rscType instead of resource
-			ret+=" | ";
-		}
+		ret+= resources.toString(); 
+		ret+=" | ";
+
 		ret+="\n";
-		ret+="---------------------------";
-		ret +="------------------------\n";
+		ret += line;
+		ret += retLine;
 		
 		ret+="Family Members: ";
 		for(int j = 0; j < familyMember.size(); j++){
-			ret+= familyMember.get(j).toString();
+			ret+= familyMember.get(j).getDiceColor().name() + ": ";
+			ret+= familyMember.get(j).getValue().toString();
 			ret+= " | ";
 		}
 		ret+="\n";
-		ret+="---------------------------";
-		ret +="------------------------\n";
+		ret += line;
+		ret += retLine;
 		
 		ret+="\n";
 		return ret;
@@ -105,11 +107,11 @@ public class PlayerBoard {
 	}
 	
 	//methods in overloading
-	public void addCard(Territory t){ //TODO controllare il numero di punti military richiesti e che non abbia gia tot=MAX carte territorio
+	public void addCard(Territory t){ 
 		territories.add(t);
 	}
 	
-	public void addCard(Building b){//TODO controllare che non abbia gia tot=MAX carte building
+	public void addCard(Building b){
 		buildings.add(b);
 	}
 	
@@ -181,5 +183,15 @@ public class PlayerBoard {
 		return excommunicationTile;
 	}
 
+
+	public ArrayList<FamilyMember> getFamilyMember() {
+		return familyMember;
+	}
+
+
+	public void setFamilyMember(ArrayList<FamilyMember> familyMember) {
+		this.familyMember = familyMember;
+	}
+	
 	
 }

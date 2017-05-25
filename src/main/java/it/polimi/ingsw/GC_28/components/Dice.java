@@ -1,6 +1,7 @@
 package it.polimi.ingsw.GC_28.components;
 
 import java.util.Random;
+import java.util.concurrent.ThreadLocalRandom;
 
 public class Dice {
 	private DiceColor color;
@@ -20,7 +21,11 @@ public class Dice {
 
 	public void setValue() {
 		this.value = new Random().nextInt(6) + 1;
-	}	
+	}
+	public void rollDice(){
+		int randomInt = ThreadLocalRandom.current().nextInt(1, 7);
+		this.value = randomInt;
+	}
 	
 	@Override
 	public String toString(){

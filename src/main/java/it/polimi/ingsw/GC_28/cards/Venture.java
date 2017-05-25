@@ -43,28 +43,24 @@ public class Venture extends Card{
         		v = immediateEffect.get(i);
         		v = gson.fromJson(e.toString(), ResourceEffect.class);
         		immediateEffect.set(i, v);
-        		System.out.println(immediateEffect.get(i).getClass());
         		break;
 			case("PRIVILEGESEFFECT"):
         		System.out.println("cambio il tipo di immediate effect #" + i + " in PrivilegesEffect venture");
         		v = immediateEffect.get(i);
         		v = gson.fromJson(e.toString(), PrivilegesEffect.class);
         		immediateEffect.set(i, v);
-        		System.out.println(immediateEffect.get(i).getClass());
         		break;
 			case("GOTOHP"):
         		System.out.println("cambio il tipo di immediate effect #" + i + " in GoToHP venture");
 	        	v = immediateEffect.get(i);
 	    		v = gson.fromJson(e.toString(), GoToHPEffect.class);
 	    		immediateEffect.set(i, v);
-        		System.out.println(immediateEffect.get(i).getClass());
         		break;
 			case("TAKECARDEFFECT"):
         		System.out.println("cambio il tipo di immediate effect #" + i + " in TakeCardEffect venture");
         		v = immediateEffect.get(i);
         		v = gson.fromJson(e.toString(), TakeCardEffect.class);
         		immediateEffect.set(i, v);
-        		System.out.println(immediateEffect.get(i).getClass());
         		break;	
 			case("NOEFFECT"):
         		System.out.println("lascio il tipo dell'effetto a effect");
@@ -105,7 +101,5 @@ public class Venture extends Card{
 	public void setMinimumRequiredMilitaryPoints(int minimumRequiredMilitaryPoints) {
 		this.minimumRequiredMilitaryPoints = minimumRequiredMilitaryPoints;
 	}
-	
-	
-	
+		
 }

@@ -3,6 +3,8 @@ package it.polimi.ingsw.GC_28.cards;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Scanner;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 //import java.util.HashMap;
 //import java.util.Map;
 import java.util.ArrayList;
@@ -25,7 +27,7 @@ public class CardWriter1 {
 	Resource resourceCost;
 	int coin, wood, stone, servant, militaryPoint, victoryPoint, faithPoint;
 	Deck deck = new Deck();
-
+	private Logger log = Logger.getAnonymousLogger();
 	public static void main(String[] args){
 		CardWriter1 writer = new CardWriter1();
 		writer.startReadCard();
@@ -78,7 +80,7 @@ public class CardWriter1 {
 			file.close();
 			
 		}catch(IOException e){
-			e.printStackTrace();
+			log.log(Level.SEVERE, "input not valide" + e);
 		}
 		scanner.close();
 	}

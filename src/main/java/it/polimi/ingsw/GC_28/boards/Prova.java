@@ -1,30 +1,14 @@
 package it.polimi.ingsw.GC_28.boards;
-
-import java.io.FileNotFoundException;
-import java.util.ArrayList;
 import java.util.EnumMap;
 import java.util.HashMap;
-//import java.lang.Character;
 
-import it.polimi.ingsw.GC_28.cards.*;
-import it.polimi.ingsw.GC_28.cards.Character;
 import it.polimi.ingsw.GC_28.components.*;
-import it.polimi.ingsw.GC_28.effects.*;
 import it.polimi.ingsw.GC_28.model.Game;
 import it.polimi.ingsw.GC_28.model.Player;
 import it.polimi.ingsw.GC_28.model.PlayerColor;
-
 public class Prova {
-	public static void main(String[] args) throws FileNotFoundException {
+	public static void main(String[] args) {
 		
-		EnumMap<ResourceType, Integer> m = new EnumMap<ResourceType, Integer>(ResourceType.class);
-		m.put(ResourceType.COIN, 0);
-		m.put(ResourceType.WOOD, 0);
-		m.put(ResourceType.MILITARYPOINT, 0);
-		m.put(ResourceType.FAITHPOINT, 3);
-		m.put(ResourceType.VICTORYPOINT, 0);
-		Resource res1 = Resource.of(m);
-	
 		EnumMap<ResourceType, Integer> p = new EnumMap<ResourceType, Integer>(ResourceType.class);
 		p.put(ResourceType.COIN, 12);
 		p.put(ResourceType.SERVANT, 5);
@@ -167,4 +151,6 @@ public class Prova {
 		
 		*/
 	}
+
+
 }

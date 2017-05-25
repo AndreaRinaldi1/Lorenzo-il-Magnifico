@@ -23,6 +23,10 @@ public class ProductionAndHarvestSpace extends Space{
 		this.secondarySpace = secondarySpace;
 	}
 	
+	public void freeFirstPlayer(){
+		this.firstPlayer = null;
+	}
+	
 	@Override
 	public void addPlayer(FamilyMember player){
 		if(this.isFree() == true){

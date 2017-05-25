@@ -4,6 +4,8 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.EnumMap;
 import java.util.Scanner;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -79,7 +81,7 @@ public class SpacesCreator {
 			
 		}
 		catch(IOException e){
-			e.printStackTrace();
+			Logger.getAnonymousLogger().log(Level.FINE, "Input not valide " + e);
 		}
 	}
 	

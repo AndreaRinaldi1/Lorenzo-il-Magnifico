@@ -1,10 +1,13 @@
 package it.polimi.ingsw.GC_28.model;
 
+
 import java.util.ArrayList;
 import java.util.EnumMap;
 import java.util.Scanner;
 
+
 import it.polimi.ingsw.GC_28.boards.GameBoard;
+import it.polimi.ingsw.GC_28.cards.CardType;
 import it.polimi.ingsw.GC_28.components.CouncilPrivilege;
 import it.polimi.ingsw.GC_28.components.DiceColor;
 import it.polimi.ingsw.GC_28.components.FamilyMember;
@@ -15,7 +18,7 @@ import it.polimi.ingsw.GC_28.effects.TakeCardEffect;
 
 public class Game {
 	private GameBoard gameBoard;
-	private ArrayList<Player> players;
+	private static ArrayList<Player> players; //it's static because is the only way i can access to it from another class in a useful way
 	private int currentEra;
 	Scanner input = new Scanner(System.in);
 	private Player currentPlayer;
@@ -25,10 +28,24 @@ public class Game {
 		//lasciare costruttore vuoto per prove
 	}
 	
+	public static void main(String[] args) {
+		ProvaSetUp.prova();
+		Game g1 = new Game(BoardsInitializer.gameBoard, ProvaSetUp.getPlayer());
+		System.out.println(g1.getGameBoard().display());
+		System.out.println("era:" + g1.getGameBoard().getTowers().get(CardType.TERRITORY).getCells()[0].getCard().getEra());
+		System.out.println(players.get(0).getBoard().display());
+		ProvaSetUp.prova2();
+		System.out.println(g1.getGameBoard().display());
+		System.out.println("era:" + g1.getGameBoard().getTowers().get(CardType.TERRITORY).getCells()[0].getCard().getEra());
+		ProvaSetUp.prova2();
+		System.out.println(g1.getGameBoard().display());
+		System.out.println("era:" + g1.getGameBoard().getTowers().get(CardType.TERRITORY).getCells()[0].getCard().getEra());
+	}
 	
-	public Game(GameBoard gameBoard, ArrayList<Player> players) {
+	
+	public Game(GameBoard gameBoard, ArrayList<Player> players2) {
 		this.gameBoard = gameBoard;
-		this.players = players;
+		players = players2;
 	}
 
 	public int getCurrentEra() {
@@ -43,10 +60,13 @@ public class Game {
 		return gameBoard;
 	}
 
-	public ArrayList<Player> getPlayers() {
+	public static ArrayList<Player> getPlayers() {
 		return players;
 	}
 	
+	public static void setPlayers(ArrayList<Player> p){
+		players = p;
+	}
 	
 	
 	public ArrayList<Character> askPrivilege(int numberOfCouncilPrivileges, boolean different){
