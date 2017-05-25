@@ -288,7 +288,9 @@
       "permanentEffect": {
         "harvestValue": 6,
         "councilPrivilegeBonus": {
-          "options": {}
+          "numberOfCouncilPrivileges": 1,
+          "different": false,
+          "type": "PRIVILEGESEFFECT"
         },
         "type": "HARVESTEFFECT"
       },
@@ -812,6 +814,7 @@
       "immediateEffect": [
         {
           "numberOfCouncilPrivileges": 1,
+          "different": false,
           "type": "PRIVILEGESEFFECT"
         },
         {
@@ -832,15 +835,18 @@
       "permanentEffect": {
         "harvestValue": 6,
         "resourceHarvestBonus": {
-          "resource": {
-            "COIN": 0,
-            "WOOD": 0,
-            "STONE": 1,
-            "SERVANT": 0,
-            "MILITARYPOINT": 0,
-            "VICTORYPOINT": 4,
-            "FAITHPOINT": 0
-          }
+          "resourceBonus": {
+            "resource": {
+              "COIN": 0,
+              "WOOD": 0,
+              "STONE": 1,
+              "SERVANT": 0,
+              "MILITARYPOINT": 0,
+              "VICTORYPOINT": 4,
+              "FAITHPOINT": 0
+            }
+          },
+          "type": "RESOURCEEFFECT"
         },
         "type": "HARVESTEFFECT"
       },
@@ -1422,11 +1428,16 @@
               "COIN": 1,
               "WOOD": 0,
               "STONE": 0,
-              "SERVANT": 0
+              "SERVANT": 0,
+              "MILITARYPOINT": 0,
+              "VICTORYPOINT": 0,
+              "FAITHPOINT": 0
             }
           },
           "privilegeBonus": {
-            "options": {}
+            "numberOfCouncilPrivileges": 1,
+            "different": false,
+            "type": "PRIVILEGESEFFECT"
           },
           "type": "EXCHANGEEFFECT"
         },
@@ -1444,7 +1455,10 @@
           "COIN": 0,
           "WOOD": 0,
           "STONE": 2,
-          "SERVANT": 0
+          "SERVANT": 0,
+          "MILITARYPOINT": 0,
+          "VICTORYPOINT": 0,
+          "FAITHPOINT": 0
         }
       }
     },
@@ -2589,6 +2603,7 @@
       "immediateEffect": [
         {
           "numberOfCouncilPrivileges": 1,
+          "different": false,
           "type": "PRIVILEGESEFFECT"
         }
       ],
@@ -2859,20 +2874,18 @@
     {
       "immediateEffect": [
         {
+          "numberOfCouncilPrivileges": 1,
+          "different": false,
+          "type": "PRIVILEGESEFFECT"
+        },
+        {
           "actionValue": 6,
           "cardType": "VENTURE",
           "discountPresence": false,
           "type": "TAKECARDEFFECT"
-        },
-        {
-          "numberOfCouncilPrivileges": 1,
-          "type": "PRIVILEGESEFFECT"
         }
       ],
-      "permanentEffect": 
-      {
-        	"type": "NOEFFECT"      
-      },
+      "permanentEffect": {},
       "name": "Eroe",
       "IDNumber": 60,
       "era": 2,
@@ -2974,13 +2987,11 @@
       "immediateEffect": [
         {
           "numberOfCouncilPrivileges": 3,
+          "different": true,
           "type": "PRIVILEGESEFFECT"
         }
       ],
-      "permanentEffect": 
-      {
-        	"type": "NOEFFECT"      
-      },
+      "permanentEffect": {},
       "name": "Messo Reale",
       "IDNumber": 64,
       "era": 2,
@@ -3268,13 +3279,11 @@
         },
         {
           "numberOfCouncilPrivileges": 1,
+          "different": false,
           "type": "PRIVILEGESEFFECT"
         }
       ],
-      "permanentEffect": 
-      {
-        	"type": "NOEFFECT"      
-      },
+      "permanentEffect": {},
       "name": "Ambasciatore",
       "IDNumber": 72,
       "era": 3,
@@ -3400,6 +3409,7 @@
         },
         {
           "numberOfCouncilPrivileges": 1,
+          "different": false,
           "type": "PRIVILEGESEFFECT"
         }
       ],
@@ -3436,6 +3446,7 @@
       "immediateEffect": [
         {
           "numberOfCouncilPrivileges": 2,
+          "different": true,
           "type": "PRIVILEGESEFFECT"
         }
       ],
@@ -3777,6 +3788,7 @@
         },
         {
           "numberOfCouncilPrivileges": 1,
+          "different": false,
           "type": "PRIVILEGESEFFECT"
         }
       ],
@@ -3812,10 +3824,6 @@
     {
       "immediateEffect": [
         {
-          "numberOfCouncilPrivileges": 1,
-          "type": "PRIVILEGESEFFECT"
-        },
-        {
           "resourceBonus": {
             "resource": {
               "COIN": 5,
@@ -3828,6 +3836,11 @@
             }
           },
           "type": "RESOURCEEFFECT"
+        },
+        {
+          "numberOfCouncilPrivileges": 1,
+          "different": false,
+          "type": "PRIVILEGESEFFECT"
         }
       ],
       "permanentEffect": {
@@ -4165,6 +4178,7 @@
         },
         {
           "numberOfCouncilPrivileges": 1,
+          "different": false,
           "type": "PRIVILEGESEFFECT"
         }
       ],
