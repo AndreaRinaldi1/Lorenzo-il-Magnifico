@@ -26,9 +26,9 @@ public class BoardSetup {
 	
 	public static final GameBoard gameBoard = BoardsInitializer.gameBoard;
 	static Deck deck = new Deck(); //once initialize it will not change
-	private static ArrayList<Card> usedCard = new ArrayList<>();
 	private static int era = 1;
 	private static int period = 1;
+	private BoardsInitializer bi = new BoardsInitializer(); 
 	
 	public BoardSetup(){
 	}
@@ -46,11 +46,11 @@ public class BoardSetup {
 			freeSpaceMoreThanTwoPlayer();
 		}
 		prepareTowers();
-		BoardsInitializer.initDices();
-		BoardsInitializer.initFamilyMember();
+		bi.initDices();
+		bi.initFamilyMember();
 	}
 	
-	private static void prepareDeck(){
+	private void prepareDeck(){
 		try{
 			CardReader cardReader = new CardReader();
 			deck =  cardReader.startRead();
@@ -67,11 +67,11 @@ public class BoardSetup {
 				int randomInt = ThreadLocalRandom.current().nextInt(0, deck.getTerritories().size());
 				/*the condition check if the era of the randomly selected card is correct and
 				 *  if the card has already been drafted, otherwise the choice of the card is repeated*/
-				if(deck.getTerritories().get(randomInt).getEra() == era && 
-						!(usedCard.contains(deck.getTerritories().get(randomInt))) ){ 
+				if(deck.getTerritories().get(randomInt).getEra() == era){ 
 					Territory t = deck.getTerritories().get(randomInt);
 					cell[i].setCard(t);
-					usedCard.add(t);
+					//usedCard.add(t);
+					deck.getTerritories().remove(t);
 					x = true;
 				}
 			}
@@ -86,18 +86,18 @@ public class BoardSetup {
 				int randomInt = ThreadLocalRandom.current().nextInt(0, deck.getBuildings().size());
 				/*the condition check if the era of the randomly selected card is correct and
 				 *  if the card has already been drafted, otherwise the choice of the card is repeated*/
-				if(deck.getBuildings().get(randomInt).getEra() == era && 
-						!(usedCard.contains(deck.getBuildings().get(randomInt))) ){ 
+				if(deck.getBuildings().get(randomInt).getEra() == era){ 
 					Building b = deck.getBuildings().get(randomInt);
 					cell[i].setCard(b);
-					usedCard.add(b);
+					deck.getBuildings().remove(b);
+					//usedCard.add(b);
 					x = true;
 				}
 			}
 		}
 	}
 	
-	private static void setUpCharacterTower(){
+	private static  void setUpCharacterTower(){
 		Cell [] cell = gameBoard.getTowers().get(CardType.CHARACTER).getCells();
 		for(int i = 0; i < cell.length; i++){
 			boolean x = false;
@@ -105,11 +105,11 @@ public class BoardSetup {
 				int randomInt = ThreadLocalRandom.current().nextInt(0, deck.getCharacters().size());
 				/*the condition check if the era of the randomly selected card is correct and
 				 *  if the card has already been drafted, otherwise the choice of the card is repeated*/
-				if(deck.getCharacters().get(randomInt).getEra() == era && 
-						!(usedCard.contains(deck.getCharacters().get(randomInt))) ){ 
+				if(deck.getCharacters().get(randomInt).getEra() == era){ 
 					Character c = deck.getCharacters().get(randomInt);
 					cell[i].setCard(c);
-					usedCard.add(c);
+					deck.getCharacters().remove(c);
+					//usedCard.add(c);
 					x = true;
 				}
 			}
@@ -124,22 +124,23 @@ public class BoardSetup {
 				int randomInt = ThreadLocalRandom.current().nextInt(0, deck.getVentures().size());
 				/*the condition check if the era of the randomly selected card is correct and
 				 *  if the card has already been drafted, otherwise the choice of the card is repeated*/
-				if(deck.getVentures().get(randomInt).getEra() == era && 
-						!(usedCard.contains(deck.getVentures().get(randomInt))) ){ 
+				if(deck.getVentures().get(randomInt).getEra() == era){ 
 					Venture v = deck.getVentures().get(randomInt);
 					cell[i].setCard(v);
-					usedCard.add(v);
+					deck.getVentures().remove(v);
+					//usedCard.add(v);
 					x = true;
 				}
 			}
 		}
 	}
 	
-	public static void prepareTowers(){
+	public void prepareTowers(){
 		setUpTerritoriesTower();
 		setUpBuildingsTower();
 		setUpCharacterTower();
 		setUpVentureTower();
+		System.out.println("era :" + era);
 		if(period == 2){
 			era = era + 1;
 			period = 1;
@@ -164,7 +165,7 @@ public class BoardSetup {
 		return nextOrder;
 	}
 	
-	public static void freeSpace(){
+	public void freeSpace(){
 		if(!gameBoard.getCoinSpace().isFree()){
 			gameBoard.getCoinSpace().getPlayer().remove(0);
 			gameBoard.getCoinSpace().setFree(true);
@@ -189,8 +190,7 @@ public class BoardSetup {
 		}
 	}
 	
-	private static void freeSpaceMoreThanTwoPlayer(){
-		
+	private void freeSpaceMoreThanTwoPlayer(){
 		if(Game.getPlayers().size() > 2){
 			for(FamilyMember fm : gameBoard.getProductionSpace().getPlayer()){
 				gameBoard.getProductionSpace().getPlayer().remove(fm);
@@ -201,7 +201,6 @@ public class BoardSetup {
 		}
 		if(Game.getPlayers().size() == 4){
 			if(!(gameBoard.getMixedSpace().isFree())){
-				System.out.println(gameBoard.getMixedSpace().isFree());
 				gameBoard.getMixedSpace().getPlayer().remove(0);
 				gameBoard.getMixedSpace().setFree(true);
 			}
@@ -212,14 +211,13 @@ public class BoardSetup {
 		}
 	}
 		
-	private static void freeFamilyMember(){
+	private void freeFamilyMember(){
 		for(Player p : Game.getPlayers()){
 			for(int i = 0; i < p.getBoard().getFamilyMember().size(); i++){
 				p.getBoard().getFamilyMember().get(i).setUsed(false);
 			}
 		}
 	}
-	
 	
 	
 }

@@ -40,7 +40,6 @@ import com.google.gson.reflect.TypeToken;
 
 public class BoardsInitializer {
 	
-	private static BoardsInitializer bi = new BoardsInitializer(); 
 	private static BonusTile bonusTile;
 	private static Dice[] dices =  new Dice[3]; //ask if dice could be static,anyway the colors will not change during the game
 	private Timer timer = new Timer();
@@ -54,7 +53,7 @@ public class BoardsInitializer {
 		try {
 			initDices();
 			initCouncilPrivilege();
-			bi.setDeck();
+			setDeck();
 			initGameBoard();
 			players  = ProvaSetUp.getPlayer();
 			initSpaces();
@@ -115,7 +114,7 @@ public class BoardsInitializer {
 		return tower;		
 	}
 	
-	private static void initGameBoard()throws FileNotFoundException{
+	private void initGameBoard()throws FileNotFoundException{
 		EnumMap<CardType,Tower> mapTower = new EnumMap<>(CardType.class);
 		for(CardType ct : CardType.values()){
 			mapTower.put(ct, prepareTower(ct));			
@@ -124,7 +123,7 @@ public class BoardsInitializer {
 	}
 	
 
-	private static void initCouncilPrivilege()throws FileNotFoundException{
+	private void initCouncilPrivilege()throws FileNotFoundException{
 		Gson gson = new GsonBuilder().create();
 		try{
 			JsonReader reader = new JsonReader(new FileReader("priv.json"));
@@ -136,7 +135,7 @@ public class BoardsInitializer {
 		}
 	}
 	
-	private static void initSpaces()throws FileNotFoundException{
+	private void initSpaces()throws FileNotFoundException{
 		Gson gson = new GsonBuilder().create(); 
         try{
         	JsonReader reader = new JsonReader(new FileReader("spaces.json"));
@@ -188,7 +187,7 @@ public class BoardsInitializer {
     	}
 	}
 	
-	static void initDices(){
+	void initDices(){
 		for(int i = 0; i < 3 ; i++){
 			dices[i] = new Dice(DiceColor.values()[i]);
 			dices[i].rollDice();
@@ -216,7 +215,7 @@ public class BoardsInitializer {
 		}
 	}
 	
-	static void initFamilyMember(){
+	void initFamilyMember(){
 		for(Player p : players){
 			ArrayList<FamilyMember> fm = new ArrayList<>();
 			for(DiceColor dc : DiceColor.values()){
