@@ -41,22 +41,27 @@ public class TakeCardAction {
 		Card card = cell.getCard();
 		if(card instanceof Territory){ 
 			Territory territory = (Territory) card;
+			familyMember.getPlayer().getBoard().addCard(territory);
 			for(Effect e : territory.getImmediateEffect()){
 				e.apply(familyMember, gameBoard, game);
 			}
 		}
 		else if(card instanceof Building){ 
 			Building building = (Building) card;
+			familyMember.getPlayer().getBoard().addCard(building);
 			building.getImmediateEffect().apply(familyMember, gameBoard, game);
+
 		}
 		else if(card instanceof Character){ 
 			Character character = (Character) card;
+			familyMember.getPlayer().getBoard().addCard(character);
 			for(Effect e : character.getImmediateEffect()){
 				e.apply(familyMember, gameBoard, game);
 			}
 		}
 		else if(card instanceof Territory){ 
 			Venture venture = (Venture) card;
+			familyMember.getPlayer().getBoard().addCard(venture);
 			for(Effect e : venture.getImmediateEffect()){
 				e.apply(familyMember, gameBoard, game);
 			}
