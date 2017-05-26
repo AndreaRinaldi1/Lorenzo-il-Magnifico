@@ -23,7 +23,7 @@ public class Game {
 	Scanner input = new Scanner(System.in);
 	private Player currentPlayer;
 	boolean modifiedWithServants = false;
-	
+	private static BoardSetup bs = new BoardSetup();
 	public Game(){
 		//lasciare costruttore vuoto per prove
 	}
@@ -31,15 +31,19 @@ public class Game {
 	public static void main(String[] args) {
 		ProvaSetUp.prova();
 		Game g1 = new Game(BoardsInitializer.gameBoard, ProvaSetUp.getPlayer());
+		//System.out.println(g1.getGameBoard().getMixedSpace().isFree());
 		System.out.println(g1.getGameBoard().display());
-		System.out.println("era:" + g1.getGameBoard().getTowers().get(CardType.TERRITORY).getCells()[0].getCard().getEra());
+		System.out.println(players.get(0).displayFamilyMembers());
 		System.out.println(players.get(0).getBoard().display());
-		ProvaSetUp.prova2();
+		bs.setUpBoard();
 		System.out.println(g1.getGameBoard().display());
-		System.out.println("era:" + g1.getGameBoard().getTowers().get(CardType.TERRITORY).getCells()[0].getCard().getEra());
-		ProvaSetUp.prova2();
+		System.out.println(players.get(1).getBoard().display());
+		System.out.println(players.get(2).getBoard().display());
+		System.out.println(players.get(0).displayFamilyMembers());
+		bs.setUpBoard();
 		System.out.println(g1.getGameBoard().display());
-		System.out.println("era:" + g1.getGameBoard().getTowers().get(CardType.TERRITORY).getCells()[0].getCard().getEra());
+		System.out.println(players.get(2).getBoard().getResources());
+		System.out.println(players.get(0).displayFamilyMembers());
 	}
 	
 	

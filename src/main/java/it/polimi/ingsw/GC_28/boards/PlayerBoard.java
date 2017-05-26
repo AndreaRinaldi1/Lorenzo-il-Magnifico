@@ -91,7 +91,7 @@ public class PlayerBoard {
 		ret += line;
 		ret += retLine;
 		
-		ret+="Family Members: ";
+		/*ret+="Family Members: ";
 		for(int j = 0; j < familyMember.size(); j++){
 			ret+= familyMember.get(j).getDiceColor().name() + ": ";
 			ret+= familyMember.get(j).getValue().toString();
@@ -99,7 +99,7 @@ public class PlayerBoard {
 		}
 		ret+="\n";
 		ret += line;
-		ret += retLine;
+		ret += retLine;*/
 		
 		ret+="\n";
 		return ret;

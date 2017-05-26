@@ -40,21 +40,23 @@ import com.google.gson.reflect.TypeToken;
 
 public class BoardsInitializer {
 	
-	
+	private static BoardsInitializer bi = new BoardsInitializer(); 
 	private static BonusTile bonusTile;
 	private static Dice[] dices =  new Dice[3]; //ask if dice could be static,anyway the colors will not change during the game
 	private Timer timer = new Timer();
 	private static CouncilPrivilege councilPrivilege;
-	public ArrayList<Player> players = ProvaSetUp.getPlayer();
+	public static ArrayList<Player> players = new ArrayList<>();
 	static Deck deck = new Deck();
 	public static final GameBoard gameBoard = new GameBoard();
 	
-	public  void initializeBoard(){
+	
+	public void initializeBoard(){
 		try {
 			initDices();
 			initCouncilPrivilege();
-			setDeck();
+			bi.setDeck();
 			initGameBoard();
+			players  = ProvaSetUp.getPlayer();
 			initSpaces();
 			initBonusTile();
 			initPlayerBoard();
@@ -64,7 +66,7 @@ public class BoardsInitializer {
 		}
 	}
 	
-	private static void setDeck(){
+	private void setDeck(){
 		try{
 			CardReader cardReader = new CardReader();
 			deck = cardReader.startRead();
@@ -134,7 +136,7 @@ public class BoardsInitializer {
 		}
 	}
 	
-	private void initSpaces()throws FileNotFoundException{
+	private static void initSpaces()throws FileNotFoundException{
 		Gson gson = new GsonBuilder().create(); 
         try{
         	JsonReader reader = new JsonReader(new FileReader("spaces.json"));
@@ -186,7 +188,7 @@ public class BoardsInitializer {
     	}
 	}
 	
-	private static void initDices(){
+	static void initDices(){
 		for(int i = 0; i < 3 ; i++){
 			dices[i] = new Dice(DiceColor.values()[i]);
 			dices[i].rollDice();
@@ -214,7 +216,7 @@ public class BoardsInitializer {
 		}
 	}
 	
-	private void initFamilyMember(){
+	static void initFamilyMember(){
 		for(Player p : players){
 			ArrayList<FamilyMember> fm = new ArrayList<>();
 			for(DiceColor dc : DiceColor.values()){
@@ -225,22 +227,22 @@ public class BoardsInitializer {
 				member.setValue(dices);
 				fm.add(member);
 			}
-			p.getBoard().setFamilyMember(fm);
+			p.setFamilyMembers(fm.toArray(new FamilyMember[4]));
 		}
 	}
 	
 	private void initPlayerBoard(){
 		int i = 0;
-		EnumMap<ResourceType,Integer> resourceMap = new EnumMap<>(ResourceType.class);
-		resourceMap.put(ResourceType.STONE, 2);
-		resourceMap.put(ResourceType.WOOD, 2);
-		resourceMap.put(ResourceType.SERVANT, 3);
-		resourceMap.put(ResourceType.COIN, 5);
-		resourceMap.put(ResourceType.MILITARYPOINT, 0);
-		resourceMap.put(ResourceType.VICTORYPOINT, 0);
-		resourceMap.put(ResourceType.FAITHPOINT, 0);
 		for(Player p: players){
-			resourceMap.put(ResourceType.COIN, resourceMap.get(ResourceType.COIN)+i);
+			EnumMap<ResourceType,Integer> resourceMap = new EnumMap<>(ResourceType.class);
+			resourceMap.put(ResourceType.STONE, 2);
+			resourceMap.put(ResourceType.WOOD, 2);
+			resourceMap.put(ResourceType.SERVANT, 3);
+			resourceMap.put(ResourceType.COIN, 5);
+			resourceMap.put(ResourceType.MILITARYPOINT, 0);
+			resourceMap.put(ResourceType.VICTORYPOINT, 0);
+			resourceMap.put(ResourceType.FAITHPOINT, 0);
+			resourceMap.put(ResourceType.COIN, 5+i);
 			Resource resource = Resource.of(resourceMap);
 			PlayerBoard pb = new PlayerBoard(BonusTile.instance(),resource);
 			p.setBoard(pb);

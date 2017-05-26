@@ -39,32 +39,32 @@ public class Venture extends Card{
 			Effect v;
 			switch(e.get("type").getAsString()){
 			case("RESOURCEEFFECT"):
-        		System.out.println("cambio il tipo di immediate effect #" + i + " in ResourceEffect venture ");
+        		//System.out.println("cambio il tipo di immediate effect #" + i + " in ResourceEffect venture ");
         		v = immediateEffect.get(i);
         		v = gson.fromJson(e.toString(), ResourceEffect.class);
         		immediateEffect.set(i, v);
         		break;
 			case("PRIVILEGESEFFECT"):
-        		System.out.println("cambio il tipo di immediate effect #" + i + " in PrivilegesEffect venture");
+        		//System.out.println("cambio il tipo di immediate effect #" + i + " in PrivilegesEffect venture");
         		v = immediateEffect.get(i);
         		v = gson.fromJson(e.toString(), PrivilegesEffect.class);
         		immediateEffect.set(i, v);
         		break;
 			case("GOTOHP"):
-        		System.out.println("cambio il tipo di immediate effect #" + i + " in GoToHP venture");
+        		//System.out.println("cambio il tipo di immediate effect #" + i + " in GoToHP venture");
 	        	v = immediateEffect.get(i);
 	    		v = gson.fromJson(e.toString(), GoToHPEffect.class);
 	    		immediateEffect.set(i, v);
         		break;
 			case("TAKECARDEFFECT"):
-        		System.out.println("cambio il tipo di immediate effect #" + i + " in TakeCardEffect venture");
+        		//System.out.println("cambio il tipo di immediate effect #" + i + " in TakeCardEffect venture");
         		v = immediateEffect.get(i);
         		v = gson.fromJson(e.toString(), TakeCardEffect.class);
         		immediateEffect.set(i, v);
         		break;	
 			case("NOEFFECT"):
-        		System.out.println("lascio il tipo dell'effetto a effect");
-        		System.out.println(immediateEffect.get(i).getClass());
+        		//System.out.println("lascio il tipo dell'effetto a effect");
+        		//System.out.println(immediateEffect.get(i).getClass());
         		break;
 			}
 		}

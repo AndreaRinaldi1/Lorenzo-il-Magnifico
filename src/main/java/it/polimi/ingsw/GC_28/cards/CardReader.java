@@ -53,7 +53,7 @@ public class CardReader{
             	deck.getTerritories().get(i).setImmediateEffect(gson, j);
         	}
         	
-        	deck.toString();
+        	/*deck.toString();
         	if(deck.getVentures().get(0).getPermanentEffect() instanceof ResourceEffect){
         		System.out.println("Andrea");
         	}
@@ -64,7 +64,7 @@ public class CardReader{
         	if(deck.getCharacters().get(0).getPermanentEffect() instanceof NoCellBonusEffect){
         		NoCellBonusEffect e = (NoCellBonusEffect) deck.getCharacters().get(0).getPermanentEffect();
         		System.out.println(e.isPresence());
-        	}
+        	}*/
 	        reader.close();
 	        reader2.close();
     	}

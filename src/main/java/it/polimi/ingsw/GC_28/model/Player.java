@@ -20,7 +20,7 @@ public class Player {
 	}
 
 	public PlayerBoard getBoard() {
-		return board;
+		return this.board;
 	}
 	
 	
@@ -53,6 +53,14 @@ public class Player {
 		this.color = color;
 	}
 	
-	
+	public String displayFamilyMembers(){
+		StringBuilder s = new StringBuilder();
+		System.out.println("Family Members:");
+		for(FamilyMember f : familyMembers){
+			s.append("Color: " + f.getDiceColor().name() + "  ");
+			s.append("Value: " + f.getValue() + "\n");
+		}
+		return s.toString();
+	}
 	
 }

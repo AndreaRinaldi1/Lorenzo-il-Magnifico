@@ -12,6 +12,7 @@ import it.polimi.ingsw.GC_28.cards.CardType;
 import it.polimi.ingsw.GC_28.cards.Deck;
 import it.polimi.ingsw.GC_28.cards.Territory;
 import it.polimi.ingsw.GC_28.cards.Venture;
+import it.polimi.ingsw.GC_28.components.Dice;
 import it.polimi.ingsw.GC_28.components.FamilyMember;
 
 import it.polimi.ingsw.GC_28.model.Game;
@@ -28,7 +29,7 @@ public class BoardSetup {
 	private static ArrayList<Card> usedCard = new ArrayList<>();
 	private static int era = 1;
 	private static int period = 1;
-
+	
 	public BoardSetup(){
 	}
 	
@@ -45,6 +46,8 @@ public class BoardSetup {
 			freeSpaceMoreThanTwoPlayer();
 		}
 		prepareTowers();
+		BoardsInitializer.initDices();
+		BoardsInitializer.initFamilyMember();
 	}
 	
 	private static void prepareDeck(){
@@ -145,7 +148,7 @@ public class BoardSetup {
 		}
 	}
 	
-	private ArrayList<Player> getNextPlayerOrder(){
+	private static ArrayList<Player> getNextPlayerOrder(){
 		ArrayList<FamilyMember> inCouncil = gameBoard.getCouncilPalace().getPlayerOrder();
 		ArrayList<Player> nextOrder = new ArrayList<>();
 		if(!(inCouncil.isEmpty())){
@@ -161,7 +164,7 @@ public class BoardSetup {
 		return nextOrder;
 	}
 	
-	public void freeSpace(){
+	public static void freeSpace(){
 		if(!gameBoard.getCoinSpace().isFree()){
 			gameBoard.getCoinSpace().getPlayer().remove(0);
 			gameBoard.getCoinSpace().setFree(true);
@@ -197,11 +200,12 @@ public class BoardSetup {
 			}
 		}
 		if(Game.getPlayers().size() == 4){
-			if(!gameBoard.getMixedSpace().isFree()){
+			if(!(gameBoard.getMixedSpace().isFree())){
+				System.out.println(gameBoard.getMixedSpace().isFree());
 				gameBoard.getMixedSpace().getPlayer().remove(0);
 				gameBoard.getMixedSpace().setFree(true);
 			}
-			if(!gameBoard.getTwoPrivilegesSpace().isFree()){
+			if(!(gameBoard.getTwoPrivilegesSpace().isFree())){
 				gameBoard.getTwoPrivilegesSpace().getPlayer().remove(0);
 				gameBoard.getTwoPrivilegesSpace().setFree(true);
 			}
@@ -215,5 +219,7 @@ public class BoardSetup {
 			}
 		}
 	}
+	
+	
 	
 }

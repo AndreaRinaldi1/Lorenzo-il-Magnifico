@@ -22,10 +22,6 @@ public class ProvaSetUp {
 		bs.firstSetUpCards();
 	}
 	
-	public static void prova2(){
-		bs.setUpBoard();
-	}
-	
 	private static void completePlayer(){
 		Player p1 = new Player("Nick", PlayerColor.BLUE);
 		Player p2 = new Player("Andrea", PlayerColor.GREEN);
