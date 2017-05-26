@@ -7,6 +7,7 @@ import java.util.Scanner;
 
 
 import it.polimi.ingsw.GC_28.boards.GameBoard;
+import it.polimi.ingsw.GC_28.cards.Card;
 import it.polimi.ingsw.GC_28.cards.CardType;
 import it.polimi.ingsw.GC_28.components.CouncilPrivilege;
 import it.polimi.ingsw.GC_28.components.DiceColor;
@@ -37,13 +38,14 @@ public class Game {
 		System.out.println(players.get(0).getBoard().display());
 		bs.setUpBoard();
 		System.out.println(g1.getGameBoard().display());
+		System.out.println(players.get(1).displayFamilyMembers());
 		System.out.println(players.get(1).getBoard().display());
-		System.out.println(players.get(2).getBoard().display());
-		System.out.println(players.get(0).displayFamilyMembers());
 		bs.setUpBoard();
 		System.out.println(g1.getGameBoard().display());
-		System.out.println(players.get(2).getBoard().getResources());
-		System.out.println(players.get(0).displayFamilyMembers());
+		System.out.println(players.get(2).displayFamilyMembers());
+		System.out.println(players.get(2).getBoard().display());
+		//System.out.println(g1.askPrivilege(1,true));
+		//g1.askCard(null);
 	}
 	
 	
@@ -104,7 +106,7 @@ public class Game {
 	
 	
 	public boolean askCard(TakeCardEffect throughEffect){ //throughEffect = null se non è un askcard che viene da effetto ma da mossa normale
-		FamilyMember familyMember;
+		FamilyMember familyMember;							// if it's null the first condition will throw a null pointer exception(N)
 		int incrementThroughServants;
 		TakeCardAction takeCardAction = new TakeCardAction(this, gameBoard);
 		
