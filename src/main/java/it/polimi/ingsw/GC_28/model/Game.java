@@ -38,7 +38,8 @@ public class Game {
 	
 	
 	public void start(){
-		
+		currentPlayer = players.get(0);
+		goToSpace(null);
 	}
 
 
@@ -115,7 +116,7 @@ public class Game {
 				if(chosenSpace.equalsIgnoreCase("coinspace")){
 					return gameBoard.getCoinSpace();
 				}
-				if(chosenSpace.equalsIgnoreCase("servantpace")){
+				if(chosenSpace.equalsIgnoreCase("servantspace")){
 					return gameBoard.getServantSpace();
 				}
 				if(chosenSpace.equalsIgnoreCase("mixedspace")){
@@ -260,8 +261,11 @@ public class Game {
 			for(DiceColor color : DiceColor.values()){
 				if(choice.toUpperCase().equals(color.name())){
 					for(FamilyMember familyMember : currentPlayer.getFamilyMembers()){
-						if(!familyMember.isUsed()){
-							return familyMember;
+						if(familyMember.getDiceColor().equals(color)){
+							if(!familyMember.isUsed()){
+								familyMember.setUsed(true);
+								return familyMember;
+							}
 						}
 					}
 					System.out.println("The specified family member has already been used!");
@@ -284,7 +288,8 @@ public class Game {
 				continue;
 			}
 			else if(input.hasNextLine()){
-				if(input.nextLine().equals("y")){
+				String choice = input.nextLine();
+				if(choice.equals("y")){
 					System.out.println("How many servants would you like to pay?");
 					if(input.hasNextInt()){
 						int increment = input.nextInt();
@@ -302,7 +307,7 @@ public class Game {
 						System.out.println("Not valid inupt!");
 					}
 				}
-				else if (input.nextLine().equals("n")){
+				else if (choice.equals("n")){
 					return 0;
 				}
 				else{

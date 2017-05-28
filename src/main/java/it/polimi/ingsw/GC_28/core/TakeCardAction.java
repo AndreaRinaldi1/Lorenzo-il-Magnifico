@@ -16,11 +16,12 @@ import it.polimi.ingsw.GC_28.model.Game;
 public class TakeCardAction {
 	private Game game;
 	private GameBoard gameBoard;
-	private TakeCardController takeCardController = new TakeCardController(gameBoard);
+	private TakeCardController takeCardController;
 	
 	public TakeCardAction(Game game, GameBoard gameBoard){
 		this.game = game;
 		this.gameBoard = gameBoard;
+		takeCardController = new TakeCardController(gameBoard);
 	}
 
 	public boolean isApplicable(String name, FamilyMember familyMember, TakeCardEffect throughEffect){
