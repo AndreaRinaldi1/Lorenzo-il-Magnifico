@@ -22,9 +22,9 @@ public class FamilyMemberTest {
 
 	@Before
 	public void familyMember(){
-		player1 = new Player(PlayerColor.BLUE);
+		player1 = new Player("ciao", PlayerColor.BLUE);
 		fm = new FamilyMember(player1, false, DiceColor.BLACK);
-		player2 = new Player(PlayerColor.RED);
+		player2 = new Player("bella", PlayerColor.RED);
 		fm2 = new FamilyMember(player2, true, DiceColor.NEUTRAL);
 		dice1 = new Dice(DiceColor.BLACK);
 

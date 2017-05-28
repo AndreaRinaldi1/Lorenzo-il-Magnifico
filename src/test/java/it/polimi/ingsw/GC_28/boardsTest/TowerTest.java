@@ -27,7 +27,6 @@ public class TowerTest {
 	
 	@Before
 	public void tower(){
-		bonus = new Resource();
 		resource = new EnumMap<ResourceType, Integer>(ResourceType.class);
 		resource.put(ResourceType.STONE, 2);
 		bonus = Resource.of(resource);
@@ -38,7 +37,7 @@ public class TowerTest {
 		cells[1] = new Cell(bonus, 5, free);
 		tower = new Tower(cells);
 		tower.setAtLeastOne(atLeastOne);
-		p = new Player(PlayerColor.BLUE);
+		p = new Player("ciao", PlayerColor.BLUE);
 		fm = new FamilyMember(p, false, DiceColor.BLACK);
 		fm2 = new FamilyMember(p, true, DiceColor.NEUTRAL);
 		fm.setUsed(true);
