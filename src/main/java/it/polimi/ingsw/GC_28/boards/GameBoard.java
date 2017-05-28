@@ -63,7 +63,7 @@ public class GameBoard {
 		
 		//hHarvest and Production Space
 		ret += "Harves Space \n";
-		if(harvestSpace.isFree()==false){
+		if(!(harvestSpace.isFree())){
 			ret += occSpace;
 		}
 		else{
@@ -72,7 +72,7 @@ public class GameBoard {
 		ret+="(    )\n";
 		
 		ret += "Production Space: \n";
-		if(productionSpace.isFree()==false){
+		if(!(productionSpace.isFree())){
 			ret += occSpace;
 		}
 		else{
@@ -82,21 +82,21 @@ public class GameBoard {
 		
 		//Market Space
 		ret += "Coin Space: \n";
-		if(coinSpace.isFree()==false){
+		if(!(coinSpace.isFree())){
 			ret += occSpace;
 		}
 		else{
 			ret += emptySpace;
 		}
 		ret += "Servant Space: \n";
-		if(servantSpace.isFree()==false){
+		if(!(servantSpace.isFree())){
 			ret += occSpace;
 		}
 		else{
 			ret += emptySpace;
 		}
 		ret += "Mixed Space: \n";
-		if(mixedSpace.isFree()==false){
+		if(!(mixedSpace.isFree())){
 			ret += occSpace;
 		}
 		else{
@@ -104,7 +104,7 @@ public class GameBoard {
 		}
 		
 		ret += "Two Privileges Space: \n";
-		if(twoPrivilegesSpace.isFree()==false){
+		if(!(twoPrivilegesSpace.isFree())){
 			ret += occSpace;
 		}
 		else{

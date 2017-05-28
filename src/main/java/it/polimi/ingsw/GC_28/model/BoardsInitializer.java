@@ -107,7 +107,7 @@ public class BoardsInitializer {
 	private static Tower prepareTower(CardType ct){
 		Tower tower = null;
 		try{
-			tower = new Tower(prepareCell(ct),false);
+			tower = new Tower(prepareCell(ct));
 		}catch(FileNotFoundException e){
 			Logger.getAnonymousLogger().log(Level.SEVERE, "cannot start initialize" + e);
 		}

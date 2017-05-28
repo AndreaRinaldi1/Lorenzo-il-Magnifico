@@ -1,26 +1,27 @@
 package it.polimi.ingsw.GC_28.cards;
 import java.util.ArrayList;
+import java.util.List;
 
 
 public class Deck {
-	private ArrayList<Territory> territories = new ArrayList<Territory>();
-	private ArrayList<Building> buildings = new ArrayList<Building>();
-	private ArrayList<Character> characters = new ArrayList<Character>();
-	private ArrayList<Venture> ventures = new ArrayList<Venture>();
+	private List<Territory> territories = new ArrayList<>();
+	private List<Building> buildings = new ArrayList<>();
+	private List<Character> characters = new ArrayList<>();
+	private List<Venture> ventures = new ArrayList<>();
 	
-	public ArrayList<Territory> getTerritories() {
+	public List<Territory> getTerritories() {
 		return territories;
 	}
-	public ArrayList<Building> getBuildings() {
+	public List<Building> getBuildings() {
 		return buildings;
 	}
-	public ArrayList<Character> getCharacters() {
+	public List<Character> getCharacters() {
 		return characters;
 	}
-	public ArrayList<Venture> getVentures() {
+	public List<Venture> getVentures() {
 		return ventures;
 	}
-	
+	@Override
 	public String toString(){
 		for(int i = 0; i < territories.size(); i++){
 			System.out.println(this.territories.get(i).toString());
@@ -53,51 +54,4 @@ public class Deck {
 		}
 		return "";
 	}
-	
-	
-	//public  Map<CardType, ArrayList<?>> deck = new EnumMap<CardType, ArrayList<?>>(CardType.class);
-	
-	/*public Deck(){
-		for(CardType cardType : CardType.values()){
-			switch(cardType){
-			case TERRITORY:
-				deck.put(cardType, new ArrayList<Territory>());
-				break;
-			case BUILDING: 
-				deck.put(cardType, new ArrayList<Building>());
-				break;
-			case CHARACTER:
-				deck.put(cardType, new ArrayList<Character>());
-				break;
-			case VENTURE:
-				deck.put(cardType, new ArrayList<Venture>());
-				break;
-			}
-		}
-	}
-
-	
-	public String toString(){
-		StringBuilder s = new StringBuilder();
-		for(CardType cardtype : deck.keySet()){
-			for(int i = 0; i < deck.get(cardtype).size() ; i++){
-				s.append(deck.get(cardtype).get(i).toString());
-				s.append("\n\n");
-			}
-    	}
-		return s.toString();
-	}
-
-	public void setDeck() {
-		
-	}
-
-	public Map<CardType, ArrayList<?>> getDeck() {
-		return deck;
-	}
-	/*
-	public void addCard(CardType cardType, Card card){
-		deck.get(cardType).add(card);
-	}
-	*/
 }
