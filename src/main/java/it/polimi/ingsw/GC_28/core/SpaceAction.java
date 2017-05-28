@@ -29,5 +29,6 @@ public class SpaceAction {
 			space.addPlayer(familyMember);	
 		}
 		space.applyBonus(game, familyMember);
+		familyMember.setUsed(true);
 	}
 }

@@ -26,12 +26,18 @@ public class Main {
 		
 		bs.firstSetUpCards();
 		game.getGameBoard().display();
-		game.getPlayers().get(0).getBoard().display();
-		System.out.println(game.getPlayers().get(0).getFamilyMembers()[0].toString());
+		game.setCurrentPlayer(game.getPlayers().get(0));
+		
+		game.getCurrentPlayer().getBoard().display();
+		System.out.println(game.getPlayers().get(0).getName());
+		for(FamilyMember fm : game.getCurrentPlayer().getFamilyMembers()){
+			System.out.println(fm.toString());
+		}
 		while(true){
 			game.start();
-			game.getPlayers().get(0).getBoard().display();
-			for(FamilyMember fm : game.currentPlayer.getFamilyMembers()){
+			game.getCurrentPlayer().getBoard().display();
+			System.out.println(game.getPlayers().get(0).getName());
+			for(FamilyMember fm : game.getCurrentPlayer().getFamilyMembers()){
 				System.out.println(fm.toString());
 			}
 		}

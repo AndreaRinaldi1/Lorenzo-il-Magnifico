@@ -38,6 +38,8 @@ public class TakeCardAction {
 		Cell cell = gameBoard.getTowers().get(takeCardController.cardType).findCard(name);
 		Resource cardCost = cell.getCard().getCost();
 		familyMember.getPlayer().getBoard().getResources().modifyResource(cardCost, false);
+		familyMember.setUsed(true);
+
 		if(throughEffect == null){
 			cell.setFamilyMember(familyMember);
 		}
@@ -59,6 +61,8 @@ public class TakeCardAction {
 			Character character = (Character) card;
 			familyMember.getPlayer().getBoard().addCard(character);
 			for(Effect e : character.getImmediateEffect()){
+				System.out.println("2 " + familyMember.getPlayer().getBoard().getResources().toString());
+
 				e.apply(familyMember, game);
 			}
 		}
@@ -69,7 +73,10 @@ public class TakeCardAction {
 				e.apply(familyMember, game);
 			}
 		}
-		
+		cell.setCard(null);
+		cell.setFree(false);
+		System.out.println("3 " + familyMember.getPlayer().getBoard().getResources().toString());
+
 	}
 	
 	

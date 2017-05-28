@@ -25,6 +25,9 @@ public class Resource {
 	
 	public void modifyResource(Resource amount, boolean sum){
 		int i;
+		if(amount == null){
+			return;
+		}
 		if(sum){
 			i = 1;
 		}

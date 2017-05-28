@@ -19,7 +19,7 @@ public class SpaceController {
 				}
 			}
 			else{
-				if(familyMember.getValue() > space.getActionValue() && space.isFree()){
+				if(familyMember.getValue() >= space.getActionValue() && space.isFree()){
 					return true;
 				}
 			}

@@ -24,7 +24,7 @@ public class Game {
 	private List<Player> players; //it's static because is the only way i can access to it from another class in a useful way
 	
 	Scanner input = new Scanner(System.in);
-	public Player currentPlayer;
+	private Player currentPlayer;
 	boolean modifiedWithServants = false;
 	private BoardSetup bs;
 	private int currentEra  = 1;
@@ -38,13 +38,21 @@ public class Game {
 	
 	
 	public void start(){
-		currentPlayer = players.get(0);
-		goToSpace(null);
+		System.out.println(currentPlayer.getName());
+		askCard(null);
 	}
 
 
 	public int getCurrentPeriod() {
 		return currentPeriod;
+	}
+	
+	public Player getCurrentPlayer(){
+		return currentPlayer;
+	}
+	
+	public void setCurrentPlayer(Player player){
+		this.currentPlayer = player;
 	}
 
 	public void setPeriod(int period) {
@@ -164,18 +172,20 @@ public class Game {
 		
 		incrementThroughServants = askForServantsIncrement();
 		familyMember.modifyValue(incrementThroughServants);
-		
-		
+		EnumMap<ResourceType, Integer> decrement = new EnumMap<>(ResourceType.class);
+		decrement.put(ResourceType.SERVANT, incrementThroughServants);
+		Resource res = Resource.of(decrement);
+
 		if(spaceAction.isApplicable(familyMember, chosenSpace, throughEffect)){
 			spaceAction.apply(familyMember, chosenSpace, throughEffect);
+			if(modifiedWithServants){
+				familyMember.modifyValue((-1)*(incrementThroughServants));
+			}
 			return true;
 		}
 		else{
 			if(modifiedWithServants){
 				familyMember.modifyValue((-1)*(incrementThroughServants));
-				EnumMap<ResourceType, Integer> decrement = new EnumMap<>(ResourceType.class);
-				decrement.put(ResourceType.SERVANT, incrementThroughServants);
-				Resource res = Resource.of(decrement);
 				currentPlayer.getBoard().getResources().modifyResource(res, true);
 			}
 			System.out.println("Not valid action!");
@@ -209,17 +219,20 @@ public class Game {
 		}
 		incrementThroughServants = askForServantsIncrement();
 		familyMember.modifyValue(incrementThroughServants);
+		EnumMap<ResourceType, Integer> decrement = new EnumMap<>(ResourceType.class);
+		decrement.put(ResourceType.SERVANT, incrementThroughServants);
+		Resource res = Resource.of(decrement);
 		
 		if(takeCardAction.isApplicable(name, familyMember, throughEffect)){
 			takeCardAction.apply(name, familyMember, throughEffect);
+			if(modifiedWithServants){
+				familyMember.modifyValue((-1)*(incrementThroughServants));
+			}
 			return true;
 		}
 		else{
 			if(modifiedWithServants){
 				familyMember.modifyValue((-1)*(incrementThroughServants));
-				EnumMap<ResourceType, Integer> decrement = new EnumMap<>(ResourceType.class);
-				decrement.put(ResourceType.SERVANT, incrementThroughServants);
-				Resource res = Resource.of(decrement);
 				currentPlayer.getBoard().getResources().modifyResource(res, true);
 			}
 			System.out.println("Not valid action!");
@@ -263,7 +276,6 @@ public class Game {
 					for(FamilyMember familyMember : currentPlayer.getFamilyMembers()){
 						if(familyMember.getDiceColor().equals(color)){
 							if(!familyMember.isUsed()){
-								familyMember.setUsed(true);
 								return familyMember;
 							}
 						}
@@ -297,10 +309,12 @@ public class Game {
 						if(increment <= numberOfServants){
 							currentPlayer.getBoard().getResources().getResource().put(ResourceType.SERVANT, (numberOfServants-increment));
 							modifiedWithServants = true;
+							input.nextLine();
 							return increment;
 						}
 						else{
 							System.out.println("You don't have so many servants!");
+							input.nextLine();
 						}
 					}
 					else{
@@ -327,9 +341,10 @@ public class Game {
 		return c;
 	} 
 	
+
 	
-	public Resource askAlternativeDiscount(Resource discount1, Resource discount2){
-		System.out.println("Which of the two following discounts do you want to apply? [1/2]");
+	public Resource askAlternative(Resource discount1, Resource discount2, String type){
+		System.out.println("Which of the two following " + type + " do you want to apply? [1/2]");
 		System.out.println(discount1.toString());
 		System.out.println(discount2.toString());
 		int choice;
@@ -337,14 +352,16 @@ public class Game {
 			if(input.hasNextInt()){
 				choice = input.nextInt();
 				if(choice == 1){
+					input.nextLine();
 					return discount1;
 				}
 				else if(choice == 2){
+					input.nextLine();
 					return discount2;
 				}
 				else{
 					System.out.println("Not valid input!");
-					System.out.println("Which of the two discounts do you want to apply? [1/2]");
+					System.out.println("Which of the two " + type + " do you want to apply? [1/2]");
 					input.nextLine();
 					continue;
 				}
