@@ -8,7 +8,6 @@ import it.polimi.ingsw.GC_28.boards.BonusTile;
 import it.polimi.ingsw.GC_28.cards.*;
 import it.polimi.ingsw.GC_28.cards.Character;
 
-import it.polimi.ingsw.GC_28.components.FamilyMember;
 import it.polimi.ingsw.GC_28.components.Resource;
 
 
@@ -27,10 +26,6 @@ public class PlayerBoard {
 	private int finalBonusResourceFactor;
 	private Resource resources;
 	private ArrayList<ExcommunicationTile> excommunicationTile = new ArrayList<>();
-	
-	
-
-	private ArrayList<FamilyMember> familyMember = new ArrayList<>();
 	
 	private String line = "---------------------------";
 	private String retLine = "------------------------\n";
@@ -90,16 +85,6 @@ public class PlayerBoard {
 		ret += line;
 		ret += retLine;
 		
-		/*ret+="Family Members: ";
-		for(int j = 0; j < familyMember.size(); j++){
-			ret+= familyMember.get(j).getDiceColor().name() + ": ";
-			ret+= familyMember.get(j).getValue().toString();
-			ret+= " | ";
-		}
-		ret+="\n";
-		ret += line;
-		ret += retLine;*/
-		
 		ret+="\n";
 		System.out.println(ret);
 		
@@ -127,12 +112,8 @@ public class PlayerBoard {
 	}
 	
 	public void reduceResources(Resource amount){
-		//TODO check disponibilità risorse in un altro metodo prima di chiamare questo metodo
 		this.getResources().modifyResource(amount, false);
-	}
-	
-	
-	
+	}	
 
 	public List<Territory> getTerritories() {
 		return territories;
@@ -178,18 +159,8 @@ public class PlayerBoard {
 		this.resources = resources;
 	}
 
-	public ArrayList<ExcommunicationTile> getExcommunicationTile() {
+	public List<ExcommunicationTile> getExcommunicationTile() {
 		return excommunicationTile;
-	}
-
-
-	public ArrayList<FamilyMember> getFamilyMember() {
-		return familyMember;
-	}
-
-
-	public void setFamilyMember(ArrayList<FamilyMember> familyMember) {
-		this.familyMember = familyMember;
 	}
 	
 	public int getFinalBonusResourceFactor() {
