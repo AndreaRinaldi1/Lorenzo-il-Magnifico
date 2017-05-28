@@ -28,6 +28,7 @@ public class CardWriter1 {
 	int coin, wood, stone, servant, militaryPoint, victoryPoint, faithPoint;
 	Deck deck = new Deck();
 	private Logger log = Logger.getAnonymousLogger();
+	
 	public static void main(String[] args){
 		CardWriter1 writer = new CardWriter1();
 		writer.startReadCard();

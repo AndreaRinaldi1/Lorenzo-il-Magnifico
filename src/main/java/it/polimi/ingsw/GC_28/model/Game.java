@@ -3,12 +3,11 @@ package it.polimi.ingsw.GC_28.model;
 
 import java.util.ArrayList;
 import java.util.EnumMap;
+import java.util.List;
 import java.util.Scanner;
 
 
 import it.polimi.ingsw.GC_28.boards.GameBoard;
-import it.polimi.ingsw.GC_28.cards.Card;
-import it.polimi.ingsw.GC_28.cards.CardType;
 import it.polimi.ingsw.GC_28.components.CouncilPrivilege;
 import it.polimi.ingsw.GC_28.components.DiceColor;
 import it.polimi.ingsw.GC_28.components.FamilyMember;
@@ -19,39 +18,33 @@ import it.polimi.ingsw.GC_28.effects.TakeCardEffect;
 
 public class Game {
 	private GameBoard gameBoard;
-	private static ArrayList<Player> players; //it's static because is the only way i can access to it from another class in a useful way
-	private int currentEra;
+	private List<Player> players; //it's static because is the only way i can access to it from another class in a useful way
+	
 	Scanner input = new Scanner(System.in);
 	private Player currentPlayer;
 	boolean modifiedWithServants = false;
-	private static BoardSetup bs = new BoardSetup();
+	private BoardSetup bs;
+	private int currentEra  = 1;
+	private int currentPeriod = 1;
+	
 	public Game(){
 		//lasciare costruttore vuoto per prove
 	}
 	
-	public static void main(String[] args) {
-		ProvaSetUp.prova();
-		Game g1 = new Game(BoardsInitializer.gameBoard, ProvaSetUp.getPlayer());
-		//System.out.println(g1.getGameBoard().getMixedSpace().isFree());
-		System.out.println(g1.getGameBoard().display());
-		System.out.println(players.get(0).displayFamilyMembers());
-		System.out.println(players.get(0).getBoard().display());
-		bs.setUpBoard();
-		System.out.println(g1.getGameBoard().display());
-		System.out.println(players.get(1).displayFamilyMembers());
-		System.out.println(players.get(1).getBoard().display());
-		bs.setUpBoard();
-		System.out.println(g1.getGameBoard().display());
-		System.out.println(players.get(2).displayFamilyMembers());
-		System.out.println(players.get(2).getBoard().display());
-		//System.out.println(g1.askPrivilege(1,true));
-		//g1.askCard(null);
+
+	
+	
+	public void start(){
+		
 	}
-	
-	
-	public Game(GameBoard gameBoard, ArrayList<Player> players2) {
-		this.gameBoard = gameBoard;
-		players = players2;
+
+
+	public int getCurrentPeriod() {
+		return currentPeriod;
+	}
+
+	public void setPeriod(int period) {
+		this.currentPeriod = period;
 	}
 
 	public int getCurrentEra() {
@@ -65,12 +58,16 @@ public class Game {
 	public GameBoard getGameBoard() {
 		return gameBoard;
 	}
+	
+	public void setGameBoard(GameBoard gb){
+		this.gameBoard = gb;
+	}
 
-	public static ArrayList<Player> getPlayers() {
+	public List<Player> getPlayers() {
 		return players;
 	}
 	
-	public static void setPlayers(ArrayList<Player> p){
+	public void setPlayers(List<Player> p){
 		players = p;
 	}
 	

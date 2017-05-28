@@ -1,7 +1,6 @@
 package it.polimi.ingsw.GC_28.boards;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 
 import it.polimi.ingsw.GC_28.boards.BonusTile;
 
@@ -10,7 +9,7 @@ import it.polimi.ingsw.GC_28.cards.Character;
 
 import it.polimi.ingsw.GC_28.components.FamilyMember;
 import it.polimi.ingsw.GC_28.components.Resource;
-import it.polimi.ingsw.GC_28.components.ResourceType;
+
 
 public class PlayerBoard {
 	private ArrayList<Territory> territories = new ArrayList<>();
@@ -21,8 +20,9 @@ public class PlayerBoard {
 
 	
 	private final BonusTile bonusTile;
-	private HashMap<Integer, Resource> finalBonusTerritories = new HashMap<>();
-	private HashMap<Integer, Resource> finalBonusCharacters = new HashMap<>();
+	private ArrayList<Resource> finalBonusTerritories = new ArrayList<>();
+	private ArrayList<Resource> finalBonusCharacters = new ArrayList<>();
+	private int finalBonusResourceFactor;
 	private Resource resources;
 	private ArrayList<ExcommunicationTile> excommunicationTile = new ArrayList<>();
 
@@ -36,11 +36,6 @@ public class PlayerBoard {
 		this.resources = resources;
 	}
 	
-	
-	//fix builder
-	public PlayerBoard(){
-		this.bonusTile = BonusTile.instance();
-	}
 	
 	public String display(){
 		String ret = "PLAYER BOARD\n";
@@ -155,19 +150,19 @@ public class PlayerBoard {
 		return bonusTile;
 	}
 
-	public HashMap<Integer, Resource> getFinalBonusTerritories() {
+	public ArrayList<Resource> getFinalBonusTerritories() {
 		return finalBonusTerritories;
 	}
 
-	public void setFinalBonusTerritories(HashMap<Integer, Resource> finalBonusTerritories) {
+	public void setFinalBonusTerritories(ArrayList<Resource> finalBonusTerritories) {
 		this.finalBonusTerritories = finalBonusTerritories;
 	}
 
-	public HashMap<Integer, Resource> getFinalBonusCharacters() {
+	public ArrayList<Resource> getFinalBonusCharacters() {
 		return finalBonusCharacters;
 	}
 
-	public void setFinalBonusCharacters(HashMap<Integer, Resource> finalBonusCharacters) {
+	public void setFinalBonusCharacters(ArrayList<Resource> finalBonusCharacters) {
 		this.finalBonusCharacters = finalBonusCharacters;
 	}
 
@@ -193,5 +188,12 @@ public class PlayerBoard {
 		this.familyMember = familyMember;
 	}
 	
+	public int getFinalBonusResourceFactor() {
+		return finalBonusResourceFactor;
+	}
+
+	public void setFinalBonusResourceFactor(int finalBonusResourceFactor) {
+		this.finalBonusResourceFactor = finalBonusResourceFactor;
+	}	
 	
 }
