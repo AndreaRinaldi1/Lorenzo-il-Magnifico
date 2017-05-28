@@ -30,8 +30,8 @@ public class FamilyMemberTest {
 		dice1 = new Dice(DiceColor.BLACK);
 
 		
+		fm2.modifyValue(3);
 
-		fm2.modifyValue(2);
 		fm.setUsed(false);
 		fm2.setUsed(true);
 	}
@@ -52,7 +52,7 @@ public class FamilyMemberTest {
 
 	@Test
 	public void testGetValue() {
-		Integer i = 2;
+		Integer i = 3;
 		assertEquals(i , fm2.getValue()); 
 		//fail("Not yet implemented");
 	}

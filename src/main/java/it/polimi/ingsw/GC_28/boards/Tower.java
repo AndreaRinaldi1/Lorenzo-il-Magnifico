@@ -9,9 +9,8 @@ public class Tower {
 	private Cell[] cells = new Cell[MAX_SIZE];
 	private boolean atLeastOne;
 	
-	public Tower(Cell[] cells, boolean atLeastOne){
+	public Tower(Cell[] cells){
 		this.cells = cells;
-		this.atLeastOne = false;
 	}
 
 	public Cell findCard(String cardName){
