@@ -41,6 +41,12 @@ public class TakeCardController {
 		if(!(checkCardExistance(name, throughEffect))){
 			return false;
 		}
+		
+		if(checkMoreThanSix(familyMember)){
+			return false;
+		}
+		
+		
 		if(throughEffect == null){
 			if(checkThisPlayerPresent(familyMember)){
 				return false;
@@ -86,6 +92,32 @@ public class TakeCardController {
 		return false;
 	}
 	
+	private boolean checkMoreThanSix(FamilyMember familyMember){
+		switch(cardType){
+		case TERRITORY:
+			if(familyMember.getPlayer().getBoard().getTerritories().size() == 6){
+				return false;
+			}
+		break;
+		case BUILDING:
+			if(familyMember.getPlayer().getBoard().getBuildings().size() == 6){
+				return false;
+			}
+		break;
+		case CHARACTER:
+			if(familyMember.getPlayer().getBoard().getCharacters().size() == 6){
+				return false;
+			}
+		break;
+		case VENTURE:
+			if(familyMember.getPlayer().getBoard().getVentures().size() == 6){
+				return false;
+			}
+		break;
+		}
+		return true;
+	}
+	
 	
 	/**
 	 * @param cardType
@@ -124,6 +156,20 @@ public class TakeCardController {
 	 * @return true if the player has enough resources to take the card
 	 */
 	private boolean checkResource(Game game, String cardName, FamilyMember familyMember, TakeCardEffect throughEffect){
+		
+		if(cardType.equals(CardType.TERRITORY)){
+			for(int i = 0; i < familyMember.getPlayer().getBoard().getTerritories().size(); i++){
+				if(familyMember.getPlayer().getBoard().getTerritories().get(i) == null){
+					for(ResourceType resType : familyMember.getPlayer().getBoard().getResourceForTerritories().get(i).getResource().keySet()){
+						if(familyMember.getPlayer().getBoard().getResources().getResource().get(resType) < familyMember.getPlayer().getBoard().getResourceForTerritories().get(i).getResource().get(resType)){
+							return false;
+						}
+					}
+				}
+			}
+		}
+
+		
 		EnumMap<ResourceType, Integer> res = new EnumMap<>(ResourceType.class);
 		Resource tmp = Resource.of(res);
 		tmp.modifyResource(familyMember.getPlayer().getBoard().getResources(), true);
