@@ -1,6 +1,7 @@
 package it.polimi.ingsw.GC_28.boards;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import it.polimi.ingsw.GC_28.boards.BonusTile;
 
@@ -12,19 +13,22 @@ import it.polimi.ingsw.GC_28.components.Resource;
 
 
 public class PlayerBoard {
-	private ArrayList<Territory> territories = new ArrayList<>();
-	private ArrayList<Building> buildings = new ArrayList<>();
-	private ArrayList<Character> characters = new ArrayList<>();
-	private ArrayList<Venture> ventures = new ArrayList<>();
+	private List<Territory> territories = new ArrayList<>();
+	private List<Building> buildings = new ArrayList<>();
+	private List<Character> characters = new ArrayList<>();
+	private List<Venture> ventures = new ArrayList<>();
 	
 
 	
 	private final BonusTile bonusTile;
-	private ArrayList<Resource> finalBonusTerritories = new ArrayList<>();
-	private ArrayList<Resource> finalBonusCharacters = new ArrayList<>();
+	private List<Resource> resourceForTerritories = new ArrayList<>();
+	private List<Resource> finalBonusTerritories = new ArrayList<>();
+	private List<Resource> finalBonusCharacters = new ArrayList<>();
 	private int finalBonusResourceFactor;
 	private Resource resources;
 	private ArrayList<ExcommunicationTile> excommunicationTile = new ArrayList<>();
+	
+	
 
 	private ArrayList<FamilyMember> familyMember = new ArrayList<>();
 	
@@ -37,7 +41,7 @@ public class PlayerBoard {
 	}
 	
 	
-	public String display(){
+	public void display(){
 		String ret = "PLAYER BOARD\n";
 		ret+="Territory Cards: ";
 		for(int j = 0; j < territories.size(); j++){
@@ -97,7 +101,7 @@ public class PlayerBoard {
 		ret += retLine;*/
 		
 		ret+="\n";
-		return ret;
+		System.out.println(ret);
 		
 	}
 	
@@ -130,19 +134,19 @@ public class PlayerBoard {
 	
 	
 
-	public ArrayList<Territory> getTerritories() {
+	public List<Territory> getTerritories() {
 		return territories;
 	}
 
-	public ArrayList<Building> getBuildings() {
+	public List<Building> getBuildings() {
 		return buildings;
 	}
 
-	public ArrayList<Character> getCharacters() {
+	public List<Character> getCharacters() {
 		return characters;
 	}
 
-	public ArrayList<Venture> getVentures() {
+	public List<Venture> getVentures() {
 		return ventures;
 	}
 
@@ -150,19 +154,19 @@ public class PlayerBoard {
 		return bonusTile;
 	}
 
-	public ArrayList<Resource> getFinalBonusTerritories() {
+	public List<Resource> getFinalBonusTerritories() {
 		return finalBonusTerritories;
 	}
 
-	public void setFinalBonusTerritories(ArrayList<Resource> finalBonusTerritories) {
+	public void setFinalBonusTerritories(List<Resource> finalBonusTerritories) {
 		this.finalBonusTerritories = finalBonusTerritories;
 	}
 
-	public ArrayList<Resource> getFinalBonusCharacters() {
+	public List<Resource> getFinalBonusCharacters() {
 		return finalBonusCharacters;
 	}
 
-	public void setFinalBonusCharacters(ArrayList<Resource> finalBonusCharacters) {
+	public void setFinalBonusCharacters(List<Resource> finalBonusCharacters) {
 		this.finalBonusCharacters = finalBonusCharacters;
 	}
 
@@ -194,6 +198,18 @@ public class PlayerBoard {
 
 	public void setFinalBonusResourceFactor(int finalBonusResourceFactor) {
 		this.finalBonusResourceFactor = finalBonusResourceFactor;
+	}
+
+
+	public List<Resource> getResourceForTerritories() {
+		return resourceForTerritories;
+	}
+
+
+	public void setResourceForTerritories(List<Resource> resourceForTerritories) {
+		this.resourceForTerritories = resourceForTerritories;
 	}	
+	
+	
 	
 }

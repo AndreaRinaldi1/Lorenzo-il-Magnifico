@@ -240,13 +240,14 @@ public class BoardsInitializer {
 	private void initFinalBonus(){
 		Gson gson = new GsonBuilder().create();
 		try {
-			JsonReader readerTerritoryBonus = new JsonReader(new FileReader("finalBonus.json"));
+			JsonReader readerTerritoryBonus = new JsonReader(new FileReader("setArrayPlayerBoard.json"));
 			//Type hashMapType = new TypeToken<HashMap<String,ArrayList<Resource>>>() {}.getType();
 			FinalBonus finalBonus = gson.fromJson(readerTerritoryBonus, FinalBonus.class);
 			for(Player p : players){
 				p.getBoard().setFinalBonusTerritories(finalBonus.getFinalTerritoriesBonus());
 				p.getBoard().setFinalBonusCharacters(finalBonus.getFinalCharactersBonus());
 				p.getBoard().setFinalBonusResourceFactor(finalBonus.getResourceFactor());
+				p.getBoard().setResourceForTerritories(finalBonus.getResourceForTerritories());
 			}
 		} catch (FileNotFoundException e) {
 			Logger.getAnonymousLogger().log(Level.SEVERE, "file not found" + e);

@@ -130,7 +130,75 @@
         "STONE": 0,
         "SERVANT": 0,
         "MILITARYPOINT": 0,
-        "VICTORYPOINT": 20,
+        "VICTORYPOINT": 21,
+        "FAITHPOINT": 0
+      }
+    }
+  ],
+  "resourceForTerritories": [
+    {
+      "resource": {
+        "COIN": 0,
+        "WOOD": 0,
+        "STONE": 0,
+        "SERVANT": 0,
+        "MILITARYPOINT": 0,
+        "VICTORYPOINT": 0,
+        "FAITHPOINT": 0
+      }
+    },
+    {
+      "resource": {
+        "COIN": 0,
+        "WOOD": 0,
+        "STONE": 0,
+        "SERVANT": 0,
+        "MILITARYPOINT": 0,
+        "VICTORYPOINT": 0,
+        "FAITHPOINT": 0
+      }
+    },
+    {
+      "resource": {
+        "COIN": 0,
+        "WOOD": 0,
+        "STONE": 0,
+        "SERVANT": 0,
+        "MILITARYPOINT": 3,
+        "VICTORYPOINT": 0,
+        "FAITHPOINT": 0
+      }
+    },
+    {
+      "resource": {
+        "COIN": 0,
+        "WOOD": 0,
+        "STONE": 0,
+        "SERVANT": 0,
+        "MILITARYPOINT": 7,
+        "VICTORYPOINT": 0,
+        "FAITHPOINT": 0
+      }
+    },
+    {
+      "resource": {
+        "COIN": 0,
+        "WOOD": 0,
+        "STONE": 0,
+        "SERVANT": 0,
+        "MILITARYPOINT": 12,
+        "VICTORYPOINT": 0,
+        "FAITHPOINT": 0
+      }
+    },
+    {
+      "resource": {
+        "COIN": 0,
+        "WOOD": 0,
+        "STONE": 0,
+        "SERVANT": 0,
+        "MILITARYPOINT": 18,
+        "VICTORYPOINT": 0,
         "FAITHPOINT": 0
       }
     }
