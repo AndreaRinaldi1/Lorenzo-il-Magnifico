@@ -2,38 +2,77 @@ package it.polimi.ingsw.GC_28.cardsTest;
 
 import static org.junit.Assert.*;
 
+import java.util.ArrayList;
+import java.util.EnumMap;
+
 import org.junit.AfterClass;
+import org.junit.Before;
 import org.junit.Test;
 
-public class VentureTest {
+import it.polimi.ingsw.GC_28.cards.*;
+import it.polimi.ingsw.GC_28.components.*;
+import it.polimi.ingsw.GC_28.effects.*;
 
+public class VentureTest {
+	private Venture venture;
+	private ArrayList<Effect> immediateEffect = new ArrayList<Effect>();
+	private ResourceEffect permanentEffect;
+	private boolean alternativeCostPresence = true;
+	private Resource alternativeCost;
+	private int minimumRequiredMilitaryPoints = 2;
+	private Resource cost1,cost2;
+	private ResourceEffect r;
+	EnumMap<ResourceType, Integer> resource1, resource2;
+	
+	
+	@Before
+	public void venture(){
+		venture = new Venture("Rob", 3, 1);
+		r = new ResourceEffect();
+		resource1 = new EnumMap<ResourceType, Integer>(ResourceType.class);
+		resource1.put(ResourceType.STONE, 2);
+		cost1 = Resource.of(resource1);
+		r.setResourceBonus(cost1);
+		immediateEffect.add(r);
+		this.venture.setImmediateEffect(immediateEffect);
+		permanentEffect = r;
+		this.venture.setPermanentEffect(permanentEffect);
+		this.venture.setAlternativeCostPresence(alternativeCostPresence);
+		resource2 = new EnumMap<ResourceType, Integer>(ResourceType.class);
+		resource2.put(ResourceType.MILITARYPOINT, 5);
+		cost2 = Resource.of(resource2);
+		alternativeCost = cost2;
+		this.venture.setAlternativeCost(alternativeCost);
+		this.venture.setMinimumRequiredMilitaryPoints(minimumRequiredMilitaryPoints);
+	}
+	
 	@AfterClass
 	public static void tearDownAfterClass() throws Exception {
 	}
 
 	@Test
 	public void testGetImmediateEffect() {
-		fail("Not yet implemented");
+		assertEquals(this.immediateEffect, this.venture.getImmediateEffect());
 	}
 
 	@Test
 	public void testGetPermanentEffect() {
-		fail("Not yet implemented");
+		assertEquals(this.permanentEffect, this.venture.getPermanentEffect());
 	}
 
 	@Test
 	public void testGetAlternativeCostPresence() {
-		fail("Not yet implemented");
+		assertEquals(this.alternativeCostPresence, this.venture.getAlternativeCostPresence());
 	}
 
 	@Test
 	public void testGetAlternativeCost() {
-		fail("Not yet implemented");
+		assertEquals(this.alternativeCost, this.venture.getAlternativeCost());
 	}
 
 	@Test
 	public void testGetMinimumRequiredMilitaryPoints() {
-		fail("Not yet implemented");
+		assertEquals(this.minimumRequiredMilitaryPoints, this.venture.getMinimumRequiredMilitaryPoints());
 	}
 
 }

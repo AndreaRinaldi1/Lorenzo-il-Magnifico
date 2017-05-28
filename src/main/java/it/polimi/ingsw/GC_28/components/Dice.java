@@ -26,6 +26,6 @@ public class Dice {
 	
 	@Override
 	public String toString(){
-		return "Color: "+this.getColor() + " Value: "+ this.getValue();
+		return "Color: "+this.getColor() + "Value: "+ this.getValue();
 	}
 }
