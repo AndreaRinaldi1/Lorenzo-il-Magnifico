@@ -1,5 +1,12 @@
 package it.polimi.ingsw.GC_28.model;
 
+/**
+ * Initialize gameBoard and playerBoard for the given game and players
+ * @author Nick
+ * @version 1.0, 05/23/2017
+ * 
+ */
+
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
@@ -9,6 +16,7 @@ import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.EnumMap;
 import java.util.LinkedList;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -16,12 +24,11 @@ import javax.management.timer.Timer;
 
 import it.polimi.ingsw.GC_28.boards.BonusTile;
 import it.polimi.ingsw.GC_28.boards.Cell;
+import it.polimi.ingsw.GC_28.boards.FinalBonus;
 import it.polimi.ingsw.GC_28.boards.GameBoard;
 import it.polimi.ingsw.GC_28.boards.PlayerBoard;
 import it.polimi.ingsw.GC_28.boards.Tower;
-import it.polimi.ingsw.GC_28.cards.CardReader;
 import it.polimi.ingsw.GC_28.cards.CardType;
-import it.polimi.ingsw.GC_28.cards.Deck;
 import it.polimi.ingsw.GC_28.components.CouncilPrivilege;
 import it.polimi.ingsw.GC_28.components.Dice;
 import it.polimi.ingsw.GC_28.components.DiceColor;
@@ -40,39 +47,44 @@ import com.google.gson.reflect.TypeToken;
 
 public class BoardsInitializer {
 	
-	private static BonusTile bonusTile;
-	private static Dice[] dices =  new Dice[3]; //ask if dice could be static,anyway the colors will not change during the game
+	private BonusTile bonusTile = new BonusTile();
+	private Dice[] dices = new Dice[3];
+	
 	private Timer timer = new Timer();
-	private static CouncilPrivilege councilPrivilege;
-	public static ArrayList<Player> players = new ArrayList<>();
-	static Deck deck = new Deck();
-	public static final GameBoard gameBoard = new GameBoard();
+	private CouncilPrivilege councilPrivilege;
+	public List<Player> players = new ArrayList<>();
+	//static Deck deck = new Deck();
+	public GameBoard gameBoard = new GameBoard();
+	private Game g = new Game();
 	
-	
-	public void initializeBoard(){
+	public Game initializeBoard(List<Player> players){
 		try {
+			this.players  = players;
 			initDices();
+			//gameBoard.setDices(dices);
+			//gameBoard.setDices(dices);
 			initCouncilPrivilege();
-			setDeck();
 			initGameBoard();
-			players  = ProvaSetUp.getPlayer();
 			initSpaces();
+			g.setGameBoard(gameBoard);
 			initBonusTile();
 			initPlayerBoard();
 			initFamilyMember();
+			g.setPlayers(players);
 		} catch (FileNotFoundException e) {
 			Logger.getAnonymousLogger().log(Level.SEVERE, "cannot start initialize" + e);
 		}
+		return g;
 	}
 	
-	private void setDeck(){
+	/*private void setDeck(){
 		try{
 			CardReader cardReader = new CardReader();
 			deck = cardReader.startRead();
 			}catch(FileNotFoundException e){
 				Logger.getAnonymousLogger().log(Level.SEVERE, "Deck file not found" + e);
 			}
-	}
+	}*/
 	
 	private static Cell[] prepareCell(CardType ct) throws FileNotFoundException{ //LinkedList allow the order of elements
 		/*This gson attribute is used to convert an EnumMap from a file, because gson library is
@@ -192,24 +204,19 @@ public class BoardsInitializer {
 			dices[i] = new Dice(DiceColor.values()[i]);
 			dices[i].rollDice();
 		}
+		gameBoard.setDices(dices);
 	}
 	
-	public void rollDices(){
-		for(int i = 0; i < 3; i++){
-			dices[i].setValue();
-		}
-	}
 	
-	public static Dice[] getDices() {
-		return dices;
-	}
 
-	private static void initBonusTile(){
+	private void initBonusTile(){
 		Gson gson = new GsonBuilder().create();
 		try {
 			JsonReader jRead = new JsonReader(new FileReader("bonusTile.json"));
-			bonusTile = gson.fromJson(jRead, BonusTile.class);
-			BonusTile.setBonusTile(bonusTile);
+			BonusTile bonusTi = gson.fromJson(jRead, BonusTile.class);
+			//this.bonusTile = bonusTi;
+			bonusTile.setHarvestEffect(bonusTi.getHarvestEffect());
+			bonusTile.setProductionEffect(bonusTi.getProductionEffect());
 		}catch(FileNotFoundException e){
 			Logger.getAnonymousLogger().log(Level.SEVERE, "cannot start initialize" + e);
 		}
@@ -230,6 +237,23 @@ public class BoardsInitializer {
 		}
 	}
 	
+	private void initFinalBonus(){
+		Gson gson = new GsonBuilder().create();
+		try {
+			JsonReader readerTerritoryBonus = new JsonReader(new FileReader("finalBonus.json"));
+			//Type hashMapType = new TypeToken<HashMap<String,ArrayList<Resource>>>() {}.getType();
+			FinalBonus finalBonus = gson.fromJson(readerTerritoryBonus, FinalBonus.class);
+			for(Player p : players){
+				p.getBoard().setFinalBonusTerritories(finalBonus.getFinalTerritoriesBonus());
+				p.getBoard().setFinalBonusCharacters(finalBonus.getFinalCharactersBonus());
+				p.getBoard().setFinalBonusResourceFactor(finalBonus.getResourceFactor());
+			}
+		} catch (FileNotFoundException e) {
+			Logger.getAnonymousLogger().log(Level.SEVERE, "file not found" + e);
+		}
+		
+	}
+	
 	private void initPlayerBoard(){
 		int i = 0;
 		for(Player p: players){
@@ -243,10 +267,11 @@ public class BoardsInitializer {
 			resourceMap.put(ResourceType.FAITHPOINT, 0);
 			resourceMap.put(ResourceType.COIN, 5+i);
 			Resource resource = Resource.of(resourceMap);
-			PlayerBoard pb = new PlayerBoard(BonusTile.instance(),resource);
+			PlayerBoard pb = new PlayerBoard(bonusTile,resource);
 			p.setBoard(pb);
 			i++;
 		}
+		initFinalBonus();
 	}
 	
 	

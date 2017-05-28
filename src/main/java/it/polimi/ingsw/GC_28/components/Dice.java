@@ -1,6 +1,5 @@
 package it.polimi.ingsw.GC_28.components;
 
-import java.util.Random;
 import java.util.concurrent.ThreadLocalRandom;
 
 public class Dice {
@@ -19,9 +18,7 @@ public class Dice {
 		return value;
 	}
 
-	public void setValue() {
-		this.value = new Random().nextInt(6) + 1;
-	}
+	
 	public void rollDice(){
 		int randomInt = ThreadLocalRandom.current().nextInt(1, 7);
 		this.value = randomInt;

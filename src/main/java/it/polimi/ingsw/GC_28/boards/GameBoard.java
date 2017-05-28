@@ -1,14 +1,14 @@
 package it.polimi.ingsw.GC_28.boards;
-
 import java.util.ArrayList;
 import java.util.EnumMap;
 import java.util.Map;
 
 import it.polimi.ingsw.GC_28.cards.*;
 import it.polimi.ingsw.GC_28.components.Dice;
+
 import it.polimi.ingsw.GC_28.components.FamilyMember;
 import it.polimi.ingsw.GC_28.components.Resource;
-import it.polimi.ingsw.GC_28.model.BoardsInitializer;
+
 import it.polimi.ingsw.GC_28.spaces.CouncilPalace;
 import it.polimi.ingsw.GC_28.spaces.MarketSpace;
 import it.polimi.ingsw.GC_28.spaces.ProductionAndHarvestSpace;
@@ -19,7 +19,7 @@ public class GameBoard {
 	private static final int N_DICE = 3;
 	private static final int N_EXCOMMUNICATIONTILE = 3;
 	private Map<CardType, Tower> towers = new EnumMap<>(CardType.class);
-	private Dice[] dices = BoardsInitializer.getDices();
+	private Dice[] dices = new Dice[3];
 	private ExcommunicationTile[] excommunications = new ExcommunicationTile[N_EXCOMMUNICATIONTILE];
 	
 	private ProductionAndHarvestSpace harvestSpace;
@@ -33,72 +33,82 @@ public class GameBoard {
 	
 	private ArrayList<FamilyMember> membersCoucilPalace = new ArrayList<>(); 
 	
+	private String emptySpace = "( )\n";
+	private String occSpace = "(X)\n";
 	
 	public GameBoard(){
 		/*empty for testing*/
 	}
 	
 
-	public String display(){
+	public void display(){
 		String ret = "GAME BOARD\n";
 		
 		//Towers
-		ret+="----------\n";
+		ret += "----------\n";
 		for(int i = 3;i >= 0 ;i--){
-			ret+="|" + towers.get(CardType.TERRITORY).getCells()[i].getCard().getName() + 
+			ret +="|" + towers.get(CardType.TERRITORY).getCells()[i].getCard().getName() + 
 				" |"+ towers.get(CardType.BUILDING).getCells()[i].getCard().getName() + 
 				" |" + towers.get(CardType.CHARACTER).getCells()[i].getCard().getName() +
 				" |" + towers.get(CardType.VENTURE).getCells()[i].getCard().getName()+ " |\n";
-			ret+="----------\n";	
+			ret +="----------\n";	
 		}
 		
 		//Council Palace
-		ret+="CP: ";
+		ret+="CP: \n";
 		for (int i = 0; i < membersCoucilPalace.size(); i++){		
-			ret+="| " + membersCoucilPalace.get(i).getPlayer().getColor() + " |"; 
+			ret +="| " + membersCoucilPalace.get(i).getPlayer().getColor() + " |"; 
 		}
-		ret+="Church: | | | |\n";			//ho bisogno delle carte scomunica
+		ret += "Church: | | | |\n";			//ho bisogno delle carte scomunica
 		
 		//hHarvest and Production Space
+		ret += "Harves Space \n";
 		if(harvestSpace.isFree()==false){
-			ret+="(X)";
+			ret += occSpace;
 		}
 		else{
-			ret+="( )";
+			ret += emptySpace;
 		}
 		ret+="(    )\n";
+		
+		ret += "Production Space: \n";
 		if(productionSpace.isFree()==false){
-			ret+="(X)";
+			ret += occSpace;
 		}
 		else{
-			ret+="( )";
+			ret += emptySpace;
 		}
 		ret+="(    )\n";
 		
 		//Market Space
+		ret += "Coin Space: \n";
 		if(coinSpace.isFree()==false){
-			ret+="(X)";
+			ret += occSpace;
 		}
 		else{
-			ret+="( )";
+			ret += emptySpace;
 		}
+		ret += "Servant Space: \n";
 		if(servantSpace.isFree()==false){
-			ret+="(X)";
+			ret += occSpace;
 		}
 		else{
-			ret+="( )";
+			ret += emptySpace;
 		}
+		ret += "Mixed Space: \n";
 		if(mixedSpace.isFree()==false){
-			ret+="(X)";
+			ret += occSpace;
 		}
 		else{
-			ret+="( )";
+			ret += emptySpace;
 		}
+		
+		ret += "Two Privileges Space: \n";
 		if(twoPrivilegesSpace.isFree()==false){
-			ret+="(X)";
+			ret += occSpace;
 		}
 		else{
-			ret+="( )";
+			ret += emptySpace;
 		}
 		ret+="\n";
 	
@@ -107,7 +117,7 @@ public class GameBoard {
 		for(int j = 0; j < N_DICE; j++){
 			ret += (dices[j].getColor().toString()+": " + dices[j].getValue() + '\n');
 		}
-		return ret;
+		System.out.println(ret);
 	}
 
 	public Map<CardType, Tower> getTowers() {
