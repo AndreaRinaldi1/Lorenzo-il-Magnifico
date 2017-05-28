@@ -52,8 +52,7 @@ public class BoardsInitializer {
 	
 	private Timer timer = new Timer();
 	private CouncilPrivilege councilPrivilege;
-	public List<Player> players = new ArrayList<>();
-	//static Deck deck = new Deck();
+	private List<Player> players = new ArrayList<>();
 	public GameBoard gameBoard = new GameBoard();
 	private Game g = new Game();
 	
@@ -61,8 +60,6 @@ public class BoardsInitializer {
 		try {
 			this.players  = players;
 			initDices();
-			//gameBoard.setDices(dices);
-			//gameBoard.setDices(dices);
 			initCouncilPrivilege();
 			initGameBoard();
 			initSpaces();
@@ -76,15 +73,6 @@ public class BoardsInitializer {
 		}
 		return g;
 	}
-	
-	/*private void setDeck(){
-		try{
-			CardReader cardReader = new CardReader();
-			deck = cardReader.startRead();
-			}catch(FileNotFoundException e){
-				Logger.getAnonymousLogger().log(Level.SEVERE, "Deck file not found" + e);
-			}
-	}*/
 	
 	private static Cell[] prepareCell(CardType ct) throws FileNotFoundException{ //LinkedList allow the order of elements
 		/*This gson attribute is used to convert an EnumMap from a file, because gson library is
@@ -214,7 +202,6 @@ public class BoardsInitializer {
 		try {
 			JsonReader jRead = new JsonReader(new FileReader("bonusTile.json"));
 			BonusTile bonusTi = gson.fromJson(jRead, BonusTile.class);
-			//this.bonusTile = bonusTi;
 			bonusTile.setHarvestEffect(bonusTi.getHarvestEffect());
 			bonusTile.setProductionEffect(bonusTi.getProductionEffect());
 		}catch(FileNotFoundException e){
