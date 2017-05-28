@@ -56,7 +56,7 @@ public class DiscountEffect extends Effect{
 
 
 	@Override
-	public void apply(FamilyMember familyMember, GameBoard gameBoard, Game game){
+	public void apply(FamilyMember familyMember, Game game){
 		System.out.println("apply di DiscountEffect");
 		if(alternativeDiscountPresence == true){
 			familyMember.getPlayer().getBoard().addResource(game.askAlternativeDiscount(discount, alternativeDiscount)); //Considero il discount come aumento risorse nella playerboard (?)

@@ -13,15 +13,18 @@ import it.polimi.ingsw.GC_28.components.DiceColor;
 import it.polimi.ingsw.GC_28.components.FamilyMember;
 import it.polimi.ingsw.GC_28.components.Resource;
 import it.polimi.ingsw.GC_28.components.ResourceType;
+import it.polimi.ingsw.GC_28.core.SpaceAction;
 import it.polimi.ingsw.GC_28.core.TakeCardAction;
+import it.polimi.ingsw.GC_28.effects.GoToHPEffect;
 import it.polimi.ingsw.GC_28.effects.TakeCardEffect;
+import it.polimi.ingsw.GC_28.spaces.Space;
 
 public class Game {
 	private GameBoard gameBoard;
 	private List<Player> players; //it's static because is the only way i can access to it from another class in a useful way
 	
 	Scanner input = new Scanner(System.in);
-	private Player currentPlayer;
+	public Player currentPlayer;
 	boolean modifiedWithServants = false;
 	private BoardSetup bs;
 	private int currentEra  = 1;
@@ -100,15 +103,93 @@ public class Game {
 		return choices;
 	}
 	
+	public Space askWhichSpace(){
+		do{
+			System.out.println("Enter which space you want to go into [coinSpace / servantSpace / mixedSpace / privilegesSpace / councilPalace / productionSpace / harvestSpace]");
+			if(input.hasNextInt()){
+				System.out.println("Not valid input!");
+				input.nextLine();
+			}
+			else{
+				String chosenSpace = input.nextLine();
+				if(chosenSpace.equalsIgnoreCase("coinspace")){
+					return gameBoard.getCoinSpace();
+				}
+				if(chosenSpace.equalsIgnoreCase("servantpace")){
+					return gameBoard.getServantSpace();
+				}
+				if(chosenSpace.equalsIgnoreCase("mixedspace")){
+					return gameBoard.getMixedSpace();
+				}
+				if(chosenSpace.equalsIgnoreCase("privilegesspace")){
+					return gameBoard.getPrivilegesSpace();
+				}
+				if(chosenSpace.equalsIgnoreCase("councilpalace")){
+					return gameBoard.getCouncilPalace();
+				}
+				if(chosenSpace.equalsIgnoreCase("productionspace")){
+					return gameBoard.getProductionSpace();
+				}
+				if(chosenSpace.equalsIgnoreCase("harvestspace")){
+					return gameBoard.getHarvestSpace();
+				}
+				else{
+					System.out.println("Not valid input!");
+				}
+			}
+		}while(true);
+	}
 	
+	public boolean goToSpace(GoToHPEffect throughEffect){
+		FamilyMember familyMember;
+		int incrementThroughServants;
+		SpaceAction spaceAction = new SpaceAction(this);
+		Space chosenSpace;
+		
+		if(!(throughEffect == null)){
+			familyMember = new FamilyMember(currentPlayer, false, null); //familyMember fittizio
+			familyMember.setValue(throughEffect.getActionValue());
+			if(throughEffect.isHarvest()){
+				chosenSpace = gameBoard.getHarvestSpace();
+			}
+			else{
+				chosenSpace = gameBoard.getProductionSpace();
+			}
+		}
+		else{
+			chosenSpace = askWhichSpace();
+			familyMember = askFamilyMember();
+		}
+		
+		incrementThroughServants = askForServantsIncrement();
+		familyMember.modifyValue(incrementThroughServants);
+		
+		
+		if(spaceAction.isApplicable(familyMember, chosenSpace, throughEffect)){
+			spaceAction.apply(familyMember, chosenSpace, throughEffect);
+			return true;
+		}
+		else{
+			if(modifiedWithServants){
+				familyMember.modifyValue((-1)*(incrementThroughServants));
+				EnumMap<ResourceType, Integer> decrement = new EnumMap<>(ResourceType.class);
+				decrement.put(ResourceType.SERVANT, incrementThroughServants);
+				Resource res = Resource.of(decrement);
+				currentPlayer.getBoard().getResources().modifyResource(res, true);
+			}
+			System.out.println("Not valid action!");
+			return false;
+		}
+		
+	}
 	
 	public boolean askCard(TakeCardEffect throughEffect){ //throughEffect = null se non è un askcard che viene da effetto ma da mossa normale
 		FamilyMember familyMember;							// if it's null the first condition will throw a null pointer exception(N)
 		int incrementThroughServants;
 		TakeCardAction takeCardAction = new TakeCardAction(this, gameBoard);
 		
-		if(!(throughEffect.equals(null))){ //se viene da effetto gli dico cosa può prendere 
-			if(throughEffect.getCardType().equals(null)){
+		if(!(throughEffect == null)){ //se viene da effetto gli dico cosa può prendere 
+			if(throughEffect.getCardType() == null){
 				System.out.println("You can take another card of any type");
 			}
 			else{
@@ -118,7 +199,7 @@ public class Game {
 		
 		String name = askCardName();
 		
-		if((throughEffect.equals(null))){ //se viene da mossa gli chiedo quale fm vuole usare
+		if(throughEffect == null){ //se viene da mossa gli chiedo quale fm vuole usare
 			familyMember = askFamilyMember();
 		}
 		else{
@@ -146,11 +227,17 @@ public class Game {
 	}
 	
 	public String askCardName(){
-		System.out.println("Enter the name of the card you would like to take: ");
-		while(input.hasNextInt()){
-			System.out.println("Not valid input!");
-		}
-		return input.nextLine();
+		do{
+			System.out.println("Enter the name of the card you would like to take: ");
+			if(input.hasNextInt()){
+				System.out.println("Not valid input!");
+				input.nextLine();
+			}
+			else{
+				return input.nextLine();
+			}
+		}while(true);
+		
 	}
 	
 	/*public CardType askCardType(){
@@ -193,6 +280,7 @@ public class Game {
 			System.out.println("Would you like to pay servants in order to increment the family member action value? [y/n]");
 			if(input.hasNextInt()){
 				System.out.println("Not valid input!");
+				input.nextLine();
 				continue;
 			}
 			else if(input.hasNextLine()){
@@ -214,8 +302,11 @@ public class Game {
 						System.out.println("Not valid inupt!");
 					}
 				}
-				else{
+				else if (input.nextLine().equals("n")){
 					return 0;
+				}
+				else{
+					System.out.println("Not valid inupt!");
 				}
 			}
 		}

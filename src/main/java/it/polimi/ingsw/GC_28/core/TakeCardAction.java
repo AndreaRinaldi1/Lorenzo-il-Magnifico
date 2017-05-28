@@ -27,6 +27,8 @@ public class TakeCardAction {
 		return takeCardController.check(game, name, familyMember, throughEffect);
 	}
 	
+	
+	
 	public void apply(String name, FamilyMember familyMember, TakeCardEffect throughEffect){
 		takeCardController.reduce3Coins(familyMember, false, null);
 		takeCardController.lookForNoCellBonus(familyMember, false, null, name);
@@ -35,7 +37,7 @@ public class TakeCardAction {
 		Cell cell = gameBoard.getTowers().get(takeCardController.cardType).findCard(name);
 		Resource cardCost = cell.getCard().getCost();
 		familyMember.getPlayer().getBoard().getResources().modifyResource(cardCost, false);
-		if(throughEffect.equals(null)){
+		if(throughEffect == null){
 			cell.setFamilyMember(familyMember);
 		}
 		Card card = cell.getCard();
@@ -43,27 +45,27 @@ public class TakeCardAction {
 			Territory territory = (Territory) card;
 			familyMember.getPlayer().getBoard().addCard(territory);
 			for(Effect e : territory.getImmediateEffect()){
-				e.apply(familyMember, gameBoard, game);
+				e.apply(familyMember, game);
 			}
 		}
 		else if(card instanceof Building){ 
 			Building building = (Building) card;
 			familyMember.getPlayer().getBoard().addCard(building);
-			building.getImmediateEffect().apply(familyMember, gameBoard, game);
+			building.getImmediateEffect().apply(familyMember, game);
 
 		}
 		else if(card instanceof Character){ 
 			Character character = (Character) card;
 			familyMember.getPlayer().getBoard().addCard(character);
 			for(Effect e : character.getImmediateEffect()){
-				e.apply(familyMember, gameBoard, game);
+				e.apply(familyMember, game);
 			}
 		}
-		else if(card instanceof Territory){ 
+		else if(card instanceof Venture){ 
 			Venture venture = (Venture) card;
 			familyMember.getPlayer().getBoard().addCard(venture);
 			for(Effect e : venture.getImmediateEffect()){
-				e.apply(familyMember, gameBoard, game);
+				e.apply(familyMember, game);
 			}
 		}
 		

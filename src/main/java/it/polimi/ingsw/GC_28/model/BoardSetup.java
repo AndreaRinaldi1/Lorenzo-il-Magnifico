@@ -201,9 +201,9 @@ public class BoardSetup {
 				gameBoard.getMixedSpace().getPlayer().remove(0);
 				gameBoard.getMixedSpace().setFree(true);
 			}
-			if(!(gameBoard.getTwoPrivilegesSpace().isFree())){
-				gameBoard.getTwoPrivilegesSpace().getPlayer().remove(0);
-				gameBoard.getTwoPrivilegesSpace().setFree(true);
+			if(!(gameBoard.getPrivilegesSpace().isFree())){
+				gameBoard.getPrivilegesSpace().getPlayer().remove(0);
+				gameBoard.getPrivilegesSpace().setFree(true);
 			}
 		}
 	}

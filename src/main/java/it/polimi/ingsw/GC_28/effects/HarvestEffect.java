@@ -44,13 +44,18 @@ public class HarvestEffect extends Effect{
 	}
 
 	@Override
-	public void apply(FamilyMember familyMember, GameBoard gameBoard, Game game) {
+	public void apply(FamilyMember familyMember, Game game) {
 		System.out.println("apply di HarvestEffect");
-		if(councilPrivilegeBonus != null){
-			councilPrivilegeBonus.apply(familyMember, gameBoard, game);
+		if(familyMember.getValue() >= harvestValue){
+			if(councilPrivilegeBonus != null){
+				councilPrivilegeBonus.apply(familyMember, game);
+			}
+			else{
+				resourceHarvestBonus.apply(familyMember, game);
+			}
 		}
 		else{
-			resourceHarvestBonus.apply(familyMember, gameBoard, game);
+			System.out.println("You don't have the necessary action value to activate this effect");
 		}
 	}
 }

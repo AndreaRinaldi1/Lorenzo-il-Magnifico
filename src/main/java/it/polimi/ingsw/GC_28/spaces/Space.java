@@ -5,6 +5,7 @@ import java.util.ArrayList;
 
 
 import it.polimi.ingsw.GC_28.components.FamilyMember;
+import it.polimi.ingsw.GC_28.model.Game;
 
 public abstract class Space {
 	private boolean free;
@@ -30,7 +31,7 @@ public abstract class Space {
 		return players;
 	}
 	
-	public void addPlayer(FamilyMember player) throws IOException{
+	public void addPlayer(FamilyMember player){
 		if(this.isFree() == true){
 			this.players.add(player);
 			this.free = false;
@@ -44,4 +45,7 @@ public abstract class Space {
 	public void setActionValue(int actionValue) {
 		this.actionValue = actionValue;
 	} 
+	
+	
+	public void applyBonus(Game game, FamilyMember familyMember){}
 }

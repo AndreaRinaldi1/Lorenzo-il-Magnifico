@@ -351,14 +351,13 @@ private void enterResourceBonus(EnumMap<ResourceType, Integer> bonus){
 	private CardType enterCardType(){
 		System.out.println("Enter Card Type: ");
 		scanner.hasNextLine();
-		boolean x = false;
 		scanner.nextLine();
 		String cardType = scanner.nextLine();
 		for(CardType ct : CardType.values()){
 			if(cardType.toUpperCase().equals(ct.name()))
 				return ct;
 		}
-		while(!x){
+		while(true){
 			System.out.println("Not valid input!");
 			System.out.print("Enter Card Type: ");
 			cardType = scanner.nextLine();
@@ -367,13 +366,11 @@ private void enterResourceBonus(EnumMap<ResourceType, Integer> bonus){
 					return ct;
 			}
 		}
-		return null;
 	}
 	
 	private ArrayList<Effect> enterEffectArray(ArrayList<Effect> effects){ //Allow to insert an arraylist of effectType
-		boolean x = false;
 		//scanner.nextLine();
-		while(!x){ 
+		while(true){ 
 			System.out.println("Enter Effect Type for the Immediate Effect: ");
 			System.out.println("Type 'r' for ResourceEffect");
 			System.out.println("Type 'p' for PrivilegesEffect");
@@ -460,7 +457,6 @@ private void enterResourceBonus(EnumMap<ResourceType, Integer> bonus){
 			if(proceed.equals("n"))
 				return effects;
 		}
-		return effects;
 	}
 	
 	private char enterProductionEffectType(){
@@ -472,12 +468,11 @@ private void enterResourceBonus(EnumMap<ResourceType, Integer> bonus){
 		System.out.println("Enter 'p' for privilege");
 		
 		
-		boolean y = false;
 		char productionEffectType = scanner.nextLine().toLowerCase().charAt(0);
 		if(productionEffectType=='e' || productionEffectType=='m' || productionEffectType=='r' || productionEffectType == 'p'){
 			return productionEffectType;
 		}
-		while(!y){
+		while(true){
 			System.out.println("Not valid input!");
 			System.out.print("Enter SpaceType: ");
 			productionEffectType = scanner.nextLine().toLowerCase().charAt(0);
@@ -485,7 +480,6 @@ private void enterResourceBonus(EnumMap<ResourceType, Integer> bonus){
 				return productionEffectType;
 			}
 		}
-		return ' ';
 	}
 	
 	private ProductionEffect enterProductionEffect(ProductionEffect pe){
@@ -537,7 +531,7 @@ private void enterResourceBonus(EnumMap<ResourceType, Integer> bonus){
 	}
 	
 	
-	private PrivilegesEffect enterPrivilegesEffect(PrivilegesEffect privEffect){
+	public PrivilegesEffect enterPrivilegesEffect(PrivilegesEffect privEffect){
 		System.out.println("Enter number of privileges: ");
 		int numOfPriv = scanner.nextInt();
 		scanner.nextLine();

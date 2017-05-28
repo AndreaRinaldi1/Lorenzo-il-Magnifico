@@ -163,21 +163,21 @@ public class BoardsInitializer {
             		gameBoard.setMixedSpace(everySpace.getMixedSpace());
             		gameBoard.getMixedSpace().setFree(true);
             		
-            		gameBoard.setTwoPrivilegesSpace(everySpace.getTwoPrivilegesSpace());
-            		gameBoard.getTwoPrivilegesSpace().setFree(true);
+            		gameBoard.setPrivilegesSpace(everySpace.getPrivilegesSpace());
+            		gameBoard.getPrivilegesSpace().setFree(true);
             	}else{
             		gameBoard.setMixedSpace(everySpace.getMixedSpace());
             		gameBoard.getMixedSpace().setFree(false);
             		
-            		gameBoard.setTwoPrivilegesSpace(everySpace.getTwoPrivilegesSpace());
-            		gameBoard.getTwoPrivilegesSpace().setFree(false);
+            		gameBoard.setPrivilegesSpace(everySpace.getPrivilegesSpace());
+            		gameBoard.getPrivilegesSpace().setFree(false);
             		}
         	}else{
         		gameBoard.setMixedSpace(everySpace.getMixedSpace());
         		gameBoard.getMixedSpace().setFree(false);
         		
-        		gameBoard.setTwoPrivilegesSpace(everySpace.getTwoPrivilegesSpace());
-        		gameBoard.getTwoPrivilegesSpace().setFree(false);
+        		gameBoard.setPrivilegesSpace(everySpace.getPrivilegesSpace());
+        		gameBoard.getPrivilegesSpace().setFree(false);
         		
         		gameBoard.getProductionSpace().setSecondarySpace(false);
         		gameBoard.getHarvestSpace().setSecondarySpace(false);

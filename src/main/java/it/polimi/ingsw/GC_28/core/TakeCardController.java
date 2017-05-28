@@ -40,7 +40,7 @@ public class TakeCardController {
 		if(!(checkCardExistance(name, throughEffect))){
 			return false;
 		}
-		if(throughEffect.equals(null)){
+		if(throughEffect == null){
 			if(checkThisPlayerPresent(familyMember)){
 				return false;
 			}
@@ -51,7 +51,7 @@ public class TakeCardController {
 		if(!(checkActionValue(name, familyMember))){
 			return false;
 		}
-		
+		//TODO controllare che il giocatore non abbia già sei carte di quel tipo e che, se territorio, abbia le risorse territorio necessarie
 		return true;
 	}
 	
@@ -63,8 +63,8 @@ public class TakeCardController {
 	private boolean checkCardExistance(String name, TakeCardEffect throughEffect){
 		for(CardType ct : gameBoard.getTowers().keySet()){
 			if(gameBoard.getTowers().get(ct).findCard(name) != null){ //se ho trovato la carta
-				if(!(throughEffect.equals(null))){ //se ho l'effetto
-					if(throughEffect.getCardType().equals(null)){ //se posso prendere qualunque cardType
+				if(!(throughEffect == null)){ //se ho l'effetto
+					if(throughEffect.getCardType() == null){ //se posso prendere qualunque cardType
 						cardType = ct;
 						return true; 
 					}
@@ -93,7 +93,7 @@ public class TakeCardController {
 	 */
 	private boolean checkThisPlayerPresent(FamilyMember familyMember){
 		for(Cell c : gameBoard.getTowers().get(cardType).getCells()){
-			if((c.getFamilyMember().getPlayer().getColor().equals(familyMember.getPlayer().getColor())) && !(c.getFamilyMember().isNEUTRAL()) && !(familyMember.isNEUTRAL())){
+			if((c.getFamilyMember().getPlayer().getColor().equals(familyMember.getPlayer().getColor())) && !(c.getFamilyMember().isNeutral()) && !(familyMember.isNeutral())){
 				return true; 
 			}
 		}
@@ -182,7 +182,7 @@ public class TakeCardController {
 	
 	
 	protected void lookForTakeCardDiscount(FamilyMember familyMember, boolean check, Resource tmp, Game game, TakeCardEffect throughEffect){
-		if(!(throughEffect.equals(null))){
+		if(!(throughEffect == null)){
 			if(throughEffect.isDiscountPresence()){ //discount di takecardeffect
 				if(throughEffect.getDiscount().getAlternativeDiscountPresence()){
 					if(check){
@@ -209,7 +209,7 @@ public class TakeCardController {
 		for(Character character : familyMember.getPlayer().getBoard().getCharacters()){
 			if(character.getPermanentEffect() instanceof IncrementCardEffect){
 				IncrementCardEffect eff = (IncrementCardEffect) character.getPermanentEffect();
-				if(cardType.equals(eff.getCardType()) || eff.getCardType().equals(null)){
+				if(cardType.equals(eff.getCardType()) || eff.getCardType() == null){
 					if(eff.isDiscountPresence()){ //discount di incrementCardEffect
 						if(eff.getDiscount().getAlternativeDiscountPresence()){ 
 							if(check){

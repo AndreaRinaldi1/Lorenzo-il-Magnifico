@@ -51,14 +51,14 @@ public class IncrementCardEffect extends Effect{
 	}
 	
 	@Override
-	public void apply(FamilyMember familyMember, GameBoard gameBoard, Game game){
+	public void apply(FamilyMember familyMember, Game game){
 		System.out.println("apply di IncrementCardEffect");
 		//Quando un controller, prima di effettuare l'azione di takeCard da tower, deve controllare se ci sono incrementcard effects
 		//chiama (per ogni incrementCard effect che trova) getCardType e guarda se è uguale al cardType della carta scelta dal giocatore. 
 		//Se sì chiama questo apply (che quindi non fa controlli su cardType ma aumenta solo actionValue del familyMember), se no non lo chiama.
 		familyMember.modifyValue(increment);
 		if(discountPresence){
-			discount.apply(familyMember, gameBoard, game);
+			discount.apply(familyMember, game);
 		}
 		
 	}

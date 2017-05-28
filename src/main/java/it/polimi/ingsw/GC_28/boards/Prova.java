@@ -38,8 +38,8 @@ public class Prova {
 			w.put(resType, 0);
 		}
 		Resource res = Resource.of(w);
-		PlayerBoard pb = new PlayerBoard();
-		pb.setResources(res);
+	//	PlayerBoard pb = new PlayerBoard();
+	//	pb.setResources(res);
 		
 		CouncilPrivilege cp = CouncilPrivilege.instance();
 		HashMap<java.lang.Character, Resource> hm = new HashMap<java.lang.Character, Resource>();
@@ -51,10 +51,13 @@ public class Prova {
 		GameBoard gb = new GameBoard();
 		
 		
-		Player player = new Player(PlayerColor.BLUE);
-		player.setBoard(pb);
+		Player player = new Player("ciao", PlayerColor.BLUE);
+	//	player.setBoard(pb);
 		FamilyMember fm = new FamilyMember(player, false, DiceColor.ORANGE);
+		player.getFamilyMembers()[0] = fm;
+		g.currentPlayer = player;
 		
+		g.askCard(null);
 		
 		//PROVA DI DISCOUNTEFFECT
 		/*DiscountEffect d = new DiscountEffect();

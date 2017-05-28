@@ -64,19 +64,25 @@ public class ProductionEffect extends Effect{
 	
 
 	@Override
-	public void apply(FamilyMember familyMember, GameBoard gameBoard, Game game) {
+	public void apply(FamilyMember familyMember, Game game) {
 		System.out.println("apply di ProductionEffect");
-		if(resourceBonus != null){
-			resourceBonus.apply(familyMember, gameBoard, game);
+		if(familyMember.getValue() >= productionValue){
+			if(resourceBonus != null){
+				resourceBonus.apply(familyMember, game);
+			}
+			if(privilegeEffect != null){
+				privilegeEffect.apply(familyMember, game);
+			}
+			if(multiplierEffect != null){
+				multiplierEffect.apply(familyMember, game);
+			}
+			if(exchangeBonus != null){
+				exchangeBonus.apply(familyMember, game);
+			}
 		}
-		if(privilegeEffect != null){
-			privilegeEffect.apply(familyMember, gameBoard, game);
+		else{
+			System.out.println("You don't have the necessary action value to activate this effect");
 		}
-		if(multiplierEffect != null){
-			multiplierEffect.apply(familyMember, gameBoard, game);
-		}
-		if(exchangeBonus != null){
-			exchangeBonus.apply(familyMember, gameBoard, game);
-		}
+		
 	}
 }

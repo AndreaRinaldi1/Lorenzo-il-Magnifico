@@ -85,13 +85,13 @@ public class ExchangeEffect extends Effect{
 
 
 	@Override
-	public void apply(FamilyMember familyMember, GameBoard gameBoard, Game game){
+	public void apply(FamilyMember familyMember, Game game){
 		System.out.println("apply di ExchangeEffect");
-		if(this.alternative == false){
+		if(!this.alternative){
 			if(this.privilegeBonus != null){
 				familyMember.getPlayer().getBoard().reduceResources(privilegeCost);
 				System.out.println(familyMember.getPlayer().getBoard().getResources().toString());
-				privilegeBonus.apply(familyMember, gameBoard, game);
+				privilegeBonus.apply(familyMember, game);
 			}
 			else{
 				familyMember.getPlayer().getBoard().reduceResources(firstCost);
