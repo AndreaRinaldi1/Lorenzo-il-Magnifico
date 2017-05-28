@@ -51,7 +51,7 @@ public class BoardSetup {
 		bi.initFamilyMember();
 	}
 	
-	private void prepareDeck(){
+	private static void prepareDeck(){
 		try{
 			CardReader cardReader = new CardReader();
 			deck =  cardReader.startRead();
