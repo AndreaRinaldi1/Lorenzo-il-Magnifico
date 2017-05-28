@@ -19,19 +19,18 @@ public class FamilyMemberTest {
 	private FamilyMember fm;
 	private FamilyMember fm2;
 	private Dice dice1 ;
-	private Dice[] dices;
-	
+
 	@Before
 	public void familyMember(){
-		player1 = new Player(PlayerColor.BLUE);
+		player1 = new Player("ciao", PlayerColor.BLUE);
 		fm = new FamilyMember(player1, false, DiceColor.BLACK);
-		player2 = new Player(PlayerColor.RED);
+		player2 = new Player("bella", PlayerColor.RED);
 		fm2 = new FamilyMember(player2, true, DiceColor.NEUTRAL);
 		dice1 = new Dice(DiceColor.BLACK);
 
 		
+		fm2.modifyValue(3);
 
-		fm2.incrementValue(3);
 		fm.setUsed(false);
 		fm2.setUsed(true);
 	}
@@ -44,9 +43,9 @@ public class FamilyMemberTest {
 	}
 
 	@Test
-	public void testIsNEUTRAL() {
-		assertEquals(false, fm.isNEUTRAL());
-		assertEquals(true, fm2.isNEUTRAL());		
+	public void testIsNeutral() {
+		assertEquals(false, fm.isNeutral());
+		assertEquals(true, fm2.isNeutral());		
 		//fail("Not yet implemented");
 	}
 
@@ -64,4 +63,8 @@ public class FamilyMemberTest {
 		//fail("Not yet implemented");
 	}
 
+	@Test
+	public void testGetDiceColor(){
+		assertEquals(this.dice1.getColor(), this.fm.getDiceColor());
+	}
 }

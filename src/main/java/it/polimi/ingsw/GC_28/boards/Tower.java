@@ -9,7 +9,6 @@ public class Tower {
 	
 	public Tower(Cell[] cells){
 		this.cells = cells;
-		this.atLeastOne = false;
 	}
 
 	public Cell findCard(String cardName){

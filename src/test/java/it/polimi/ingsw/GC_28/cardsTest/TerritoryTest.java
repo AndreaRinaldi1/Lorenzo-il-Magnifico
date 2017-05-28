@@ -35,7 +35,7 @@ public class TerritoryTest {
 		immediateEffect = new ArrayList<Effect>();
 		immediateEffect.add(r);
 		permanentEffect = new HarvestEffect();
-		permanentEffect.setResourceHarvestBonus(bonus);
+		permanentEffect.setResourceHarvestBonus(r);
 		t.setImmediateEffect(immediateEffect);
 		t.setPermanentEffect(permanentEffect);
 	}

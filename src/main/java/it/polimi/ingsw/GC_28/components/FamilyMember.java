@@ -4,17 +4,17 @@ package it.polimi.ingsw.GC_28.components;
 import it.polimi.ingsw.GC_28.model.Player;
 
 public class FamilyMember {
-	private Player player;
+	private Player Player;
 	private int value;
 	private boolean used;
 	private final boolean neutral;
 	private DiceColor diceColor;
 	
 	public FamilyMember(Player player, boolean neutral, DiceColor diceColor){
-		this.player = player;
+		this.Player = player;
 		this.neutral = neutral;
 		this.diceColor = diceColor;
-		if(this.isNeutral()){
+		if(this.neutral){
 			value = 0;
 		}
 	}
@@ -24,7 +24,7 @@ public class FamilyMember {
 	}
 
 	public Player getPlayer() {
-		return player;
+		return Player;
 	}
 	
 	public boolean isNeutral() {
