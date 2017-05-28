@@ -87,8 +87,18 @@ public class FinalBonusWriter {
 		Integer resourceBonus = scanner.nextInt();
 		scanner.nextLine();
 		finalBonus.setResourceFactor(resourceBonus);
+		System.out.println("Necessary Resource for get more territories:");
+		for(int i = 0; i< 6; i++){
+			Integer p = i+1;
+			String place = p.toString();
+			System.out.println("Bonus for "+ place + " place:");
+			EnumMap<ResourceType, Integer> r = new EnumMap<>(ResourceType.class);
+			enterResourceBonus(r);
+			Resource resource = Resource.of(r);
+			finalBonus.getResourceForTerritories().add(resource);
+		}
 		try{
-			FileWriter f = new FileWriter("finalBonus.json", true);
+			FileWriter f = new FileWriter("setArrayPlayerBoard.json", true);
 			String tmp = gson.toJson(finalBonus);
 			f.write(tmp);
 			f.flush();
