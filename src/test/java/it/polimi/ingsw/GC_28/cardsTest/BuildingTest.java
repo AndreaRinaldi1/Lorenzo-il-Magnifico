@@ -2,9 +2,7 @@ package it.polimi.ingsw.GC_28.cardsTest;
 
 import static org.junit.Assert.*;
 
-import java.util.ArrayList;
 import java.util.EnumMap;
-import java.util.HashMap;
 
 import org.junit.*;
 
@@ -17,30 +15,34 @@ public class BuildingTest {
 	private Building building;
 	private ResourceEffect immediateEffect;
 	private ProductionEffect permanentEffect;
-	private Card card;
 	private String name = "Pippo";
 	private int IDNumber = 2;
 	private int era = 1;
-	ArrayList<Effect> effects;
+	private Resource resourceBonus;
+	EnumMap<ResourceType, Integer> resource;
 	
 	@Before
 	public void building(){
 		this.building = new Building(this.name, this.IDNumber, this.era);
-		//effects = new ArrayList<Effect>();
-		
-		
-		this.building.setImmediateEffect(re);
+		resource = new EnumMap<ResourceType, Integer>(ResourceType.class);
+		resource.put(ResourceType.COIN, 5);
+		resourceBonus = Resource.of(resource);
+		immediateEffect = new ResourceEffect();
+		permanentEffect = new ProductionEffect();
+		this.immediateEffect.setResourceBonus(resourceBonus);
+		this.permanentEffect.setResourceBonus(resourceBonus);
+		this.building.setImmediateEffect(immediateEffect);
 		this.building.setPermanentEffect(permanentEffect);
 	}
 	
 	@Test
 	public void testGetImmediateEffect() {
-		assertEquals(effects.get(0), this.building.getImmediateEffect());
+		assertEquals(this.immediateEffect, this.building.getImmediateEffect());
 	}
-/*
+
 	@Test
 	public void testGetPermanentEffect() {
-		assertEquals(permanentEffect.getResourceProductionBonus(), this.building.getPermanentEffect());
+		assertEquals(this.permanentEffect, this.building.getPermanentEffect());
 	}
-*/
+
 }

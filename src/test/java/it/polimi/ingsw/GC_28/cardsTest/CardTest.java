@@ -16,7 +16,6 @@ public class CardTest {
 	private String name = "Pippo";
 	private int IDNumber = 2;
 	private int era = 1;
-	private Color color;
 	private Resource cost;
 	EnumMap<ResourceType, Integer> resource;
 	
