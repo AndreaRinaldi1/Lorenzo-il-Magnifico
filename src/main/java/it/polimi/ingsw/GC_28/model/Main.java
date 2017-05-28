@@ -4,8 +4,6 @@ package it.polimi.ingsw.GC_28.model;
 import java.util.ArrayList;
 import java.util.List;
 
-import it.polimi.ingsw.GC_28.cards.CardType;
-
 public class Main {
 	
 	private Main(){

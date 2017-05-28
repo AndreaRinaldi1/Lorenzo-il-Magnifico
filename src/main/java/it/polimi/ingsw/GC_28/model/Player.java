@@ -7,7 +7,7 @@ public class Player {
 	private String name;
 	private PlayerColor color;
 	private PlayerBoard board;
-	private FamilyMember familyMembers[] = new FamilyMember[4];
+	private FamilyMember[] familyMembers = new FamilyMember[4];
 	
 
 	public Player(String name, PlayerColor color){
@@ -41,10 +41,6 @@ public class Player {
 		this.board = board;
 	}
 
-	public Player(PlayerColor color) {
-		this.color = color;
-	}
-
 	public PlayerColor getColor() {
 		return color;
 	}
@@ -55,7 +51,7 @@ public class Player {
 	
 	public String displayFamilyMembers(){
 		StringBuilder s = new StringBuilder();
-		System.out.println("Family Members:");
+		s.append("Family Members:\n");
 		for(FamilyMember f : familyMembers){
 			s.append("Color: " + f.getDiceColor().name() + "  ");
 			s.append("Value: " + f.getValue() + "\n");
