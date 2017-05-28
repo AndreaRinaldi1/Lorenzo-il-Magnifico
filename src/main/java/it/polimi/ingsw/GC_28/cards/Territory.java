@@ -3,13 +3,14 @@ import it.polimi.ingsw.GC_28.effects.*;
 
 import java.awt.Color;
 import java.util.ArrayList;
+import java.util.List;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 
 public class Territory extends Card{
-	private ArrayList<Effect> immediateEffect = new ArrayList<Effect>();
+	private List<Effect> immediateEffect = new ArrayList<>();
 	private HarvestEffect permanentEffect;
 	
 	public Territory(String name, int IDNumber, int era){
@@ -17,7 +18,7 @@ public class Territory extends Card{
 		this.setColor(Color.green);
 	}
 
-	public ArrayList<Effect> getImmediateEffect() {
+	public List<Effect> getImmediateEffect() {
 		return immediateEffect;
 	}
 
