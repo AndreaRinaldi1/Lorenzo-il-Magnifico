@@ -2171,19 +2171,23 @@
       },
       "permanentEffect": {
         "productionValue": 5,
-        "resourceProductionBonus": {
-          "resource": {
-            "COIN": 0,
-            "WOOD": 0,
-            "STONE": 0,
-            "SERVANT": 0,
-            "MILITARYPOINT": 0,
-            "VICTORYPOINT": 2,
-            "FAITHPOINT": 0
-          }
+        "resourceBonus": {
+          "resourceBonus": {
+            "resource": {
+              "COIN": 0,
+              "WOOD": 0,
+              "STONE": 0,
+              "SERVANT": 0,
+              "MILITARYPOINT": 0,
+              "VICTORYPOINT": 2,
+              "FAITHPOINT": 0
+            }
+          },
+          "type": "RESOURCEEFFECT"
         },
         "privilegeEffect": {
           "numberOfCouncilPrivileges": 1,
+          "different": false,
           "type": "PRIVILEGESEFFECT"
         },
         "type": "PRODUCTIONEFFECT"
