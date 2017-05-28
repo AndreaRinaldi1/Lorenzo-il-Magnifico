@@ -216,6 +216,7 @@ public class BoardsInitializer {
 				FamilyMember member = new FamilyMember(p, false, dc);
 				if(dc.equals(DiceColor.NEUTRAL)){
 					member = new FamilyMember(p, true, DiceColor.NEUTRAL);
+					member.setValue(0);
 					}
 				member.setValue(dices);
 				fm.add(member);
@@ -249,7 +250,7 @@ public class BoardsInitializer {
 			resourceMap.put(ResourceType.STONE, 2);
 			resourceMap.put(ResourceType.WOOD, 2);
 			resourceMap.put(ResourceType.SERVANT, 3);
-			resourceMap.put(ResourceType.COIN, 5);
+			//resourceMap.put(ResourceType.COIN, 5); non credo che serva
 			resourceMap.put(ResourceType.MILITARYPOINT, 0);
 			resourceMap.put(ResourceType.VICTORYPOINT, 0);
 			resourceMap.put(ResourceType.FAITHPOINT, 0);

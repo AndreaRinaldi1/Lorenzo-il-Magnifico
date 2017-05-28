@@ -13,7 +13,10 @@ public class Tower {
 
 	public Cell findCard(String cardName){
 		for(Cell cell : cells){
-			if(cell.getCard().getName().equals(cardName)){
+			if(cell.getCard() == null){
+				continue;
+			}
+			if(cell.getCard().getName().equalsIgnoreCase(cardName)){
 				return cell;
 			}
 		}

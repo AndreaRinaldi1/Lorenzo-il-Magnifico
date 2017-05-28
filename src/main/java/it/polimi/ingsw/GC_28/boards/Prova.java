@@ -55,7 +55,7 @@ public class Prova {
 	//	player.setBoard(pb);
 		FamilyMember fm = new FamilyMember(player, false, DiceColor.ORANGE);
 		player.getFamilyMembers()[0] = fm;
-		g.currentPlayer = player;
+		g.setCurrentPlayer(player);
 		
 		g.askCard(null);
 		

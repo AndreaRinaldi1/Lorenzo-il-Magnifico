@@ -4,6 +4,8 @@ package it.polimi.ingsw.GC_28.model;
 import java.util.ArrayList;
 import java.util.List;
 
+import it.polimi.ingsw.GC_28.components.FamilyMember;
+
 public class Main {
 	
 	private Main(){
@@ -24,13 +26,21 @@ public class Main {
 		
 		bs.firstSetUpCards();
 		game.getGameBoard().display();
+		game.setCurrentPlayer(game.getPlayers().get(0));
 		
-		game.getGameBoard().getHarvestSpace().addPlayer(game.getPlayers().get(0).getFamilyMembers()[1]);
-		
-		game.getGameBoard().display();
-		bs.setUpBoard();
-		game.getGameBoard().display();
-		
+		game.getCurrentPlayer().getBoard().display();
+		System.out.println(game.getPlayers().get(0).getName());
+		for(FamilyMember fm : game.getCurrentPlayer().getFamilyMembers()){
+			System.out.println(fm.toString());
+		}
+		while(true){
+			game.start();
+			game.getCurrentPlayer().getBoard().display();
+			System.out.println(game.getPlayers().get(0).getName());
+			for(FamilyMember fm : game.getCurrentPlayer().getFamilyMembers()){
+				System.out.println(fm.toString());
+			}
+		}
 		/*bs.setUpBoard();
 		System.out.println(game.getGameBoard().display());
 		

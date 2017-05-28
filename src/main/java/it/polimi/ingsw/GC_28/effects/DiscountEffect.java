@@ -59,7 +59,7 @@ public class DiscountEffect extends Effect{
 	public void apply(FamilyMember familyMember, Game game){
 		System.out.println("apply di DiscountEffect");
 		if(alternativeDiscountPresence == true){
-			familyMember.getPlayer().getBoard().addResource(game.askAlternativeDiscount(discount, alternativeDiscount)); //Considero il discount come aumento risorse nella playerboard (?)
+			familyMember.getPlayer().getBoard().addResource(game.askAlternative(discount, alternativeDiscount, "discount")); //Considero il discount come aumento risorse nella playerboard (?)
 		}
 		else{
 			familyMember.getPlayer().getBoard().addResource(discount);

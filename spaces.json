@@ -1,9 +1,12 @@
 {
   "coinSpace": {
     "bonus": {
-      "resource": {
-        "COIN": 5
-      }
+      "resourceBonus": {
+        "resource": {
+          "COIN": 5
+        }
+      },
+      "type": "RESOURCEEFFECT"
     },
     "free": true,
     "players": [],
@@ -11,9 +14,12 @@
   },
   "servantSpace": {
     "bonus": {
-      "resource": {
-        "SERVANT": 5
-      }
+      "resourceBonus": {
+        "resource": {
+          "SERVANT": 5
+        }
+      },
+      "type": "RESOURCEEFFECT"
     },
     "free": true,
     "players": [],
@@ -21,18 +27,23 @@
   },
   "mixedSpace": {
     "bonus": {
-      "resource": {
-        "COIN": 1,
-        "MILITARYPOINT": 3
-      }
+      "resourceBonus": {
+        "resource": {
+          "COIN": 2,
+          "MILITARYPOINT": 3
+        }
+      },
+      "type": "RESOURCEEFFECT"
     },
     "free": true,
     "players": [],
     "actionValue": 1
   },
-  "twoPrivilegesSpace": {
+  "privilegesSpace": {
     "bonus": {
-      "options": {}
+      "numberOfCouncilPrivileges": 2,
+      "different": true,
+      "type": "PRIVILEGESEFFECT"
     },
     "free": true,
     "players": [],
@@ -40,13 +51,23 @@
   },
   "councilPalace": {
     "bonus1": {
-      "resource": {
-        "COIN": 1,
-        "MILITARYPOINT": 3
-      }
+      "resourceBonus": {
+        "resource": {
+          "COIN": 1,
+          "WOOD": 0,
+          "STONE": 0,
+          "SERVANT": 0,
+          "MILITARYPOINT": 0,
+          "VICTORYPOINT": 0,
+          "FAITHPOINT": 0
+        }
+      },
+      "type": "RESOURCEEFFECT"
     },
     "bonus2": {
-      "options": {}
+      "numberOfCouncilPrivileges": 1,
+      "different": false,
+      "type": "PRIVILEGESEFFECT"
     },
     "free": true,
     "players": [],
@@ -54,12 +75,14 @@
   },
   "productionSpace": {
     "secondarySpace": false,
+    "harvest": false,
     "free": true,
     "players": [],
     "actionValue": 1
   },
   "harvestSpace": {
     "secondarySpace": false,
+    "harvest": true,
     "free": true,
     "players": [],
     "actionValue": 1

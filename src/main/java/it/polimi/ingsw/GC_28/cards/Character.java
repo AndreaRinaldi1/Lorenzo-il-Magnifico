@@ -102,7 +102,7 @@ public class Character extends Card{
 	    	break;
 		case("INCREMENTHPEFFECT"):
     		//System.out.println("cambio il tipo di permanent effect della carta in IncrementHPEffect character");
-	    	permanentEffect = gson.fromJson(j.get("permanentEffect").toString(), IncrementCardEffect.class);
+	    	permanentEffect = gson.fromJson(j.get("permanentEffect").toString(), IncrementHPEffect.class);
 	    	break;
 	    default:
 	    	//System.out.println(permanentEffect.getClass());
