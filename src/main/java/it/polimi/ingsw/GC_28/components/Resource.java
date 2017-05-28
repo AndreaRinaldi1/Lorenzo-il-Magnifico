@@ -9,7 +9,7 @@ public class Resource {
 	
 	private Map<ResourceType, Integer> resource; 
 	
-	public Resource(){}; //per le prove, al massimo dopo si toglie o private
+	//public Resource(){}; //per le prove, al massimo dopo si toglie o private
 	
 	private Resource(Map<ResourceType, Integer> resource){
 		this.resource = resource;
@@ -57,28 +57,33 @@ public class Resource {
 	public boolean equals(Resource otherResource){
 		Resource shorterResource;
 		Resource longerResource;
-		if(!(otherResource.getResource().isEmpty())){
-			if(resource.size() > otherResource.getResource().size()){
-				shorterResource = otherResource;
-				longerResource = this;
-			}
-			else{
-				shorterResource = this;
-				longerResource = otherResource;
-			}
-			for(ResourceType resType : longerResource.getResource().keySet()){
-				if(shorterResource.getResource().containsKey(resType)){
-					if(!(longerResource.getResource().get(resType).equals(shorterResource.getResource().get(resType)))){
-						return false;
-					}
+		if(otherResource == null){
+			return false;
+		}
+		else{
+			if(!(otherResource.getResource().isEmpty())){
+				if(resource.size() > otherResource.getResource().size()){
+					shorterResource = otherResource;
+					longerResource = this;
 				}
 				else{
-					if(!(longerResource.getResource().get(resType).equals(0))){
-						return false;
+					shorterResource = this;
+					longerResource = otherResource;
+				}
+				for(ResourceType resType : longerResource.getResource().keySet()){
+					if(shorterResource.getResource().containsKey(resType)){
+						if(!(longerResource.getResource().get(resType).equals(shorterResource.getResource().get(resType)))){
+							return false;
+						}
+					}
+					else{
+						if(!(longerResource.getResource().get(resType).equals(0))){
+							return false;
+						}
 					}
 				}
 			}
+			return true;
 		}
-		return true;
 	}
 }

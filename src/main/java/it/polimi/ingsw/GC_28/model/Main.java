@@ -4,8 +4,6 @@ package it.polimi.ingsw.GC_28.model;
 import java.util.ArrayList;
 import java.util.List;
 
-import it.polimi.ingsw.GC_28.cards.CardType;
-
 public class Main {
 	
 	private Main(){
@@ -23,10 +21,8 @@ public class Main {
 		System.out.println(game.getCurrentEra());
 		
 		BoardSetup bs = new BoardSetup(game);
-		System.out.println(bs.gameBoard.getDices()[0]);
 		
 		bs.firstSetUpCards();
-		System.out.println(bs.gameBoard.getTowers().get(CardType.BUILDING).getCells()[0].getCard().toString());
 		game.getGameBoard().display();
 		
 		game.getGameBoard().getHarvestSpace().addPlayer(game.getPlayers().get(0).getFamilyMembers()[1]);

@@ -4,17 +4,17 @@ public class EverySpace {
 	private MarketSpace coinSpace;
 	private MarketSpace servantSpace;
 	private MarketSpace mixedSpace;
-	private TwoPrivilegesSpace twoPrivilegesSpace;
+	private PrivilegesSpace privilegesSpace;
 	private CouncilPalace councilPalace;
 	private ProductionAndHarvestSpace productionSpace;
 	private ProductionAndHarvestSpace harvestSpace;
 
 	
-	public TwoPrivilegesSpace getTwoPrivilegesSpace() {
-		return twoPrivilegesSpace;
+	public PrivilegesSpace getPrivilegesSpace() {
+		return privilegesSpace;
 	}
-	public void setTwoPrivilegesSpace(TwoPrivilegesSpace twoPrivilegesSpace) {
-		this.twoPrivilegesSpace = twoPrivilegesSpace;
+	public void setPrivilegesSpace(PrivilegesSpace privilegesSpace) {
+		this.privilegesSpace = privilegesSpace;
 	}
 	public CouncilPalace getCouncilPalace() {
 		return councilPalace;

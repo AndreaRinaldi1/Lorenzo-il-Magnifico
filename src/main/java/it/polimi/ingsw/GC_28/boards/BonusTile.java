@@ -7,10 +7,6 @@ public class BonusTile {
 	private ProductionEffect productionEffect;
 	private HarvestEffect harvestEffect;
 	
-	public BonusTile(){
-		
-	}
-	
 	public ProductionEffect getProductionEffect() {
 		return productionEffect;
 	}

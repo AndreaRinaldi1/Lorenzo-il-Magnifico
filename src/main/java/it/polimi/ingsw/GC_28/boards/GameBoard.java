@@ -12,7 +12,7 @@ import it.polimi.ingsw.GC_28.components.Resource;
 import it.polimi.ingsw.GC_28.spaces.CouncilPalace;
 import it.polimi.ingsw.GC_28.spaces.MarketSpace;
 import it.polimi.ingsw.GC_28.spaces.ProductionAndHarvestSpace;
-import it.polimi.ingsw.GC_28.spaces.TwoPrivilegesSpace;
+import it.polimi.ingsw.GC_28.spaces.PrivilegesSpace;
 
 
 public class GameBoard {
@@ -27,7 +27,7 @@ public class GameBoard {
 	private MarketSpace coinSpace;
 	private MarketSpace servantSpace;
 	private MarketSpace mixedSpace;
-	private TwoPrivilegesSpace twoPrivilegesSpace;
+	private PrivilegesSpace privilegesSpace;
 	private Resource bonusFaithPoints;
 	private CouncilPalace councilPalace;
 	
@@ -63,7 +63,7 @@ public class GameBoard {
 		
 		//hHarvest and Production Space
 		ret += "Harves Space \n";
-		if(harvestSpace.isFree()==false){
+		if(!(harvestSpace.isFree())){
 			ret += occSpace;
 		}
 		else{
@@ -72,7 +72,7 @@ public class GameBoard {
 		ret+="(    )\n";
 		
 		ret += "Production Space: \n";
-		if(productionSpace.isFree()==false){
+		if(!(productionSpace.isFree())){
 			ret += occSpace;
 		}
 		else{
@@ -82,21 +82,21 @@ public class GameBoard {
 		
 		//Market Space
 		ret += "Coin Space: \n";
-		if(coinSpace.isFree()==false){
+		if(!(coinSpace.isFree())){
 			ret += occSpace;
 		}
 		else{
 			ret += emptySpace;
 		}
 		ret += "Servant Space: \n";
-		if(servantSpace.isFree()==false){
+		if(!(servantSpace.isFree())){
 			ret += occSpace;
 		}
 		else{
 			ret += emptySpace;
 		}
 		ret += "Mixed Space: \n";
-		if(mixedSpace.isFree()==false){
+		if(!(mixedSpace.isFree())){
 			ret += occSpace;
 		}
 		else{
@@ -104,8 +104,9 @@ public class GameBoard {
 		}
 		
 		ret += "Two Privileges Space: \n";
-		if(twoPrivilegesSpace.isFree()==false){
+		if(!(privilegesSpace.isFree())){
 			ret += occSpace;
+
 		}
 		else{
 			ret += emptySpace;
@@ -186,12 +187,12 @@ public class GameBoard {
 		this.mixedSpace = mixedSpace2;
 	}
 
-	public TwoPrivilegesSpace getTwoPrivilegesSpace() {
-		return twoPrivilegesSpace;
+	public PrivilegesSpace getPrivilegesSpace() {
+		return privilegesSpace;
 	}
 
-	public void setTwoPrivilegesSpace(TwoPrivilegesSpace twoPrivilegesSpace2) {
-		this.twoPrivilegesSpace = twoPrivilegesSpace2;
+	public void setPrivilegesSpace(PrivilegesSpace privilegesSpace) {
+		this.privilegesSpace = privilegesSpace;
 	}
 
 	public Resource getBonusFaithPoints() {

@@ -25,7 +25,7 @@ import it.polimi.ingsw.GC_28.cards.Character;
 public class BoardSetup {
 	
 	private Game game ;
-	public GameBoard gameBoard;
+	private GameBoard gameBoard;
 	private static Deck deck = new Deck(); //once initialize it will not change
 	private BoardsInitializer bi = new BoardsInitializer(); 
 	
@@ -51,7 +51,7 @@ public class BoardSetup {
 		bi.initFamilyMember();
 	}
 	
-	private void prepareDeck(){
+	private static void prepareDeck(){
 		try{
 			CardReader cardReader = new CardReader();
 			deck =  cardReader.startRead();
@@ -71,7 +71,6 @@ public class BoardSetup {
 				if(deck.getTerritories().get(randomInt).getEra() == game.getCurrentEra()){ 
 					Territory t = deck.getTerritories().get(randomInt);
 					cell[i].setCard(t);
-					//usedCard.add(t);
 					deck.getTerritories().remove(t);
 					x = true;
 				}
@@ -91,7 +90,6 @@ public class BoardSetup {
 					Building b = deck.getBuildings().get(randomInt);
 					cell[i].setCard(b);
 					deck.getBuildings().remove(b);
-					//usedCard.add(b);
 					x = true;
 				}
 			}
@@ -110,7 +108,6 @@ public class BoardSetup {
 					Character c = deck.getCharacters().get(randomInt);
 					cell[i].setCard(c);
 					deck.getCharacters().remove(c);
-					//usedCard.add(c);
 					x = true;
 				}
 			}
@@ -129,7 +126,6 @@ public class BoardSetup {
 					Venture v = deck.getVentures().get(randomInt);
 					cell[i].setCard(v);
 					deck.getVentures().remove(v);
-					//usedCard.add(v);
 					x = true;
 				}
 			}
@@ -205,17 +201,17 @@ public class BoardSetup {
 				gameBoard.getMixedSpace().getPlayer().remove(0);
 				gameBoard.getMixedSpace().setFree(true);
 			}
-			if(!(gameBoard.getTwoPrivilegesSpace().isFree())){
-				gameBoard.getTwoPrivilegesSpace().getPlayer().remove(0);
-				gameBoard.getTwoPrivilegesSpace().setFree(true);
+			if(!(gameBoard.getPrivilegesSpace().isFree())){
+				gameBoard.getPrivilegesSpace().getPlayer().remove(0);
+				gameBoard.getPrivilegesSpace().setFree(true);
 			}
 		}
 	}
 		
 	private void freeFamilyMember(){
 		for(Player p : game.getPlayers()){
-			for(int i = 0; i < p.getBoard().getFamilyMember().size(); i++){
-				p.getBoard().getFamilyMember().get(i).setUsed(false);
+			for(int i = 0; i < p.getFamilyMembers().length; i++){
+				p.getFamilyMembers()[i].setUsed(false);
 			}
 		}
 	}

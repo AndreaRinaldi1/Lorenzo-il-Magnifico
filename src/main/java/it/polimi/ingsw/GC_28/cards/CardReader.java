@@ -4,11 +4,6 @@ package it.polimi.ingsw.GC_28.cards;
 import com.google.gson.*;
 import com.google.gson.stream.JsonReader;
 
-
-import it.polimi.ingsw.GC_28.effects.NoCellBonusEffect;
-import it.polimi.ingsw.GC_28.effects.PrivilegesEffect;
-import it.polimi.ingsw.GC_28.effects.ResourceEffect;
-
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
@@ -53,18 +48,6 @@ public class CardReader{
             	deck.getTerritories().get(i).setImmediateEffect(gson, j);
         	}
         	
-        	/*deck.toString();
-        	if(deck.getVentures().get(0).getPermanentEffect() instanceof ResourceEffect){
-        		System.out.println("Andrea");
-        	}
-        	if(deck.getVentures().get(0).getImmediateEffect().get(0) instanceof PrivilegesEffect){
-        		System.out.println("Andrea33");
-        	}
-        	
-        	if(deck.getCharacters().get(0).getPermanentEffect() instanceof NoCellBonusEffect){
-        		NoCellBonusEffect e = (NoCellBonusEffect) deck.getCharacters().get(0).getPermanentEffect();
-        		System.out.println(e.isPresence());
-        	}*/
 	        reader.close();
 	        reader2.close();
     	}

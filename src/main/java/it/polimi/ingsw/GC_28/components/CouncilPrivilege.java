@@ -1,10 +1,11 @@
 package it.polimi.ingsw.GC_28.components;
 
 import java.util.HashMap;
+import java.util.Map;
 import java.lang.Character;
 
 public class CouncilPrivilege {
-	private HashMap<Character, Resource> options = new HashMap<Character, Resource>();
+	private Map<Character, Resource> options = new HashMap<>();
 	private static CouncilPrivilege instance;
 	
 	private CouncilPrivilege(){
@@ -21,7 +22,7 @@ public class CouncilPrivilege {
 		return options.get(c); 
 	}
 	
-	public HashMap<Character, Resource> getOptions() {
+	public Map<Character, Resource> getOptions() {
 		return options;
 	}
 	

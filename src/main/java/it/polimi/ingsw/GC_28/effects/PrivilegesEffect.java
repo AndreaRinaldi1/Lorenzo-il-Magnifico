@@ -33,7 +33,7 @@ public class PrivilegesEffect extends Effect{
 	}
 	
 	@Override
-	public void apply(FamilyMember familyMember, GameBoard gameBoard, Game game) {
+	public void apply(FamilyMember familyMember, Game game) {
 		System.out.println("apply di PrivilegesEffect");
 		ArrayList<Character> choices = game.askPrivilege(numberOfCouncilPrivileges, different);
 		for(int i = 0; i < choices.size(); i++){

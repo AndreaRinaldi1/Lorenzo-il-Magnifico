@@ -5,18 +5,23 @@ import it.polimi.ingsw.GC_28.cards.*;
 import it.polimi.ingsw.GC_28.components.CouncilPrivilege;
 import it.polimi.ingsw.GC_28.components.FamilyMember;
 import it.polimi.ingsw.GC_28.components.Resource;
+import it.polimi.ingsw.GC_28.components.ResourceType;
+import it.polimi.ingsw.GC_28.effects.PrivilegesEffect;
+import it.polimi.ingsw.GC_28.effects.ResourceEffect;
+import it.polimi.ingsw.GC_28.model.Game;
 
 import java.util.ArrayList;
+import java.util.EnumMap;
+import java.util.Map;
 import java.lang.Character;
 
 public class CouncilPalace extends Space{
-	private Resource bonus1;
-	private CouncilPrivilege bonus2;
+	private ResourceEffect bonus1;
+	private PrivilegesEffect bonus2;
 	private static CouncilPalace instance;
 	
-	private CouncilPalace(boolean free, int actionValue, CouncilPrivilege bonus2) {
+	private CouncilPalace(boolean free, int actionValue) {
 		super(true, actionValue);
-		this.bonus2 = bonus2;
 	}
 	
 	private CouncilPalace(){}
@@ -26,24 +31,24 @@ public class CouncilPalace extends Space{
 			instance = new CouncilPalace();
 		}
 		return instance;
-	}	
+	}		
 	
-	public Resource getBonus1() {
+	public ResourceEffect getBonus1() {
 		return bonus1;
 	}
-	
-	public void setBonus1(Resource bonus1) {
+
+	public void setBonus1(ResourceEffect bonus1) {
 		this.bonus1 = bonus1;
 	}
 
-	public Resource getBonus2(Character choice) {
-		return this.bonus2.choose(choice);
+	public PrivilegesEffect getBonus2() {
+		return bonus2;
 	}
-	
-	public void setBonus2(CouncilPrivilege bonus2) {
+
+	public void setBonus2(PrivilegesEffect bonus2) {
 		this.bonus2 = bonus2;
 	}
-	
+
 	public ArrayList<FamilyMember> getPlayerOrder(){
 		return this.getPlayer();
 	}
@@ -52,4 +57,12 @@ public class CouncilPalace extends Space{
 	public void addPlayer(FamilyMember player){
 		this.getPlayer().add(player);
 	}
+	
+	
+	@Override
+	public void applyBonus(Game game, FamilyMember familyMember){
+		bonus1.apply(familyMember, game);
+		bonus2.apply(familyMember, game);
+	}
+	
 }

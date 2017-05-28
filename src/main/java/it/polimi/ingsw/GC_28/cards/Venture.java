@@ -5,13 +5,14 @@ import it.polimi.ingsw.GC_28.effects.*;
 
 import java.awt.Color;
 import java.util.ArrayList;
+import java.util.List;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 
 public class Venture extends Card{
-	private ArrayList<Effect> immediateEffect = new ArrayList<Effect>();
+	private List<Effect> immediateEffect = new ArrayList<>();
 	private ResourceEffect permanentEffect;
 	private boolean alternativeCostPresence;
 	private Resource alternativeCost;
@@ -24,7 +25,7 @@ public class Venture extends Card{
 		this.setColor(Color.pink);
 	}
 
-	public ArrayList<Effect> getImmediateEffect() {
+	public List<Effect> getImmediateEffect() {
 		return immediateEffect;
 	}
 

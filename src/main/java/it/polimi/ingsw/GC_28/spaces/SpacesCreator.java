@@ -13,16 +13,18 @@ import com.google.gson.GsonBuilder;
 import it.polimi.ingsw.GC_28.components.CouncilPrivilege;
 import it.polimi.ingsw.GC_28.components.Resource;
 import it.polimi.ingsw.GC_28.components.ResourceType;
+import it.polimi.ingsw.GC_28.effects.PrivilegesEffect;
+import it.polimi.ingsw.GC_28.effects.ResourceEffect;
 
 
 public class SpacesCreator {
 	Scanner scanner = new Scanner(System.in);
-	int coin, servants, militaryPoints;
 	EnumMap<ResourceType, Integer> bonus = new EnumMap<ResourceType, Integer>(ResourceType.class);
 	Resource resource;
 	CouncilPrivilege cp;
 	EverySpace everySpace = new EverySpace();
-	
+	int coin, wood, stone, servant, militaryPoint, victoryPoint, faithPoint;
+
 	public static void main(String[] args) {
 		SpacesCreator sc = new SpacesCreator();
 		sc.startCreating();
@@ -42,18 +44,21 @@ public class SpacesCreator {
 					this.setMarketSpace(new MarketSpace(true, 1), type);
 					break;
 				case('t'):
-					cp = CouncilPrivilege.instance();
-					TwoPrivilegesSpace tps = new TwoPrivilegesSpace(true, 1, cp);
-					everySpace.setTwoPrivilegesSpace(tps);
+					PrivilegesEffect pe = new PrivilegesEffect();
+					PrivilegesSpace tps = new PrivilegesSpace(true, 1);
+					tps.setBonus(enterPrivilegesEffect(pe));
+					everySpace.setPrivilegesSpace(tps);
 					break;
 				case('c'):
 					CouncilPalace palace = CouncilPalace.instance();
-					cp = CouncilPrivilege.instance();
-					coin = enterBonus("coin first");
-					bonus.put(ResourceType.COIN, coin);
-					resource = Resource.of(bonus);
-					palace.setBonus1(resource);
-					palace.setBonus2(cp);
+					bonus = new EnumMap<ResourceType, Integer>(ResourceType.class);
+					enterResourceBonus(bonus);
+					Resource resourceBonus = Resource.of(bonus);
+					ResourceEffect re = new ResourceEffect();
+					re.setResourceBonus(resourceBonus);
+					palace.setBonus1(re);
+					PrivilegesEffect priveff = new PrivilegesEffect();
+					palace.setBonus2(enterPrivilegesEffect(priveff));
 					palace.setActionValue(1);
 					palace.setFree(true);
 					everySpace.setCouncilPalace(palace);
@@ -62,9 +67,11 @@ public class SpacesCreator {
 					String pht = enterProdHarvType();
 					ProductionAndHarvestSpace phSpace = new ProductionAndHarvestSpace(true, 1);
 					if(pht.equals("harvest")){
+						phSpace.setHarvest(true);
 						everySpace.setHarvest(phSpace);	
 						}
 					else{
+						phSpace.setHarvest(false);
 						everySpace.setProduction(phSpace);	
 					}
 					break;
@@ -116,28 +123,32 @@ public class SpacesCreator {
 	
 	private void setMarketSpace(MarketSpace m, String type){
 		bonus = new EnumMap<ResourceType, Integer>(ResourceType.class);
+		ResourceEffect re = new ResourceEffect();
 		switch(type){
 		case "coinspace":
 			coin = enterBonus("coin");
 			bonus.put(ResourceType.COIN, coin);
 			resource = Resource.of(bonus);
-			m.setBonus(resource);
+			re.setResourceBonus(resource);
+			m.setBonus(re);
 			everySpace.setCoinSpace(m);
 			break;
 		case "servantspace":
-			servants = enterBonus("servant");
-			bonus.put(ResourceType.SERVANT, servants);
+			servant = enterBonus("servant");
+			bonus.put(ResourceType.SERVANT, servant);
 			resource = Resource.of(bonus);
-			m.setBonus(resource);
+			re.setResourceBonus(resource);
+			m.setBonus(re);
 			everySpace.setServantSpace(m);
 			break;
 		case "mixedspace":
 			coin = enterBonus("coin");
-			militaryPoints = enterBonus("military points");
+			militaryPoint = enterBonus("military points");
 			bonus.put(ResourceType.COIN, coin);
-			bonus.put(ResourceType.MILITARYPOINT, militaryPoints);
+			bonus.put(ResourceType.MILITARYPOINT, militaryPoint);
 			resource = Resource.of(bonus);
-			m.setBonus(resource);
+			re.setResourceBonus(resource);
+			m.setBonus(re);
 			everySpace.setMixedSpace(m);
 			break;
 		}
@@ -163,12 +174,11 @@ public class SpacesCreator {
 		System.out.println("type 'c' for CouncilPalace");
 		System.out.println("type 'x' for Production&HarvestSpace");
 		
-		boolean y = false;
 		char spaceType = scanner.nextLine().toLowerCase().charAt(0);
 		if(spaceType=='m' || spaceType=='t' || spaceType=='c' || spaceType=='x'){
 			return spaceType;
 		}
-		while(!y){
+		while(true){
 			System.out.println("Not valid input!");
 			System.out.print("Enter SpaceType: ");
 			spaceType = scanner.nextLine().toLowerCase().charAt(0);
@@ -176,6 +186,45 @@ public class SpacesCreator {
 				return spaceType;
 			}
 		}
-		return ' ';
+	}
+	
+private void enterResourceBonus(EnumMap<ResourceType, Integer> bonus){
+		
+		coin = enterBonus(ResourceType.COIN.name());
+		wood = enterBonus(ResourceType.WOOD.name());
+		stone = enterBonus(ResourceType.STONE.name());
+		servant = enterBonus(ResourceType.SERVANT.name());
+		victoryPoint = enterBonus(ResourceType.VICTORYPOINT.name());
+		militaryPoint = enterBonus(ResourceType.MILITARYPOINT.name());
+		faithPoint = enterBonus(ResourceType.FAITHPOINT.name());
+		
+		bonus.put(ResourceType.COIN, coin);
+		bonus.put(ResourceType.WOOD, wood);
+		bonus.put(ResourceType.STONE, stone);
+		bonus.put(ResourceType.SERVANT, servant);
+		bonus.put(ResourceType.VICTORYPOINT, victoryPoint);
+		bonus.put(ResourceType.MILITARYPOINT, militaryPoint);
+		bonus.put(ResourceType.FAITHPOINT, faithPoint);
+
+}
+	
+	public PrivilegesEffect enterPrivilegesEffect(PrivilegesEffect privEffect){
+		System.out.println("Enter number of privileges: ");
+		int numOfPriv = scanner.nextInt();
+		scanner.nextLine();
+		privEffect.setNumberOfCouncilPrivileges(numOfPriv);
+		if(numOfPriv == 1){
+			privEffect.setDifferent(false);
+		}
+		else{
+			System.out.println("Are they different one from the others?[y/n]");
+			if(scanner.nextLine().equalsIgnoreCase("y")){
+				privEffect.setDifferent(true);
+			}
+			else{
+				privEffect.setDifferent(false);
+			}
+		}
+		return privEffect;
 	}
 }
