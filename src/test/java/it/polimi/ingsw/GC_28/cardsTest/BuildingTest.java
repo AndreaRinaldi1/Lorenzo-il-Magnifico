@@ -13,7 +13,7 @@ import it.polimi.ingsw.GC_28.effects.*;
 
 public class BuildingTest {
 	private Building building;
-	private ResourceEffect immediateEffect;
+	private ResourceEffect immediateEffect, resourceProductionBonus;
 	private ProductionEffect permanentEffect;
 	private String name = "Pippo";
 	private int IDNumber = 2;
@@ -30,7 +30,8 @@ public class BuildingTest {
 		immediateEffect = new ResourceEffect();
 		permanentEffect = new ProductionEffect();
 		this.immediateEffect.setResourceBonus(resourceBonus);
-		this.permanentEffect.setResourceBonus(resourceBonus);
+		resourceProductionBonus = immediateEffect;
+		this.permanentEffect.setResourceBonus(resourceProductionBonus);
 		this.building.setImmediateEffect(immediateEffect);
 		this.building.setPermanentEffect(permanentEffect);
 	}
