@@ -31,7 +31,7 @@ public class FamilyMemberTest {
 
 		
 
-		fm2.incrementValue(3);
+		fm2.modifyValue(2);
 		fm.setUsed(false);
 		fm2.setUsed(true);
 	}
@@ -52,7 +52,7 @@ public class FamilyMemberTest {
 
 	@Test
 	public void testGetValue() {
-		Integer i = 3;
+		Integer i = 2;
 		assertEquals(i , fm2.getValue()); 
 		//fail("Not yet implemented");
 	}
