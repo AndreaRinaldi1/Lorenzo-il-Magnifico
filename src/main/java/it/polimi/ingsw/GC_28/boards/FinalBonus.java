@@ -36,6 +36,5 @@ public class FinalBonus {
 	public void setResourceForTerritories(List<Resource> resourceForTerritories) {
 		this.resourceForTerritories = resourceForTerritories;
 	}
-	
-	
+
 }
