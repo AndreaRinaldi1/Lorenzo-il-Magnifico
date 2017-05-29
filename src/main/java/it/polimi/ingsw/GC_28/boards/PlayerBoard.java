@@ -36,7 +36,7 @@ public class PlayerBoard {
 	}
 	
 	
-	public void display(){
+	public String display(){
 		String ret = "PLAYER BOARD\n";
 		ret+="Territory Cards: ";
 		for(int j = 0; j < territories.size(); j++){
@@ -86,7 +86,8 @@ public class PlayerBoard {
 		ret += retLine;
 		
 		ret+="\n";
-		System.out.println(ret);
+		
+		return ret;
 		
 	}
 	

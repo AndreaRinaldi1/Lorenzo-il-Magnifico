@@ -59,32 +59,41 @@ public class Game implements Runnable {
 	}
 
 	public void play() throws IOException{
-		
-			do{
-				currentPlayer.getOut().println("Which move do you want to undertake? [takeCard / goToSpace / skip]");
-				currentPlayer.getOut().flush();	
-				String line = currentPlayer.getIn().nextLine();
-				if(line.equalsIgnoreCase("takeCard")){
-					if(askCard(null)){
-						return;
-					}
-				}
-				else if(line.equalsIgnoreCase("goToSpace")){
-					if(goToSpace(null)){
-						return;
-					}
-				}
-				else if(line.equalsIgnoreCase("skip")){
+
+		for(Player p: players){
+			p.getOut().println(gameBoard.display());
+			p.getOut().println("test");
+			p.getOut().println(p.getBoard().display());
+			for(int i = 0; i < 4; i++){
+				p.getOut().println(p.getFamilyMembers()[i].toString());
+			}
+			p.getOut().flush();
+		}
+
+		do{
+			currentPlayer.getOut().println("Which move do you want to undertake? [takeCard / goToSpace / skip]");
+			currentPlayer.getOut().flush();	
+			String line = currentPlayer.getIn().nextLine();
+			if(line.equalsIgnoreCase("takeCard")){
+				if(askCard(null)){
 					return;
 				}
-				else{
-					currentPlayer.getOut().println("Not valid input!");
-					currentPlayer.getOut().flush();
-					//line = currentPlayer.getIn().nextLine();
+			}
+			else if(line.equalsIgnoreCase("goToSpace")){
+				if(goToSpace(null)){
+					return;
 				}
-			}while(true);
-		
-		
+			}
+			else if(line.equalsIgnoreCase("skip")){
+				return;
+			}
+			else{
+				currentPlayer.getOut().println("Not valid input!");
+				currentPlayer.getOut().flush();
+				//line = currentPlayer.getIn().nextLine();
+			}
+		}while(true);
+	
 	}
 	
 

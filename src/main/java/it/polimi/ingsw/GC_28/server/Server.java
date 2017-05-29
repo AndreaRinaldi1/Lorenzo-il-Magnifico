@@ -75,10 +75,6 @@ public class Server {
 		game.getGameBoard().display();
 		game.setCurrentPlayer(game.getPlayers().get(0));
 		game.getCurrentPlayer().getBoard().display();
-		System.out.println(game.getPlayers().get(0).getName());
-		for(FamilyMember fm : game.getCurrentPlayer().getFamilyMembers()){
-			System.out.println(fm.toString());
-		}
 		executor.submit(game);	
 	}
 	

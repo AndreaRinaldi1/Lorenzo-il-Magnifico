@@ -41,7 +41,7 @@ public class GameBoard {
 	}
 	
 
-	public void display(){
+	public String display(){
 		String ret = "GAME BOARD\n";
 		
 		//Towers
@@ -118,7 +118,7 @@ public class GameBoard {
 		for(int j = 0; j < N_DICE; j++){
 			ret += (dices[j].getColor().toString()+": " + dices[j].getValue() + '\n');
 		}
-		System.out.println(ret);
+		return ret;
 	}
 
 	public Map<CardType, Tower> getTowers() {
