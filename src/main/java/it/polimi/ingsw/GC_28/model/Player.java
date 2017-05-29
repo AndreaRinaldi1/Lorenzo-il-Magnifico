@@ -1,5 +1,8 @@
 package it.polimi.ingsw.GC_28.model;
 
+import java.io.PrintStream;
+import java.net.Socket;
+
 import it.polimi.ingsw.GC_28.boards.PlayerBoard;
 import it.polimi.ingsw.GC_28.components.FamilyMember;
 
@@ -8,11 +11,18 @@ public class Player {
 	private PlayerColor color;
 	private PlayerBoard board;
 	private FamilyMember[] familyMembers = new FamilyMember[4];
+	private Socket socket ;
+	transient private PrintStream ps;
 	
-
-	public Player(String name, PlayerColor color){
+	public Player(String name, PlayerColor color){ //Used for local test. KEEP IT!
 		this.name = name;
 		this.color = color;
+	}
+	
+	public Player(String name, PlayerColor color, Socket s){
+		this.name = name;
+		this.color = color;
+		this.socket = s;
 	}
 		
 	public String getName() {
@@ -35,8 +45,6 @@ public class Player {
 		this.familyMembers = familyMembers;
 	}
 
-
-
 	public void setBoard(PlayerBoard board) {
 		this.board = board;
 	}
@@ -49,6 +57,10 @@ public class Player {
 		this.color = color;
 	}
 	
+	public Socket getSocket() {
+		return socket;
+	}
+
 	public String displayFamilyMembers(){
 		StringBuilder s = new StringBuilder();
 		s.append("Family Members:\n");
