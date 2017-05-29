@@ -20,7 +20,7 @@ public class Player {
 	private PlayerBoard board;
 	private FamilyMember[] familyMembers = new FamilyMember[4];
 	private Socket socket;
-	private BufferedReader in;
+	private Scanner in;
 	transient private PrintWriter out;
 	
 	public Player(String name, PlayerColor color){ //Used for local test. KEEP IT!
@@ -34,7 +34,7 @@ public class Player {
 		this.socket = s;
 
 		try {
-			in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+			in = new Scanner(socket.getInputStream());
 			out = new PrintWriter(socket.getOutputStream());
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -55,7 +55,7 @@ public class Player {
 		this.socket = socket;
 	}
 
-	public BufferedReader getIn() {
+	public Scanner getIn() {
 		return in;
 	}
 

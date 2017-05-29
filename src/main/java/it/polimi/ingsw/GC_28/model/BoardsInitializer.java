@@ -59,19 +59,10 @@ public class BoardsInitializer {
 	public Game initializeBoard(List<Player> players){
 		try {
 			this.players  = players;
-			System.out.println("1");
 			initDices();
-			System.out.println("2");
-
 			initCouncilPrivilege();
-			System.out.println("3");
-
 			initGameBoard();
-			System.out.println("4");
-
 			initSpaces();
-			System.out.println("5");
-
 			g.setGameBoard(gameBoard);
 			initBonusTile();
 			initPlayerBoard();
@@ -146,16 +137,12 @@ public class BoardsInitializer {
 	
 	private void initSpaces()throws FileNotFoundException{
 		Gson gson = new GsonBuilder().create(); 
-		System.out.println("1");
         try{
         	JsonReader reader = new JsonReader(new FileReader("spaces.json"));
-        	System.out.println("1.");
         	EverySpace everySpace = gson.fromJson(reader, EverySpace.class);
-        	System.out.println("2");
         	reader.close();
         	gameBoard.setCouncilPalace(everySpace.getCouncilPalace());
         	gameBoard.getCouncilPalace().setFree(true);
-        	System.out.println("3");
         	gameBoard.setCoinSpace(everySpace.getCoinSpace());
         	gameBoard.getCoinSpace().setFree(true);
         	
@@ -166,7 +153,6 @@ public class BoardsInitializer {
         	gameBoard.setHarvestSpace(everySpace.getHarvest());
         	gameBoard.getProductionSpace().setFree(true);
     		gameBoard.getHarvestSpace().setFree(true);
-    		System.out.println("qu");
         	if(players.size() > 2){ 
         		//checking if other spaces are available according to the game rules
             	gameBoard.getProductionSpace().setSecondarySpace(true);
