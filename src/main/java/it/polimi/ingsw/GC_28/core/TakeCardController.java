@@ -96,26 +96,26 @@ public class TakeCardController {
 		switch(cardType){
 		case TERRITORY:
 			if(familyMember.getPlayer().getBoard().getTerritories().size() == 6){
-				return false;
+				return true;
 			}
 		break;
 		case BUILDING:
 			if(familyMember.getPlayer().getBoard().getBuildings().size() == 6){
-				return false;
+				return true;
 			}
 		break;
 		case CHARACTER:
 			if(familyMember.getPlayer().getBoard().getCharacters().size() == 6){
-				return false;
+				return true;
 			}
 		break;
 		case VENTURE:
 			if(familyMember.getPlayer().getBoard().getVentures().size() == 6){
-				return false;
+				return true;
 			}
 		break;
 		}
-		return true;
+		return false;
 	}
 	
 	
