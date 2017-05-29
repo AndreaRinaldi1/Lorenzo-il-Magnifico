@@ -1,30 +1,34 @@
 package it.polimi.ingsw.GC_28.model;
 
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
 import java.io.PrintStream;
+import java.io.PrintWriter;
 import java.net.Socket;
+import java.util.Scanner;
 
 import it.polimi.ingsw.GC_28.boards.PlayerBoard;
 import it.polimi.ingsw.GC_28.components.FamilyMember;
+
 
 public class Player {
 	private String name;
 	private PlayerColor color;
 	private PlayerBoard board;
 	private FamilyMember[] familyMembers = new FamilyMember[4];
-	private Socket socket ;
-	transient private PrintStream ps;
+	private Socket socket;
+	private BufferedReader in;
+	transient private PrintWriter out;
 	
 	public Player(String name, PlayerColor color){ //Used for local test. KEEP IT!
 		this.name = name;
 		this.color = color;
 	}
-	
-	public Player(String name, PlayerColor color, Socket s){
-		this.name = name;
-		this.color = color;
-		this.socket = s;
-	}
 		
+	
 	public String getName() {
 		return name;
 	}
@@ -32,8 +36,25 @@ public class Player {
 	public PlayerBoard getBoard() {
 		return this.board;
 	}
-	
-	
+
+
+	public void setSocket(Socket socket) throws IOException {
+		this.socket = socket;
+
+		in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+		out = new PrintWriter(socket.getOutputStream());
+		
+	}
+
+	public BufferedReader getIn() {
+		return in;
+	}
+
+
+	public PrintWriter getOut() {
+		return out;
+	}
+
 
 	public FamilyMember[] getFamilyMembers() {
 		return familyMembers;

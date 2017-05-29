@@ -1,6 +1,10 @@
 package it.polimi.ingsw.GC_28.model;
 
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.EnumMap;
 import java.util.List;
@@ -19,28 +23,73 @@ import it.polimi.ingsw.GC_28.effects.GoToHPEffect;
 import it.polimi.ingsw.GC_28.effects.TakeCardEffect;
 import it.polimi.ingsw.GC_28.spaces.Space;
 
-public class Game implements Runnable{
+
+public class Game implements Runnable {
 	private GameBoard gameBoard;
-	private List<Player> players; //it's static because is the only way i can access to it from another class in a useful way
-	
+
 	Scanner input = new Scanner(System.in);
 	private Player currentPlayer;
 	boolean modifiedWithServants = false;
-	private BoardSetup bs;
 	private int currentEra  = 1;
 	private int currentPeriod = 1;
+	private List<Player> players = new ArrayList<>();
 	
 	public Game(){
-		//lasciare costruttore vuoto per prove
+		
 	}
 	
-
 	
-	
+	@Override
 	public void run(){
-		System.out.println(currentPlayer.getName());
-		askCard(null);
+		for(; currentEra <= 3; currentEra++){
+			for(; currentPeriod <= 2; currentPeriod++){
+				for(int round = 1; round <= 4; round++){
+					for(int turn = 0; turn < players.size(); turn++){
+						try {
+							play();
+						} catch (IOException e) {
+							e.printStackTrace();
+						}
+						currentPlayer = players.get((turn+1));
+						System.out.println(currentPlayer.getName());
+					}
+				}
+			}
+			
+		}
 	}
+
+	public void play() throws IOException{
+		currentPlayer.getOut().println("Which move do you want to undertake? [takeCard / goToSpace / skip]");
+		currentPlayer.getOut().flush();
+		
+			String line = currentPlayer.getIn().readLine();
+			do{
+				if(line.equalsIgnoreCase("takeCard")){
+					if(askCard(null)){
+						return;
+					}
+				}
+				else if(line.equalsIgnoreCase("goToSpace")){
+					if(goToSpace(null)){
+						return;
+					}
+					currentPlayer.getOut().println("bravo");
+					currentPlayer.getOut().flush();
+					return;
+				}
+				else if(line.equalsIgnoreCase("skip")){
+					return;
+				}
+				else{
+					System.out.println("Not valid input");
+					line = input.nextLine();
+				}
+			}while(true);
+		
+		
+	}
+	
 
 
 	public int getCurrentPeriod() {
