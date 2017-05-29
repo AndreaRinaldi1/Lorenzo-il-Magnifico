@@ -33,7 +33,7 @@ public class CellTest {
 		bonus = Resource.of(resource);
 		cell = new Cell(bonus, 5, true);
 		cell.setCard(card);
-		player = new Player("ciao",PlayerColor.RED);
+		player = new Player("ciao", PlayerColor.RED);
 		fm = new FamilyMember(player, false, DiceColor.ORANGE);
 		cell.setFamilyMember(fm);
 		
