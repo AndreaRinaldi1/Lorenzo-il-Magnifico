@@ -3,7 +3,7 @@ package it.polimi.ingsw.GC_28.server;
 import java.io.IOException;
 
 import java.io.PrintStream;
-
+import java.io.PrintWriter;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.ArrayList;
@@ -25,7 +25,6 @@ import it.polimi.ingsw.GC_28.model.PlayerColor;
 public class Server {
 	private int port;
 	private ServerSocket server;
-	Socket sock = new Socket();
 	private PrintStream p;
 	private Scanner scan;
 	
@@ -47,13 +46,14 @@ public class Server {
 	private void startServer() throws IOException{
 		server = new ServerSocket(port);
 		ExecutorService executor = Executors.newCachedThreadPool();
-		p = new PrintStream(sock.getOutputStream());
-		scan = new Scanner(sock.getInputStream());
+
 		List<Player> players = new ArrayList<>();
 		System.out.println("Server ready");
-		while(players.size() < 4){
+		
+		while(players.size() < 2){
 			Socket socket = server.accept();
-			sock = socket;
+			p = new PrintStream(socket.getOutputStream());
+			scan = new Scanner(socket.getInputStream());
 			p.println("Enter your name:");
 			p.flush();
 			String name = scan.nextLine();

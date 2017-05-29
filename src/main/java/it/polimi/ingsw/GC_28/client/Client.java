@@ -1,4 +1,4 @@
-package it.polimi.ingsw.GC_28.model;
+package it.polimi.ingsw.GC_28.client;
 
 import java.io.*;
 import java.net.Socket;
