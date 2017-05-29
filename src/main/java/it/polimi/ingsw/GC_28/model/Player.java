@@ -27,7 +27,12 @@ public class Player {
 		this.name = name;
 		this.color = color;
 	}
-		
+	
+	public Player(String name, PlayerColor color,Socket s){ //Used for local test. KEEP IT!
+		this.name = name;
+		this.color = color;
+		this.socket = s;
+	}
 	
 	public String getName() {
 		return name;

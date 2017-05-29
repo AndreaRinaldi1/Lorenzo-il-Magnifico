@@ -14,6 +14,8 @@ import java.util.concurrent.Executors;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import it.polimi.ingsw.GC_28.components.FamilyMember;
+import it.polimi.ingsw.GC_28.model.BoardSetup;
 import it.polimi.ingsw.GC_28.model.BoardsInitializer;
 import it.polimi.ingsw.GC_28.model.Game;
 import it.polimi.ingsw.GC_28.model.Player;
@@ -67,7 +69,17 @@ public class Server {
 		}
 		BoardsInitializer bi = new BoardsInitializer();	
 		Game game = bi.initializeBoard(players);
-		executor.submit(game);
+		
+		BoardSetup bs = new BoardSetup(game);
+		bs.firstSetUpCards();
+		game.getGameBoard().display();
+		game.setCurrentPlayer(game.getPlayers().get(0));
+		game.getCurrentPlayer().getBoard().display();
+		System.out.println(game.getPlayers().get(0).getName());
+		for(FamilyMember fm : game.getCurrentPlayer().getFamilyMembers()){
+			System.out.println(fm.toString());
+		}
+		executor.submit(game);	
 	}
 	
 }

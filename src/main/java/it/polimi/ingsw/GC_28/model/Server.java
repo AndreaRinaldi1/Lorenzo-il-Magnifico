@@ -61,8 +61,7 @@ public class Server {
 			String color = scan.nextLine().toUpperCase();
 			for(PlayerColor pc : PlayerColor.values()){
 				if(pc.name().equals(color)){
-					Player player = new Player(name,pc);
-					player.setSocket(socket);
+					Player player = new Player(name,pc,socket);
 					players.add(player);
 				}	
 			}
