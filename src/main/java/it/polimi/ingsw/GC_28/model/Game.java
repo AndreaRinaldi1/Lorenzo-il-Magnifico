@@ -19,7 +19,7 @@ import it.polimi.ingsw.GC_28.effects.GoToHPEffect;
 import it.polimi.ingsw.GC_28.effects.TakeCardEffect;
 import it.polimi.ingsw.GC_28.spaces.Space;
 
-public class Game {
+public class Game implements Runnable{
 	private GameBoard gameBoard;
 	private List<Player> players; //it's static because is the only way i can access to it from another class in a useful way
 	
@@ -37,7 +37,7 @@ public class Game {
 
 	
 	
-	public void start(){
+	public void run(){
 		System.out.println(currentPlayer.getName());
 		askCard(null);
 	}
