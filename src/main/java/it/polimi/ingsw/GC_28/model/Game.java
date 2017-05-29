@@ -62,6 +62,12 @@ public class Game implements Runnable {
 	public void play() throws IOException{
 		for(Player p: players){
 			p.getOut().println(gameBoard.display());
+			p.getOut().println("test");
+			p.getOut().println(p.getBoard().display());
+			for(int i = 0; i < 4; i++){
+				p.getOut().println(p.getFamilyMembers()[i].toString());
+			}
+			p.getOut().flush();
 		}
 		currentPlayer.getOut().println("Which move do you want to undertake? [takeCard / goToSpace / skip]");
 		currentPlayer.getOut().flush();
