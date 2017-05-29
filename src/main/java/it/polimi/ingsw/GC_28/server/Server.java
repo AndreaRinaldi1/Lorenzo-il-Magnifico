@@ -47,13 +47,14 @@ public class Server {
 	private void startServer() throws IOException{
 		server = new ServerSocket(port);
 		ExecutorService executor = Executors.newCachedThreadPool();
-		p = new PrintStream(sock.getOutputStream());
-		scan = new Scanner(sock.getInputStream());
+		
 		List<Player> players = new ArrayList<>();
 		System.out.println("Server ready");
+		
 		while(players.size() < 4){
 			Socket socket = server.accept();
-			sock = socket;
+			p = new PrintStream(socket.getOutputStream());
+			scan = new Scanner(socket.getInputStream());
 			p.println("Enter your name:");
 			p.flush();
 			String name = scan.nextLine();
