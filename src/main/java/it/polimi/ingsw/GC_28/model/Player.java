@@ -32,6 +32,14 @@ public class Player {
 		this.name = name;
 		this.color = color;
 		this.socket = s;
+
+		try {
+			in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+			out = new PrintWriter(socket.getOutputStream());
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
 	}
 	
 	public String getName() {
@@ -45,10 +53,6 @@ public class Player {
 
 	public void setSocket(Socket socket) throws IOException {
 		this.socket = socket;
-
-		in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-		out = new PrintWriter(socket.getOutputStream());
-		
 	}
 
 	public BufferedReader getIn() {
