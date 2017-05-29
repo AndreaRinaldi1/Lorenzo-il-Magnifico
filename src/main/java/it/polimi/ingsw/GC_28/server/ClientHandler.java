@@ -1,4 +1,4 @@
-package it.polimi.ingsw.GC_28.model;
+package it.polimi.ingsw.GC_28.server;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -6,6 +6,8 @@ import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.Socket;
 import java.util.ArrayList;
+
+import it.polimi.ingsw.GC_28.model.Game;
 
 public class ClientHandler extends Game implements Runnable{
 
