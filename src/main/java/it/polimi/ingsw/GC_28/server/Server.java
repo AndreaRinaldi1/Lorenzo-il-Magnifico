@@ -6,8 +6,10 @@ import java.io.PrintStream;
 import java.io.PrintWriter;
 import java.net.ServerSocket;
 import java.net.Socket;
-import java.util.ArrayList;
 import java.util.List;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Scanner;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -48,11 +50,11 @@ public class Server {
 	private void startServer() throws IOException{
 		server = new ServerSocket(port);
 		ExecutorService executor = Executors.newCachedThreadPool();
+		Map<Player, ClientHandler> handlers = new HashMap<>();
 
-		List<Player> players = new ArrayList<>();
 		System.out.println("Server ready");
 		
-		while(players.size() < 2){
+		while(handlers.size() < 2){
 			Socket socket = server.accept();
 			p = new PrintStream(socket.getOutputStream());
 			scan = new Scanner(socket.getInputStream());
@@ -60,13 +62,15 @@ public class Server {
 			p.flush();
 			String name = scan.nextLine();
 			PlayerColor color = enterColor();
-			Player player = new Player(name, color ,socket);
-			players.add(player);
+			Player player = new Player(name, color);
+			ClientHandler ch = new ClientHandler(socket);
+			handlers.put(player, ch);
 		}
 		usedColors.clear();
 		BoardsInitializer bi = new BoardsInitializer();	
+		List<Player> players = new ArrayList<>(handlers.keySet());
 		Game game = bi.initializeBoard(players);
-		
+		game.setHandlers(handlers);
 		BoardSetup bs = new BoardSetup(game);
 		bs.firstSetUpCards();
 		game.getGameBoard().display();
