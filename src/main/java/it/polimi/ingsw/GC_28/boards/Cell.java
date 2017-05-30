@@ -34,7 +34,10 @@ public class Cell {
 		this.player = player;
 	}
 
-	public Card getCard() {
+	public Card getCard(){
+		if(card == null){
+			return  new Card("presa",0,0);
+		}
 		return card;
 	}
 
