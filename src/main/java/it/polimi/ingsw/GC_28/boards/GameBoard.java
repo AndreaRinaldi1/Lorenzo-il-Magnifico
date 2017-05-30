@@ -47,13 +47,14 @@ public class GameBoard {
 		//Towers
 		ret += "----------\n";
 		for(int i = 3;i >= 0 ;i--){
+			System.out.println("display 1");
 			ret +="|" + towers.get(CardType.TERRITORY).getCells()[i].getCard().getName() + 
 				" |"+ towers.get(CardType.BUILDING).getCells()[i].getCard().getName() + 
 				" |" + towers.get(CardType.CHARACTER).getCells()[i].getCard().getName() +
 				" |" + towers.get(CardType.VENTURE).getCells()[i].getCard().getName()+ " |\n";
 			ret +="----------\n";	
 		}
-		
+		System.out.println("display 2");
 		//Council Palace
 		ret+="CP: \n";
 		for (int i = 0; i < membersCoucilPalace.size(); i++){		

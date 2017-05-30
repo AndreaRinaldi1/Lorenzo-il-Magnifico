@@ -50,7 +50,11 @@ public class Game implements Runnable {
 						} catch (IOException e) {
 							e.printStackTrace();
 						}
-						currentPlayer = players.get((turn+1));
+						if(turn == (players.size()-1)){
+							currentPlayer = players.get(0);
+						}else{
+							currentPlayer = players.get((turn+1));
+						}
 					}
 				}
 			}
@@ -59,17 +63,20 @@ public class Game implements Runnable {
 	}
 
 	public void play() throws IOException{
-
+		System.out.println(players.get(0).getName());
+		System.out.println(currentPlayer.getName());
 		for(Player p: players){
+			System.out.println(1);
 			p.getOut().println(gameBoard.display());
-			p.getOut().println("test");
+			System.out.println(2);
 			p.getOut().println(p.getBoard().display());
+			System.out.println(3);
 			for(int i = 0; i < 4; i++){
 				p.getOut().println(p.getFamilyMembers()[i].toString());
 			}
 			p.getOut().flush();
 		}
-
+		System.out.println("test");
 		do{
 			currentPlayer.getOut().println("Which move do you want to undertake? [takeCard / goToSpace / skip]");
 			currentPlayer.getOut().flush();	
