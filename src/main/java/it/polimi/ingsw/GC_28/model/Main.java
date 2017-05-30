@@ -4,6 +4,7 @@ package it.polimi.ingsw.GC_28.model;
 import java.util.ArrayList;
 import java.util.List;
 
+import it.polimi.ingsw.GC_28.client.ClientListener;
 import it.polimi.ingsw.GC_28.components.FamilyMember;
 
 public class Main {
@@ -34,7 +35,7 @@ public class Main {
 			System.out.println(fm.toString());
 		}
 		while(true){
-			game.run();
+			new Thread(game).start();
 			game.getCurrentPlayer().getBoard().display();
 			System.out.println(game.getPlayers().get(0).getName());
 			for(FamilyMember fm : game.getCurrentPlayer().getFamilyMembers()){

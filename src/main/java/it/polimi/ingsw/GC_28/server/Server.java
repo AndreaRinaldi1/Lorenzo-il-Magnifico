@@ -14,6 +14,7 @@ import java.util.concurrent.Executors;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import it.polimi.ingsw.GC_28.cards.CardType;
 import it.polimi.ingsw.GC_28.components.FamilyMember;
 import it.polimi.ingsw.GC_28.model.BoardSetup;
 import it.polimi.ingsw.GC_28.model.BoardsInitializer;
@@ -27,7 +28,8 @@ public class Server {
 	private ServerSocket server;
 	private PrintStream p;
 	private Scanner scan;
-	
+	List<PlayerColor> usedColors = new ArrayList<>();
+
 	
 	public Server(int p){
 		this.port = p;
@@ -57,16 +59,11 @@ public class Server {
 			p.println("Enter your name:");
 			p.flush();
 			String name = scan.nextLine();
-			p.println("Enter your Color: [red,blue,green,yellow]");
-			p.flush();
-			String color = scan.nextLine().toUpperCase();
-			for(PlayerColor pc : PlayerColor.values()){
-				if(pc.name().equals(color)){
-					Player player = new Player(name,pc,socket);
-					players.add(player);
-				}	
-			}
+			PlayerColor color = enterColor();
+			Player player = new Player(name, color ,socket);
+			players.add(player);
 		}
+		usedColors.clear();
 		BoardsInitializer bi = new BoardsInitializer();	
 		Game game = bi.initializeBoard(players);
 		
@@ -76,6 +73,32 @@ public class Server {
 		game.setCurrentPlayer(game.getPlayers().get(0));
 		game.getCurrentPlayer().getBoard().display();
 		executor.submit(game);	
+	}
+	
+	
+	private PlayerColor enterColor(){
+		boolean found = false;
+		do{
+			p.println("Enter the color you prefer: [red / blue / green / yellow] ");
+			p.flush();
+			String playerColor = scan.nextLine().toUpperCase();
+			for(PlayerColor color : PlayerColor.values()){
+				if(playerColor.equals(color.name())){
+					if(!usedColors.contains(color)){
+						usedColors.add(color);
+						return color;
+					}
+					else{
+						p.println("This color has already been choosed");
+						found = true;
+						break;
+					}
+				}
+			}
+			if(!found){
+				p.println("Not valid input!");
+			}
+		}while(true);
 	}
 	
 }
