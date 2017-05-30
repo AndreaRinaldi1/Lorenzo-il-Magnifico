@@ -9,7 +9,8 @@ import java.util.ArrayList;
 import java.util.EnumMap;
 import java.util.List;
 import java.util.Scanner;
-
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import it.polimi.ingsw.GC_28.boards.GameBoard;
 import it.polimi.ingsw.GC_28.components.CouncilPrivilege;
@@ -46,9 +47,11 @@ public class Game implements Runnable {
 				for(int round = 1; round <= 4; round++){
 					for(int turn = 0; turn < players.size(); turn++){
 						try {
+							System.out.println("rifaccio play");
 							play();
+							System.out.println("tornato");
 						} catch (IOException e) {
-							e.printStackTrace();
+							Logger.getAnonymousLogger().log(Level.SEVERE,"Cannot play that move in method run()" + e);
 						}
 						if(turn == (players.size()-1)){
 							currentPlayer = players.get(0);
@@ -63,26 +66,21 @@ public class Game implements Runnable {
 	}
 
 	public void play() throws IOException{
-		System.out.println(players.get(0).getName());
-		System.out.println(currentPlayer.getName());
 		for(Player p: players){
-			System.out.println(1);
 			p.getOut().println(gameBoard.display());
-			System.out.println(2);
 			p.getOut().println(p.getBoard().display());
-			System.out.println(3);
 			for(int i = 0; i < 4; i++){
 				p.getOut().println(p.getFamilyMembers()[i].toString());
 			}
 			p.getOut().flush();
 		}
-		System.out.println("test");
 		do{
 			currentPlayer.getOut().println("Which move do you want to undertake? [takeCard / goToSpace / skip]");
 			currentPlayer.getOut().flush();	
 			String line = currentPlayer.getIn().nextLine();
 			if(line.equalsIgnoreCase("takeCard")){
 				if(askCard(null)){
+					System.out.println("fatto tutto ");
 					return;
 				}
 			}
@@ -299,6 +297,7 @@ public class Game implements Runnable {
 			if(modifiedWithServants){
 				familyMember.modifyValue((-1)*(incrementThroughServants));
 			}
+			System.out.println("tutto bene");
 			return true;
 		}
 		else{
@@ -308,6 +307,8 @@ public class Game implements Runnable {
 			}
 			currentPlayer.getOut().println("Not valid action!");
 			currentPlayer.getOut().flush();
+			System.out.println("tutto male");
+
 			return false;
 		}
 	}

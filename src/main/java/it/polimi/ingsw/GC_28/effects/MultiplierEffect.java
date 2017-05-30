@@ -77,8 +77,7 @@ public class MultiplierEffect extends Effect{
 			int times = 0;
 			for(ResourceType resType : resourceCost.getResource().keySet()){
 				if(!(resourceCost.getResource().get(resType).equals(0))){
-					times = familyMember.getPlayer().getBoard().getResources().getResource().get(resType) / 2;
-					break;
+					times += familyMember.getPlayer().getBoard().getResources().getResource().get(resType) / resourceCost.getResource().get(resType);
 				}
 			}
 			familyMember.getPlayer().getBoard().addResource(multiplyResource(times));

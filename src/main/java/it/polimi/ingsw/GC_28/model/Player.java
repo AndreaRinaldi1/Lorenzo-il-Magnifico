@@ -9,6 +9,8 @@ import java.io.PrintStream;
 import java.io.PrintWriter;
 import java.net.Socket;
 import java.util.Scanner;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import it.polimi.ingsw.GC_28.boards.PlayerBoard;
 import it.polimi.ingsw.GC_28.components.FamilyMember;
@@ -37,7 +39,7 @@ public class Player {
 			in = new Scanner(socket.getInputStream());
 			out = new PrintWriter(socket.getOutputStream());
 		} catch (IOException e) {
-			e.printStackTrace();
+			Logger.getAnonymousLogger().log(Level.WARNING,"Cannot instantiate the scanner or the printWriter in the player" + e);
 		}
 		
 	}

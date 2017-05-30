@@ -37,7 +37,9 @@ public class ClientWriter implements Runnable{
 			}catch (IOException e) {
 				System.out.println(e.getMessage());			
 			}
-			stdin.close();
+			if(stdin != null){
+				stdin.close();
+			}
 
 		}
 	}
