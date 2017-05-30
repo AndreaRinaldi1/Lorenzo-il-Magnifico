@@ -71,7 +71,7 @@ public class TakeCardAction {
 				e.apply(familyMember, game);
 			}
 		}
-		//cell.setCard(null);
+		cell.setCard(null);
 		cell.setFree(false);
 	}
 	
