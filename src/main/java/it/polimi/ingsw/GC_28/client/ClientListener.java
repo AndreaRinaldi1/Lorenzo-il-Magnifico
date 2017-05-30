@@ -16,12 +16,13 @@ public class ClientListener implements Runnable{
 	@Override
 	public void run(){
 		BufferedReader socketIn = null;
+		String socketLine;
 		try{
 			socketIn = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-			while(true){
-				String socketLine = socketIn.readLine();
+			do{
+				socketLine = socketIn.readLine();
 				System.out.println(socketLine);
-			}
+			}while(!socketLine.equals("close"));
 		}
 		catch(IOException e){
 			System.out.println(e.getMessage());
@@ -30,7 +31,9 @@ public class ClientListener implements Runnable{
 			System.out.println("Client chiuso -listener-");
 		}finally{
 			try {
-				socketIn.close();
+				if(socketIn != null){
+					socketIn.close();
+				}
 			} catch (IOException e) {
 				System.err.println(e.getMessage());
 			}

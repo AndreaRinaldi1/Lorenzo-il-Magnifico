@@ -1,7 +1,9 @@
 package it.polimi.ingsw.GC_28.core;
 
+import it.polimi.ingsw.GC_28.cards.Character;
 import it.polimi.ingsw.GC_28.components.FamilyMember;
 import it.polimi.ingsw.GC_28.effects.GoToHPEffect;
+import it.polimi.ingsw.GC_28.effects.IncrementHPEffect;
 import it.polimi.ingsw.GC_28.model.Game;
 import it.polimi.ingsw.GC_28.spaces.ProductionAndHarvestSpace;
 import it.polimi.ingsw.GC_28.spaces.Space;
@@ -19,9 +21,23 @@ public class SpaceAction {
 	}
 	
 	public void apply(FamilyMember familyMember, Space space, GoToHPEffect throughEffect){
+		ProductionAndHarvestSpace prodHarv;
+		
+		if(space instanceof ProductionAndHarvestSpace){
+			prodHarv = (ProductionAndHarvestSpace) space;
+			for(Character character : familyMember.getPlayer().getBoard().getCharacters()){
+				if(character.getPermanentEffect() instanceof IncrementHPEffect){
+					IncrementHPEffect eff = (IncrementHPEffect) character.getPermanentEffect();
+					if((eff.isHarvest() && prodHarv.isHarvest()) || (eff.isProduction() && !prodHarv.isHarvest())){
+						familyMember.modifyValue(eff.getIncrement());
+					}
+				}
+			}
+		}
+		
 		if(throughEffect == null){
 			if(space instanceof ProductionAndHarvestSpace){
-				ProductionAndHarvestSpace prodHarv = (ProductionAndHarvestSpace) space;
+				prodHarv = (ProductionAndHarvestSpace) space;
 				if(!prodHarv.isFree() && prodHarv.isSecondarySpace()){
 					familyMember.modifyValue(-3);
 				}

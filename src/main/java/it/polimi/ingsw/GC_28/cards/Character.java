@@ -75,7 +75,6 @@ public class Character extends Card{
         		v = gson.fromJson(e.toString(), TakeCardEffect.class);
         		immediateEffect.set(i, v);
         		break;
-        	default:
         	case("NOEFFECT"):
         		//System.out.println("lascio il tipo dell'effetto a effect");
         		//System.out.println(immediateEffect.get(i).getClass());
