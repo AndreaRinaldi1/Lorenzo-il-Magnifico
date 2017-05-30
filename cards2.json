@@ -1,0 +1,53 @@
+{
+  "territories": [],
+  "buildings": [],
+  "characters": [],
+  "ventures": [
+    {
+      "immediateEffect": [
+        {
+          "resourceBonus": {
+            "resource": {
+              "COIN": 0,
+              "WOOD": 0,
+              "STONE": 0,
+              "SERVANT": 0,
+              "MILITARYPOINT": 0,
+              "VICTORYPOINT": 2,
+              "FAITHPOINT": 0
+            }
+          },
+          "type": "RESOURCEEFFECT"
+        }
+      ],
+      "permanentEffect": {
+        "resourceBonus": {
+          "resource": {
+            "VICTORYPOINT": 3
+          }
+        },
+        "type": "RESOURCEEFFECT"
+      },
+      "alternativeCostPresence": false,
+      "minimumRequiredMilitaryPoints": 0,
+      "name": "Ammazzo Tutti",
+      "IdNumber": 1,
+      "era": 1,
+      "color": {
+        "value": -20561,
+        "falpha": 0.0
+      },
+      "cost": {
+        "resource": {
+          "COIN": 1,
+          "WOOD": 0,
+          "STONE": 0,
+          "SERVANT": 0,
+          "MILITARYPOINT": 0,
+          "VICTORYPOINT": 0,
+          "FAITHPOINT": 0
+        }
+      }
+    }
+  ]
+}

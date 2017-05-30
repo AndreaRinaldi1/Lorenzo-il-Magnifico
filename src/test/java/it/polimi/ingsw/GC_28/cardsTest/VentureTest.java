@@ -20,16 +20,18 @@ public class VentureTest {
 	private boolean alternativeCostPresence = true;
 	private Resource alternativeCost;
 	private int minimumRequiredMilitaryPoints = 2;
-	private Resource cost1,cost2;
+	private Resource cost1;
+	private Resource cost2;
 	private ResourceEffect r;
-	EnumMap<ResourceType, Integer> resource1, resource2;
+	EnumMap<ResourceType, Integer> resource1;
+	EnumMap<ResourceType, Integer> resource2;
 	
 	
 	@Before
 	public void venture(){
 		venture = new Venture("Rob", 3, 1);
 		r = new ResourceEffect();
-		resource1 = new EnumMap<ResourceType, Integer>(ResourceType.class);
+		resource1 = new EnumMap<>(ResourceType.class);
 		resource1.put(ResourceType.STONE, 2);
 		cost1 = Resource.of(resource1);
 		r.setResourceBonus(cost1);
@@ -38,7 +40,7 @@ public class VentureTest {
 		permanentEffect = r;
 		this.venture.setPermanentEffect(permanentEffect);
 		this.venture.setAlternativeCostPresence(alternativeCostPresence);
-		resource2 = new EnumMap<ResourceType, Integer>(ResourceType.class);
+		resource2 = new EnumMap<>(ResourceType.class);
 		resource2.put(ResourceType.MILITARYPOINT, 5);
 		cost2 = Resource.of(resource2);
 		alternativeCost = cost2;
