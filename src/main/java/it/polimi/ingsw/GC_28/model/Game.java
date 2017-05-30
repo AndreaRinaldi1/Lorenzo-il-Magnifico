@@ -10,7 +10,9 @@ import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import it.polimi.ingsw.GC_28.boards.Cell;
 import it.polimi.ingsw.GC_28.boards.GameBoard;
+import it.polimi.ingsw.GC_28.cards.CardType;
 import it.polimi.ingsw.GC_28.components.CouncilPrivilege;
 import it.polimi.ingsw.GC_28.components.DiceColor;
 import it.polimi.ingsw.GC_28.components.FamilyMember;
@@ -22,6 +24,7 @@ import it.polimi.ingsw.GC_28.effects.GoToHPEffect;
 import it.polimi.ingsw.GC_28.effects.TakeCardEffect;
 import it.polimi.ingsw.GC_28.server.ClientHandler;
 import it.polimi.ingsw.GC_28.spaces.Space;
+
 
 
 public class Game implements Runnable {
@@ -85,7 +88,7 @@ public class Game implements Runnable {
 			handlers.get(p).getOut().flush();
 		}
 		do{
-			handlers.get(currentPlayer).getOut().println("Which move do you want to undertake? [takeCard / goToSpace / skip]");
+			handlers.get(currentPlayer).getOut().println("Which move do you want to undertake? [takeCard / goToSpace / skip/ askcost]");
 			handlers.get(currentPlayer).getOut().flush();	
 			String line = handlers.get(currentPlayer).getIn().nextLine();
 			if(line.equalsIgnoreCase("takeCard")){
@@ -101,6 +104,9 @@ public class Game implements Runnable {
 			}
 			else if(line.equalsIgnoreCase("skip")){
 				return;
+			}
+			else if(line.equalsIgnoreCase("askcost")){
+				askCost();
 			}
 			else{
 				handlers.get(currentPlayer).getOut().println("Not valid input!");
@@ -508,6 +514,18 @@ public class Game implements Runnable {
 			}
 			
 		}
+	}
+	
+	private void askCost(){
+		String name = askCardName();
+		Cell c;
+		for(CardType ct : CardType.values()){
+			if((c = gameBoard.getTowers().get(ct).findCard(name)) != null){
+				handlers.get(currentPlayer).getOut().println(c.getCard().getCost().toString());
+				handlers.get(currentPlayer).getOut().flush();
+				return;
+			}
+		}	
 	}
 	
 }

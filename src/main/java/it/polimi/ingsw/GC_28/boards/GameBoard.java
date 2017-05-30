@@ -54,13 +54,10 @@ public class GameBoard {
 					  towers.get(CardType.VENTURE).getCells()[i].getCard().getName());
 		}
 		at.addRule();
-		
-		String board = at.render();
-		board += "\n";
-		
+
+		String board = at.render() + "\n";
 		ret.append(board);
 		
-		System.out.println("display 2");
 		//Council Palace
 		AsciiTable councilTable = new AsciiTable();
 		councilTable.addRule();
@@ -73,10 +70,6 @@ public class GameBoard {
 		}
 		String cp = councilTable.render() + "\n";
 		ret.append(cp);
-		/*ret.append("Council Palace: \n");
-		for (int i = 0; i < councilPalace.getPlayer().size(); i++){
-			ret.append(councilPalace.getPlayer().get(i).getPlayer().getColor());
-		}*/
 		
 		ret.append("Church: | | | |\n");			//ho bisogno delle carte scomunica
 		
@@ -135,7 +128,7 @@ public class GameBoard {
 		//Dice Space
 		ret.append("Dice Values \n");
 		for(int j = 0; j < N_DICE; j++){
-			ret.append((dices[j].getColor().toString()+": " + dices[j].getValue() + '\n'));
+			ret.append(dices[j].getColor().toString()+": " + dices[j].getValue() + '\n');
 		}
 		return ret.toString();
 	}

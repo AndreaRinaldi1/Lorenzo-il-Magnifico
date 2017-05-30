@@ -3,6 +3,7 @@ package it.polimi.ingsw.GC_28.boards;
 import java.util.ArrayList;
 import java.util.List;
 
+import de.vandermeer.asciitable.AsciiTable;
 import it.polimi.ingsw.GC_28.boards.BonusTile;
 
 import it.polimi.ingsw.GC_28.cards.*;
@@ -27,7 +28,6 @@ public class PlayerBoard {
 	private Resource resources;
 	private ArrayList<ExcommunicationTile> excommunicationTile = new ArrayList<>();
 	
-	private String line = "---------------------------";
 	private String retLine = "------------------------\n";
 	
 	public PlayerBoard(BonusTile bonusTile, Resource resources){
@@ -37,57 +37,58 @@ public class PlayerBoard {
 	
 	
 	public String display(){
-		String ret = "PLAYER BOARD\n";
-		ret+="Territory Cards: ";
+		StringBuilder ret = new StringBuilder();
+		ret.append("PLAYER BOARD\n");
+		
+		AsciiTable territoryTab = new AsciiTable();
+		territoryTab.addRule();
+		territoryTab.addRow("Territory Cards: ");
 		for(int j = 0; j < territories.size(); j++){
-			ret+= territories.get(j).toString();
-			ret+=" | ";
+			territoryTab.addRule();
+			territoryTab.addRow(territories.get(j).toString());
 		}
-		ret+="\n";
-		ret+= line;
-		ret+= retLine;
-		ret+="Building Cards: ";
+		territoryTab.addRule();
+		String terTab = territoryTab.render() + "\n";
+		ret.append(terTab);
 		
+		AsciiTable buildTab = new AsciiTable();
+		buildTab.addRule();
+		buildTab.addRow("Building Cards: ");
 		for(int j = 0; j < buildings.size(); j++){
-			ret+= buildings.get(j).toString();
-			ret+=" | ";
+			buildTab.addRule();
+			buildTab.addRow(buildings.get(j).toString());
 		}
-		ret +="\n";
-		ret += line; 
-		ret += retLine;
+		buildTab.addRule();
+		String build = buildTab.render() + "\n";
+		ret.append(build);
 		
-		ret+="Character Cards: ";
-		
+		AsciiTable charTab = new AsciiTable();
+		charTab.addRule();
+		charTab.addRow("Character Cards: ");
 		for(int j = 0; j < characters.size(); j++){
-			ret+= characters.get(j).toString();
-			ret+=" | ";
+			charTab.addRule();
+			charTab.addRow(characters.get(j).toString());
 		}
-		ret +="\n";
-		ret += line;
-		ret += retLine;
+		charTab.addRule();
+		String charT = charTab.render() + "\n";
+		ret.append(charT);
 		
-		ret+="Ventures Cards: ";
-		
+		AsciiTable ventTab = new AsciiTable();
+		ventTab.addRule();
+		ventTab.addRow("Ventures Cards: ");
 		for(int j = 0; j < ventures.size(); j++){
-			ret+= ventures.get(j).toString();
-			ret+=" | ";
+			ventTab.addRule();
+			ventTab.addRow(ventures.get(j).toString());
 		}
-		ret+="\n";
-		ret += line;
-		ret += retLine;
+		ventTab.addRule();
+		String vent = ventTab.render() + "\n";
+		ret.append(vent);
 		
-		ret+="Resources: ";
+		ret.append("Resources: \n");
+		ret.append(resources.toString()); 
+		ret.append("\n" + retLine);
 		
-		ret+= resources.toString(); 
-		ret+=" | ";
-
-		ret+="\n";
-		ret += line;
-		ret += retLine;
-		
-		ret+="\n";
-		
-		return ret;
+		return ret.toString();
 		
 	}
 	

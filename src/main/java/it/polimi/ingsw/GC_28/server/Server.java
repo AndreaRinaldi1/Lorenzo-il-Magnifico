@@ -3,7 +3,6 @@ package it.polimi.ingsw.GC_28.server;
 import java.io.IOException;
 
 import java.io.PrintStream;
-import java.io.PrintWriter;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.List;
@@ -16,8 +15,6 @@ import java.util.concurrent.Executors;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import it.polimi.ingsw.GC_28.cards.CardType;
-import it.polimi.ingsw.GC_28.components.FamilyMember;
 import it.polimi.ingsw.GC_28.model.BoardSetup;
 import it.polimi.ingsw.GC_28.model.BoardsInitializer;
 import it.polimi.ingsw.GC_28.model.Game;

@@ -60,9 +60,9 @@ public class Card {
 	}
 	@Override
 	public String toString(){
-		return "Name: " + this.name + "\n" +
-				"IDNumber: " + this.IdNumber + "\n" +
-				"Color: " + this.color.toString() + "\n" + 
-				this.cost.toString();
+		return "Name: " + this.name + "\n";
+				//"IDNumber: " + this.IdNumber + "\n" +
+				//"Color: " + this.color.toString() + "\n";
+				//this.cost.toString();
 	}
 }
