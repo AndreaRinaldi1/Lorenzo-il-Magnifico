@@ -143,7 +143,6 @@ public class BoardsInitializer {
         	reader.close();
         	gameBoard.setCouncilPalace(everySpace.getCouncilPalace());
         	gameBoard.getCouncilPalace().setFree(true);
-        	
         	gameBoard.setCoinSpace(everySpace.getCoinSpace());
         	gameBoard.getCoinSpace().setFree(true);
         	
@@ -154,7 +153,6 @@ public class BoardsInitializer {
         	gameBoard.setHarvestSpace(everySpace.getHarvest());
         	gameBoard.getProductionSpace().setFree(true);
     		gameBoard.getHarvestSpace().setFree(true);
-    		
         	if(players.size() > 2){ 
         		//checking if other spaces are available according to the game rules
             	gameBoard.getProductionSpace().setSecondarySpace(true);

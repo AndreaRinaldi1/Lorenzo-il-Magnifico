@@ -96,26 +96,26 @@ public class TakeCardController {
 		switch(cardType){
 		case TERRITORY:
 			if(familyMember.getPlayer().getBoard().getTerritories().size() == 6){
-				return false;
+				return true;
 			}
 		break;
 		case BUILDING:
 			if(familyMember.getPlayer().getBoard().getBuildings().size() == 6){
-				return false;
+				return true;
 			}
 		break;
 		case CHARACTER:
 			if(familyMember.getPlayer().getBoard().getCharacters().size() == 6){
-				return false;
+				return true;
 			}
 		break;
 		case VENTURE:
 			if(familyMember.getPlayer().getBoard().getVentures().size() == 6){
-				return false;
+				return true;
 			}
 		break;
 		}
-		return true;
+		return false;
 	}
 	
 	
@@ -127,9 +127,7 @@ public class TakeCardController {
 	private boolean checkThisPlayerPresent(FamilyMember familyMember){
 		for(Cell c : gameBoard.getTowers().get(cardType).getCells()){
 			if(!c.isFree()){
-				System.out.println("entro in checkThisPlayerPresent e la cella non è libera");
 				if((c.getFamilyMember().getPlayer().getColor().equals(familyMember.getPlayer().getColor())) && !(c.getFamilyMember().isNeutral()) && !(familyMember.isNeutral())){
-					System.out.println("entro dentro if dopo");
 					return true; 
 				}
 			}
@@ -196,7 +194,6 @@ public class TakeCardController {
 				}
 			}
 			if(venture.getAlternativeCostPresence() && costNotZeros){//ho due alternative di costo
-				System.out.println("andrea");
 				if(venture.getMinimumRequiredMilitaryPoints() <= familyMember.getPlayer().getBoard().getResources().getResource().get(ResourceType.MILITARYPOINT)){
 					//qui se avrebbe un numero adeguato di military points tale da chiedere quale alternativa vuole
 					tmp.modifyResource(game.askAlternative(venture.getCost(), venture.getAlternativeCost(), "cost"), false);
@@ -209,7 +206,6 @@ public class TakeCardController {
 				tmp.modifyResource(venture.getCost(), false); 
 			}
 			else{//ho il costo (alternativa) coi punti militari ma non il costo normale (tutti 0)
-				System.out.println("fdsavd");
 				if(venture.getMinimumRequiredMilitaryPoints() <= familyMember.getPlayer().getBoard().getResources().getResource().get(ResourceType.MILITARYPOINT)){
 					//qui se avrebbe un numero adeguato di military points 
 					tmp.modifyResource(venture.getAlternativeCost(), false);

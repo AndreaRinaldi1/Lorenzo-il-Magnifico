@@ -61,8 +61,6 @@ public class TakeCardAction {
 			Character character = (Character) card;
 			familyMember.getPlayer().getBoard().addCard(character);
 			for(Effect e : character.getImmediateEffect()){
-				System.out.println("2 " + familyMember.getPlayer().getBoard().getResources().toString());
-
 				e.apply(familyMember, game);
 			}
 		}
@@ -75,8 +73,6 @@ public class TakeCardAction {
 		}
 		cell.setCard(null);
 		cell.setFree(false);
-		System.out.println("3 " + familyMember.getPlayer().getBoard().getResources().toString());
-
 	}
 	
 	

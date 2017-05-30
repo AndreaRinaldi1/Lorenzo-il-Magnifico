@@ -15,7 +15,7 @@ public class Main {
 	
 	public static void main(String[] args) {
 		List<Player> players = new ArrayList<>();
-		players = completePlayer(players);
+		//players = completePlayer(players);
 		
 		BoardsInitializer bi = new BoardsInitializer();
 		
@@ -34,7 +34,7 @@ public class Main {
 			System.out.println(fm.toString());
 		}
 		while(true){
-			game.start();
+			game.run();
 			game.getCurrentPlayer().getBoard().display();
 			System.out.println(game.getPlayers().get(0).getName());
 			for(FamilyMember fm : game.getCurrentPlayer().getFamilyMembers()){
@@ -49,7 +49,7 @@ public class Main {
 		System.out.println(game.getGameBoard().display());*/
 	}
 	
-	private static List<Player> completePlayer(List<Player> players){
+	/*private static List<Player> completePlayer(List<Player> players){
 		Player p1 = new Player("Nick", PlayerColor.BLUE);
 		Player p2 = new Player("Andrea", PlayerColor.GREEN);
 		Player p3 = new Player("Rob", PlayerColor.RED);
@@ -59,7 +59,7 @@ public class Main {
 		players.add(p3);
 		players.add(p4);
 		return players;
-	}
+	}*/
 	
 	
 }
