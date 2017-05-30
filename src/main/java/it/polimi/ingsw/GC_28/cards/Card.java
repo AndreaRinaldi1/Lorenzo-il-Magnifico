@@ -17,7 +17,7 @@ public class Card {
 		this.setEra(era);
 	}
 	
-	public String getName() {
+	public String getName(){
 		return name;
 	}
 	
