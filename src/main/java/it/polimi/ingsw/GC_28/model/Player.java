@@ -22,8 +22,7 @@ public class Player {
 	private PlayerBoard board;
 	private FamilyMember[] familyMembers = new FamilyMember[4];
 	private Socket socket;
-	private Scanner in;
-	transient private PrintWriter out;
+
 	
 	public Player(String name, PlayerColor color){ //Used for local test. KEEP IT!
 		this.name = name;
@@ -33,14 +32,6 @@ public class Player {
 	public Player(String name, PlayerColor color,Socket s){ //Used for local test. KEEP IT!
 		this.name = name;
 		this.color = color;
-		this.socket = s;
-
-		try {
-			in = new Scanner(socket.getInputStream());
-			out = new PrintWriter(socket.getOutputStream());
-		} catch (IOException e) {
-			Logger.getAnonymousLogger().log(Level.WARNING,"Cannot instantiate the scanner or the printWriter in the player" + e);
-		}
 		
 	}
 	
@@ -51,21 +42,6 @@ public class Player {
 	public PlayerBoard getBoard() {
 		return this.board;
 	}
-
-
-	public void setSocket(Socket socket) throws IOException {
-		this.socket = socket;
-	}
-
-	public Scanner getIn() {
-		return in;
-	}
-
-
-	public PrintWriter getOut() {
-		return out;
-	}
-
 
 	public FamilyMember[] getFamilyMembers() {
 		return familyMembers;
@@ -89,10 +65,6 @@ public class Player {
 		this.color = color;
 	}
 	
-	public Socket getSocket() {
-		return socket;
-	}
-
 	public String displayFamilyMembers(){
 		StringBuilder s = new StringBuilder();
 		s.append("Family Members:\n");
