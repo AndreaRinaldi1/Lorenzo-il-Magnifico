@@ -26,8 +26,7 @@ public class BoardSetup {
 	
 	private Game game ;
 	private GameBoard gameBoard;
-	private static Deck deck = new Deck(); //once initialize it will not change
-	private BoardsInitializer bi = new BoardsInitializer(); 
+	private static Deck deck = new Deck(); //once initialize it will not change 
 	
 	public BoardSetup(Game g){
 		this.game = g;
@@ -48,7 +47,7 @@ public class BoardSetup {
 		}
 		prepareTowers();
 		setDicesValue(gameBoard.getDices());
-		bi.initFamilyMember();
+		setFamilyMember();
 	}
 	
 	private static void prepareDeck(){
@@ -163,7 +162,7 @@ public class BoardSetup {
 	}
 	
 	public void freeSpace(){
-		if(!gameBoard.getCoinSpace().isFree()){
+		if(!(gameBoard.getCoinSpace().isFree())){
 			gameBoard.getCoinSpace().getPlayer().remove(0);
 			gameBoard.getCoinSpace().setFree(true);
 		}
@@ -173,17 +172,20 @@ public class BoardSetup {
 			gameBoard.getServantSpace().setFree(true);
 		}
 		
-		if(!gameBoard.getProductionSpace().isFree()){
+		if(!(gameBoard.getProductionSpace().isFree())){
 			gameBoard.getProductionSpace().freeFirstPlayer();
 			gameBoard.getProductionSpace().setFree(true);
 		}
-		if(!gameBoard.getHarvestSpace().isFree()){
+		if(!(gameBoard.getHarvestSpace().isFree())){
 			gameBoard.getHarvestSpace().freeFirstPlayer();
 			gameBoard.getHarvestSpace().setFree(true);
 		}
-		
-		for(FamilyMember fm : gameBoard.getCouncilPalace().getPlayerOrder()){
-			gameBoard.getCouncilPalace().getPlayerOrder().remove(fm);
+		int i = 0;
+		while(gameBoard.getCouncilPalace().getPlayerOrder().size() > 0){
+			if(gameBoard.getCouncilPalace().getPlayerOrder().size() != 0){
+				gameBoard.getCouncilPalace().getPlayerOrder().remove(i);
+			}
+			i++;
 		}
 	}
 	
@@ -221,6 +223,15 @@ public class BoardSetup {
 			dices[i].rollDice();
 		}
 		gameBoard.setDices(dices);
+	}
+	
+	private void setFamilyMember(){
+		for(Player p : game.getPlayers()){
+			FamilyMember[] f = p.getFamilyMembers();
+			for(FamilyMember fm : f){
+				fm.setValue(gameBoard.getDices());
+			}
+		}
 	}
 	
 	
