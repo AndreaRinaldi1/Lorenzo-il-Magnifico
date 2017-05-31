@@ -9,10 +9,14 @@ import org.junit.Before;
 import org.junit.Test;
 
 import it.polimi.ingsw.GC_28.components.CouncilPrivilege;
+import it.polimi.ingsw.GC_28.components.DiceColor;
+import it.polimi.ingsw.GC_28.components.FamilyMember;
 import it.polimi.ingsw.GC_28.components.Resource;
 import it.polimi.ingsw.GC_28.components.ResourceType;
 import it.polimi.ingsw.GC_28.effects.PrivilegesEffect;
 import it.polimi.ingsw.GC_28.effects.ResourceEffect;
+import it.polimi.ingsw.GC_28.model.Player;
+import it.polimi.ingsw.GC_28.model.PlayerColor;
 import it.polimi.ingsw.GC_28.spaces.CouncilPalace;
 
 public class CouncilPalaceTest {
@@ -23,6 +27,12 @@ public class CouncilPalaceTest {
 	private Resource r;
 	EnumMap<ResourceType, Integer> resource;
 	private int numberOfCouncilPrivileges=1;
+	
+	private FamilyMember fm1;
+	private Player p1;
+	private FamilyMember fm2;
+	private Player p2;
+	private FamilyMember[] fmOrder;
 
 	EnumMap<ResourceType, Integer> resource1;
 	
@@ -39,9 +49,19 @@ public class CouncilPalaceTest {
 		cp.setBonus1(bonus1);
 		
 		resource1 = new EnumMap<>(ResourceType.class);
-		
 		cp.setBonus2(bonus2);
 		
+		fmOrder = new FamilyMember[2];
+		p1 = new Player("Rob", PlayerColor.YELLOW);
+		fm1 = new FamilyMember(p1, true, DiceColor.NEUTRAL);
+		p2 = new Player("A", PlayerColor.YELLOW);
+		fm2 = new FamilyMember(p2, true, DiceColor.NEUTRAL);
+		
+		fmOrder[0] = fm1;
+		fmOrder[1] = fm2;
+		
+		cp.addPlayer(fm1);
+		cp.addPlayer(fm2);
 	}
 	
 	@AfterClass
@@ -61,12 +81,14 @@ public class CouncilPalaceTest {
 
 	@Test
 	public void testGetBonus2() {
+		assertEquals(this.bonus2, this.cp.getBonus2());
 		//fail("Not yet implemented");
 	}
 
 	@Test
 	public void testGetPlayerOrder() {
-		fail("Not yet implemented");
+		assertArrayEquals(this.fmOrder, this.cp.getPlayerOrder().toArray());
+		//fail("Not yet implemented");
 	}
 
 }

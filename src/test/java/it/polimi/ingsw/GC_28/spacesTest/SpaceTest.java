@@ -64,9 +64,4 @@ public class SpaceTest {
 		//fail("Not yet implemented");
 	}
 
-	@Test
-	public void testApplyBonus() {
-		//fail("Not yet implemented");
-	}
-
 }

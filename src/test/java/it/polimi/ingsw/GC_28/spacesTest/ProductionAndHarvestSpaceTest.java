@@ -26,7 +26,6 @@ public class ProductionAndHarvestSpaceTest {
 		phs = new ProductionAndHarvestSpace(true, 1);
 		p = new Player("Rob", PlayerColor.BLUE);
 		firstPlayer = new FamilyMember(p, neutral, DiceColor.BLACK);
-		phs.setFree(harvest);
 	}
 	
 	@AfterClass
@@ -40,18 +39,14 @@ public class ProductionAndHarvestSpaceTest {
 
 	@Test
 	public void testIsHarvest() {
+		phs.setFree(harvest);
 		assertEquals(this.harvest, this.phs.isHarvest());
 		//fail("Not yet implemented");
-	}
-
-
-	@After
-	public void productionAndHarvestSpace2(){
-		phs.addPlayer(firstPlayer);		
 	}
 	
 	@Test
 	public void testGetFirstPlayer() {
+		phs.addPlayer(firstPlayer);		
 		assertEquals(this.firstPlayer, this.phs.getFirstPlayer());
 		//fail("Not yet implemented");
 	}
@@ -62,13 +57,9 @@ public class ProductionAndHarvestSpaceTest {
 		//fail("Not yet implemented");
 	}
 	
-	@After
-	public void productionAndHarvestSpace1(){
-		phs.freeFirstPlayer();
-	}
-	
 	@Test
 	public void testFreeFirstPlayer() {
+		phs.freeFirstPlayer();
 		assertEquals(null, this.phs.getFirstPlayer());
 		//fail("Not yet implemented");
 	}
