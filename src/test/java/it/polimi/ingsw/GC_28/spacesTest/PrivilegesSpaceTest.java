@@ -29,11 +29,13 @@ public class PrivilegesSpaceTest {
 		pe = new PrivilegesEffect();
 		cp = CouncilPrivilege.instance();
 		
+		options = new HashMap<>();
 		resource = new EnumMap<>(ResourceType.class);
 		resource.put(ResourceType.COIN, 3);
 		bonus = Resource.of(resource);
 		options.put('c', bonus);
 		cp.setOptions(options);
+		
 		ps.setBonus(pe);
 	}
 	
@@ -49,7 +51,8 @@ public class PrivilegesSpaceTest {
 */
 	@Test
 	public void testGetBonus() {
-		assertEquals(this.options, this.);
+		assertEquals(this.pe, 
+				this.ps.getBonus());
 	}
 
 }

@@ -3,11 +3,8 @@ package it.polimi.ingsw.GC_28.modelTest;
 import static org.junit.Assert.*;
 
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.net.Socket;
-import java.util.ArrayList;
 import java.util.EnumMap;
-import java.util.Scanner;
 
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -32,8 +29,7 @@ public class PlayerTest {
 	private FamilyMember fm;
 	private FamilyMember fm1;
 	private FamilyMember[] familyMembers;
-	private Scanner in;
-	transient private PrintWriter out;
+
 	
 	@Before
 	public void playerTest() throws IOException{
@@ -93,12 +89,6 @@ public class PlayerTest {
 	@Test
 	public void testGetColor() {
 		assertEquals(PlayerColor.BLUE, this.p.getColor());
-	}
-
-	@Test
-	public void testGetSocket() {
-		assertEquals(this.s, this.p.getSocket());
-		//fail("Not yet implemented");
 	}
 
 }

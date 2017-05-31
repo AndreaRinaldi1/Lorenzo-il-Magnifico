@@ -44,11 +44,12 @@ public class CardReaderTest {
 	
 	
 	@Before
-	public void cardReader(){
+	public void cardReader() throws FileNotFoundException{
 		cr = new CardReader();
-		try{
-        	JsonReader reader = new JsonReader(new FileReader("cards2.json"));
-            JsonReader reader2 = new JsonReader(new FileReader("cards2.json"));
+		
+		/*try{
+        	JsonReader reader = new JsonReader(new FileReader("cards.json"));
+            JsonReader reader2 = new JsonReader(new FileReader("cards.json"));
         	
         	d = gson.fromJson(reader, Deck.class);
         	
@@ -67,8 +68,10 @@ public class CardReaderTest {
     	catch(IOException e){
     		Logger.getAnonymousLogger().log(Level.SEVERE, "Deck file not found" + e);
     	}
+    	*/
+		d.equals(cr.startRead());
 		
-		resource = new EnumMap<>(ResourceType.class);
+/*		resource = new EnumMap<>(ResourceType.class);
 		resource.put(ResourceType.COIN, 1);
 		cost = Resource.of(resource);
 		v.setCost(cost);
@@ -85,9 +88,7 @@ public class CardReaderTest {
 		permanentBonus = Resource.of(resource2);
 		re1.setResourceBonus(permanentBonus);
 		v.setPermanentEffect(re1);
-		
-        d.getVentures().add(v);
-        
+*/		        
 
 	}
 	
@@ -97,8 +98,22 @@ public class CardReaderTest {
 
 	@Test
 	public void testStartRead() throws FileNotFoundException {
-		assertEquals(this.d.getVentures(), this.cr.startRead().getVentures());
-		//fail("Not yet implemented");
+		for (int i = 0; i<d.getVentures().size(); i++){ 
+			assertEquals(this.d.getVentures().get(i), this.cr.startRead().getVentures().get(i));
+			//fail("Not yet implemented");
+		}
+		for (int i = 0; i<d.getBuildings().size(); i++){ 
+			assertEquals(this.d.getBuildings().get(i), this.cr.startRead().getBuildings().get(i));
+			//fail("Not yet implemented");
+		}
+		for (int i = 0; i<d.getCharacters().size(); i++){ 
+			assertEquals(this.d.getCharacters().get(i), this.cr.startRead().getCharacters().get(i));
+			//fail("Not yet implemented");
+		}
+		for (int i = 0; i<d.getTerritories().size(); i++){ 
+			assertEquals(this.d.getTerritories().get(i), this.cr.startRead().getTerritories().get(i));
+			//fail("Not yet implemented");
+		}
 	}
 
 }
