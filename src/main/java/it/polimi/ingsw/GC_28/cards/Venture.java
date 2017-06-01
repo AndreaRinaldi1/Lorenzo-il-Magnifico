@@ -7,10 +7,6 @@ import java.awt.Color;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.google.gson.Gson;
-import com.google.gson.JsonArray;
-import com.google.gson.JsonObject;
-
 public class Venture extends Card{
 	private List<Effect> immediateEffect = new ArrayList<>();
 	private ResourceEffect permanentEffect;
@@ -33,7 +29,7 @@ public class Venture extends Card{
 		this.immediateEffect = immediateEffect;
 	}
 
-	public void setImmediateEffect(Gson gson, JsonObject j) {
+	/*public void setImmediateEffect(Gson gson, JsonObject j) {
 		JsonArray array = j.get("immediateEffect").getAsJsonArray();
 		for(int i = 0; i< array.size(); i++){
 			JsonObject e = array.get(i).getAsJsonObject();
@@ -69,7 +65,7 @@ public class Venture extends Card{
         		break;
 			}
 		}
-	}
+	}*/
 
 	public ResourceEffect getPermanentEffect() {
 		return permanentEffect;
