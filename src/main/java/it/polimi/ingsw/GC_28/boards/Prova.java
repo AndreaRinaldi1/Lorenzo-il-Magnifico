@@ -7,6 +7,9 @@ import java.util.logging.Logger;
 
 import it.polimi.ingsw.GC_28.cards.CardReader;
 import it.polimi.ingsw.GC_28.cards.Deck;
+import it.polimi.ingsw.GC_28.cards.Venture;
+import it.polimi.ingsw.GC_28.cards.Character;
+
 import it.polimi.ingsw.GC_28.components.*;
 import it.polimi.ingsw.GC_28.model.Game;
 import it.polimi.ingsw.GC_28.model.Player;
@@ -20,6 +23,9 @@ public class Prova {
 		CardReader c = new CardReader();
 		try{
 			d = c.startRead();
+			for(Character x : d.getCharacters()){
+				System.out.println(x.getPermanentEffect().getClass());
+			}
 		}catch(FileNotFoundException e){
 			Logger.getAnonymousLogger().log(Level.SEVERE,"error" + e);
 		}

@@ -40,8 +40,6 @@ public class Territory extends Card{
         		v = gson.fromJson(e.toString(), PrivilegesEffect.class);
         		immediateEffect.set(i, v);
         		break;
-			default:
-		    	//System.out.println(permanentEffect.getClass());
 			case("NOEFFECT"):
         		//System.out.println("lascio il tipo dell'effetto a effect");
         		//System.out.println(immediateEffect.get(i).getClass());
