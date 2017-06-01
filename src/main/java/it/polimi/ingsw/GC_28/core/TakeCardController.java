@@ -73,12 +73,12 @@ public class TakeCardController {
 				if(!(throughEffect == null)){ //se ho l'effetto
 					if(throughEffect.getCardType() == null){ //se posso prendere qualunque cardType
 						cardType = ct;
+						System.out.println("ritorno true in checkcardExistance. posso prendere qualunque cardType");
 						return true; 
 					}
 					else{
 						if(throughEffect.getCardType().equals(ct)){ //se posso prendere un cardTYpe specifico e coincide
 							cardType = ct;
-
 							return true;
 						}
 					}
@@ -89,6 +89,7 @@ public class TakeCardController {
 				}
 			}
 		}
+		System.out.println("ritorno false nel checkcardexistance perche o non esiste o cardType sbagliato");
 		return false;
 	}
 	
@@ -115,6 +116,7 @@ public class TakeCardController {
 			}
 		break;
 		}
+		System.out.println("ritorno che ho gia sei carte di quel tipo");
 		return false;
 	}
 	
@@ -128,10 +130,13 @@ public class TakeCardController {
 		for(Cell c : gameBoard.getTowers().get(cardType).getCells()){
 			if(!c.isFree()){
 				if((c.getFamilyMember().getPlayer().getColor().equals(familyMember.getPlayer().getColor())) && !(c.getFamilyMember().isNeutral()) && !(familyMember.isNeutral())){
+					System.out.println("ritorno true in checkthisplayer");
 					return true; 
 				}
 			}
 		}
+		System.out.println("ritorno false in checkthisplayer");
+
 		return false;
 	}
 	
@@ -176,6 +181,7 @@ public class TakeCardController {
 		reduce3Coins(familyMember, true, tmp);
 		
 		if(tmp.getResource().get(ResourceType.COIN) < 0){
+			System.out.println("ritorno false in checkresource perche non ho montete per altro giocatore su torre");
 			return false;
 		}
 		
@@ -195,22 +201,27 @@ public class TakeCardController {
 			}
 			if(venture.getAlternativeCostPresence() && costNotZeros){//ho due alternative di costo
 				if(venture.getMinimumRequiredMilitaryPoints() <= familyMember.getPlayer().getBoard().getResources().getResource().get(ResourceType.MILITARYPOINT)){
-					//qui se avrebbe un numero adeguato di military points tale da chiedere quale alternativa vuole
+					//qui se avesse un numero adeguato di military points tale da chiedere quale alternativa vuole
+					System.out.println("1");
 					tmp.modifyResource(game.askAlternative(venture.getCost(), venture.getAlternativeCost(), "cost"), false);
 				}
 				else{
+					System.out.println("2");
+
 					tmp.modifyResource(venture.getCost(), false); //se non ha suff. military points gli sottraggo cost
 				}
 			}
 			else if(!venture.getAlternativeCostPresence()){ //ho cost ma non l'alternativa coi pti militari
+				System.out.println("3");
 				tmp.modifyResource(venture.getCost(), false); 
 			}
 			else{//ho il costo (alternativa) coi punti militari ma non il costo normale (tutti 0)
 				if(venture.getMinimumRequiredMilitaryPoints() <= familyMember.getPlayer().getBoard().getResources().getResource().get(ResourceType.MILITARYPOINT)){
-					//qui se avrebbe un numero adeguato di military points 
+					//qui se avesse un numero adeguato di military points 
 					tmp.modifyResource(venture.getAlternativeCost(), false);
 				}
 				else{
+					System.out.println("no abbastanza pti mil");
 					return false; //se non ha suff. military points non può prendere la carta
 				}
 			}
@@ -221,6 +232,7 @@ public class TakeCardController {
 		
 		for(ResourceType resType : tmp.getResource().keySet()){
 			if(tmp.getResource().get(resType) < 0){
+				System.out.println("ritorno false in checkresource perceh non ho risorse nec");
 				return false;
 			}
 		}

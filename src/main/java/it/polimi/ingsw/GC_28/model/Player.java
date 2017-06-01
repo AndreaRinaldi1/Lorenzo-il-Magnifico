@@ -21,19 +21,13 @@ public class Player {
 	private PlayerColor color;
 	private PlayerBoard board;
 	private FamilyMember[] familyMembers = new FamilyMember[4];
-	private Socket socket;
 
 	
 	public Player(String name, PlayerColor color){ //Used for local test. KEEP IT!
 		this.name = name;
 		this.color = color;
 	}
-	
-	public Player(String name, PlayerColor color,Socket s){ //Used for local test. KEEP IT!
-		this.name = name;
-		this.color = color;
-		
-	}
+
 	
 	public String getName() {
 		return name;

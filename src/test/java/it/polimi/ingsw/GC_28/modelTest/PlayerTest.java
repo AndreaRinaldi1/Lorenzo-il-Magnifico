@@ -21,7 +21,6 @@ import it.polimi.ingsw.GC_28.model.PlayerColor;
 
 public class PlayerTest {
 	private Player p; 
-	private Socket s;
 	private PlayerBoard pb;
 	private BonusTile bt;
 	private Resource resources;
@@ -33,8 +32,7 @@ public class PlayerTest {
 	
 	@Before
 	public void playerTest() throws IOException{
-		s = new Socket();
-		p = new Player("Rob", PlayerColor.BLUE, s);
+		p = new Player("Rob", PlayerColor.BLUE);
 		resource = new EnumMap<>(ResourceType.class);
 		resource.put(ResourceType.COIN, 1);
 		resources = Resource.of(resource);

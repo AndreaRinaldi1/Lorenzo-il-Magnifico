@@ -94,7 +94,6 @@ public class Game implements Runnable {
 			String line = handlers.get(currentPlayer).getIn().nextLine();
 			if(line.equalsIgnoreCase("takeCard")){
 				if(askCard(null)){
-					System.out.println("fatto tutto ");
 					return;
 				}
 			}
@@ -112,12 +111,16 @@ public class Game implements Runnable {
 			else{
 				handlers.get(currentPlayer).getOut().println("Not valid input!");
 				handlers.get(currentPlayer).getOut().flush();
-				line = handlers.get(currentPlayer).getIn().nextLine();
 			}
 		}while(true);
 	
 	}
 	
+
+
+	public Map<Player, ClientHandler> getHandlers() {
+		return handlers;
+	}
 
 
 	public int getCurrentPeriod() {
@@ -286,10 +289,10 @@ public class Game implements Runnable {
 		
 		if(!(throughEffect == null)){ //se viene da effetto gli dico cosa può prendere 
 			if(throughEffect.getCardType() == null){
-				handlers.get(currentPlayer).getOut().println("You can take another card of any type");
+				handlers.get(currentPlayer).getOut().println("You can take another card of any type of value " + throughEffect.getActionValue());
 			}
 			else{
-				handlers.get(currentPlayer).getOut().println("You can take a card of type: " + throughEffect.getCardType().name());
+				handlers.get(currentPlayer).getOut().println("You can take a card of type: " + throughEffect.getCardType().name() + " of value " + throughEffect.getActionValue());
 			}
 			handlers.get(currentPlayer).getOut().flush();
 		}
