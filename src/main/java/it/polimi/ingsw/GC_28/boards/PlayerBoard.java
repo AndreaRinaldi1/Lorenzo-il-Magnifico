@@ -10,6 +10,7 @@ import it.polimi.ingsw.GC_28.cards.*;
 import it.polimi.ingsw.GC_28.cards.Character;
 
 import it.polimi.ingsw.GC_28.components.Resource;
+import it.polimi.ingsw.GC_28.components.ResourceType;
 
 
 public class PlayerBoard {
@@ -85,7 +86,20 @@ public class PlayerBoard {
 		ret.append(vent);
 		
 		ret.append("Resources: \n");
-		ret.append(resources.toString()); 
+		AsciiTable res = new AsciiTable();
+		res.addRule();
+		res.addRow(ResourceType.COIN, ResourceType.WOOD, ResourceType.STONE, ResourceType.SERVANT, ResourceType.MILITARYPOINT, ResourceType.VICTORYPOINT, ResourceType.FAITHPOINT );
+		res.addRule();
+		res.addRow(resources.getResource().get(ResourceType.COIN), 
+				resources.getResource().get(ResourceType.WOOD), 
+				resources.getResource().get(ResourceType.STONE), 
+				resources.getResource().get(ResourceType.SERVANT), 
+				resources.getResource().get(ResourceType.MILITARYPOINT), 
+				resources.getResource().get(ResourceType.VICTORYPOINT), 
+				resources.getResource().get(ResourceType.FAITHPOINT));
+		res.addRule();
+		ret.append(res.render() + "\n");
+		//ret.append(resources.toString()); 
 		ret.append("\n" + retLine);
 		
 		return ret.toString();
