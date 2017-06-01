@@ -52,6 +52,17 @@ public class TakeCardEffect extends Effect{
 	@Override
 	public void apply(FamilyMember familyMember, Game game) {
 		System.out.println("apply di TakeCardEffect");
-		game.askCard(this);
+		//game.askCard(this);
+		boolean ok = false;
+		do{
+			ok = game.askCard(this);
+			if(!ok){
+				game.getHandlers().get(familyMember.getPlayer()).getOut().println("Are you unable to take any card and you want to skip? [y/n]");
+				game.getHandlers().get(familyMember.getPlayer()).getOut().flush();
+				if (game.getHandlers().get(familyMember.getPlayer()).getIn().nextLine().equals("y")){
+					return;
+				}
+			}
+		}while(!ok);
 	}
 }

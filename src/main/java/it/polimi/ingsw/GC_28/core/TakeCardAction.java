@@ -39,7 +39,7 @@ public class TakeCardAction {
 		Resource cardCost = cell.getCard().getCost();
 		familyMember.getPlayer().getBoard().getResources().modifyResource(cardCost, false);
 		familyMember.setUsed(true);
-
+		
 		if(throughEffect == null){
 			cell.setFamilyMember(familyMember);
 		}
