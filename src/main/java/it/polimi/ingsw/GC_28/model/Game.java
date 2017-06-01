@@ -45,7 +45,7 @@ public class Game implements Runnable {
 	
 	@Override
 	public void run(){
-		
+		BoardSetup bs = new BoardSetup(this);
 		for(Player p : players){
 			System.out.println(p.getName());
 			System.out.println(handlers.get(p).getClass());
@@ -66,10 +66,11 @@ public class Game implements Runnable {
 						}else{
 							currentPlayer = players.get((turn+1));
 						}
-					}
+					}	
 				}
+				bs.setUpBoard();
 			}
-			
+			bs.setUpBoard();
 		}
 	}
 	
