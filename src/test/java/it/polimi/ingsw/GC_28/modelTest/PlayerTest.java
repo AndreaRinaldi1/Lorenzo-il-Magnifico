@@ -90,5 +90,10 @@ public class PlayerTest {
 	public void testGetColor() {
 		assertEquals(PlayerColor.BLUE, this.p.getColor());
 	}
+	
+	@Test
+	public void testDisplayFamiltMembers () {
+		System.out.println(p.displayFamilyMembers());
+	}
 
 }
