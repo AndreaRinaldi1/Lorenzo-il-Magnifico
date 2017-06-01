@@ -16,8 +16,8 @@ public class Venture extends Card{
 	
 
 
-	public Venture(String name, int IDNumber, int era) {
-		super(name, IDNumber, era);
+	public Venture(String name, int idNumber, int era) {
+		super(name, idNumber, era);
 		this.setColor(Color.pink);
 	}
 
@@ -25,7 +25,7 @@ public class Venture extends Card{
 		return immediateEffect;
 	}
 
-	public void setImmediateEffect(ArrayList<Effect> immediateEffect) {
+	public void setImmediateEffect(List<Effect> immediateEffect) {
 		this.immediateEffect = immediateEffect;
 	}
 

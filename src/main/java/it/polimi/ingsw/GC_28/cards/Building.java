@@ -7,8 +7,8 @@ public class Building extends Card{
 	private ResourceEffect immediateEffect;
 	private ProductionEffect permanentEffect;
 
-	public Building(String name, int IdNumber, int era) {
-		super(name, IdNumber, era);
+	public Building(String name, int idNumber, int era) {
+		super(name, idNumber, era);
 		this.setColor(Color.yellow);
 	}
 

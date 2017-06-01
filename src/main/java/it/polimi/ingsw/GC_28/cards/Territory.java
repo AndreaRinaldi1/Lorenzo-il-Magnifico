@@ -9,8 +9,8 @@ public class Territory extends Card{
 	private List<Effect> immediateEffect = new ArrayList<>();
 	private HarvestEffect permanentEffect;
 	
-	public Territory(String name, int IDNumber, int era){
-		super(name, IDNumber, era);
+	public Territory(String name, int idNumber, int era){
+		super(name, idNumber, era);
 		this.setColor(Color.green);
 	}
 
@@ -18,7 +18,7 @@ public class Territory extends Card{
 		return immediateEffect;
 	}
 
-	public void setImmediateEffect(ArrayList<Effect> immediateEffect) {
+	public void setImmediateEffect(List<Effect> immediateEffect) {
 		this.immediateEffect = immediateEffect;
 	}
 

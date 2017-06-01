@@ -6,14 +6,14 @@ import it.polimi.ingsw.GC_28.components.Resource;
 
 public class Card {
 	private String name;
-	private int IdNumber;
+	private int idNumber;
 	private int era;
 	private Color color;
 	private Resource cost;
 	
-	public Card(String name, int IdNumber, int era){
+	public Card(String name, int idNumber, int era){
 		this.setName(name);
-		this.setIDNumber(IdNumber);
+		this.setIDNumber(idNumber);
 		this.setEra(era);
 	}
 	
@@ -26,7 +26,7 @@ public class Card {
 	}
 
 	public void setIDNumber(int IDNumber) {
-		this.IdNumber = IDNumber;
+		this.idNumber = IDNumber;
 	}
 
 	public void setEra(int era) {
@@ -43,7 +43,7 @@ public class Card {
 	}
 
 	public int getIDNumber() {
-		return IdNumber;
+		return idNumber;
 	}
 
 	public int getEra() {
@@ -61,8 +61,5 @@ public class Card {
 	@Override
 	public String toString(){
 		return "Name: " + this.name + "\n";
-				//"IDNumber: " + this.IdNumber + "\n" +
-				//"Color: " + this.color.toString() + "\n";
-				//this.cost.toString();
 	}
 }

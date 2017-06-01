@@ -1,19 +1,11 @@
 package it.polimi.ingsw.GC_28.spaces;
 
-import it.polimi.ingsw.GC_28.boards.*;
-import it.polimi.ingsw.GC_28.cards.*;
-import it.polimi.ingsw.GC_28.components.CouncilPrivilege;
 import it.polimi.ingsw.GC_28.components.FamilyMember;
-import it.polimi.ingsw.GC_28.components.Resource;
-import it.polimi.ingsw.GC_28.components.ResourceType;
 import it.polimi.ingsw.GC_28.effects.PrivilegesEffect;
 import it.polimi.ingsw.GC_28.effects.ResourceEffect;
 import it.polimi.ingsw.GC_28.model.Game;
 
-import java.util.ArrayList;
-import java.util.EnumMap;
-import java.util.Map;
-import java.lang.Character;
+import java.util.List;
 
 public class CouncilPalace extends Space{
 	private ResourceEffect bonus1;
@@ -49,7 +41,7 @@ public class CouncilPalace extends Space{
 		this.bonus2 = bonus2;
 	}
 
-	public ArrayList<FamilyMember> getPlayerOrder(){
+	public List<FamilyMember> getPlayerOrder(){
 		return this.getPlayer();
 	}
 	

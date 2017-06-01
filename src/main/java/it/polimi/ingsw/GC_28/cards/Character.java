@@ -4,22 +4,23 @@ import it.polimi.ingsw.GC_28.effects.*;
 
 import java.awt.Color;
 import java.util.ArrayList;
+import java.util.List;
 
 public class Character extends Card{
 
-	private ArrayList<Effect> immediateEffect = new ArrayList<Effect>();
+	private List<Effect> immediateEffect = new ArrayList<>();
 	private Effect permanentEffect;
 	
-	public Character(String name, int IDNumber, int era) {
-		super(name, IDNumber, era);
+	public Character(String name, int idNumber, int era) {
+		super(name, idNumber, era);
 		this.setColor(Color.blue);
 	}
 
-	public ArrayList<Effect> getImmediateEffect() {
+	public List<Effect> getImmediateEffect() {
 		return immediateEffect;
 	}
 
-	public void setImmediateEffect(ArrayList<Effect> immediateEffect) {
+	public void setImmediateEffect(List<Effect> immediateEffect) {
 		this.immediateEffect = immediateEffect;
 	}
 
