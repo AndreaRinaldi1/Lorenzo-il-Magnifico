@@ -1,15 +1,35 @@
 package it.polimi.ingsw.GC_28.boards;
+import java.io.FileNotFoundException;
 import java.util.EnumMap;
 import java.util.HashMap;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
+import it.polimi.ingsw.GC_28.cards.CardReader;
+import it.polimi.ingsw.GC_28.cards.Deck;
+import it.polimi.ingsw.GC_28.cards.Venture;
+import it.polimi.ingsw.GC_28.cards.Character;
 
 import it.polimi.ingsw.GC_28.components.*;
 import it.polimi.ingsw.GC_28.model.Game;
 import it.polimi.ingsw.GC_28.model.Player;
 import it.polimi.ingsw.GC_28.model.PlayerColor;
+
+
 public class Prova {
 	public static void main(String[] args) {
 		
-		EnumMap<ResourceType, Integer> p = new EnumMap<ResourceType, Integer>(ResourceType.class);
+		Deck d = new Deck();
+		CardReader c = new CardReader();
+		try{
+			d = c.startRead();
+			for(Character x : d.getCharacters()){
+				System.out.println(x.getPermanentEffect().getClass());
+			}
+		}catch(FileNotFoundException e){
+			Logger.getAnonymousLogger().log(Level.SEVERE,"error" + e);
+		}
+		/*EnumMap<ResourceType, Integer> p = new EnumMap<ResourceType, Integer>(ResourceType.class);
 		p.put(ResourceType.COIN, 12);
 		p.put(ResourceType.SERVANT, 5);
 		p.put(ResourceType.WOOD, 19);

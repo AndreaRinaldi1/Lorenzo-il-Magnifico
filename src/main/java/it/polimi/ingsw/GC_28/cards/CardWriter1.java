@@ -170,7 +170,7 @@ public class CardWriter1 {
 			z = true;
 		}
 		else if(et.equals("null")){
-			Effect noEffect = new Effect();
+			Effect noEffect = new NoEffect();
 			character.setPermanentEffect(noEffect);
 			deck.getCharacters().add(character);
 			z = true;
@@ -395,7 +395,7 @@ private void enterResourceBonus(EnumMap<ResourceType, Integer> bonus){
 						effects.add(re);
 					}
 					else if(effectType.equals("n")){
-						Effect e = new Effect();
+						Effect e = new NoEffect();
 						effects.add(e);
 					}
 					else if(effectType.equals("p")){

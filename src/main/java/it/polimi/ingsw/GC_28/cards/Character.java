@@ -5,10 +5,6 @@ import it.polimi.ingsw.GC_28.effects.*;
 import java.awt.Color;
 import java.util.ArrayList;
 
-import com.google.gson.Gson;
-import com.google.gson.JsonArray;
-import com.google.gson.JsonObject;
-
 public class Character extends Card{
 
 	private ArrayList<Effect> immediateEffect = new ArrayList<Effect>();
@@ -39,7 +35,7 @@ public class Character extends Card{
 	}
 	
 	
-	public void setImmediateEffect(Gson gson, JsonObject j){
+	/*public void setImmediateEffect(Gson gson, JsonObject j){
     	JsonArray array = j.get("immediateEffect").getAsJsonArray();
     	for(int i = 0; i < array.size(); i++){
         	JsonObject e = array.get(i).getAsJsonObject();
@@ -81,13 +77,13 @@ public class Character extends Card{
         		break;
         	}
     	}
-	}
+	}*/
 
 	public Effect getPermanentEffect() {
 		return permanentEffect;
 	}
 
-	public void setPermanentEffect(Gson gson, JsonObject j) {
+	/*public void setPermanentEffect(Gson gson, JsonObject j) {
 		switch(j.get("permanentEffect").getAsJsonObject().get("type").getAsString()){
 		case("NOCELLBONUS"):
     		//System.out.println("cambio il tipo di permanent effect della carta in NoCellBonusEffect character");
@@ -112,7 +108,7 @@ public class Character extends Card{
 		}
 		
 		
-	}
+	}*/
 
 	public void setPermanentEffect(Effect permanentEffect) {
 		this.permanentEffect = permanentEffect;

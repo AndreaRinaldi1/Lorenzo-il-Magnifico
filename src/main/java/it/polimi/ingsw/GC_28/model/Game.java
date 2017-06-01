@@ -94,7 +94,6 @@ public class Game implements Runnable {
 			String line = handlers.get(currentPlayer).getIn().nextLine();
 			if(line.equalsIgnoreCase("takeCard")){
 				if(askCard(null)){
-					System.out.println("fatto tutto ");
 					return;
 				}
 			}
