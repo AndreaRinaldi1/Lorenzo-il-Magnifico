@@ -67,4 +67,11 @@ public class FamilyMemberTest {
 	public void testGetDiceColor(){
 		assertEquals(this.dice1.getColor(), this.fm.getDiceColor());
 	}
+	
+	@Test
+	public void testToString() {
+		fm.toString();
+		assertEquals(" Color: " + fm.getDiceColor() + " value: " + 
+				fm.getValue() + " used: " + fm.isUsed(), this.fm.toString());
+	}
 }

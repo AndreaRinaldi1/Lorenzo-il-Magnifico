@@ -14,6 +14,12 @@ import it.polimi.ingsw.GC_28.cards.Character;
 import it.polimi.ingsw.GC_28.cards.Deck;
 import it.polimi.ingsw.GC_28.cards.Territory;
 import it.polimi.ingsw.GC_28.cards.Venture;
+import it.polimi.ingsw.GC_28.components.FamilyMember;
+import it.polimi.ingsw.GC_28.effects.Effect;
+import it.polimi.ingsw.GC_28.effects.HarvestEffect;
+import it.polimi.ingsw.GC_28.effects.ProductionEffect;
+import it.polimi.ingsw.GC_28.effects.ResourceEffect;
+import it.polimi.ingsw.GC_28.model.Game;
 
 public class DeckTest {
 	
@@ -25,21 +31,43 @@ public class DeckTest {
 	private List<Venture> ventures = new ArrayList<>();
 	
 	private Territory t = new Territory("terra", 1, 2);
+	private HarvestEffect permanentEffect;
 	private Building b = new Building("Palazzo", 42, 1);
 	private Character c = new Character("Ciccio", 41, 1);
 	private Venture v = new Venture("Ammazzo Tutti", 66, 2);
 	
+	private String s;
+	private String s1;
+	private String s2;
+	private String s3;
+	
 	@Before
 	public void deck(){
 		d = new Deck();
+		
+		
+		permanentEffect =new HarvestEffect();
 		territories.add(t);
+		t.setPermanentEffect(permanentEffect);
 		d.getTerritories().add(t);
 		buildings.add(b);
+		
+		ResourceEffect immediateEffect = new ResourceEffect();
+		b.setImmediateEffect(immediateEffect);
+		ProductionEffect permanentEffect1 = new ProductionEffect();
+		b.setPermanentEffect(permanentEffect1);
 		d.getBuildings().add(b);
+		
+		c.setPermanentEffect(immediateEffect);;
 		characters.add(c);
 		d.getCharacters().add(c);
+		
+		v.setPermanentEffect(immediateEffect);
 		ventures.add(v);
 		d.getVentures().add(v);
+		
+		s= new String();
+		s.equals(this.d.toString());
 	}
 
 	@AfterClass
@@ -48,30 +76,35 @@ public class DeckTest {
 
 	@Test
 	public void testGetTerritories() {
-		assertArrayEquals(this.territories.toArray(), 
-				this.d.getTerritories().toArray());
+		assertEquals(this.t, 
+				this.d.getTerritories().get(0));
 		//fail("Not yet implemented");
 	}
 
 	@Test
 	public void testGetBuildings() {
-		assertArrayEquals(this.buildings.toArray(), 
-				this.d.getBuildings().toArray());
+		assertEquals(this.b, 
+				this.d.getBuildings().get(0));
 		//fail("Not yet implemented");
 	}
 
 	@Test
 	public void testGetCharacters() {
-		assertArrayEquals(this.characters.toArray(), 
-				this.d.getCharacters().toArray());
+		assertEquals(this.c, 
+				this.d.getCharacters().get(0));
 		//fail("Not yet implemented");
 	}
 
 	@Test
 	public void testGetVentures() {
-		assertArrayEquals(this.ventures.toArray(), 
-				this.d.getVentures().toArray());
+		assertEquals(this.v, 
+				this.d.getVentures().get(0));
 		//fail("Not yet implemented");
+	}
+
+	@Test
+	public void testToString() {
+		assertEquals(this.s, this.d.toString());
 	}
 
 }
