@@ -52,6 +52,7 @@ public class BoardsInitializer {
 	
 	private Timer timer = new Timer();
 	private CouncilPrivilege councilPrivilege;
+	private FinalBonus finalBonus;
 	private List<Player> players = new ArrayList<>();
 	public GameBoard gameBoard = new GameBoard();
 	private Game g = new Game();
@@ -66,6 +67,7 @@ public class BoardsInitializer {
 			g.setGameBoard(gameBoard);
 			initBonusTile();
 			initPlayerBoard();
+			initFinalBonus();
 			initFamilyMember();
 			g.setPlayers(players);
 		} catch (FileNotFoundException e) {
@@ -223,19 +225,15 @@ public class BoardsInitializer {
 		}
 	}
 	
-	private void initFinalBonus(){
+	private void initFinalBonus()throws FileNotFoundException{
 		Gson gson = new GsonBuilder().create();
 		try {
-			JsonReader readerTerritoryBonus = new JsonReader(new FileReader("setArrayPlayerBoard.json"));
+			JsonReader readerTerritoryBonus = new JsonReader(new FileReader("finalBonus.json"));
 			//Type hashMapType = new TypeToken<HashMap<String,ArrayList<Resource>>>() {}.getType();
-			FinalBonus finalBonus = gson.fromJson(readerTerritoryBonus, FinalBonus.class);
-			for(Player p : players){
-				p.getBoard().setFinalBonusTerritories(finalBonus.getFinalTerritoriesBonus());
-				p.getBoard().setFinalBonusCharacters(finalBonus.getFinalCharactersBonus());
-				p.getBoard().setFinalBonusResourceFactor(finalBonus.getResourceFactor());
-				p.getBoard().setResourceForTerritories(finalBonus.getResourceForTerritories());
-			}
-		} catch (FileNotFoundException e) {
+			finalBonus = gson.fromJson(readerTerritoryBonus, FinalBonus.class);
+			FinalBonus.setFinalBonus(finalBonus);
+			readerTerritoryBonus.close();
+		} catch (IOException e) {
 			Logger.getAnonymousLogger().log(Level.SEVERE, "file not found" + e);
 		}
 		
@@ -258,7 +256,6 @@ public class BoardsInitializer {
 			p.setBoard(pb);
 			i++;
 		}
-		initFinalBonus();
 	}
 	
 	

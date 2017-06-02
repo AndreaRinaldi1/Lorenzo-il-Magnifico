@@ -15,6 +15,7 @@ import java.util.concurrent.Executors;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import it.polimi.ingsw.GC_28.boards.FinalBonus;
 import it.polimi.ingsw.GC_28.model.BoardSetup;
 import it.polimi.ingsw.GC_28.model.BoardsInitializer;
 import it.polimi.ingsw.GC_28.model.Game;
@@ -51,7 +52,7 @@ public class Server {
 
 		System.out.println("Server ready");
 		
-		while(handlers.size() < 2){
+		while(handlers.size() < 1){
 			Socket socket = server.accept();
 			p = new PrintStream(socket.getOutputStream());
 			scan = new Scanner(socket.getInputStream());

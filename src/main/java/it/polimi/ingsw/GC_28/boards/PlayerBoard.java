@@ -22,10 +22,6 @@ public class PlayerBoard {
 
 	
 	private final BonusTile bonusTile;
-	private List<Resource> resourceForTerritories = new ArrayList<>();
-	private List<Resource> finalBonusTerritories = new ArrayList<>();
-	private List<Resource> finalBonusCharacters = new ArrayList<>();
-	private int finalBonusResourceFactor;
 	private Resource resources;
 	private ArrayList<ExcommunicationTile> excommunicationTile = new ArrayList<>();
 	
@@ -151,22 +147,6 @@ public class PlayerBoard {
 		return bonusTile;
 	}
 
-	public List<Resource> getFinalBonusTerritories() {
-		return finalBonusTerritories;
-	}
-
-	public void setFinalBonusTerritories(List<Resource> finalBonusTerritories) {
-		this.finalBonusTerritories = finalBonusTerritories;
-	}
-
-	public List<Resource> getFinalBonusCharacters() {
-		return finalBonusCharacters;
-	}
-
-	public void setFinalBonusCharacters(List<Resource> finalBonusCharacters) {
-		this.finalBonusCharacters = finalBonusCharacters;
-	}
-
 	public Resource getResources() {
 		return resources;
 	}
@@ -178,25 +158,7 @@ public class PlayerBoard {
 	public List<ExcommunicationTile> getExcommunicationTile() {
 		return excommunicationTile;
 	}
-	
-	public int getFinalBonusResourceFactor() {
-		return finalBonusResourceFactor;
-	}
-
-	public void setFinalBonusResourceFactor(int finalBonusResourceFactor) {
-		this.finalBonusResourceFactor = finalBonusResourceFactor;
-	}
-
-
-	public List<Resource> getResourceForTerritories() {
-		return resourceForTerritories;
-	}
-
-
-	public void setResourceForTerritories(List<Resource> resourceForTerritories) {
-		this.resourceForTerritories = resourceForTerritories;
-	}	
-	
+		
 	
 	
 }
