@@ -37,22 +37,14 @@ public class PlayerBoardTest {
 	private Venture v = new Venture("Ammazzo Tutti", 66, 2);
 	//private ArrayList<ExcommunicationTile> et = new ArrayList<>(); 	TODO ExcommunicationTile class	
 	
-	private List<Resource> resourceForTerritories = new ArrayList<>();
-	private List<Resource> finalBonusTerritories = new ArrayList<>();
-	private List<Resource> finalBonusCharacters = new ArrayList<>();
-	private int finalBonusResourceFactor;
-
-	private String s;
-
+	
 	EnumMap<ResourceType, Integer> resource1;
-	private Resource resources;
-	private String retLine = "------------------------\n";
-	private StringBuilder ret = new StringBuilder();
 
 
 	
 	@Before
 	public void playerBoard(){
+		
 		bonusTile = new BonusTile();
  		resourcesBonus = new EnumMap<ResourceType, Integer>(ResourceType.class);
 		resourcesBonus.put(ResourceType.STONE, 2);
@@ -63,7 +55,7 @@ public class PlayerBoardTest {
 		
 		resource1 = new EnumMap<>(ResourceType.class);
 		resource1.put(ResourceType.COIN, 3);
-		resources = Resource.of(resource1);
+		//Resource res = Resource.of(resource1);
 	}
 	
 	@AfterClass
@@ -197,23 +189,6 @@ public class PlayerBoardTest {
 		//fail("Not yet implemented");
 	}
 
-	@Test
-	public void testGetFinalBonusTerritories() {
-		finalBonusTerritories.add(resource);
-		pb.setFinalBonusTerritories(finalBonusTerritories);
-		assertArrayEquals(this.finalBonusTerritories.toArray(), 
-				this.pb.getFinalBonusTerritories().toArray());
-		//fail("Not yet implemented");
-	}
-
-	@Test
-	public void testGetFinalBonusCharacters() {
-		finalBonusCharacters.add(resource);
-		pb.setFinalBonusCharacters(finalBonusCharacters);
-		assertArrayEquals(this.finalBonusCharacters.toArray(), 
-				this.pb.getFinalBonusCharacters().toArray());
-		//fail("Not yet implemented");
-	}
 
 	@Test
 	public void testGetResources() {
@@ -224,23 +199,6 @@ public class PlayerBoardTest {
 
 	@Test
 	public void testGetExcommunicationTile() {
-		//fail("Not yet implemented");
-	}
-
-	@Test
-	public void testGetFinalBonusResourceFactor() {
-		finalBonusResourceFactor = 3;
-		pb.setFinalBonusResourceFactor(finalBonusResourceFactor);
-		assertEquals(3, this.pb.getFinalBonusResourceFactor());
-		//fail("Not yet implemented");
-	}
-
-	@Test
-	public void testGetResourceForTerritories() {
-		resourceForTerritories.add(resource);
-		pb.setResourceForTerritories(resourceForTerritories);
-		assertArrayEquals(this.resourceForTerritories.toArray(),
-				this.pb.getResourceForTerritories().toArray());
 		//fail("Not yet implemented");
 	}
 

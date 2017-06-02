@@ -60,4 +60,18 @@ public class FinalBonus {
 		}
 	}
 
+	public void setFinalTerritoriesBonus(List<Resource> finalTerritoriesBonus) {
+		this.finalTerritoriesBonus = finalTerritoriesBonus;
+	}
+
+	public void setFinalCharactersBonus(List<Resource> finalCharactersBonus) {
+		this.finalCharactersBonus = finalCharactersBonus;
+	}
+
+	public void setResourceForTerritories(List<Resource> resourceForTerritories) {
+		this.resourceForTerritories = resourceForTerritories;
+	}
+	
+	
+
 }

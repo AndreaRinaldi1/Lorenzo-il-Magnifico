@@ -27,20 +27,20 @@ public class FinalBonusTest {
 
 	@Before
 	public void finalBonus(){
-		fb = new FinalBonus();
+		fb = FinalBonus.instance();
 		finalTerritoriesBonus = new ArrayList<>();
 		finalCharactersBonus = new ArrayList<>();
 		resourceForTerritories = new ArrayList<>();
 		resourceFactor = 3;
 		fb.setResourceFactor(resourceFactor);
-
+		
  		resource = new EnumMap<ResourceType, Integer>(ResourceType.class);
 		resource.put(ResourceType.VICTORYPOINT, 2);
 		bonus = Resource.of(resource);
 		finalTerritoriesBonus.add(bonus);
 		finalCharactersBonus.add(bonus);
-		fb.getFinalTerritoriesBonus().add(bonus);
-		fb.getFinalCharactersBonus().add(bonus);
+		fb.setFinalTerritoriesBonus(finalTerritoriesBonus);
+		fb.setFinalCharactersBonus(finalCharactersBonus);
 		
  		resource1 = new EnumMap<ResourceType, Integer>(ResourceType.class);
 		resource1.put(ResourceType.MILITARYPOINT, 2);
