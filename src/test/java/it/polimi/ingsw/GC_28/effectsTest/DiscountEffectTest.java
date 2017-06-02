@@ -8,9 +8,14 @@ import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.Test;
 
+import it.polimi.ingsw.GC_28.components.DiceColor;
+import it.polimi.ingsw.GC_28.components.FamilyMember;
 import it.polimi.ingsw.GC_28.components.Resource;
 import it.polimi.ingsw.GC_28.components.ResourceType;
 import it.polimi.ingsw.GC_28.effects.DiscountEffect;
+import it.polimi.ingsw.GC_28.model.Game;
+import it.polimi.ingsw.GC_28.model.Player;
+import it.polimi.ingsw.GC_28.model.PlayerColor;
 
 public class DiscountEffectTest {
 	private DiscountEffect de;
@@ -22,12 +27,20 @@ public class DiscountEffectTest {
 	EnumMap<ResourceType, Integer> resource1;
 	EnumMap<ResourceType, Integer> resource2;
 	
+	private FamilyMember fm;
+	private Game g;
+	private Player p;
+	
 	@Before
 	public void discountEffect(){
 		de = new DiscountEffect();
 		resource = new EnumMap<>(ResourceType.class);
 		resource1 = new EnumMap<>(ResourceType.class);
 		resource2 = new EnumMap<>(ResourceType.class);
+		
+		g = new Game();
+		p = new Player("bob", PlayerColor.YELLOW);
+		fm = new FamilyMember(p, false, DiceColor.WHITE);
 	
 	}
 	
@@ -37,7 +50,7 @@ public class DiscountEffectTest {
 
 	@Test
 	public void testApply() {
-	
+//		assertEquals(this.fm.getPlayer().getBoard().get, de);
 	}
 
 	@Test

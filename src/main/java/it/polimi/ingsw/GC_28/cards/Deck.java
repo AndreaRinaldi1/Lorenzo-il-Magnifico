@@ -50,8 +50,8 @@ public class Deck {
 				System.out.println(this.ventures.get(i).getImmediateEffect().get(j).getClass());
 			}
 			System.out.println(this.ventures.get(i).getPermanentEffect().getClass());
-
 		}
 		return "";
+		
 	}
 }
