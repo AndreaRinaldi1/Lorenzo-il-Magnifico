@@ -1,6 +1,7 @@
 package it.polimi.ingsw.GC_28.boardsTest;
 
 import static org.junit.Assert.*;
+import de.vandermeer.asciitable.AsciiTable;
 
 import java.util.ArrayList;
 import java.util.EnumMap;
@@ -17,14 +18,13 @@ import it.polimi.ingsw.GC_28.cards.Character;
 import it.polimi.ingsw.GC_28.cards.ExcommunicationTile;
 import it.polimi.ingsw.GC_28.cards.Territory;
 import it.polimi.ingsw.GC_28.cards.Venture;
-import it.polimi.ingsw.GC_28.components.Resource;
-import it.polimi.ingsw.GC_28.components.ResourceType;
+import it.polimi.ingsw.GC_28.components.*;
 
 public class PlayerBoardTest {
 	private PlayerBoard pb;
 	private BonusTile bonusTile;
 	private Resource resource;
-	EnumMap<ResourceType, Integer> resources;
+	EnumMap<ResourceType, Integer> resourcesBonus;
 	
 	private List<Territory> territories;
 	private List<Building> buildings = new ArrayList<>();
@@ -41,60 +41,152 @@ public class PlayerBoardTest {
 	private List<Resource> finalBonusTerritories = new ArrayList<>();
 	private List<Resource> finalBonusCharacters = new ArrayList<>();
 	private int finalBonusResourceFactor;
+
+	private String s;
+
+	EnumMap<ResourceType, Integer> resource1;
+	private Resource resources;
+	private String retLine = "------------------------\n";
+	private StringBuilder ret = new StringBuilder();
+
+
 	
 	@Before
 	public void playerBoard(){
 		bonusTile = new BonusTile();
- 		resources = new EnumMap<ResourceType, Integer>(ResourceType.class);
-		resources.put(ResourceType.STONE, 2);
-		resource = Resource.of(resources);
+ 		resourcesBonus = new EnumMap<ResourceType, Integer>(ResourceType.class);
+		resourcesBonus.put(ResourceType.STONE, 2);
+		resource = Resource.of(resourcesBonus);
 		pb = new PlayerBoard(bonusTile, resource);
 		territories = new ArrayList<>();
-		territories.add(t);
-		pb.addCard(t);
-		buildings.add(b);
-		pb.addCard(b);
-		characters.add(c);
-		pb.addCard(c);
-		ventures.add(v);
-		pb.addCard(v);
 		
-		finalBonusTerritories.add(resource);
-		pb.setFinalBonusTerritories(finalBonusTerritories);
-		finalBonusCharacters.add(resource);
-		pb.setFinalBonusCharacters(finalBonusCharacters);
-		finalBonusResourceFactor = 3;
-		pb.setFinalBonusResourceFactor(finalBonusResourceFactor);
-		resourceForTerritories.add(resource);
-		pb.setResourceForTerritories(resourceForTerritories);
 		
-		pb.setResources(resource);
+		resource1 = new EnumMap<>(ResourceType.class);
+		resource1.put(ResourceType.COIN, 3);
+		resources = Resource.of(resource1);
 	}
 	
 	@AfterClass
 	public static void tearDownAfterClass() throws Exception {
 	}
-
+	
+//	@Test
+	//public void testDisplay(){
+		/*s = "PLAYER BOARD" + "\n" + 
+		"┌──────────────────────────────────────────────────────────────────────────────┐" + "\n" +
+		"│Territory Cards:                                                              │" + "\n" +
+		"└──────────────────────────────────────────────────────────────────────────────┘" + "\n" +
+		"┌──────────────────────────────────────────────────────────────────────────────┐" + "\n" +
+		"│Building Cards:                                                               │" + "\n" +
+		"└──────────────────────────────────────────────────────────────────────────────┘" + "\n" +
+		"┌──────────────────────────────────────────────────────────────────────────────┐" + "\n" +
+		"│Character Cards:                                                              │" + "\n" +
+		"└──────────────────────────────────────────────────────────────────────────────┘" + "\n" +
+		"┌──────────────────────────────────────────────────────────────────────────────┐" + "\n" +
+		"│Ventures Cards:                                                               │" + "\n" +
+		"└──────────────────────────────────────────────────────────────────────────────┘" + "\n" +
+		"Resources: " + "\n" +
+		"┌───────────┬───────────┬──────────┬──────────┬──────────┬──────────┬──────────┐" + "\n" +
+		"│COIN       │WOOD       │STONE     │SERVANT   │MILITARYPO│VICTORYPOI│FAITHPOINT│" + "\n" +
+		"│           │           │          │          │INT       │NT        │          │" + "\n" +
+		"├───────────┼───────────┼──────────┼──────────┼──────────┼──────────┼──────────┤" + "\n" +
+		"│6          │2          │2         │3         │0         │0         │0         │" + "\n" + 
+		"└───────────┴───────────┴──────────┴──────────┴──────────┴──────────┴──────────┘" + "\n" +
+		"\n" +		
+		"------------------------" ;*/
+		/*ret.append("PLAYER BOARD\n");
+		
+		AsciiTable territoryTab = new AsciiTable();
+		territoryTab.addRule();
+		territoryTab.addRow("Territory Cards: ");
+		for(int j = 0; j < territories.size(); j++){
+			territoryTab.addRule();
+			territoryTab.addRow(territories.get(j).toString());
+		}
+		territoryTab.addRule();
+		String terTab = territoryTab.render() + "\n";
+		ret.append(terTab);
+		
+		AsciiTable buildTab = new AsciiTable();
+		buildTab.addRule();
+		buildTab.addRow("Building Cards: ");
+		for(int j = 0; j < buildings.size(); j++){
+			buildTab.addRule();
+			buildTab.addRow(buildings.get(j).toString());
+		}
+		buildTab.addRule();
+		String build = buildTab.render() + "\n";
+		ret.append(build);
+		
+		AsciiTable charTab = new AsciiTable();
+		charTab.addRule();
+		charTab.addRow("Character Cards: ");
+		for(int j = 0; j < characters.size(); j++){
+			charTab.addRule();
+			charTab.addRow(characters.get(j).toString());
+		}
+		charTab.addRule();
+		String charT = charTab.render() + "\n";
+		ret.append(charT);
+		
+		AsciiTable ventTab = new AsciiTable();
+		ventTab.addRule();
+		ventTab.addRow("Ventures Cards: ");
+		for(int j = 0; j < ventures.size(); j++){
+			ventTab.addRule();
+			ventTab.addRow(ventures.get(j).toString());
+		}
+		ventTab.addRule();
+		String vent = ventTab.render() + "\n";
+		ret.append(vent);
+		
+		ret.append("Resources: \n");
+		AsciiTable res = new AsciiTable();
+		res.addRule();
+		res.addRow(ResourceType.COIN, ResourceType.WOOD, ResourceType.STONE, ResourceType.SERVANT, ResourceType.MILITARYPOINT, ResourceType.VICTORYPOINT, ResourceType.FAITHPOINT );
+		res.addRule();
+		res.addRow(resources.getResource().get(ResourceType.COIN), 
+				resources.getResource().get(ResourceType.WOOD), 
+				resources.getResource().get(ResourceType.STONE), 
+				resources.getResource().get(ResourceType.SERVANT), 
+				resources.getResource().get(ResourceType.MILITARYPOINT), 
+				resources.getResource().get(ResourceType.VICTORYPOINT), 
+				resources.getResource().get(ResourceType.FAITHPOINT));
+		res.addRule();
+		ret.append(res.render() + "\n");
+		//ret.append(resources.toString()); 
+		ret.append("\n" + retLine);
+		assertEquals(this.ret.toString(), this.pb.display());
+	}
+*/
 	@Test
 	public void testGetTerritories() {
+		territories.add(t);
+		pb.addCard(t);
 		assertArrayEquals(this.territories.toArray(), this.pb.getTerritories().toArray());
 		//fail("Not yet implemented");
 	}
 
 	@Test
 	public void testGetBuildings() {
+		buildings.add(b);
+		pb.addCard(b);
 		assertArrayEquals(this.buildings.toArray(), this.pb.getBuildings().toArray());
 		//fail("Not yet implemented");
 	}
 
 	@Test
 	public void testGetCharacters() {
+		characters.add(c);
+		pb.addCard(c);
 		assertArrayEquals(this.characters.toArray(), this.pb.getCharacters().toArray());
 		//fail("Not yet implemented");
 	}
 
 	@Test
 	public void testGetVentures() {
+		ventures.add(v);
+		pb.addCard(v);
 		assertArrayEquals(this.ventures.toArray(), this.pb.getVentures().toArray());
 		//fail("Not yet implemented");
 	}
@@ -107,6 +199,8 @@ public class PlayerBoardTest {
 
 	@Test
 	public void testGetFinalBonusTerritories() {
+		finalBonusTerritories.add(resource);
+		pb.setFinalBonusTerritories(finalBonusTerritories);
 		assertArrayEquals(this.finalBonusTerritories.toArray(), 
 				this.pb.getFinalBonusTerritories().toArray());
 		//fail("Not yet implemented");
@@ -114,6 +208,8 @@ public class PlayerBoardTest {
 
 	@Test
 	public void testGetFinalBonusCharacters() {
+		finalBonusCharacters.add(resource);
+		pb.setFinalBonusCharacters(finalBonusCharacters);
 		assertArrayEquals(this.finalBonusCharacters.toArray(), 
 				this.pb.getFinalBonusCharacters().toArray());
 		//fail("Not yet implemented");
@@ -121,6 +217,7 @@ public class PlayerBoardTest {
 
 	@Test
 	public void testGetResources() {
+		pb.setResources(resource);
 		assertEquals(this.resource, this.pb.getResources());
 		//fail("Not yet implemented");
 	}
@@ -132,12 +229,16 @@ public class PlayerBoardTest {
 
 	@Test
 	public void testGetFinalBonusResourceFactor() {
+		finalBonusResourceFactor = 3;
+		pb.setFinalBonusResourceFactor(finalBonusResourceFactor);
 		assertEquals(3, this.pb.getFinalBonusResourceFactor());
 		//fail("Not yet implemented");
 	}
 
 	@Test
 	public void testGetResourceForTerritories() {
+		resourceForTerritories.add(resource);
+		pb.setResourceForTerritories(resourceForTerritories);
 		assertArrayEquals(this.resourceForTerritories.toArray(),
 				this.pb.getResourceForTerritories().toArray());
 		//fail("Not yet implemented");
