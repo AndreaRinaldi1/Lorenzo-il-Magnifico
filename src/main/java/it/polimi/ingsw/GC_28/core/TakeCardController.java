@@ -3,6 +3,7 @@ package it.polimi.ingsw.GC_28.core;
 import java.util.EnumMap;
 
 import it.polimi.ingsw.GC_28.boards.Cell;
+import it.polimi.ingsw.GC_28.boards.FinalBonus;
 import it.polimi.ingsw.GC_28.boards.GameBoard;
 import it.polimi.ingsw.GC_28.boards.Tower;
 import it.polimi.ingsw.GC_28.cards.CardType;
@@ -58,7 +59,6 @@ public class TakeCardController {
 		if(!(checkActionValue(name, familyMember))){
 			return false;
 		}
-		//TODO controllare che il giocatore non abbia già sei carte di quel tipo e che, se territorio, abbia le risorse territorio necessarie
 		return true;
 	}
 	
@@ -163,8 +163,8 @@ public class TakeCardController {
 		if(cardType.equals(CardType.TERRITORY)){
 			for(int i = 0; i < familyMember.getPlayer().getBoard().getTerritories().size(); i++){
 				if(familyMember.getPlayer().getBoard().getTerritories().get(i) == null){
-					for(ResourceType resType : familyMember.getPlayer().getBoard().getResourceForTerritories().get(i).getResource().keySet()){
-						if(familyMember.getPlayer().getBoard().getResources().getResource().get(resType) < familyMember.getPlayer().getBoard().getResourceForTerritories().get(i).getResource().get(resType)){
+					for(ResourceType resType : FinalBonus.instance().getResourceForTerritories().get(i).getResource().keySet()){
+						if(familyMember.getPlayer().getBoard().getResources().getResource().get(resType) < FinalBonus.instance().getResourceForTerritories().get(i).getResource().get(resType)){
 							return false;
 						}
 					}
