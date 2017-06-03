@@ -47,4 +47,6 @@ public class GoToHPEffect extends Effect{
 	}
 	
 	
+	
+	
 }

@@ -23,7 +23,7 @@ public class PlayerBoard {
 	
 	private final BonusTile bonusTile;
 	private Resource resources;
-	private ArrayList<ExcommunicationTile> excommunicationTile = new ArrayList<>();
+	
 	
 	private String retLine = "------------------------\n";
 	
@@ -155,10 +155,4 @@ public class PlayerBoard {
 		this.resources = resources;
 	}
 
-	public List<ExcommunicationTile> getExcommunicationTile() {
-		return excommunicationTile;
-	}
-		
-	
-	
 }

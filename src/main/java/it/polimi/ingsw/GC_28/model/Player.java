@@ -8,11 +8,13 @@ import java.io.OutputStreamWriter;
 import java.io.PrintStream;
 import java.io.PrintWriter;
 import java.net.Socket;
+import java.util.List;
 import java.util.Scanner;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import it.polimi.ingsw.GC_28.boards.PlayerBoard;
+import it.polimi.ingsw.GC_28.cards.ExcommunicationTile;
 import it.polimi.ingsw.GC_28.components.FamilyMember;
 
 
@@ -21,7 +23,7 @@ public class Player {
 	private PlayerColor color;
 	private PlayerBoard board;
 	private FamilyMember[] familyMembers = new FamilyMember[4];
-
+	private ExcommunicationTile[] excommunicationTile = new ExcommunicationTile[3];
 	
 	public Player(String name, PlayerColor color){ //Used for local test. KEEP IT!
 		this.name = name;
@@ -40,8 +42,10 @@ public class Player {
 	public FamilyMember[] getFamilyMembers() {
 		return familyMembers;
 	}
-
-
+	
+	public ExcommunicationTile[] getExcommunicationTile() {
+		return excommunicationTile;
+	}
 
 	public void setFamilyMembers(FamilyMember[] familyMembers) {
 		this.familyMembers = familyMembers;
