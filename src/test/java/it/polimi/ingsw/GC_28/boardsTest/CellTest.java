@@ -61,7 +61,12 @@ public class CellTest {
 	public void testGetCard() {
 		assertEquals(this.card, this.cell.getCard());
 	}
-
+	
+	@Test 
+	public void testGetCardNUll(){
+		cell.setCard(null);
+		assertEquals(null, this.cell.getCard());
+	}
 	@Test
 	public void testGetActionValue() {
 		assertEquals(5, this.cell.getActionValue());
