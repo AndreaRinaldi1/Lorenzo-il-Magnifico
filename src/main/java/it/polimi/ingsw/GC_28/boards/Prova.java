@@ -29,6 +29,15 @@ public class Prova {
 		}catch(FileNotFoundException e){
 			Logger.getAnonymousLogger().log(Level.SEVERE,"error" + e);
 		}
+		EnumMap<ResourceType, Integer> p = new EnumMap<ResourceType, Integer>(ResourceType.class);
+		p.put(ResourceType.COIN, 12);
+		p.put(ResourceType.SERVANT, 5);
+		p.put(ResourceType.WOOD, 19);
+		p.put(ResourceType.MILITARYPOINT, 1);
+		p.put(ResourceType.FAITHPOINT, 2);
+		Resource res2 = Resource.of(p);
+		
+		int i = d.getBuildings().get(0).getCost().getResource().get(ResourceType.STONE);
 		/*EnumMap<ResourceType, Integer> p = new EnumMap<ResourceType, Integer>(ResourceType.class);
 		p.put(ResourceType.COIN, 12);
 		p.put(ResourceType.SERVANT, 5);

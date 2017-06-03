@@ -37,7 +37,7 @@ public class TakeCardAction {
 		takeCardController.lookForIncrementCardDiscount(familyMember, false, null, game);
 		Cell cell = gameBoard.getTowers().get(takeCardController.cardType).findCard(name);
 		Resource cardCost = cell.getCard().getCost();
-		familyMember.getPlayer().getBoard().getResources().modifyResource(cardCost, false);
+		familyMember.getPlayer().reduceResources(cardCost);
 		familyMember.setUsed(true);
 		
 		if(throughEffect == null){

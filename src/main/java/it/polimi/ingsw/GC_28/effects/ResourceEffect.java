@@ -27,6 +27,6 @@ public class ResourceEffect extends Effect{
 	@Override
 	public void apply(FamilyMember familyMember, Game game) {
 		System.out.println("apply di ResourceEffect");
-		familyMember.getPlayer().getBoard().addResource(resourceBonus);
+		familyMember.getPlayer().addResource(resourceBonus);
 	}
 }

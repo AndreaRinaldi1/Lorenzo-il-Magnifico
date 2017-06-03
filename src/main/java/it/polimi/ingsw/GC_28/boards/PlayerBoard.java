@@ -119,13 +119,6 @@ public class PlayerBoard {
 		ventures.add(v);
 	}
 	
-	public void addResource(Resource amount){
-		this.getResources().modifyResource(amount, true);
-	}
-	
-	public void reduceResources(Resource amount){
-		this.getResources().modifyResource(amount, false);
-	}	
 
 	public List<Territory> getTerritories() {
 		return territories;

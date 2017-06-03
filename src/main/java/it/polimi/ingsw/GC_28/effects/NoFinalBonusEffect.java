@@ -4,8 +4,8 @@ import it.polimi.ingsw.GC_28.boards.FinalBonus;
 import it.polimi.ingsw.GC_28.boards.PlayerBoard;
 import it.polimi.ingsw.GC_28.cards.CardType;
 import it.polimi.ingsw.GC_28.cards.Venture;
-import it.polimi.ingsw.GC_28.components.FamilyMember;
 import it.polimi.ingsw.GC_28.model.Game;
+import it.polimi.ingsw.GC_28.model.Player;
 
 public class NoFinalBonusEffect extends Effect {
 	CardType cardType;
@@ -20,10 +20,10 @@ public class NoFinalBonusEffect extends Effect {
 	}
 
 	@Override
-	public void apply(FamilyMember familyMember, Game game) {
+	public void apply(Player player, Game game) {
 		System.out.println("Apply di NoFinalBonusEffect");
 		FinalBonus finalBonus = FinalBonus.instance();
-		PlayerBoard pb = familyMember.getPlayer().getBoard();
+		PlayerBoard pb = player.getBoard();
 		switch(cardType){
 		case TERRITORY:
 			pb.getResources().modifyResource(finalBonus.getFinalTerritoriesBonus().get(pb.getTerritories().size()), false);
@@ -36,6 +36,11 @@ public class NoFinalBonusEffect extends Effect {
 				pb.getResources().modifyResource(v.getPermanentEffect().getResourceBonus(), false);
 			}
 			break;
+		
+		default:
+			break;
 		}
 	}
+
+
 }

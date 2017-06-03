@@ -13,6 +13,7 @@ import java.util.logging.Logger;
 import it.polimi.ingsw.GC_28.boards.Cell;
 import it.polimi.ingsw.GC_28.boards.GameBoard;
 import it.polimi.ingsw.GC_28.cards.CardType;
+import it.polimi.ingsw.GC_28.cards.ExcommunicationTile;
 import it.polimi.ingsw.GC_28.components.CouncilPrivilege;
 import it.polimi.ingsw.GC_28.components.DiceColor;
 import it.polimi.ingsw.GC_28.components.FamilyMember;
@@ -20,7 +21,11 @@ import it.polimi.ingsw.GC_28.components.Resource;
 import it.polimi.ingsw.GC_28.components.ResourceType;
 import it.polimi.ingsw.GC_28.core.SpaceAction;
 import it.polimi.ingsw.GC_28.core.TakeCardAction;
+import it.polimi.ingsw.GC_28.effects.EffectType;
 import it.polimi.ingsw.GC_28.effects.GoToHPEffect;
+import it.polimi.ingsw.GC_28.effects.NoEffect;
+import it.polimi.ingsw.GC_28.effects.OtherEffect;
+import it.polimi.ingsw.GC_28.effects.ServantEffect;
 import it.polimi.ingsw.GC_28.effects.TakeCardEffect;
 import it.polimi.ingsw.GC_28.server.ClientHandler;
 import it.polimi.ingsw.GC_28.spaces.Space;
@@ -35,9 +40,11 @@ public class Game implements Runnable {
 	boolean modifiedWithServants = false;
 	private int currentEra  = 1;
 	private int currentPeriod = 1;
+	private int currentRound = 1;
+	private int currentTurn = 0;
 	private List<Player> players = new ArrayList<>();
 	private Map<Player, ClientHandler> handlers = new HashMap<>();
-	
+	private List<Player> skipped = new ArrayList<>();
 	public Game(){
 		
 	}
@@ -51,9 +58,18 @@ public class Game implements Runnable {
 			System.out.println(handlers.get(p).getClass());
 		}
 		for(; currentEra <= 3; currentEra++){
+			for(Player p : players){
+				if(p.getExcommunicationTile()[currentEra].getEffect() instanceof OtherEffect){
+					OtherEffect otherEffect = (OtherEffect) p.getExcommunicationTile()[currentEra].getEffect();
+					if(otherEffect.getType().equals(EffectType.SKIPROUNDEFFECT)){
+						skipped.add(p);
+
+					}
+				}
+			}
 			for(; currentPeriod <= 2; currentPeriod++){
-				for(int round = 1; round <= 4; round++){
-					for(int turn = 0; turn < players.size(); turn++){
+				for(; currentRound <= 4; currentRound++){
+					for(; currentTurn < players.size(); currentTurn++){
 						try {
 							System.out.println("rifaccio play");
 							play();
@@ -61,11 +77,20 @@ public class Game implements Runnable {
 						} catch (IOException e) {
 							Logger.getAnonymousLogger().log(Level.SEVERE,"Cannot play that move in method run()" + e);
 						}
-						if(turn == (players.size()-1)){
+						if(currentTurn == (players.size()-1)){
 							currentPlayer = players.get(0);
 						}else{
-							currentPlayer = players.get((turn+1));
+							currentPlayer = players.get((currentTurn+1));
 						}
+					}	
+				}
+				for(Player p : skipped){
+					currentPlayer = p;
+					try{
+						play();
+					}
+					catch (IOException e) {
+						Logger.getAnonymousLogger().log(Level.SEVERE,"Cannot play that move in method run()" + e);
 					}	
 				}
 				bs.setUpBoard();
@@ -87,6 +112,11 @@ public class Game implements Runnable {
 				handlers.get(p).getOut().println(p.getFamilyMembers()[i].toString());
 			}
 			handlers.get(p).getOut().flush();
+		}
+		
+		if(skipped.contains(currentPlayer) && currentRound == 1){
+			handlers.get(currentPlayer).getOut().println("Skipped first turn due to excommunication");
+			return;
 		}
 		do{
 			handlers.get(currentPlayer).getOut().println("Which move do you want to undertake? [takeCard / goToSpace / skip/ askcost]");
@@ -411,6 +441,14 @@ public class Game implements Runnable {
 							currentPlayer.getBoard().getResources().getResource().put(ResourceType.SERVANT, (numberOfServants-increment));
 							modifiedWithServants = true;
 							handlers.get(currentPlayer).getIn().nextLine();
+							
+							for(ExcommunicationTile t : currentPlayer.getExcommunicationTile()){
+								if(t.getEffect() instanceof ServantEffect){
+									ServantEffect eff = (ServantEffect) t.getEffect();
+									return increment * eff.getIncrement() / eff.getNumberOfServant();
+								}
+
+							}
 							return increment;
 						}
 						else{

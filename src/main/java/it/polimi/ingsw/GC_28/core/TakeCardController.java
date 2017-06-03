@@ -10,8 +10,9 @@ import it.polimi.ingsw.GC_28.cards.CardType;
 import it.polimi.ingsw.GC_28.components.FamilyMember;
 import it.polimi.ingsw.GC_28.components.Resource;
 import it.polimi.ingsw.GC_28.components.ResourceType;
+import it.polimi.ingsw.GC_28.effects.EffectType;
 import it.polimi.ingsw.GC_28.effects.IncrementCardEffect;
-import it.polimi.ingsw.GC_28.effects.NoCellBonusEffect;
+import it.polimi.ingsw.GC_28.effects.OtherEffect;
 import it.polimi.ingsw.GC_28.effects.TakeCardEffect;
 import it.polimi.ingsw.GC_28.model.Game;
 import it.polimi.ingsw.GC_28.cards.Character;
@@ -258,8 +259,11 @@ public class TakeCardController {
 	protected void lookForNoCellBonus(FamilyMember familyMember, boolean check, Resource tmp, String cardName){
 		boolean noCellBonus = false;
 		for(Character character : familyMember.getPlayer().getBoard().getCharacters()){
-			if(character.getPermanentEffect() instanceof NoCellBonusEffect){
-				noCellBonus = true;
+			if(character.getPermanentEffect() instanceof OtherEffect){
+				OtherEffect otherEffect = (OtherEffect) character.getPermanentEffect();
+				if(otherEffect.getType().equals(EffectType.NOCELLBONUS)){
+					noCellBonus = true;
+				}
 			}
 		}
 		if(!noCellBonus){

@@ -37,7 +37,7 @@ public class PrivilegesEffect extends Effect{
 		System.out.println("apply di PrivilegesEffect");
 		ArrayList<Character> choices = game.askPrivilege(numberOfCouncilPrivileges, different);
 		for(int i = 0; i < choices.size(); i++){
-			familyMember.getPlayer().getBoard().addResource(CouncilPrivilege.instance().getOptions().get(choices.get(i)));
+			familyMember.getPlayer().addResource(CouncilPrivilege.instance().getOptions().get(choices.get(i)));
 		}
 	}
 }

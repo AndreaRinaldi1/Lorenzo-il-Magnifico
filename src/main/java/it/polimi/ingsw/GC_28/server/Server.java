@@ -49,7 +49,7 @@ public class Server {
 		ExecutorService executor = Executors.newCachedThreadPool();
 		server = new ServerSocket(port);
 		//server.setReuseAddress(true);
-		while(noStop){
+		while(!noStop){
 			Map<Player, ClientHandler> handlers = new HashMap<>();
 			
 			System.out.println("Server ready");

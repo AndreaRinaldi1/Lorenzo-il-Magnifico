@@ -16,6 +16,9 @@ import java.util.logging.Logger;
 import it.polimi.ingsw.GC_28.boards.PlayerBoard;
 import it.polimi.ingsw.GC_28.cards.ExcommunicationTile;
 import it.polimi.ingsw.GC_28.components.FamilyMember;
+import it.polimi.ingsw.GC_28.components.Resource;
+import it.polimi.ingsw.GC_28.components.ResourceType;
+import it.polimi.ingsw.GC_28.effects.DiscountEffect;
 
 
 public class Player {
@@ -59,6 +62,50 @@ public class Player {
 		return color;
 	}
 
+	
+	public void addResource(Resource amount){
+		for(ExcommunicationTile t : excommunicationTile){
+			if(t.getEffect() instanceof DiscountEffect){
+				DiscountEffect eff = (DiscountEffect) t.getEffect();
+				boolean disc = false;
+				boolean altDisc = false;
+				if(eff.getAlternativeDiscountPresence()){ //se ho due alternative
+					for(ResourceType resType : eff.getDiscount().getResource().keySet()){ 
+						if(!(eff.getDiscount().getResource().get(resType).equals(0))){
+							if(!amount.getResource().get(resType).equals(0)){
+								disc = true;
+								break;
+							}
+						}
+					}
+					for(ResourceType resType : eff.getAlternativeDiscount().getResource().keySet()){ 
+						if(!(eff.getAlternativeDiscount().getResource().get(resType).equals(0))){
+							if(!amount.getResource().get(resType).equals(0)){
+								altDisc = true;
+								break;
+							}
+						}
+					}
+					
+					if(disc && altDisc){
+						this.getBoard().getResources().modifyResource(game.askAlternative(discount, alternativeDiscount, "malus"), true); //Considero il discount come aumento risorse nella playerboard (?)
+					}
+				}
+				
+			}
+
+		}
+		
+		
+		
+		this.getBoard().getResources().modifyResource(amount, true);
+	}
+	
+	
+	public void reduceResources(Resource amount){
+		this.getBoard().getResources().modifyResource(amount, false);
+	}
+	
 	public void setColor(PlayerColor color) {
 		this.color = color;
 	}

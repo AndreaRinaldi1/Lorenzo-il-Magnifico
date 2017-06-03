@@ -2,10 +2,14 @@ package it.polimi.ingsw.GC_28.cards;
 
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.EnumMap;
+import java.util.List;
 import java.util.Scanner;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
+import javax.print.attribute.standard.MediaSize.Other;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -13,19 +17,23 @@ import com.google.gson.GsonBuilder;
 import it.polimi.ingsw.GC_28.components.Resource;
 import it.polimi.ingsw.GC_28.components.ResourceType;
 import it.polimi.ingsw.GC_28.effects.DiscountEffect;
+import it.polimi.ingsw.GC_28.effects.EffectType;
 import it.polimi.ingsw.GC_28.effects.IncrementCardEffect;
 import it.polimi.ingsw.GC_28.effects.IncrementHPEffect;
 import it.polimi.ingsw.GC_28.effects.MultiplierEffect;
 import it.polimi.ingsw.GC_28.effects.NoFinalBonusEffect;
+import it.polimi.ingsw.GC_28.effects.OtherEffect;
+import it.polimi.ingsw.GC_28.effects.ReduceDiceEffect;
 import jdk.nashorn.internal.runtime.regexp.joni.ScanEnvironment;
 
 public class ExcommunicationWriter {
 	Scanner scanner = new Scanner(System.in);
-	ExcommunicationTile ex = new ExcommunicationTile();
 	EnumMap<ResourceType, Integer> cost;
 	EnumMap<ResourceType, Integer> bonus;
 	Resource resourceBonus;
 	Resource resourceCost;
+	List<ExcommunicationTile> exList = new ArrayList<>();
+	
 	int coin, wood, stone, servant, militaryPoint, victoryPoint, faithPoint;
 
 			
@@ -36,6 +44,7 @@ public class ExcommunicationWriter {
 	
 	public void startWrite() {
 		Gson gson = new GsonBuilder().setPrettyPrinting().create();
+		ExcommunicationTile ex = new ExcommunicationTile();
 		try{
 			FileWriter file = new FileWriter("excommunication.json",true);
 			String procede = new String();
@@ -44,24 +53,31 @@ public class ExcommunicationWriter {
 				System.out.println("Type 'incrcard' for INCREMENTCARDEFFECT" );
 				System.out.println("Type 'incrhp' for INCREMENTHPFFECT" );
 				System.out.println("Type 'nf' for NOFINALBONUS" );
-				System.out.println("Type 'm' for MULTIPLIEREFFECT");
+				System.out.println("Type 'mult' for MULTIPLIEREFFECT");
 				System.out.println("Type 'd' for DISCOUNTEFFECT");
+				System.out.println("Type 'rd' for REDUCEDICEEFFECT");
+				System.out.println("Type 'skip' for SKIPROUNDEFFECT");
+				System.out.println("Type 'nm' for NOMARKETEFFECT");
+				System.out.println();
 				String et = scanner.nextLine();
 				switch(et){
 				case "incrcard":
 					IncrementCardEffect ice = new IncrementCardEffect();
 					ex.setEffect(enterIncrementCardEffect(ice));
+					exList.add(ex);
 					break;
 				case "incrhp":
 					IncrementHPEffect iHP = new IncrementHPEffect();
 					ex.setEffect(enterHPEffect(iHP));
+					exList.add(ex);
 					break;
 				case "nf":
 					NoFinalBonusEffect nf = new NoFinalBonusEffect();
 					nf.setCardType(enterCardType());
 					ex.setEffect(nf);
+					exList.add(ex);
 					break;
-				case "m":
+				case "mult":
 					MultiplierEffect me = new MultiplierEffect();
 					me.setCardType(null);
 					bonus = new EnumMap<ResourceType, Integer>(ResourceType.class);
@@ -73,10 +89,29 @@ public class ExcommunicationWriter {
 					resourceCost = Resource.of(cost);
 					me.setResourceCost(resourceCost);
 					ex.setEffect(me);
+					exList.add(ex);
 					break;
 				case "d":
 					DiscountEffect de = new DiscountEffect();
 					ex.setEffect(enterDiscountEffect(de));
+					exList.add(ex);
+					break;
+				case "rd":
+					ReduceDiceEffect rd = new ReduceDiceEffect();
+					ex.setEffect(rd);
+					exList.add(ex);
+					break;
+				case "skip":
+					OtherEffect oe = new OtherEffect();
+					oe.setType(EffectType.SKIPROUNDEFFECT);
+					ex.setEffect(oe);
+					exList.add(ex);
+					break;
+				case "nm":
+					OtherEffect nm = new OtherEffect();
+					nm.setType(EffectType.NOMARKETEFFECT);
+					ex.setEffect(nm);
+					exList.add(ex);
 					break;
 				}
 				

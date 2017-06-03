@@ -162,8 +162,8 @@ public class CardWriter1 {
 			deck.getCharacters().add(character);
 			z = true;
 		}else if(et.equals("nc")){
-			NoCellBonusEffect noCell = new NoCellBonusEffect(true); 
-			//noCell.setPresence(true);
+			OtherEffect noCell = new OtherEffect(); 
+			noCell.setType(EffectType.NOCELLBONUS);
 			//character.type = EffectType.NOCELLBONUS;
 			character.setPermanentEffect(noCell);
 			deck.getCharacters().add(character);

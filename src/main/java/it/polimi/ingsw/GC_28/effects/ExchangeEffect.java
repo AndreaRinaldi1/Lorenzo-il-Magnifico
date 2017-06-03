@@ -89,26 +89,26 @@ public class ExchangeEffect extends Effect{
 		System.out.println("apply di ExchangeEffect");
 		if(!this.alternative){
 			if(this.privilegeBonus != null){
-				familyMember.getPlayer().getBoard().reduceResources(privilegeCost);
+				familyMember.getPlayer().reduceResources(privilegeCost);
 				System.out.println(familyMember.getPlayer().getBoard().getResources().toString());
 				privilegeBonus.apply(familyMember, game);
 			}
 			else{
-				familyMember.getPlayer().getBoard().reduceResources(firstCost);
+				familyMember.getPlayer().reduceResources(firstCost);
 				System.out.println(familyMember.getPlayer().getBoard().getResources().toString());
-				familyMember.getPlayer().getBoard().addResource(firstBonus);
+				familyMember.getPlayer().addResource(firstBonus);
 			}
 		}
 		else{
 			if(game.askAlternativeExchange(firstCost, firstBonus, secondCost, secondBonus) == 1){
-				familyMember.getPlayer().getBoard().reduceResources(firstCost);
+				familyMember.getPlayer().reduceResources(firstCost);
 				System.out.println(familyMember.getPlayer().getBoard().getResources().toString());
-				familyMember.getPlayer().getBoard().addResource(firstBonus);
+				familyMember.getPlayer().addResource(firstBonus);
 			}
 			else{
-				familyMember.getPlayer().getBoard().reduceResources(secondCost);
+				familyMember.getPlayer().reduceResources(secondCost);
 				System.out.println(familyMember.getPlayer().getBoard().getResources().toString());
-				familyMember.getPlayer().getBoard().addResource(secondBonus);
+				familyMember.getPlayer().addResource(secondBonus);
 			}
 		}
 	}

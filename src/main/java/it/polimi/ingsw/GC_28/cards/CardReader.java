@@ -14,8 +14,8 @@ import it.polimi.ingsw.GC_28.effects.HarvestEffect;
 import it.polimi.ingsw.GC_28.effects.IncrementCardEffect;
 import it.polimi.ingsw.GC_28.effects.IncrementHPEffect;
 import it.polimi.ingsw.GC_28.effects.MultiplierEffect;
-import it.polimi.ingsw.GC_28.effects.NoCellBonusEffect;
 import it.polimi.ingsw.GC_28.effects.NoEffect;
+import it.polimi.ingsw.GC_28.effects.OtherEffect;
 import it.polimi.ingsw.GC_28.effects.PrivilegesEffect;
 import it.polimi.ingsw.GC_28.effects.ProductionEffect;
 import it.polimi.ingsw.GC_28.effects.ResourceEffect;
@@ -49,7 +49,7 @@ public class CardReader{
         		.registerSubtype(IncrementCardEffect.class,"INCREMENTCARDEFFECT")
         		.registerSubtype(IncrementHPEffect.class,"INCREMENTHPEFFECT")
         		.registerSubtype(MultiplierEffect.class,"MULTIPLIEREFFECT")
-        		.registerSubtype(NoCellBonusEffect.class,"NOCELLBONUS")
+        		.registerSubtype(OtherEffect.class,"OTHEREFFECT")
         		.registerSubtype(PrivilegesEffect.class,"PRIVILEGESEFFECT")
         		.registerSubtype(ProductionEffect.class,"PRODUCTIONEFFECT")
         		.registerSubtype(ResourceEffect.class,"RESOURCEEFFECT")
@@ -59,7 +59,7 @@ public class CardReader{
         Gson gson = new GsonBuilder().registerTypeAdapterFactory(typeFactory).create();
 
         try{
-        	JsonReader reader = new JsonReader(new FileReader("cards.json"));     	
+        	JsonReader reader = new JsonReader(new FileReader("cards2.json"));     	
         	deck = gson.fromJson(reader, requestListTypeToken);
 	        reader.close();
     	}
