@@ -15,7 +15,6 @@ import java.util.concurrent.Executors;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import it.polimi.ingsw.GC_28.boards.FinalBonus;
 import it.polimi.ingsw.GC_28.model.BoardSetup;
 import it.polimi.ingsw.GC_28.model.BoardsInitializer;
 import it.polimi.ingsw.GC_28.model.Game;
@@ -25,7 +24,7 @@ import it.polimi.ingsw.GC_28.model.PlayerColor;
 
 public class Server {
 	private int port;
-	private  static ServerSocket server;
+	private ServerSocket server;
 	private PrintStream p;
 	private Scanner scan;
 	List<PlayerColor> usedColors = new ArrayList<>();
@@ -39,9 +38,7 @@ public class Server {
 		Server server = new Server(1337);
 		
 		try{
-			while(true){
-				server.startServer();
-			}
+			server.startServer();
 		}catch(IOException e){
 			Logger.getAnonymousLogger().log(Level.SEVERE,"Cannot start the server" + e);
 			
@@ -52,7 +49,8 @@ public class Server {
 		ExecutorService executor = Executors.newCachedThreadPool();
 		server = new ServerSocket(port);
 		//server.setReuseAddress(true);
-		while(true){
+		Boolean noStop = true;
+		while(noStop){
 			Map<Player, ClientHandler> handlers = new HashMap<>();
 			
 			System.out.println("Server ready");

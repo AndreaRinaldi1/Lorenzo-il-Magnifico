@@ -7,6 +7,9 @@ import java.util.Scanner;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+
 import it.polimi.ingsw.GC_28.components.Resource;
 import it.polimi.ingsw.GC_28.components.ResourceType;
 import it.polimi.ingsw.GC_28.effects.DiscountEffect;
@@ -32,7 +35,7 @@ public class ExcommunicationWriter {
 	}
 	
 	public void startWrite() {
-		
+		Gson gson = new GsonBuilder().setPrettyPrinting().create();
 		try{
 			FileWriter file = new FileWriter("excommunication.json",true);
 			String procede = new String();
@@ -81,7 +84,7 @@ public class ExcommunicationWriter {
 				procede = scanner.nextLine();
 			}while(!(procede.equals("end")));
 			
-			
+			file.close();
 		}catch(IOException e){
 			Logger.getAnonymousLogger().log(Level.SEVERE, "error"+e);
 		}
