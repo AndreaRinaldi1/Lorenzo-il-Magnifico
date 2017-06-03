@@ -28,7 +28,7 @@ public class Server {
 	private PrintStream p;
 	private Scanner scan;
 	List<PlayerColor> usedColors = new ArrayList<>();
-	
+	Boolean noStop = false;
 	
 	public Server(int p){
 		this.port = p;
@@ -49,7 +49,7 @@ public class Server {
 		ExecutorService executor = Executors.newCachedThreadPool();
 		server = new ServerSocket(port);
 		//server.setReuseAddress(true);
-		for(;;){
+		while(noStop){
 			Map<Player, ClientHandler> handlers = new HashMap<>();
 			
 			System.out.println("Server ready");
@@ -79,6 +79,9 @@ public class Server {
 		}
 	}
 	
+	public void noStop(){
+		noStop = true;
+	}
 	
 	private PlayerColor enterColor(){
 		boolean found = false;
