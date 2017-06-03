@@ -15,10 +15,16 @@ import it.polimi.ingsw.GC_28.model.Game;
 import it.polimi.ingsw.GC_28.model.Player;
 import it.polimi.ingsw.GC_28.model.PlayerColor;
 
+import it.polimi.ingsw.GC_28.effects.*;
+
+
+//FIXME DEFINIRE IL METODO APPLY PERCHE A VOLTE GLI PASSI UN ENUMMAP 
+//E ALTRE FAMILYMEMBER, GAMEBOARD E GAME.
+
 
 public class Prova {
 	public static void main(String[] args) {
-		
+		/*
 		Deck d = new Deck();
 		CardReader c = new CardReader();
 		try{
@@ -29,6 +35,53 @@ public class Prova {
 		}catch(FileNotFoundException e){
 			Logger.getAnonymousLogger().log(Level.SEVERE,"error" + e);
 		}
+			*/
+		/*PlayerBoard pb = new PlayerBoard(null, null);
+		Game g = new Game();
+		GameBoard gb = new GameBoard();
+		Player player = new Player("ciao", PlayerColor.BLUE);
+		player.setBoard(pb);
+		FamilyMember fm = new FamilyMember(player, false, DiceColor.ORANGE);
+		player.getFamilyMembers()[0] = fm;
+		g.setCurrentPlayer(player);
+		
+		
+		
+		EnumMap<ResourceType, Integer> p = new EnumMap<ResourceType, Integer>(ResourceType.class);
+		p.put(ResourceType.COIN, 12);
+		p.put(ResourceType.SERVANT, 5);
+		p.put(ResourceType.WOOD, 19);
+		p.put(ResourceType.MILITARYPOINT, 1);
+		p.put(ResourceType.FAITHPOINT, 2);
+		Resource res2 = Resource.of(p);
+		
+		EnumMap<ResourceType, Integer> t = new EnumMap<ResourceType, Integer>(ResourceType.class);
+		t.put(ResourceType.COIN, 42);
+		t.put(ResourceType.WOOD, 99);
+		t.put(ResourceType.MILITARYPOINT, 51);
+		t.put(ResourceType.FAITHPOINT, 23);
+		t.put(ResourceType.VICTORYPOINT,83);
+		Resource res3 = Resource.of(t);
+
+		DiscountEffect d1 = new DiscountEffect();
+		d1.setDiscount(res3);
+		d1.setAlternativeDiscount(res2);
+		d1.setAlternativeDiscountPresence(true);
+		d1.apply(fm, g);
+		System.out.println(pb.getResources().toString());
+		
+		CardReader c = new CardReader();
+		Deck deck = c.startRead();
+		
+		System.out.println("Characters");
+		for(Character x : deck.getCharacters()){
+			x.getPermanentEffect().apply(p);
+			for(int i = 0; i < x.getImmediateEffect().size(); i++){
+				x.getImmediateEffect().get(i).apply(p);
+			}
+		}
+
+		
 		/*EnumMap<ResourceType, Integer> p = new EnumMap<ResourceType, Integer>(ResourceType.class);
 		p.put(ResourceType.COIN, 12);
 		p.put(ResourceType.SERVANT, 5);
@@ -80,12 +133,12 @@ public class Prova {
 		g.askCard(null);
 		
 		//PROVA DI DISCOUNTEFFECT
-		/*DiscountEffect d = new DiscountEffect();
+		DiscountEffect d = new DiscountEffect();
 		d.setDiscount(res1);
 		d.setAlternativeDiscount(res2);
 		d.setAlternativeDiscountPresence(true);
 		d.apply(fm, gb, g);
-		System.out.println(pb.getResources().toString());*/
+		System.out.println(pb.getResources().toString());
 		
 
 		//PROVA DI EXCHANGEEFFECT

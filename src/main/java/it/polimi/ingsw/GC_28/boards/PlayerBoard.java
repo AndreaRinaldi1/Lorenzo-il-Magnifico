@@ -158,7 +158,4 @@ public class PlayerBoard {
 	public List<ExcommunicationTile> getExcommunicationTile() {
 		return excommunicationTile;
 	}
-		
-	
-	
 }

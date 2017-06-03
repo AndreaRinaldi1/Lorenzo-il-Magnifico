@@ -27,7 +27,7 @@ public class FinalBonusTest {
 
 	@Before
 	public void finalBonus(){
-		fb = new FinalBonus();
+		fb = FinalBonus.instance();
 		finalTerritoriesBonus = new ArrayList<>();
 		finalCharactersBonus = new ArrayList<>();
 		resourceForTerritories = new ArrayList<>();
@@ -37,16 +37,12 @@ public class FinalBonusTest {
  		resource = new EnumMap<ResourceType, Integer>(ResourceType.class);
 		resource.put(ResourceType.VICTORYPOINT, 2);
 		bonus = Resource.of(resource);
-		finalTerritoriesBonus.add(bonus);
 		finalCharactersBonus.add(bonus);
-		fb.getFinalTerritoriesBonus().add(bonus);
 		fb.getFinalCharactersBonus().add(bonus);
 		
  		resource1 = new EnumMap<ResourceType, Integer>(ResourceType.class);
 		resource1.put(ResourceType.MILITARYPOINT, 2);
 		rft = Resource.of(resource1);
-		resourceForTerritories.add(rft);
-		fb.setResourceForTerritories(resourceForTerritories);
 	}
 	
 	@AfterClass
@@ -61,6 +57,8 @@ public class FinalBonusTest {
 
 	@Test
 	public void testGetFinalTerritoriesBonus() {
+		finalTerritoriesBonus.add(bonus);
+		fb.getFinalTerritoriesBonus().add(bonus);
 		assertArrayEquals(this.finalTerritoriesBonus.toArray(),
 				this.fb.getFinalTerritoriesBonus().toArray());
 		//fail("Not yet implemented");
@@ -75,6 +73,8 @@ public class FinalBonusTest {
 
 	@Test
 	public void testGetResourceForTerritories() {
+		resourceForTerritories.add(rft);
+		fb.getResourceForTerritories().add(rft);
 		assertArrayEquals(this.resourceForTerritories.toArray(),
 				this.fb.getResourceForTerritories().toArray());
 		//fail("Not yet implemented");

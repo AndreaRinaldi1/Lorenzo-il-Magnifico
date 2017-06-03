@@ -37,7 +37,6 @@ public class FinalBonus {
 		return resourceFactor;
 	}
 	
-	
 	public List<Resource> getFinalTerritoriesBonus() {
 		return finalTerritoriesBonus;
 	}

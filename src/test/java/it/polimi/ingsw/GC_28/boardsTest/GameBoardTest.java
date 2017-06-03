@@ -57,7 +57,7 @@ public class GameBoardTest {
 
 	@Test
 	public void testDisplay() {
-		
+		//questo display poi verrà tolto
 	}
 	
 	@Test

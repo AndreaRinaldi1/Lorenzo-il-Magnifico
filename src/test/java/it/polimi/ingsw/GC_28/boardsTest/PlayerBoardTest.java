@@ -198,24 +198,6 @@ public class PlayerBoardTest {
 	}
 
 	@Test
-	public void testGetFinalBonusTerritories() {
-		finalBonusTerritories.add(resource);
-		pb.setFinalBonusTerritories(finalBonusTerritories);
-		assertArrayEquals(this.finalBonusTerritories.toArray(), 
-				this.pb.getFinalBonusTerritories().toArray());
-		//fail("Not yet implemented");
-	}
-
-	@Test
-	public void testGetFinalBonusCharacters() {
-		finalBonusCharacters.add(resource);
-		pb.setFinalBonusCharacters(finalBonusCharacters);
-		assertArrayEquals(this.finalBonusCharacters.toArray(), 
-				this.pb.getFinalBonusCharacters().toArray());
-		//fail("Not yet implemented");
-	}
-
-	@Test
 	public void testGetResources() {
 		pb.setResources(resource);
 		assertEquals(this.resource, this.pb.getResources());
@@ -228,20 +210,16 @@ public class PlayerBoardTest {
 	}
 
 	@Test
-	public void testGetFinalBonusResourceFactor() {
-		finalBonusResourceFactor = 3;
-		pb.setFinalBonusResourceFactor(finalBonusResourceFactor);
-		assertEquals(3, this.pb.getFinalBonusResourceFactor());
-		//fail("Not yet implemented");
+	public void testAddResource() {
+		this.pb.addResource(resource);
+		assertEquals(this.resource, this.pb.getResources());
 	}
 
 	@Test
-	public void testGetResourceForTerritories() {
-		resourceForTerritories.add(resource);
-		pb.setResourceForTerritories(resourceForTerritories);
-		assertArrayEquals(this.resourceForTerritories.toArray(),
-				this.pb.getResourceForTerritories().toArray());
-		//fail("Not yet implemented");
+	public void testReduceResources() {
+		this.pb.reduceResources(resource);
+		assertEquals(this.resource, this.pb.getResources());
+		
 	}
-
+	
 }
