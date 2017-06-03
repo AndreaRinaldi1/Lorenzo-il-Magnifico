@@ -56,6 +56,11 @@ public class GameBoardTest {
 	}
 
 	@Test
+	public void testDisplay() {
+		
+	}
+	
+	@Test
 	public void testGetTowers() {
 		assertEquals(this.towers, this.gb.getTowers());
 		//fail("Not yet implemented");

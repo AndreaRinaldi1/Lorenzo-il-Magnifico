@@ -2,7 +2,9 @@ package it.polimi.ingsw.GC_28.boards;
 
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.EnumMap;
+import java.util.List;
 import java.util.Scanner;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -17,7 +19,8 @@ public class FinalBonusWriter {
 	
 	Scanner scanner = new Scanner(System.in);
 	Gson gson = new GsonBuilder().setPrettyPrinting().create();
-	FinalBonus finalBonus = new FinalBonus();
+
+	List<Resource> l = new ArrayList<>();
 	
 	public static void main(String[] args) {
 		FinalBonusWriter fi = new FinalBonusWriter();
@@ -62,7 +65,7 @@ public class FinalBonusWriter {
 	
 	
 	private void setFinalBonus(){
-		System.out.println("Territories final bonus");
+		/*System.out.println("Territories final bonus");
 		for(int i = 0; i< 6; i++){
 			Integer p = i+1;
 			String place = p.toString();
@@ -82,8 +85,19 @@ public class FinalBonusWriter {
 			enterResourceBonus(r);
 			Resource resource = Resource.of(r);
 			finalBonus.getFinalCharactersBonus().add(resource);
+		}*/
+		FinalBonus finalBonus = FinalBonus.instance();
+		for(int i = 0; i< 4; i++){
+			Integer p = i+1;
+			String place = p.toString();
+			System.out.println("Bonus for "+ place + " place:");
+			EnumMap<ResourceType, Integer> r = new EnumMap<>(ResourceType.class);
+			enterResourceBonus(r);
+			Resource resource = Resource.of(r);
+			l.add(resource);
 		}
-		System.out.println("Enter Resource divide value for resource final bonus:");
+		finalBonus.setFinalMilitaryTrack(l);
+		/*System.out.println("Enter Resource divide value for resource final bonus:");
 		Integer resourceBonus = scanner.nextInt();
 		scanner.nextLine();
 		finalBonus.setResourceFactor(resourceBonus);
@@ -96,9 +110,9 @@ public class FinalBonusWriter {
 			enterResourceBonus(r);
 			Resource resource = Resource.of(r);
 			finalBonus.getResourceForTerritories().add(resource);
-		}
+		}*/
 		try{
-			FileWriter f = new FileWriter("setArrayPlayerBoard.json", true);
+			FileWriter f = new FileWriter("finalBonus.json", true);
 			String tmp = gson.toJson(finalBonus);
 			f.write(tmp);
 			f.flush();

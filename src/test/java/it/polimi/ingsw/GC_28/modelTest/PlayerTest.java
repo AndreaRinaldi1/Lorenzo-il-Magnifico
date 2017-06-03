@@ -89,9 +89,9 @@ public class PlayerTest {
 		assertEquals(PlayerColor.BLUE, this.p.getColor());
 	}
 	
-	@Test
-	public void testDisplayFamiltMembers () {
+/*	@Test
+	public void testDisplayFamilyMembers () {
 		System.out.println(p.displayFamilyMembers());
 	}
-
+*/
 }

@@ -19,6 +19,7 @@ public class CouncilPrivilegeTest {
 	private CouncilPrivilege cp = CouncilPrivilege.instance();
 	private Resource resourceBonus;
 	EnumMap<ResourceType, Integer> resource;
+	private CouncilPrivilege cp2;
 	
 	@Before
 	public void councilPrivilege(){
@@ -44,6 +45,16 @@ public class CouncilPrivilegeTest {
 	@AfterClass
 	public static void tearDownAfterClass() throws Exception {
 	}
+	
+	@Test
+	public void testInstance() {
+		assertEquals(this.cp, cp = CouncilPrivilege.instance());
+	}
+	
+	@Test
+	public void testChoose() {
+		assertEquals(this.resourceBonus, this.cp.choose('c'));
+	}
 
 	@Test
 	public void testGetOptions() {
@@ -52,4 +63,11 @@ public class CouncilPrivilegeTest {
 		//assertEquals(true, this.instance.getOptions().equals(options));
 	}
 
+	@Test 
+	public void testSetCouncilPrivilege() {
+		cp2 = CouncilPrivilege.instance();
+		cp2.setCouncilPrivilege(cp);
+		assertEquals(this.cp, this.cp2);
+	}
+	
 }
