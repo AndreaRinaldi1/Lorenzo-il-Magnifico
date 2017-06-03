@@ -146,7 +146,7 @@ public class BoardSetup {
 	}
 	
 	private List<Player> getNextPlayerOrder(){
-		ArrayList<FamilyMember> inCouncil = gameBoard.getCouncilPalace().getPlayerOrder();
+		List<FamilyMember> inCouncil = gameBoard.getCouncilPalace().getPlayerOrder();
 		List<Player> nextOrder = new ArrayList<>();
 		if(!(inCouncil.isEmpty())){
 			for(FamilyMember fm : inCouncil){
@@ -155,8 +155,10 @@ public class BoardSetup {
 				}
 			}
 		}
-		if(nextOrder.isEmpty()){
-			nextOrder = game.getPlayers();
+		for(Player p : game.getPlayers()){
+			if(!(nextOrder.contains(p))){
+				nextOrder.add(p);
+			}
 		} 
 		return nextOrder;
 	}

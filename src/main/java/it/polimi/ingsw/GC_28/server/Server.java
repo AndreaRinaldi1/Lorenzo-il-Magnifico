@@ -25,11 +25,11 @@ import it.polimi.ingsw.GC_28.model.PlayerColor;
 
 public class Server {
 	private int port;
-	private ServerSocket server;
+	private  static ServerSocket server;
 	private PrintStream p;
 	private Scanner scan;
 	List<PlayerColor> usedColors = new ArrayList<>();
-
+	
 	
 	public Server(int p){
 		this.port = p;
@@ -37,8 +37,11 @@ public class Server {
 	
 	public static void main(String[] args) {
 		Server server = new Server(1337);
+		
 		try{
-			server.startServer();
+			while(true){
+				server.startServer();
+			}
 		}catch(IOException e){
 			Logger.getAnonymousLogger().log(Level.SEVERE,"Cannot start the server" + e);
 			
@@ -46,35 +49,37 @@ public class Server {
 	}
 	
 	private void startServer() throws IOException{
-		server = new ServerSocket(port);
 		ExecutorService executor = Executors.newCachedThreadPool();
-		Map<Player, ClientHandler> handlers = new HashMap<>();
-
-		System.out.println("Server ready");
-		
-		while(handlers.size() < 1){
-			Socket socket = server.accept();
-			p = new PrintStream(socket.getOutputStream());
-			scan = new Scanner(socket.getInputStream());
-			p.println("Enter your name:");
-			p.flush();
-			String name = scan.nextLine();
-			PlayerColor color = enterColor();
-			Player player = new Player(name, color);
-			ClientHandler ch = new ClientHandler(socket);
-			handlers.put(player, ch);
+		server = new ServerSocket(port);
+		//server.setReuseAddress(true);
+		while(true){
+			Map<Player, ClientHandler> handlers = new HashMap<>();
+			
+			System.out.println("Server ready");
+			while(handlers.size() < 1){
+				Socket socket = server.accept();
+				p = new PrintStream(socket.getOutputStream());
+				scan = new Scanner(socket.getInputStream());
+				p.println("Enter your name:");
+				p.flush();
+				String name = scan.nextLine();
+				PlayerColor color = enterColor();
+				Player player = new Player(name, color);
+				ClientHandler ch = new ClientHandler(socket);
+				handlers.put(player, ch);
+			}
+			usedColors.clear();
+			BoardsInitializer bi = new BoardsInitializer();	
+			List<Player> players = new ArrayList<>(handlers.keySet());
+			Game game = bi.initializeBoard(players);
+			game.setHandlers(handlers);
+			BoardSetup bs = new BoardSetup(game);
+			bs.firstSetUpCards();
+			game.getGameBoard().display();
+			game.setCurrentPlayer(game.getPlayers().get(0));
+			game.getCurrentPlayer().getBoard().display();
+			executor.submit(game);
 		}
-		usedColors.clear();
-		BoardsInitializer bi = new BoardsInitializer();	
-		List<Player> players = new ArrayList<>(handlers.keySet());
-		Game game = bi.initializeBoard(players);
-		game.setHandlers(handlers);
-		BoardSetup bs = new BoardSetup(game);
-		bs.firstSetUpCards();
-		game.getGameBoard().display();
-		game.setCurrentPlayer(game.getPlayers().get(0));
-		game.getCurrentPlayer().getBoard().display();
-		executor.submit(game);	
 	}
 	
 	
