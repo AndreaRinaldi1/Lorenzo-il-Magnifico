@@ -1,6 +1,7 @@
 package it.polimi.ingsw.GC_28.core;
 
 import it.polimi.ingsw.GC_28.cards.Character;
+import it.polimi.ingsw.GC_28.cards.ExcommunicationTile;
 import it.polimi.ingsw.GC_28.components.FamilyMember;
 import it.polimi.ingsw.GC_28.effects.GoToHPEffect;
 import it.polimi.ingsw.GC_28.effects.IncrementHPEffect;
@@ -33,7 +34,18 @@ public class SpaceAction {
 					}
 				}
 			}
+			
+			for(ExcommunicationTile t : familyMember.getPlayer().getExcommunicationTile()){ //guardo se tra le scomuniche ha incrementhpeffect
+				if(t.getEffect() instanceof IncrementHPEffect){
+					IncrementHPEffect eff = (IncrementHPEffect) t.getEffect();
+					if((eff.isHarvest() && prodHarv.isHarvest()) || (eff.isProduction() && !prodHarv.isHarvest())){ //se production e ho prod o se harvest e ho har
+						familyMember.modifyValue(eff.getIncrement()); // allora applico effetto
+					}
+				}		
+			}
+			
 		}
+		
 		
 		if(throughEffect == null){
 			if(space instanceof ProductionAndHarvestSpace){

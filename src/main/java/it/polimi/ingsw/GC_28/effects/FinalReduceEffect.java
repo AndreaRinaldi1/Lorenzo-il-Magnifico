@@ -29,36 +29,31 @@ public class FinalReduceEffect  extends Effect{
 	
 	public void apply(Player player, Game game){
 		int times = 0;
-		for(ResourceType resType : resourceCost.getResource().keySet()){
-			if(!(resourceCost.getResource().get(resType).equals(0))){
-				switch(cardType){
-				case BUILDING:
-					for(Building b : player.getBoard().getBuildings()){
+		
+		switch(cardType){
+		case BUILDING:
+			for(Building b : player.getBoard().getBuildings()){
+				for(ResourceType resType : resourceCost.getResource().keySet()){
+					if(!(resourceCost.getResource().get(resType).equals(0))){
 						times +=  b.getCost().getResource().get(resType) / resourceCost.getResource().get(resType);
 					}
-					break;
-				case CHARACTER:
-					for(Character c : player.getBoard().getCharacters()){
-						times +=  c.getCost().getResource().get(resType) / resourceCost.getResource().get(resType);
-					}
-					break;
-				case TERRITORY:
-					for(Territory t : player.getBoard().getTerritories()){
-						times +=  t.getCost().getResource().get(resType) / resourceCost.getResource().get(resType);
-					}
-					break;
-				case VENTURE:
-					for(Venture v : player.getBoard().getVentures()){
-						times +=  v.getCost().getResource().get(resType) / resourceCost.getResource().get(resType);
-					}
-					break;
-				default:
-					break;
-				
 				}
 			}
+			break;
+		case CHARACTER:
+			for(Character c : player.getBoard().getCharacters()){
+				for(ResourceType resType : resourceCost.getResource().keySet()){
+					if(!(resourceCost.getResource().get(resType).equals(0))){
+						times +=  c.getCost().getResource().get(resType) / resourceCost.getResource().get(resType);
+					}
+				}
+			}
+			break;
+		default:
+			break;
+		
 		}
-		player.getBoard().addResource(multiplyResource(times));
+		player.addResource(multiplyResource(times));
 	}
 	
 	

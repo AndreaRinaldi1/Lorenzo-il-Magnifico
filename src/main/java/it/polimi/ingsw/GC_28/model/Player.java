@@ -8,6 +8,7 @@ import java.io.OutputStreamWriter;
 import java.io.PrintStream;
 import java.io.PrintWriter;
 import java.net.Socket;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 import java.util.logging.Level;
@@ -26,7 +27,7 @@ public class Player {
 	private PlayerColor color;
 	private PlayerBoard board;
 	private FamilyMember[] familyMembers = new FamilyMember[4];
-	private ExcommunicationTile[] excommunicationTile = new ExcommunicationTile[3];
+	private List<ExcommunicationTile> excommunicationTile = new ArrayList<>();
 	
 	public Player(String name, PlayerColor color){ //Used for local test. KEEP IT!
 		this.name = name;
@@ -46,7 +47,7 @@ public class Player {
 		return familyMembers;
 	}
 	
-	public ExcommunicationTile[] getExcommunicationTile() {
+	public List<ExcommunicationTile> getExcommunicationTile() {
 		return excommunicationTile;
 	}
 
@@ -64,40 +65,6 @@ public class Player {
 
 	
 	public void addResource(Resource amount){
-		for(ExcommunicationTile t : excommunicationTile){
-			if(t.getEffect() instanceof DiscountEffect){
-				DiscountEffect eff = (DiscountEffect) t.getEffect();
-				boolean disc = false;
-				boolean altDisc = false;
-				if(eff.getAlternativeDiscountPresence()){ //se ho due alternative
-					for(ResourceType resType : eff.getDiscount().getResource().keySet()){ 
-						if(!(eff.getDiscount().getResource().get(resType).equals(0))){
-							if(!amount.getResource().get(resType).equals(0)){
-								disc = true;
-								break;
-							}
-						}
-					}
-					for(ResourceType resType : eff.getAlternativeDiscount().getResource().keySet()){ 
-						if(!(eff.getAlternativeDiscount().getResource().get(resType).equals(0))){
-							if(!amount.getResource().get(resType).equals(0)){
-								altDisc = true;
-								break;
-							}
-						}
-					}
-					
-					if(disc && altDisc){
-						this.getBoard().getResources().modifyResource(game.askAlternative(discount, alternativeDiscount, "malus"), true); //Considero il discount come aumento risorse nella playerboard (?)
-					}
-				}
-				
-			}
-
-		}
-		
-		
-		
 		this.getBoard().getResources().modifyResource(amount, true);
 	}
 	

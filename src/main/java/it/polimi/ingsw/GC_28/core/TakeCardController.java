@@ -16,6 +16,7 @@ import it.polimi.ingsw.GC_28.effects.OtherEffect;
 import it.polimi.ingsw.GC_28.effects.TakeCardEffect;
 import it.polimi.ingsw.GC_28.model.Game;
 import it.polimi.ingsw.GC_28.cards.Character;
+import it.polimi.ingsw.GC_28.cards.ExcommunicationTile;
 import it.polimi.ingsw.GC_28.cards.Venture;
 
 public class TakeCardController {
@@ -57,7 +58,7 @@ public class TakeCardController {
 		if(!(checkResource(game, name,  familyMember, throughEffect))){
 			return false;
 		}
-		if(!(checkActionValue(name, familyMember))){
+		if(!(checkActionValue(game, name, familyMember))){
 			return false;
 		}
 		return true;
@@ -186,7 +187,7 @@ public class TakeCardController {
 			return false;
 		}
 		
-		lookForNoCellBonus(familyMember, true, tmp, cardName);
+		lookForNoCellBonus(game, familyMember, true, tmp, cardName);
 		
 		lookForTakeCardDiscount(familyMember, true, tmp, game, throughEffect);
 		
@@ -256,7 +257,7 @@ public class TakeCardController {
 
 	}
 	
-	protected void lookForNoCellBonus(FamilyMember familyMember, boolean check, Resource tmp, String cardName){
+	protected void lookForNoCellBonus(Game game, FamilyMember familyMember, boolean check, Resource tmp, String cardName){
 		boolean noCellBonus = false;
 		for(Character character : familyMember.getPlayer().getBoard().getCharacters()){
 			if(character.getPermanentEffect() instanceof OtherEffect){
@@ -272,7 +273,7 @@ public class TakeCardController {
 				tmp.modifyResource(bonus, true);
 			}
 			else{
-				familyMember.getPlayer().getBoard().getResources().modifyResource(bonus, true);
+				familyMember.getPlayer().addResource(game.checkResourceExcommunication(bonus));
 			}
 		}
 		
@@ -288,7 +289,7 @@ public class TakeCardController {
 						tmp.modifyResource(throughEffect.getDiscount().getChosenAlternativeDiscount(), true);
 					}
 					else{
-						familyMember.getPlayer().getBoard().getResources().modifyResource(throughEffect.getDiscount().getChosenAlternativeDiscount(), true);
+						familyMember.getPlayer().addResource(throughEffect.getDiscount().getChosenAlternativeDiscount());
 					}
 				}
 				else{
@@ -296,7 +297,7 @@ public class TakeCardController {
 						tmp.modifyResource(throughEffect.getDiscount().getDiscount(), true);
 					}
 					else{
-						familyMember.getPlayer().getBoard().getResources().modifyResource(throughEffect.getDiscount().getDiscount(), true);
+						familyMember.getPlayer().addResource(throughEffect.getDiscount().getDiscount());
 					}
 				}
 			}
@@ -315,7 +316,7 @@ public class TakeCardController {
 								tmp.modifyResource(eff.getDiscount().getChosenAlternativeDiscount(), true);
 							}
 							else{
-								familyMember.getPlayer().getBoard().getResources().modifyResource(eff.getDiscount().getChosenAlternativeDiscount(), true);
+								familyMember.getPlayer().addResource(eff.getDiscount().getChosenAlternativeDiscount());
 							}
 							
 						}
@@ -324,7 +325,7 @@ public class TakeCardController {
 								tmp.modifyResource(eff.getDiscount().getDiscount(), true);
 							}
 							else{
-								familyMember.getPlayer().getBoard().getResources().modifyResource(eff.getDiscount().getDiscount(), true);
+								familyMember.getPlayer().addResource(eff.getDiscount().getDiscount());
 							}
 						}
 					}
@@ -339,16 +340,29 @@ public class TakeCardController {
 	 * @param familyMember
 	 * @return true if the familyMember has actionvalue >= required cell action value
 	 */
-	private boolean checkActionValue(String cardName, FamilyMember familyMember){
+	private boolean checkActionValue(Game game, String cardName, FamilyMember familyMember){
+		IncrementCardEffect eff;
 		int tmp = familyMember.getValue();
 		for(Character character : familyMember.getPlayer().getBoard().getCharacters()){
 			if(character.getPermanentEffect() instanceof IncrementCardEffect){
-				IncrementCardEffect eff = (IncrementCardEffect) character.getPermanentEffect();
+				eff = (IncrementCardEffect) character.getPermanentEffect();
 				if(eff.getCardType().equals(cardType)){
-					tmp += eff.getIncrement();
+					eff.apply(familyMember, game);
 				}
 			}
 		}
+		
+		
+		for(ExcommunicationTile t : familyMember.getPlayer().getExcommunicationTile()){ //guardo se tra le scomuniche ha incrementcardeff
+			if(t.getEffect() instanceof IncrementCardEffect){
+				eff = (IncrementCardEffect) t.getEffect();
+				if(eff.getCardType().equals(cardType)){ //se il cardType coincide allora gli tolgo il valore della scomun
+					eff.apply(familyMember, game);
+				}
+			}
+		}
+					
+					
 		if(tmp >= gameBoard.getTowers().get(cardType).findCard(cardName).getActionValue()){
 			return true;
 		}

@@ -55,6 +55,10 @@ public class DiscountEffect extends Effect{
 		this.chosenAlternativeDiscount = chosenAlternativeDiscount;
 	}
 
+	@Override
+	public void apply(FamilyMember familyMember, Game game){
+		apply(familyMember.getPlayer(), game);
+	}
 
 	@Override
 	public void apply(Player player, Game game){

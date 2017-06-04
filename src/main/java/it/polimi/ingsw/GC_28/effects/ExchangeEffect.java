@@ -96,19 +96,21 @@ public class ExchangeEffect extends Effect{
 			else{
 				familyMember.getPlayer().reduceResources(firstCost);
 				System.out.println(familyMember.getPlayer().getBoard().getResources().toString());
-				familyMember.getPlayer().addResource(firstBonus);
+				familyMember.getPlayer().addResource(game.checkResourceExcommunication(firstBonus));
+
 			}
 		}
 		else{
 			if(game.askAlternativeExchange(firstCost, firstBonus, secondCost, secondBonus) == 1){
 				familyMember.getPlayer().reduceResources(firstCost);
 				System.out.println(familyMember.getPlayer().getBoard().getResources().toString());
-				familyMember.getPlayer().addResource(firstBonus);
+				familyMember.getPlayer().addResource(game.checkResourceExcommunication(firstBonus));
+
 			}
 			else{
 				familyMember.getPlayer().reduceResources(secondCost);
 				System.out.println(familyMember.getPlayer().getBoard().getResources().toString());
-				familyMember.getPlayer().addResource(secondBonus);
+				familyMember.getPlayer().addResource(game.checkResourceExcommunication(secondBonus));
 			}
 		}
 	}

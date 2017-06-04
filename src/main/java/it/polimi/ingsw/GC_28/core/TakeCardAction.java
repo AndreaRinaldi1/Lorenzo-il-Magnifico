@@ -32,7 +32,7 @@ public class TakeCardAction {
 	
 	public void apply(String name, FamilyMember familyMember, TakeCardEffect throughEffect){
 		takeCardController.reduce3Coins(familyMember, false, null);
-		takeCardController.lookForNoCellBonus(familyMember, false, null, name);
+		takeCardController.lookForNoCellBonus(game, familyMember, false, null, name);
 		takeCardController.lookForTakeCardDiscount(familyMember, false, null, game, throughEffect);
 		takeCardController.lookForIncrementCardDiscount(familyMember, false, null, game);
 		Cell cell = gameBoard.getTowers().get(takeCardController.cardType).findCard(name);

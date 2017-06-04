@@ -56,21 +56,25 @@ public class MultiplierEffect extends Effect{
 	}
 	
 	@Override
-	public void apply(FamilyMember familyMember, Game game) {
+	public void apply(FamilyMember familyMember, Game game){
+		apply(familyMember.getPlayer(), game);
+	}
+	
+	@Override
+	public void apply(Player player, Game game) {
 		System.out.println("apply di MultiplierEffect");
 		if(resourceCost == null){
 			switch(cardType){
 			case TERRITORY:
-				familyMember.getPlayer().addResource(multiplyResource(familyMember.getPlayer().getBoard().getTerritories().size()));
+				player.addResource(game.checkResourceExcommunication(multiplyResource(player.getBoard().getTerritories().size())));
 				break;
 			case BUILDING:
-				familyMember.getPlayer().addResource(multiplyResource(familyMember.getPlayer().getBoard().getBuildings().size()));
+				player.addResource(game.checkResourceExcommunication(multiplyResource(player.getBoard().getBuildings().size())));
 				break;
 			case CHARACTER:
-				familyMember.getPlayer().addResource(multiplyResource(familyMember.getPlayer().getBoard().getCharacters().size()));
-				break;
+				player.addResource(game.checkResourceExcommunication(multiplyResource(player.getBoard().getCharacters().size())));
 			case VENTURE:
-				familyMember.getPlayer().addResource(multiplyResource(familyMember.getPlayer().getBoard().getVentures().size()));
+				player.addResource(game.checkResourceExcommunication(multiplyResource(player.getBoard().getVentures().size())));
 				break;
 			}
 		}
@@ -78,10 +82,10 @@ public class MultiplierEffect extends Effect{
 			int times = 0;
 			for(ResourceType resType : resourceCost.getResource().keySet()){
 				if(!(resourceCost.getResource().get(resType).equals(0))){
-					times += familyMember.getPlayer().getBoard().getResources().getResource().get(resType) / resourceCost.getResource().get(resType);
+					times += player.getBoard().getResources().getResource().get(resType) / resourceCost.getResource().get(resType);
 				}
 			}
-			familyMember.getPlayer().addResource(multiplyResource(times));
+			player.addResource(game.checkResourceExcommunication(multiplyResource(times)));
 		}
 		
 	}

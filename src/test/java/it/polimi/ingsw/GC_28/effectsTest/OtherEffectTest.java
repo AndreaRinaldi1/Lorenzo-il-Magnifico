@@ -5,16 +5,15 @@ import static org.junit.Assert.*;
 import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.Test;
+import it.polimi.ingsw.GC_28.effects.*;
+import it.polimi.ingsw.GC_28.effects.OtherEffect;
 
-import it.polimi.ingsw.GC_28.effects.NoCellBonusEffect;
-
-public class NoCellBonusEffectTest {
-	private NoCellBonusEffect nce;
-	private boolean presence;
-	
+public class OtherEffectTest {
+	private OtherEffect other;
+	private EffectType type = EffectType.SKIPROUNDEFFECT;
 	@Before
-	public void noCellBonus(){
-		nce = new NoCellBonusEffect();
+	public void otherEffectTest(){
+		other = new OtherEffect();
 	}
 	
 	@AfterClass
@@ -29,8 +28,8 @@ public class NoCellBonusEffectTest {
 	
 	@Test
 	public void testIsPresence() {
-		nce.setPresence(presence);
-		assertEquals(this.presence, this.nce.isPresence());
+		other.setType(type);;
+		assertEquals(type, this.other.getType());
 	}
 
 }

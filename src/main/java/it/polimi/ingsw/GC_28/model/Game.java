@@ -21,10 +21,15 @@ import it.polimi.ingsw.GC_28.components.Resource;
 import it.polimi.ingsw.GC_28.components.ResourceType;
 import it.polimi.ingsw.GC_28.core.SpaceAction;
 import it.polimi.ingsw.GC_28.core.TakeCardAction;
+import it.polimi.ingsw.GC_28.effects.DiscountEffect;
 import it.polimi.ingsw.GC_28.effects.EffectType;
 import it.polimi.ingsw.GC_28.effects.GoToHPEffect;
+import it.polimi.ingsw.GC_28.effects.IncrementCardEffect;
+import it.polimi.ingsw.GC_28.effects.MultiplierEffect;
 import it.polimi.ingsw.GC_28.effects.NoEffect;
+import it.polimi.ingsw.GC_28.effects.NoFinalBonusEffect;
 import it.polimi.ingsw.GC_28.effects.OtherEffect;
+import it.polimi.ingsw.GC_28.effects.ReduceDiceEffect;
 import it.polimi.ingsw.GC_28.effects.ServantEffect;
 import it.polimi.ingsw.GC_28.effects.TakeCardEffect;
 import it.polimi.ingsw.GC_28.server.ClientHandler;
@@ -58,16 +63,12 @@ public class Game implements Runnable {
 			System.out.println(handlers.get(p).getClass());
 		}
 		for(; currentEra <= 3; currentEra++){
-			for(Player p : players){
-				if(p.getExcommunicationTile()[currentEra].getEffect() instanceof OtherEffect){
-					OtherEffect otherEffect = (OtherEffect) p.getExcommunicationTile()[currentEra].getEffect();
-					if(otherEffect.getType().equals(EffectType.SKIPROUNDEFFECT)){
-						skipped.add(p);
-
-					}
-				}
-			}
+			skipPlayers();
+			System.out.println("zeb");
 			for(; currentPeriod <= 2; currentPeriod++){
+				System.out.println("qua");
+				checkDiceReduction();
+				System.out.println("andrea");
 				for(; currentRound <= 4; currentRound++){
 					for(; currentTurn < players.size(); currentTurn++){
 						try {
@@ -84,37 +85,92 @@ public class Game implements Runnable {
 						}
 					}	
 				}
-				for(Player p : skipped){
-					currentPlayer = p;
-					try{
-						play();
-					}
-					catch (IOException e) {
-						Logger.getAnonymousLogger().log(Level.SEVERE,"Cannot play that move in method run()" + e);
-					}	
-				}
+				checkSkippedPlayers();
 				bs.setUpBoard();
 			}
+			
+			//TODO: alla fine dell'era manca la gestione dei punti fede per attribuire scomuniche
 			bs.setUpBoard();
 		}
+		
+		//FINE DEL GIOCO
+		applyFinalMalus();
 	}
 	
 	public void setHandlers(Map<Player, ClientHandler> handlers) {
 		this.handlers = handlers;
 	}
+	
+	
+	public void applyFinalMalus(){
+		for(Player p : players){
+			ExcommunicationTile t = p.getExcommunicationTile().get(currentEra-1);
+			if(t != null){
+				t.getEffect().apply(p, this);
+			}
+		}
+	}
 
-
-	public void play() throws IOException{
+	public void checkDiceReduction(){  //se i giocatori tra le scomuniche hanno reducedice applico effetto
+		for(Player p : players){
+			System.out.println("4");
+			for(ExcommunicationTile t : p.getExcommunicationTile()){
+				System.out.println("5");
+				if(t.getEffect() instanceof ReduceDiceEffect){
+					t.getEffect().apply(p, this);
+				}
+			}
+		}
+		System.out.println("6");
+	}
+	
+	public void checkSkippedPlayers(){ // se i giocatori hanno saltato il primo turno ora possono rifare il turno che gli spetta alla fine
+		for(Player p : skipped){
+			currentPlayer = p;
+			try{
+				play();
+			}
+			catch (IOException e) {
+				Logger.getAnonymousLogger().log(Level.SEVERE,"Cannot play that move in method run()" + e);
+			}	
+		}
+	}
+	
+	
+	public void skipPlayers(){
+		for(Player p : players){
+			System.out.println("1");
+			for(ExcommunicationTile t : p.getExcommunicationTile()){
+				System.out.println("2");
+				if(t.getEffect() instanceof OtherEffect){
+					OtherEffect otherEffect = (OtherEffect) t.getEffect();
+					if(otherEffect.getType().equals(EffectType.SKIPROUNDEFFECT)){
+						skipped.add(p);
+					}
+				}
+			}
+			System.out.println("3");
+		}
+		
+	}
+	
+	public void display(){
 		for(Player p: players){
 			handlers.get(p).getOut().println(gameBoard.display());
 			handlers.get(p).getOut().println(p.getBoard().display());
+		
 			for(int i = 0; i < 4; i++){
 				handlers.get(p).getOut().println(p.getFamilyMembers()[i].toString());
 			}
 			handlers.get(p).getOut().flush();
 		}
+	}
+
+	public void play() throws IOException{
+		display();
 		
-		if(skipped.contains(currentPlayer) && currentRound == 1){
+		
+		if(skipped.contains(currentPlayer) && currentRound == 1){ //se è tra i giocatori in skipped allora salta turno
 			handlers.get(currentPlayer).getOut().println("Skipped first turn due to excommunication");
 			return;
 		}
@@ -191,6 +247,54 @@ public class Game implements Runnable {
 	
 	public void setPlayers(List<Player> p){
 		players = p;
+	}
+	
+	
+	public Resource checkResourceExcommunication(Resource amount){
+		for(ExcommunicationTile t : currentPlayer.getExcommunicationTile()){ //guardo tra le scomuniche del currentPlayer
+			if(t.getEffect() instanceof DiscountEffect){ //se trovo un discounteffect
+				DiscountEffect eff = (DiscountEffect) t.getEffect();
+				boolean disc = false;
+				boolean altDisc = false;
+				
+				for(ResourceType resType : eff.getDiscount().getResource().keySet()){ //guardo tra i resourceType del discounteff
+					if(!(eff.getDiscount().getResource().get(resType).equals(0))){ //se ne trovo uno diverso da 0
+						if(!amount.getResource().get(resType).equals(0)){ // e se io l'ho preso quel tipo di risorsa
+							disc = true; //allora setto un bool
+							break;
+						}
+					}
+				}
+				
+				if(eff.getAlternativeDiscountPresence()){ //se ho due alternative
+					for(ResourceType resType : eff.getAlternativeDiscount().getResource().keySet()){ 
+						if(!(eff.getAlternativeDiscount().getResource().get(resType).equals(0))){
+							if(!amount.getResource().get(resType).equals(0)){
+								altDisc = true; // se ho preso anche la risorsa diversa da zero dell'alternativediscount setto un bool
+								break;
+							}
+						}
+					}
+				}
+					
+				if(disc && altDisc){ // se ho preso entrambi chiedo quale togliere
+					eff.setChosenAlternativeDiscount(askAlternative(eff.getDiscount(), eff.getAlternativeDiscount(), "malus")); 
+				}
+				else if(disc){ //altrimenti tolgo disc..
+					eff.setChosenAlternativeDiscount(eff.getDiscount());
+				}
+				else if(altDisc){ //o alternative disc
+					eff.setChosenAlternativeDiscount(eff.getAlternativeDiscount());
+				}
+				else{ //se non ho preso niente di quei tipi non tolgo niente
+					eff.setChosenAlternativeDiscount(null);
+				}
+				
+				amount.modifyResource(eff.getChosenAlternativeDiscount(), true);
+				return amount;
+			}			
+		}
+		return amount;
 	}
 	
 	
@@ -303,7 +407,7 @@ public class Game implements Runnable {
 		else{
 			if(modifiedWithServants){
 				familyMember.modifyValue((-1)*(incrementThroughServants));
-				currentPlayer.getBoard().getResources().modifyResource(res, true);
+				currentPlayer.addResource(res);
 			}
 			handlers.get(currentPlayer).getOut().println("Not valid action!");
 			handlers.get(currentPlayer).getOut().flush();
@@ -336,6 +440,8 @@ public class Game implements Runnable {
 			familyMember = new FamilyMember(currentPlayer, false, null); //altrimenti uno fittizio
 			familyMember.setValue(throughEffect.getActionValue());
 		}
+
+		
 		incrementThroughServants = askForServantsIncrement();
 		familyMember.modifyValue(incrementThroughServants);
 		EnumMap<ResourceType, Integer> decrement = new EnumMap<>(ResourceType.class);
@@ -353,7 +459,7 @@ public class Game implements Runnable {
 		else{
 			if(modifiedWithServants){
 				familyMember.modifyValue((-1)*(incrementThroughServants));
-				currentPlayer.getBoard().getResources().modifyResource(res, true);
+				currentPlayer.addResource(res);
 			}
 			handlers.get(currentPlayer).getOut().println("Not valid action!");
 			handlers.get(currentPlayer).getOut().flush();
@@ -442,13 +548,14 @@ public class Game implements Runnable {
 							modifiedWithServants = true;
 							handlers.get(currentPlayer).getIn().nextLine();
 							
-							for(ExcommunicationTile t : currentPlayer.getExcommunicationTile()){
+							for(ExcommunicationTile t : currentPlayer.getExcommunicationTile()){ //guardo se tra le scomuniche ha servanteffect
 								if(t.getEffect() instanceof ServantEffect){
 									ServantEffect eff = (ServantEffect) t.getEffect();
-									return increment * eff.getIncrement() / eff.getNumberOfServant();
+									return increment * eff.getIncrement() / eff.getNumberOfServant(); // se sì allora applico l'effetto
 								}
 
 							}
+							
 							return increment;
 						}
 						else{
