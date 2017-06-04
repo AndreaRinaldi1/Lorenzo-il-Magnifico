@@ -10,6 +10,8 @@ import it.polimi.ingsw.GC_28.model.Player;
 
 public class ReduceDiceEffect extends Effect{
 	
+	public final EffectType type = EffectType.REDUCEDICEEFFECT;
+	
 	private List<DiceColor> diceColor = new ArrayList<>();
 	int reduce = 1;
 	

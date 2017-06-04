@@ -81,6 +81,13 @@ public class PlayerBoard {
 		String vent = ventTab.render() + "\n";
 		ret.append(vent);
 		
+		/*ret.append("Excommunication: \n");
+		AsciiTable excom = new AsciiTable();
+		excom.addRule();
+		excom.addRow("First Era", "Second Era", "Third Era");
+		excom.addRule();
+		excom.addRow()*/
+		
 		ret.append("Resources: \n");
 		AsciiTable res = new AsciiTable();
 		res.addRule();

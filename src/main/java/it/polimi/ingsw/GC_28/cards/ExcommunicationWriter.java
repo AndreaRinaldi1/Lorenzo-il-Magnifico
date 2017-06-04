@@ -18,12 +18,14 @@ import it.polimi.ingsw.GC_28.components.Resource;
 import it.polimi.ingsw.GC_28.components.ResourceType;
 import it.polimi.ingsw.GC_28.effects.DiscountEffect;
 import it.polimi.ingsw.GC_28.effects.EffectType;
+import it.polimi.ingsw.GC_28.effects.FinalReduceEffect;
 import it.polimi.ingsw.GC_28.effects.IncrementCardEffect;
 import it.polimi.ingsw.GC_28.effects.IncrementHPEffect;
 import it.polimi.ingsw.GC_28.effects.MultiplierEffect;
 import it.polimi.ingsw.GC_28.effects.NoFinalBonusEffect;
 import it.polimi.ingsw.GC_28.effects.OtherEffect;
 import it.polimi.ingsw.GC_28.effects.ReduceDiceEffect;
+import it.polimi.ingsw.GC_28.effects.ServantEffect;
 import jdk.nashorn.internal.runtime.regexp.joni.ScanEnvironment;
 
 public class ExcommunicationWriter {
@@ -44,11 +46,15 @@ public class ExcommunicationWriter {
 	
 	public void startWrite() {
 		Gson gson = new GsonBuilder().setPrettyPrinting().create();
-		ExcommunicationTile ex = new ExcommunicationTile();
 		try{
 			FileWriter file = new FileWriter("excommunication.json",true);
 			String procede = new String();
 			do{
+				ExcommunicationTile ex = new ExcommunicationTile();
+				System.out.println("Enter era:");
+				Integer era = scanner.nextInt();
+				scanner.nextLine();
+				ex.setEra(era);
 				System.out.println("Enter the EffectType for the  ExcomunicationCard");
 				System.out.println("Type 'incrcard' for INCREMENTCARDEFFECT" );
 				System.out.println("Type 'incrhp' for INCREMENTHPFFECT" );
@@ -58,7 +64,8 @@ public class ExcommunicationWriter {
 				System.out.println("Type 'rd' for REDUCEDICEEFFECT");
 				System.out.println("Type 'skip' for SKIPROUNDEFFECT");
 				System.out.println("Type 'nm' for NOMARKETEFFECT");
-				System.out.println();
+				System.out.println("Type 'se' for SERVANTEFFECT");
+				System.out.println("Type 'fe' for  FINALREDUCEEFFECT");
 				String et = scanner.nextLine();
 				switch(et){
 				case "incrcard":
@@ -85,7 +92,7 @@ public class ExcommunicationWriter {
 					resourceBonus = Resource.of(bonus);
 					me.setResourceBonus(resourceBonus);
 					cost = new EnumMap<ResourceType, Integer>(ResourceType.class);
-					enterResourceBonus(cost);
+					enterResourceCost(cost);
 					resourceCost = Resource.of(cost);
 					me.setResourceCost(resourceCost);
 					ex.setEffect(me);
@@ -113,12 +120,36 @@ public class ExcommunicationWriter {
 					ex.setEffect(nm);
 					exList.add(ex);
 					break;
+				case "se":
+					ServantEffect se = new ServantEffect();
+					se.setNumberOfServant(2);
+					se.setIncrement(1);
+					ex.setEffect(se);
+					exList.add(ex);
+					break;
+				case "fe":
+					FinalReduceEffect fe = new FinalReduceEffect();
+					fe.setCardType(enterCardType());
+					cost = new EnumMap<ResourceType, Integer>(ResourceType.class);
+					enterResourceCost(cost);
+					resourceCost = Resource.of(cost);
+					fe.setResourceCost(resourceCost);
+					bonus = new EnumMap<ResourceType, Integer>(ResourceType.class);
+					enterResourceBonus(bonus);
+					resourceBonus = Resource.of(bonus);
+					fe.setResourceBonus(resourceBonus);
+					ex.setEffect(fe);
+					exList.add(ex);
+					break;
 				}
-				
+				System.out.println(exList.get(0).getEffect());
 				System.out.println("Do you want to continue?[y/end]");
 				procede = scanner.nextLine();
 			}while(!(procede.equals("end")));
 			
+			String tmp = gson.toJson(exList);
+			file.write(tmp);
+			file.flush();
 			file.close();
 		}catch(IOException e){
 			Logger.getAnonymousLogger().log(Level.SEVERE, "error"+e);
@@ -171,6 +202,40 @@ public class ExcommunicationWriter {
 		hopEff.setIncrement(scanner.nextInt());
 		scanner.nextLine();
 		return hopEff;
+	}
+	
+	private int enterCost(String resourceType){
+		System.out.print("Enter " + resourceType + " cost: ");
+		while(!scanner.hasNextInt()){
+			System.out.println("Not valid input!");
+			System.out.print("Enter " + resourceType + " cost: ");
+			scanner.nextLine();
+			scanner.hasNextInt();
+		}
+		int cost = scanner.nextInt();
+		scanner.nextLine();
+		return cost;
+	}
+	
+	private void enterResourceCost(EnumMap<ResourceType, Integer> cost){
+		
+		coin = enterCost(ResourceType.COIN.name());
+		wood = enterCost(ResourceType.WOOD.name());
+		stone = enterCost(ResourceType.STONE.name());
+		servant = enterCost(ResourceType.SERVANT.name());
+		victoryPoint = enterCost(ResourceType.VICTORYPOINT.name());
+		militaryPoint = enterCost(ResourceType.MILITARYPOINT.name());
+		faithPoint = enterCost(ResourceType.FAITHPOINT.name());
+
+		
+		cost.put(ResourceType.COIN, coin);
+		cost.put(ResourceType.WOOD, wood);
+		cost.put(ResourceType.STONE, stone);
+		cost.put(ResourceType.SERVANT, servant);
+		cost.put(ResourceType.VICTORYPOINT, victoryPoint);
+		cost.put(ResourceType.MILITARYPOINT, militaryPoint);
+		cost.put(ResourceType.FAITHPOINT, faithPoint);
+
 	}
 	
 	private int enterBonus(String resourceType){

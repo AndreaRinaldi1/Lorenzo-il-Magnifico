@@ -39,15 +39,21 @@ public class BoardSetup {
 	}
 	
 	public void setUpBoard(){
+		System.out.println(1);
 		game.setPlayers(getNextPlayerOrder());
 		freeFamilyMember();
+		System.out.println(3);
 		freeSpace();
 		if(game.getPlayers().size() > 2){
 			freeSpaceMoreThanTwoPlayer();
 		}
+		System.out.println(4);
 		prepareTowers();
+		System.out.println(5);
 		setDicesValue(gameBoard.getDices());
+		System.out.println(6);
 		setFamilyMember();
+		System.out.println(7);
 	}
 	
 	private static void prepareDeck(){

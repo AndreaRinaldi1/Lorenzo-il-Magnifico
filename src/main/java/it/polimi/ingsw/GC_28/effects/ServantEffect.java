@@ -8,7 +8,8 @@ import it.polimi.ingsw.GC_28.model.Player;
 public class ServantEffect  extends Effect{
 	private int numberOfServant;
 	private int increment;
-
+	public final EffectType type = EffectType.SERVANTEFFECT;
+	
 	public void setNumberOfServant(int numberOfServant) {
 		this.numberOfServant = numberOfServant;
 	}

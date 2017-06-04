@@ -1,0 +1,303 @@
+[
+  {
+    "era": 1,
+    "effect": {
+      "alternativeDiscountPresence": false,
+      "discount": {
+        "resource": {
+          "COIN": 0,
+          "WOOD": 0,
+          "STONE": 0,
+          "SERVANT": 0,
+          "MILITARYPOINT": -1,
+          "VICTORYPOINT": 0,
+          "FAITHPOINT": 0
+        }
+      },
+      "type": "DISCOUNTEFFECT"
+    }
+  },
+  {
+    "era": 1,
+    "effect": {
+      "alternativeDiscountPresence": false,
+      "discount": {
+        "resource": {
+          "COIN": -1,
+          "WOOD": 0,
+          "STONE": 0,
+          "SERVANT": 0,
+          "MILITARYPOINT": 0,
+          "VICTORYPOINT": 0,
+          "FAITHPOINT": 0
+        }
+      },
+      "type": "DISCOUNTEFFECT"
+    }
+  },
+  {
+    "era": 1,
+    "effect": {
+      "alternativeDiscountPresence": false,
+      "discount": {
+        "resource": {
+          "COIN": 0,
+          "WOOD": 0,
+          "STONE": 0,
+          "SERVANT": -1,
+          "MILITARYPOINT": 0,
+          "VICTORYPOINT": 0,
+          "FAITHPOINT": 0
+        }
+      },
+      "type": "DISCOUNTEFFECT"
+    }
+  },
+  {
+    "era": 1,
+    "effect": {
+      "alternativeDiscountPresence": true,
+      "discount": {
+        "resource": {
+          "COIN": 0,
+          "WOOD": -1,
+          "STONE": 0,
+          "SERVANT": 0,
+          "MILITARYPOINT": 0,
+          "VICTORYPOINT": 0,
+          "FAITHPOINT": 0
+        }
+      },
+      "alternativeDiscount": {
+        "resource": {
+          "COIN": 0,
+          "WOOD": 0,
+          "STONE": -1,
+          "SERVANT": 0,
+          "MILITARYPOINT": 0,
+          "VICTORYPOINT": 0,
+          "FAITHPOINT": 0
+        }
+      },
+      "type": "DISCOUNTEFFECT"
+    }
+  },
+  {
+    "era": 1,
+    "effect": {
+      "increment": -3,
+      "production": false,
+      "harvest": true,
+      "type": "INCREMENTHPEFFECT"
+    }
+  },
+  {
+    "era": 1,
+    "effect": {
+      "increment": -3,
+      "production": true,
+      "harvest": false,
+      "type": "INCREMENTHPEFFECT"
+    }
+  },
+  {
+    "era": 1,
+    "effect": {
+      "type": "REDUCEDICEEFFECT",
+      "diceColor": [],
+      "reduce": 1
+    }
+  },
+  {
+    "era": 2,
+    "effect": {
+      "increment": -4,
+      "cardType": "TERRITORY",
+      "discountPresence": false,
+      "type": "INCREMENTCARDEFFECT"
+    }
+  },
+  {
+    "era": 2,
+    "effect": {
+      "increment": -4,
+      "cardType": "BUILDING",
+      "discountPresence": false,
+      "type": "INCREMENTCARDEFFECT"
+    }
+  },
+  {
+    "era": 2,
+    "effect": {
+      "increment": -4,
+      "cardType": "CHARACTER",
+      "discountPresence": false,
+      "type": "INCREMENTCARDEFFECT"
+    }
+  },
+  {
+    "era": 2,
+    "effect": {
+      "increment": -4,
+      "cardType": "VENTURE",
+      "discountPresence": false,
+      "type": "INCREMENTCARDEFFECT"
+    }
+  },
+  {
+    "era": 2,
+    "effect": {
+      "type": "OTHEREFFECT",
+      "specificType": "NOMARKETEFFECT"
+    }
+  },
+  {
+    "era": 2,
+    "effect": {
+      "type" :"SERVANTEFFECT",
+      "numberOfServant": 2,
+      "increment": 1
+    }
+  },
+  {
+    "era": 2,
+    "effect": {
+      "type": "OTHEREFFECT",
+      "specificType": "SKIPROUNDEFFECT"
+    }
+  },
+  {
+    "era": 3,
+    "effect": {
+      "cardType": "CHARACTER",
+      "type": "NOFINALBONUSEFFECT"
+    }
+  },
+  {
+    "era": 3,
+    "effect": {
+      "cardType": "VENTURE",
+      "type": "NOFINALBONUSEFFECT"
+    }
+  },
+  {
+    "era": 3,
+    "effect": {
+      "cardType": "TERRITORY",
+      "type": "NOFINALBONUSEFFECT"
+    }
+  },
+  {
+    "era": 3,
+    "effect": {
+      "resourceBonus": {
+        "resource": {
+          "COIN": 0,
+          "WOOD": 0,
+          "STONE": 0,
+          "SERVANT": 0,
+          "MILITARYPOINT": 0,
+          "VICTORYPOINT": -1,
+          "FAITHPOINT": 0
+        }
+      },
+      "resourceCost": {
+        "resource": {
+          "COIN": 0,
+          "WOOD": 0,
+          "STONE": 0,
+          "SERVANT": 0,
+          "MILITARYPOINT": 0,
+          "VICTORYPOINT": 5,
+          "FAITHPOINT": 0
+        }
+      },
+      "type": "MULTIPLIEREFFECT"
+    }
+  },
+  {
+    "era": 3,
+    "effect": {
+      "resourceBonus": {
+        "resource": {
+          "COIN": 0,
+          "WOOD": 0,
+          "STONE": 0,
+          "SERVANT": 0,
+          "MILITARYPOINT": 0,
+          "VICTORYPOINT": -1,
+          "FAITHPOINT": 0
+        }
+      },
+      "resourceCost": {
+        "resource": {
+          "COIN": 0,
+          "WOOD": 0,
+          "STONE": 0,
+          "SERVANT": 0,
+          "MILITARYPOINT": 1,
+          "VICTORYPOINT": 0,
+          "FAITHPOINT": 0
+        }
+      },
+      "type": "MULTIPLIEREFFECT"
+    }
+  },
+  {
+    "era": 3,
+    "effect": {
+      "cardType": "BUILDING",
+      "resourceCost": {
+        "resource": {
+          "COIN": 0,
+          "WOOD": 1,
+          "STONE": 1,
+          "SERVANT": 0,
+          "MILITARYPOINT": 0,
+          "VICTORYPOINT": 0,
+          "FAITHPOINT": 0
+        }
+      },
+      "resourceBonus": {
+        "resource": {
+          "COIN": 0,
+          "WOOD": 0,
+          "STONE": 0,
+          "SERVANT": 0,
+          "MILITARYPOINT": 0,
+          "VICTORYPOINT": -1,
+          "FAITHPOINT": 0
+        }
+      },
+      "type": "FINALREDUCEEFFECT"
+    }
+  },
+  {
+    "era": 3,
+    "effect": {
+      "resourceBonus": {
+        "resource": {
+          "COIN": 0,
+          "WOOD": 0,
+          "STONE": 0,
+          "SERVANT": 0,
+          "MILITARYPOINT": 0,
+          "VICTORYPOINT": -1,
+          "FAITHPOINT": 0
+        }
+      },
+      "resourceCost": {
+        "resource": {
+          "COIN": 1,
+          "WOOD": 1,
+          "STONE": 1,
+          "SERVANT": 1,
+          "MILITARYPOINT": 0,
+          "VICTORYPOINT": 0,
+          "FAITHPOINT": 0
+        }
+      },
+      "type": "MULTIPLIEREFFECT"
+    }
+  }
+]

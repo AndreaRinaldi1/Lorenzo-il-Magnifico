@@ -73,6 +73,15 @@ public class GameBoard {
 		String cp = councilTable.render() + "\n";
 		ret.append(cp);
 		
+		/*AsciiTable excomm = new AsciiTable();
+		excomm.addRule();
+		excomm.addRow("First Era","Second Era", "Third Era");
+		excomm.addRule();
+		excomm.addRow(excommunications[0].ge,excommunications[1],excommunications[2]);
+		excomm.addRule();
+		String excommunicationBoard = excomm.render();
+		ret.append(excommunicationBoard + "\n");*/
+		
 		AsciiTable church = new AsciiTable();
 		church.addRule();
 		church.addRow("Church", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15");

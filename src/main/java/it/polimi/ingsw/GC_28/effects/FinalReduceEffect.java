@@ -16,8 +16,20 @@ public class FinalReduceEffect  extends Effect{
 	private CardType cardType;
 	private Resource resourceCost;
 	private Resource resourceBonus;
+	public final EffectType type = EffectType.FINALREDUCEEFFECT;
 	
-	
+	public void setCardType(CardType cardType) {
+		this.cardType = cardType;
+	}
+
+	public void setResourceCost(Resource resourceCost) {
+		this.resourceCost = resourceCost;
+	}
+
+	public void setResourceBonus(Resource resourceBonus) {
+		this.resourceBonus = resourceBonus;
+	}
+
 	public Resource multiplyResource(int times){
 		EnumMap<ResourceType, Integer> resource = new EnumMap<ResourceType, Integer>(ResourceType.class);
 		for(ResourceType resType : resourceBonus.getResource().keySet()){

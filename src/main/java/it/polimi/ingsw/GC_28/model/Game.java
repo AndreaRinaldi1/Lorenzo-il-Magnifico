@@ -64,17 +64,20 @@ public class Game implements Runnable {
 		}
 		for(; currentEra <= 3; currentEra++){
 			skipPlayers();
-			System.out.println("zeb");
+			//System.out.println("zeb");
 			for(; currentPeriod <= 2; currentPeriod++){
 				System.out.println("qua");
 				checkDiceReduction();
-				System.out.println("andrea");
-				for(; currentRound <= 4; currentRound++){
-					for(; currentTurn < players.size(); currentTurn++){
+				System.out.println("currentPeriod"+ currentPeriod);
+				//System.out.println("andrea");
+				for(currentRound = 1; currentRound <= 4; currentRound++){
+					System.out.println("currentRound" + currentRound);
+					for(currentTurn = 0; currentTurn < players.size(); currentTurn++){
+						System.out.println(currentTurn);
 						try {
-							System.out.println("rifaccio play");
+							//System.out.println("rifaccio play");
 							play();
-							System.out.println("tornato");
+							//System.out.println("tornato");
 						} catch (IOException e) {
 							Logger.getAnonymousLogger().log(Level.SEVERE,"Cannot play that move in method run()" + e);
 						}
@@ -87,9 +90,9 @@ public class Game implements Runnable {
 				}
 				checkSkippedPlayers();
 				bs.setUpBoard();
+				System.out.println(8);
 			}
-			
-			//TODO: alla fine dell'era manca la gestione dei punti fede per attribuire scomuniche
+			giveExcommunication();
 			bs.setUpBoard();
 		}
 		
@@ -112,20 +115,23 @@ public class Game implements Runnable {
 	}
 
 	public void checkDiceReduction(){  //se i giocatori tra le scomuniche hanno reducedice applico effetto
+		System.out.println("check0");
 		for(Player p : players){
-			System.out.println("4");
+			System.out.println("check1");
 			for(ExcommunicationTile t : p.getExcommunicationTile()){
-				System.out.println("5");
+				System.out.println("check2");
 				if(t.getEffect() instanceof ReduceDiceEffect){
 					t.getEffect().apply(p, this);
 				}
 			}
 		}
-		System.out.println("6");
+		//System.out.println("6");
 	}
 	
 	public void checkSkippedPlayers(){ // se i giocatori hanno saltato il primo turno ora possono rifare il turno che gli spetta alla fine
+		System.out.println("skipped1");
 		for(Player p : skipped){
+			System.out.println("skipped2");
 			currentPlayer = p;
 			try{
 				play();
@@ -139,9 +145,9 @@ public class Game implements Runnable {
 	
 	public void skipPlayers(){
 		for(Player p : players){
-			System.out.println("1");
+			//System.out.println("1");
 			for(ExcommunicationTile t : p.getExcommunicationTile()){
-				System.out.println("2");
+				//System.out.println("2");
 				if(t.getEffect() instanceof OtherEffect){
 					OtherEffect otherEffect = (OtherEffect) t.getEffect();
 					if(otherEffect.getType().equals(EffectType.SKIPROUNDEFFECT)){
@@ -149,7 +155,7 @@ public class Game implements Runnable {
 					}
 				}
 			}
-			System.out.println("3");
+			//System.out.println("3");
 		}
 		
 	}
@@ -676,5 +682,56 @@ public class Game implements Runnable {
 			}
 		}	
 	}
+	
+	private void giveExcommunication(){
+		for(Player p : players){
+			if(currentEra == 1){
+				int faith = p.getBoard().getResources().getResource().get(ResourceType.FAITHPOINT);
+				if(faith < 3){
+					handlers.get(p).getOut().println("You recive an Excommunication, because you cannot pay to avoid it");
+					p.getExcommunicationTile().set(currentEra-1, gameBoard.getExcommunications()[currentEra-1]);
+				}else{
+					handlers.get(p).getOut().println("Do you want to pay to avoid Excommunication?[y/n]");
+					if(handlers.get(p).getIn().nextLine().equalsIgnoreCase("n")){
+						p.getExcommunicationTile().set(currentEra-1, gameBoard.getExcommunications()[currentEra-1]);
+					}else{
+						handlers.get(p).getOut().println("You paid to avoid Excommunication, your faith points have been reset to 0");
+						p.getBoard().getResources().getResource().put(ResourceType.FAITHPOINT, 0);
+					}
+				}
+			}
+			else if(currentEra == 2){
+				int faith = p.getBoard().getResources().getResource().get(ResourceType.FAITHPOINT);
+				if(faith < 4){
+					handlers.get(p).getOut().println("You recive an Excommunication, because you cannot pay to avoid it");
+					p.getExcommunicationTile().set(currentEra-1, gameBoard.getExcommunications()[currentEra-1]);
+				}else{
+					handlers.get(p).getOut().println("Do you want to pay to avoid Excommunication?[y/n]");
+					if(handlers.get(p).getIn().nextLine().equalsIgnoreCase("n")){
+						p.getExcommunicationTile().set(currentEra-1, gameBoard.getExcommunications()[currentEra-1]);
+					}else{
+						handlers.get(p).getOut().println("You paid to avoid Excommunication, your faith points have been reset to 0");
+						p.getBoard().getResources().getResource().put(ResourceType.FAITHPOINT, 0);
+					}
+				}
+			}
+			else if(currentEra == 3){
+				int faith = p.getBoard().getResources().getResource().get(ResourceType.FAITHPOINT);
+				if(faith < 4){
+					handlers.get(p).getOut().println("You recive an Excommunication, because you cannot pay to avoid it");
+					p.getExcommunicationTile().set(currentEra-1, gameBoard.getExcommunications()[currentEra-1]);
+				}else{
+					handlers.get(p).getOut().println("Do you want to pay to avoid Excommunication?[y/n]");
+					if(handlers.get(p).getIn().nextLine().equalsIgnoreCase("n")){
+						p.getExcommunicationTile().set(currentEra-1, gameBoard.getExcommunications()[currentEra-1]);
+					}else{
+						handlers.get(p).getOut().println("You paid to avoid Excommunication, your faith points have been reset to 0");
+						p.getBoard().getResources().getResource().put(ResourceType.FAITHPOINT, 0);
+					}
+				}
+			}
+		}
+	}
+	
 	
 }

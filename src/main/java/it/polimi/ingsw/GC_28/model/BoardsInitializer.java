@@ -17,6 +17,7 @@ import java.util.ArrayList;
 import java.util.EnumMap;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.concurrent.ThreadLocalRandom;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -29,6 +30,8 @@ import it.polimi.ingsw.GC_28.boards.GameBoard;
 import it.polimi.ingsw.GC_28.boards.PlayerBoard;
 import it.polimi.ingsw.GC_28.boards.Tower;
 import it.polimi.ingsw.GC_28.cards.CardType;
+import it.polimi.ingsw.GC_28.cards.ExcommunicationReader;
+import it.polimi.ingsw.GC_28.cards.ExcommunicationTile;
 import it.polimi.ingsw.GC_28.components.CouncilPrivilege;
 import it.polimi.ingsw.GC_28.components.Dice;
 import it.polimi.ingsw.GC_28.components.DiceColor;
@@ -65,6 +68,7 @@ public class BoardsInitializer {
 			initGameBoard();
 			initSpaces();
 			g.setGameBoard(gameBoard);
+			initExcommunication();
 			initBonusTile();
 			initPlayerBoard();
 			initFinalBonus();
@@ -258,6 +262,24 @@ public class BoardsInitializer {
 		}
 	}
 	
+	private void initExcommunication(){
+		System.out.println(1);
+		ExcommunicationReader exReader = new ExcommunicationReader();
+		List<ExcommunicationTile> ex = new ArrayList<>();
+		ex = exReader.startRead();
+		for(int i = 0; i < 3; i++){
+			ArrayList<ExcommunicationTile> tmp = new ArrayList<>();
+			for(ExcommunicationTile e : ex){
+				if(e.getEra() == (i+1)){
+					tmp.add(e);
+				}
+			}
+			int randomInt = ThreadLocalRandom.current().nextInt(0, tmp.size());
+			gameBoard.getExcommunications()[i] = tmp.get(randomInt);
+			System.out.println(gameBoard.getExcommunications()[i].getEffect());
+		}
+		
+	}
 	
 }
 
