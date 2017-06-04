@@ -9,11 +9,17 @@ import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.Test;
 
+import it.polimi.ingsw.GC_28.boards.PlayerBoard;
 import it.polimi.ingsw.GC_28.components.CouncilPrivilege;
+import it.polimi.ingsw.GC_28.components.DiceColor;
+import it.polimi.ingsw.GC_28.components.FamilyMember;
 import it.polimi.ingsw.GC_28.components.Resource;
 import it.polimi.ingsw.GC_28.components.ResourceType;
 import it.polimi.ingsw.GC_28.effects.ExchangeEffect;
 import it.polimi.ingsw.GC_28.effects.PrivilegesEffect;
+import it.polimi.ingsw.GC_28.model.Game;
+import it.polimi.ingsw.GC_28.model.Player;
+import it.polimi.ingsw.GC_28.model.PlayerColor;
 import it.polimi.ingsw.GC_28.spaces.PrivilegesSpace;
 
 public class ExchangeEffectTest {
@@ -35,8 +41,13 @@ public class ExchangeEffectTest {
 	HashMap<Character, Resource> options;
 	private Resource bonus;
 	EnumMap<ResourceType, Integer> resource5;
+	EnumMap<ResourceType, Integer> w = new EnumMap<ResourceType, Integer>(ResourceType.class);
 
 
+	private FamilyMember fm;
+	private Game g;
+	private Player p;
+	
 	@Before
 	public void exchangeEffect(){
 		exchange = new ExchangeEffect();
@@ -50,6 +61,20 @@ public class ExchangeEffectTest {
 		ps = new PrivilegesSpace(true, 1);
 		cp = CouncilPrivilege.instance();
 
+		
+		
+		for(ResourceType resType : ResourceType.values()){
+			w.put(resType, 0);
+		}
+		Resource res = Resource.of(w);
+		PlayerBoard pb = new PlayerBoard(null, res);
+		
+		g = new Game();
+		p = new Player("bob", PlayerColor.YELLOW);
+		p.setBoard(pb);
+		fm = new FamilyMember(p, false, DiceColor.WHITE);
+		g.setCurrentPlayer(p);
+
 	}
 	
 	@AfterClass
@@ -58,6 +83,20 @@ public class ExchangeEffectTest {
 
 	@Test
 	public void testApply() {
+		resource.put(ResourceType.COIN, 2);
+		firstCost = Resource.of(resource);
+		exchange.setFirstCost(firstCost);
+		resource2.put(ResourceType.SERVANT, 1);
+		firstBonus = Resource.of(resource2);
+		exchange.setFirstBonus(firstBonus);
+		exchange.apply(fm, g);
+		Resource res = Resource.of(w);
+		res.modifyResource(firstCost, false);
+		res.modifyResource(firstBonus, true);
+
+		boolean x = res.equals(fm.getPlayer().getBoard().getResources());
+		
+		assertTrue(x);
 	}
 
 	@Test

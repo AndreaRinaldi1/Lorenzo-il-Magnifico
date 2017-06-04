@@ -19,47 +19,29 @@ import it.polimi.ingsw.GC_28.model.PlayerColor;
 public class Prova {
 	public static void main(String[] args) {
 		
-		Deck d = new Deck();
-		CardReader c = new CardReader();
-		try{
-			d = c.startRead();
-			for(Character x : d.getCharacters()){
-				System.out.println(x.getPermanentEffect().getClass());
-			}
-		}catch(FileNotFoundException e){
-			Logger.getAnonymousLogger().log(Level.SEVERE,"error" + e);
-		}
-		EnumMap<ResourceType, Integer> p = new EnumMap<ResourceType, Integer>(ResourceType.class);
-		p.put(ResourceType.COIN, 12);
-		p.put(ResourceType.SERVANT, 5);
-		p.put(ResourceType.WOOD, 19);
-		p.put(ResourceType.MILITARYPOINT, 1);
-		p.put(ResourceType.FAITHPOINT, 2);
-		Resource res2 = Resource.of(p);
 		
-		int i = d.getBuildings().get(0).getCost().getResource().get(ResourceType.STONE);
 		/*EnumMap<ResourceType, Integer> p = new EnumMap<ResourceType, Integer>(ResourceType.class);
-		p.put(ResourceType.COIN, 12);
+		p.put(ResourceType.COIN, 1);
 		p.put(ResourceType.SERVANT, 5);
-		p.put(ResourceType.WOOD, 19);
+		p.put(ResourceType.WOOD, 1);
 		p.put(ResourceType.MILITARYPOINT, 1);
 		p.put(ResourceType.FAITHPOINT, 2);
 		Resource res2 = Resource.of(p);
 		
 		EnumMap<ResourceType, Integer> t = new EnumMap<ResourceType, Integer>(ResourceType.class);
-		t.put(ResourceType.COIN, 42);
-		t.put(ResourceType.WOOD, 99);
-		t.put(ResourceType.MILITARYPOINT, 51);
-		t.put(ResourceType.FAITHPOINT, 23);
-		t.put(ResourceType.VICTORYPOINT,83);
+		t.put(ResourceType.COIN, 2);
+		t.put(ResourceType.WOOD, 9);
+		t.put(ResourceType.MILITARYPOINT, 1);
+		t.put(ResourceType.FAITHPOINT, 2);
+		t.put(ResourceType.VICTORYPOINT,3);
 		Resource res3 = Resource.of(t);
 		
 		EnumMap<ResourceType, Integer> c = new EnumMap<ResourceType, Integer>(ResourceType.class);
 		c.put(ResourceType.COIN, 4);
-		c.put(ResourceType.WOOD, 9);
-		c.put(ResourceType.MILITARYPOINT, 8);
-		c.put(ResourceType.FAITHPOINT, 13);
-		c.put(ResourceType.VICTORYPOINT, 93);
+		c.put(ResourceType.WOOD, 8);
+		c.put(ResourceType.MILITARYPOINT, 0);
+		c.put(ResourceType.FAITHPOINT, 3);
+		c.put(ResourceType.VICTORYPOINT, 2);
 		Resource res4 = Resource.of(c);
 		
 		EnumMap<ResourceType, Integer> w = new EnumMap<ResourceType, Integer>(ResourceType.class);
@@ -67,8 +49,8 @@ public class Prova {
 			w.put(resType, 0);
 		}
 		Resource res = Resource.of(w);
-	//	PlayerBoard pb = new PlayerBoard();
-	//	pb.setResources(res);
+		PlayerBoard pb = new PlayerBoard();
+		pb.setResources(res);
 		
 		CouncilPrivilege cp = CouncilPrivilege.instance();
 		HashMap<java.lang.Character, Resource> hm = new HashMap<java.lang.Character, Resource>();

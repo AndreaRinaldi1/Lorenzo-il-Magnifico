@@ -15,7 +15,7 @@ public abstract class Effect {
 	
 
 	
-	public void apply(FamilyMember familyMember, Game game){};
+	public void apply(FamilyMember familyMember, Game game){}
 		//System.out.println("apply di Effect");
 	public void apply(Player player, Game game){}
 	
