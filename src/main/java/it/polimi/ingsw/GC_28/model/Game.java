@@ -685,9 +685,8 @@ public class Game implements Runnable {
 	
 	private void giveExcommunication(){
 		for(Player p : players){
-			if(currentEra == 1){
 				int faith = p.getBoard().getResources().getResource().get(ResourceType.FAITHPOINT);
-				if(faith < 3){
+				if(faith < (3+ currentEra)){
 					handlers.get(p).getOut().println("You recive an Excommunication, because you cannot pay to avoid it");
 					p.getExcommunicationTile().set(currentEra-1, gameBoard.getExcommunications()[currentEra-1]);
 				}else{
@@ -700,37 +699,6 @@ public class Game implements Runnable {
 					}
 				}
 			}
-			else if(currentEra == 2){
-				int faith = p.getBoard().getResources().getResource().get(ResourceType.FAITHPOINT);
-				if(faith < 4){
-					handlers.get(p).getOut().println("You recive an Excommunication, because you cannot pay to avoid it");
-					p.getExcommunicationTile().set(currentEra-1, gameBoard.getExcommunications()[currentEra-1]);
-				}else{
-					handlers.get(p).getOut().println("Do you want to pay to avoid Excommunication?[y/n]");
-					if(handlers.get(p).getIn().nextLine().equalsIgnoreCase("n")){
-						p.getExcommunicationTile().set(currentEra-1, gameBoard.getExcommunications()[currentEra-1]);
-					}else{
-						handlers.get(p).getOut().println("You paid to avoid Excommunication, your faith points have been reset to 0");
-						p.getBoard().getResources().getResource().put(ResourceType.FAITHPOINT, 0);
-					}
-				}
-			}
-			else if(currentEra == 3){
-				int faith = p.getBoard().getResources().getResource().get(ResourceType.FAITHPOINT);
-				if(faith < 4){
-					handlers.get(p).getOut().println("You recive an Excommunication, because you cannot pay to avoid it");
-					p.getExcommunicationTile().set(currentEra-1, gameBoard.getExcommunications()[currentEra-1]);
-				}else{
-					handlers.get(p).getOut().println("Do you want to pay to avoid Excommunication?[y/n]");
-					if(handlers.get(p).getIn().nextLine().equalsIgnoreCase("n")){
-						p.getExcommunicationTile().set(currentEra-1, gameBoard.getExcommunications()[currentEra-1]);
-					}else{
-						handlers.get(p).getOut().println("You paid to avoid Excommunication, your faith points have been reset to 0");
-						p.getBoard().getResources().getResource().put(ResourceType.FAITHPOINT, 0);
-					}
-				}
-			}
-		}
 	}
 	
 	
