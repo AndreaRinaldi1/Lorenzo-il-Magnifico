@@ -67,7 +67,8 @@ public class BoardSetup {
 				int randomInt = ThreadLocalRandom.current().nextInt(0, deck.getTerritories().size());
 				/*the condition check if the era of the randomly selected card is correct and
 				 *  if the card has already been drafted, otherwise the choice of the card is repeated*/
-				if(deck.getTerritories().get(randomInt).getEra() == game.getCurrentEra()){ 
+				if(deck.getTerritories().get(randomInt).getEra() == game.getCurrentEra() && game.getCurrentPeriod() == 1
+						|| deck.getTerritories().get(randomInt).getEra() == (game.getCurrentEra()+1) && game.getCurrentPeriod() == 2){ 
 					Territory t = deck.getTerritories().get(randomInt);
 					cell[i].setCard(t);
 					deck.getTerritories().remove(t);
@@ -85,7 +86,8 @@ public class BoardSetup {
 				int randomInt = ThreadLocalRandom.current().nextInt(0, deck.getBuildings().size());
 				/*the condition check if the era of the randomly selected card is correct and
 				 *  if the card has already been drafted, otherwise the choice of the card is repeated*/
-				if(deck.getBuildings().get(randomInt).getEra() == game.getCurrentEra()){ 
+				if(deck.getBuildings().get(randomInt).getEra() == game.getCurrentEra() && game.getCurrentPeriod() == 1
+						|| deck.getBuildings().get(randomInt).getEra() == (game.getCurrentEra()+1) && game.getCurrentPeriod() == 2){ 
 					Building b = deck.getBuildings().get(randomInt);
 					cell[i].setCard(b);
 					deck.getBuildings().remove(b);
@@ -103,7 +105,8 @@ public class BoardSetup {
 				int randomInt = ThreadLocalRandom.current().nextInt(0, deck.getCharacters().size());
 				/*the condition check if the era of the randomly selected card is correct and
 				 *  if the card has already been drafted, otherwise the choice of the card is repeated*/
-				if(deck.getCharacters().get(randomInt).getEra() == game.getCurrentEra()){ 
+				if(deck.getCharacters().get(randomInt).getEra() == game.getCurrentEra() && game.getCurrentPeriod() == 1
+						|| deck.getCharacters().get(randomInt).getEra() == (game.getCurrentEra()+1) && game.getCurrentPeriod() == 2){ 
 					Character c = deck.getCharacters().get(randomInt);
 					cell[i].setCard(c);
 					deck.getCharacters().remove(c);
@@ -121,7 +124,8 @@ public class BoardSetup {
 				int randomInt = ThreadLocalRandom.current().nextInt(0, deck.getVentures().size());
 				/*the condition check if the era of the randomly selected card is correct and
 				 *  if the card has already been drafted, otherwise the choice of the card is repeated*/
-				if(deck.getVentures().get(randomInt).getEra() == game.getCurrentEra()){ 
+				if(deck.getVentures().get(randomInt).getEra() == game.getCurrentEra() && game.getCurrentPeriod() == 1
+						|| deck.getVentures().get(randomInt).getEra() == (game.getCurrentEra()+1) && game.getCurrentPeriod() == 2){ 
 					Venture v = deck.getVentures().get(randomInt);
 					cell[i].setCard(v);
 					deck.getVentures().remove(v);
@@ -132,17 +136,13 @@ public class BoardSetup {
 	}
 	
 	
+	
 	public void prepareTowers(){
 		setUpTerritoriesTower();
 		setUpBuildingsTower();
 		setUpCharacterTower();
 		setUpVentureTower();
-		if(game.getCurrentPeriod() == 2){
-			game.setCurrentEra(game.getCurrentEra()+1);
-			game.setPeriod(1);
-		}else{
-			game.setPeriod(2);
-		}
+		
 	}
 	
 	private List<Player> getNextPlayerOrder(){

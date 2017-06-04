@@ -43,7 +43,7 @@ public class Game implements Runnable {
 	//Scanner currentPlayer.getIn() = new Scanner(System.in);
 	private Player currentPlayer;
 	boolean modifiedWithServants = false;
-	private int currentEra  = 1;
+	private int currentEra = 1;
 	private int currentPeriod = 1;
 	private int currentRound = 1;
 	private int currentTurn = 0;
@@ -58,23 +58,14 @@ public class Game implements Runnable {
 	@Override
 	public void run(){
 		BoardSetup bs = new BoardSetup(this);
-		for(Player p : players){
-			System.out.println(p.getName());
-			System.out.println(handlers.get(p).getClass());
-		}
-		for(; currentEra <= 3; currentEra++){
+		for(currentEra = 1; currentEra <= 3; currentEra++){
 			skipPlayers();
-			System.out.println("zeb");
-			for(; currentPeriod <= 2; currentPeriod++){
-				System.out.println("qua");
-				checkDiceReduction();
-				System.out.println("andrea");
-				for(; currentRound <= 4; currentRound++){
-					for(; currentTurn < players.size(); currentTurn++){
+			for(currentPeriod = 1; currentPeriod <= 2; currentPeriod++){
+				checkDiceReduction();				
+				for(currentRound = 1; currentRound <= 4; currentRound++){					
+					for(currentTurn = 0; currentTurn < players.size(); currentTurn++){
 						try {
-							System.out.println("rifaccio play");
 							play();
-							System.out.println("tornato");
 						} catch (IOException e) {
 							Logger.getAnonymousLogger().log(Level.SEVERE,"Cannot play that move in method run()" + e);
 						}
@@ -83,14 +74,14 @@ public class Game implements Runnable {
 						}else{
 							currentPlayer = players.get((currentTurn+1));
 						}
-					}	
+					} 	
 				}
 				checkSkippedPlayers();
 				bs.setUpBoard();
 			}
 			
 			//TODO: alla fine dell'era manca la gestione dei punti fede per attribuire scomuniche
-			bs.setUpBoard();
+			//bs.setUpBoard();
 		}
 		
 		//FINE DEL GIOCO
