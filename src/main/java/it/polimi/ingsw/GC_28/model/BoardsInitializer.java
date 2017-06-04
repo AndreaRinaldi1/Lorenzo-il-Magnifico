@@ -74,6 +74,7 @@ public class BoardsInitializer {
 			initFinalBonus();
 			initFamilyMember();
 			g.setPlayers(players);
+			completeExcommunicationArray();
 		} catch (FileNotFoundException e) {
 			Logger.getAnonymousLogger().log(Level.SEVERE, "cannot start initialize" + e);
 		}
@@ -281,6 +282,17 @@ public class BoardsInitializer {
 		
 	}
 	
+	private void completeExcommunicationArray(){
+		for(Player p : g.getPlayers()){
+			System.out.println(p);
+			for(int i = 0; i < 3; i++){
+				System.out.println("tre");
+				ExcommunicationTile e = new ExcommunicationTile();
+				e.setEffect(null);
+				p.getExcommunicationTile().add(e);
+			}
+		}
+	}
 }
 
 class EnumMapInstanceCreator<K extends Enum<K>, V> implements InstanceCreator<EnumMap<K, V>> {

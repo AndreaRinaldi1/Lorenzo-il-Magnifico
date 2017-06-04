@@ -57,6 +57,7 @@ public class Game implements Runnable {
 	
 	@Override
 	public void run(){
+		System.out.println(1);
 		BoardSetup bs = new BoardSetup(this);
 		for(currentEra = 1; currentEra <= 3; currentEra++){
 			skipPlayers();
@@ -154,7 +155,8 @@ public class Game implements Runnable {
 		for(Player p: players){
 			handlers.get(p).getOut().println(gameBoard.display());
 			handlers.get(p).getOut().println(p.getBoard().display());
-		
+			handlers.get(p).getOut().println(p.displayExcommunication());
+			
 			for(int i = 0; i < 4; i++){
 				handlers.get(p).getOut().println(p.getFamilyMembers()[i].toString());
 			}

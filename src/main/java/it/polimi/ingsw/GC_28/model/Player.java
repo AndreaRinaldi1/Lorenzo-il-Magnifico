@@ -14,6 +14,7 @@ import java.util.Scanner;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import de.vandermeer.asciitable.AsciiTable;
 import it.polimi.ingsw.GC_28.boards.PlayerBoard;
 import it.polimi.ingsw.GC_28.cards.ExcommunicationTile;
 import it.polimi.ingsw.GC_28.components.FamilyMember;
@@ -75,6 +76,19 @@ public class Player {
 	
 	public void setColor(PlayerColor color) {
 		this.color = color;
+	}
+	
+	public String displayExcommunication(){
+		AsciiTable tab = new AsciiTable();
+		tab.addRule();
+		tab.addRow("First Excommunication", "Second Excommunication", "Third Excommunication");
+		tab.addRule();
+		tab.addRow(excommunicationTile.get(0).getEffect() != null ? true : false,
+				   excommunicationTile.get(1).getEffect() != null ? true : false,
+				   excommunicationTile.get(2).getEffect() != null ? true : false);
+		tab.addRule();
+		String e = tab.render();
+		return e;
 	}
 	
 	public String displayFamilyMembers(){
