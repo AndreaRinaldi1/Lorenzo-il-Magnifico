@@ -11,6 +11,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import it.polimi.ingsw.GC_28.boards.Cell;
+import it.polimi.ingsw.GC_28.boards.FinalBonus;
 import it.polimi.ingsw.GC_28.boards.GameBoard;
 import it.polimi.ingsw.GC_28.cards.CardType;
 import it.polimi.ingsw.GC_28.cards.ExcommunicationTile;
@@ -79,10 +80,8 @@ public class Game implements Runnable {
 				}
 				checkSkippedPlayers();
 				bs.setUpBoard();
-				System.out.println(8);
 			}
 			giveExcommunication();
-			System.out.println("curP"+ currentPeriod);
 		}
 		
 		//FINE DEL GIOCO
@@ -674,10 +673,8 @@ public class Game implements Runnable {
 				if(faith < (2+ currentEra)){
 					handlers.get(p).getOut().println("You recive an Excommunication, because you cannot pay to avoid it");
 					handlers.get(p).getOut().flush();
-					System.out.println(9);
 					p.getExcommunicationTile().get(currentEra -1).setEffect(gameBoard.getExcommunications()[currentEra-1].getEffect());
 					//p.getExcommunicationTile().add(currentEra-1, gameBoard.getExcommunications()[currentEra-1]);
-					System.out.println(10);
 					return;
 				}else{
 					handlers.get(p).getOut().println("Do you want to pay to avoid Excommunication?[y/n]");
@@ -688,6 +685,9 @@ public class Game implements Runnable {
 					}else{
 						handlers.get(p).getOut().println("You paid to avoid Excommunication, your faith points have been reset to 0");
 						handlers.get(p).getOut().flush();
+						int numberOfFaithPoint = p.getBoard().getResources().getResource().get(ResourceType.FAITHPOINT);
+						Resource bonusForFaithPoint = FinalBonus.instance().getFaithPointTrack().get(numberOfFaithPoint-1);
+						p.addResource(bonusForFaithPoint);
 						p.getBoard().getResources().getResource().put(ResourceType.FAITHPOINT, 0);
 						return;
 					}

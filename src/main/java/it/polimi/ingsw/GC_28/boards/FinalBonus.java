@@ -11,6 +11,7 @@ public class FinalBonus {
 	private List<Resource> finalCharactersBonus = new ArrayList<>();
 	private List<Resource> resourceForTerritories = new ArrayList<>();
 	private List<Resource> finalMilitaryTrack = new ArrayList<>();
+	private List<Resource> faithPointTrack = new ArrayList<>();
 	
 	private int resourceFactor;
 	
@@ -70,6 +71,14 @@ public class FinalBonus {
 
 	public void setResourceForTerritories(List<Resource> resourceForTerritories) {
 		this.resourceForTerritories = resourceForTerritories;
+	}
+
+	public List<Resource> getFaithPointTrack() {
+		return faithPointTrack;
+	}
+
+	public void setFaithPointTrack(List<Resource> faithPointTrack) {
+		this.faithPointTrack = faithPointTrack;
 	}
 	
 	

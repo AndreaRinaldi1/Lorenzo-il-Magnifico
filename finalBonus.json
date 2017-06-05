@@ -249,5 +249,172 @@
       }
     }
   ],
+  "faithPointTrack": [
+    {
+      "resource": {
+        "COIN": 0,
+        "WOOD": 0,
+        "STONE": 0,
+        "SERVANT": 0,
+        "MILITARYPOINT": 0,
+        "VICTORYPOINT": 1,
+        "FAITHPOINT": 0
+      }
+    },
+    {
+      "resource": {
+        "COIN": 0,
+        "WOOD": 0,
+        "STONE": 0,
+        "SERVANT": 0,
+        "MILITARYPOINT": 0,
+        "VICTORYPOINT": 2,
+        "FAITHPOINT": 0
+      }
+    },
+    {
+      "resource": {
+        "COIN": 0,
+        "WOOD": 0,
+        "STONE": 0,
+        "SERVANT": 0,
+        "MILITARYPOINT": 0,
+        "VICTORYPOINT": 3,
+        "FAITHPOINT": 0
+      }
+    },
+    {
+      "resource": {
+        "COIN": 0,
+        "WOOD": 0,
+        "STONE": 0,
+        "SERVANT": 0,
+        "MILITARYPOINT": 0,
+        "VICTORYPOINT": 4,
+        "FAITHPOINT": 0
+      }
+    },
+    {
+      "resource": {
+        "COIN": 0,
+        "WOOD": 0,
+        "STONE": 0,
+        "SERVANT": 0,
+        "MILITARYPOINT": 0,
+        "VICTORYPOINT": 5,
+        "FAITHPOINT": 0
+      }
+    },
+    {
+      "resource": {
+        "COIN": 0,
+        "WOOD": 0,
+        "STONE": 0,
+        "SERVANT": 0,
+        "MILITARYPOINT": 0,
+        "VICTORYPOINT": 7,
+        "FAITHPOINT": 0
+      }
+    },
+    {
+      "resource": {
+        "COIN": 0,
+        "WOOD": 0,
+        "STONE": 0,
+        "SERVANT": 0,
+        "MILITARYPOINT": 0,
+        "VICTORYPOINT": 9,
+        "FAITHPOINT": 0
+      }
+    },
+    {
+      "resource": {
+        "COIN": 0,
+        "WOOD": 0,
+        "STONE": 0,
+        "SERVANT": 0,
+        "MILITARYPOINT": 0,
+        "VICTORYPOINT": 11,
+        "FAITHPOINT": 0
+      }
+    },
+    {
+      "resource": {
+        "COIN": 0,
+        "WOOD": 0,
+        "STONE": 0,
+        "SERVANT": 0,
+        "MILITARYPOINT": 0,
+        "VICTORYPOINT": 13,
+        "FAITHPOINT": 0
+      }
+    },
+    {
+      "resource": {
+        "COIN": 0,
+        "WOOD": 0,
+        "STONE": 0,
+        "SERVANT": 0,
+        "MILITARYPOINT": 0,
+        "VICTORYPOINT": 15,
+        "FAITHPOINT": 0
+      }
+    },
+    {
+      "resource": {
+        "COIN": 0,
+        "WOOD": 0,
+        "STONE": 0,
+        "SERVANT": 0,
+        "MILITARYPOINT": 0,
+        "VICTORYPOINT": 17,
+        "FAITHPOINT": 0
+      }
+    },
+    {
+      "resource": {
+        "COIN": 0,
+        "WOOD": 0,
+        "STONE": 0,
+        "SERVANT": 0,
+        "MILITARYPOINT": 0,
+        "VICTORYPOINT": 19,
+        "FAITHPOINT": 0
+      }
+    },
+    {
+      "resource": {
+        "COIN": 0,
+        "WOOD": 0,
+        "STONE": 0,
+        "SERVANT": 0,
+        "MILITARYPOINT": 0,
+        "VICTORYPOINT": 22,
+        "FAITHPOINT": 0
+      }
+    },
+    {
+      "resource": {
+        "COIN": 0,
+        "WOOD": 0,
+        "STONE": 0,
+        "SERVANT": 0,
+        "MILITARYPOINT": 0,
+        "VICTORYPOINT": 25,
+        "FAITHPOINT": 0
+      }
+    },
+    {
+      "resource": {
+        "COIN": 0,
+        "WOOD": 0,
+        "STONE": 0,
+        "SERVANT": 0,
+        "MILITARYPOINT": 0,
+        "VICTORYPOINT": 30,
+        "FAITHPOINT": 0
+      }
+    }
+  ],
   "resourceFactor": 5
 }
