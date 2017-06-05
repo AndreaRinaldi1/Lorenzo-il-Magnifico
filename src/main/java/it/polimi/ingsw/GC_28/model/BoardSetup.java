@@ -39,21 +39,15 @@ public class BoardSetup {
 	}
 	
 	public void setUpBoard(){
-		System.out.println(1);
 		game.setPlayers(getNextPlayerOrder());
 		freeFamilyMember();
-		System.out.println(3);
 		freeSpace();
 		if(game.getPlayers().size() > 2){
 			freeSpaceMoreThanTwoPlayer();
 		}
-		System.out.println(4);
 		prepareTowers();
-		System.out.println(5);
 		setDicesValue(gameBoard.getDices());
-		System.out.println(6);
 		setFamilyMember();
-		System.out.println(7);
 	}
 	
 	private static void prepareDeck(){
@@ -66,19 +60,15 @@ public class BoardSetup {
 	}
 	
 	private void setUpTerritoriesTower(){
-		System.out.println("te1");
 		Cell [] cell = gameBoard.getTowers().get(CardType.TERRITORY).getCells();
 		for(int i = 0; i < cell.length; i++){
 			boolean x = false;
-			System.out.println("te2");
 			while(!x){
 				int randomInt = ThreadLocalRandom.current().nextInt(0, deck.getTerritories().size());
 				/*the condition check if the era of the randomly selected card is correct and
 				 *  if the card has already been drafted, otherwise the choice of the card is repeated*/
-				//System.out.println("te3");
 				if(deck.getTerritories().get(randomInt).getEra() == game.getCurrentEra() && game.getCurrentPeriod() == 1
 						|| deck.getTerritories().get(randomInt).getEra() == (game.getCurrentEra()+1) && game.getCurrentPeriod() == 2){
-					System.out.println("Te4");
 					Territory t = deck.getTerritories().get(randomInt);
 					cell[i].setCard(t);
 					cell[i].setFree(true);

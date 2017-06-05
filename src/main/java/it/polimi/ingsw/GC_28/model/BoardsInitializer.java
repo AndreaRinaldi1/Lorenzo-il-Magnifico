@@ -284,9 +284,7 @@ public class BoardsInitializer {
 	
 	private void completeExcommunicationArray(){
 		for(Player p : g.getPlayers()){
-			System.out.println(p);
 			for(int i = 0; i < 3; i++){
-				System.out.println("tre");
 				ExcommunicationTile e = new ExcommunicationTile();
 				e.setEffect(null);
 				p.getExcommunicationTile().add(e);

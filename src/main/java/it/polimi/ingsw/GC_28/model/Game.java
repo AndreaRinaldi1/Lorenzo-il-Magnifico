@@ -81,10 +81,8 @@ public class Game implements Runnable {
 				bs.setUpBoard();
 				System.out.println(8);
 			}
-			currentPeriod--;
 			giveExcommunication();
 			System.out.println("curP"+ currentPeriod);
-			bs.setUpBoard();
 		}
 		
 		//FINE DEL GIOCO
@@ -106,11 +104,8 @@ public class Game implements Runnable {
 	}
 
 	public void checkDiceReduction(){  //se i giocatori tra le scomuniche hanno reducedice applico effetto
-		System.out.println("check0");
 		for(Player p : players){
-			System.out.println("check1");
 			for(ExcommunicationTile t : p.getExcommunicationTile()){
-				System.out.println("check2");
 				if(t.getEffect() instanceof ReduceDiceEffect){
 					t.getEffect().apply(p, this);
 				}
@@ -120,9 +115,7 @@ public class Game implements Runnable {
 	}
 	
 	public void checkSkippedPlayers(){ // se i giocatori hanno saltato il primo turno ora possono rifare il turno che gli spetta alla fine
-		System.out.println("skipped1");
 		for(Player p : skipped){
-			System.out.println("skipped2");
 			currentPlayer = p;
 			try{
 				play();
@@ -676,14 +669,14 @@ public class Game implements Runnable {
 	}
 	
 	private void giveExcommunication(){
-		System.out.println("ex");
 		for(Player p : players){
 				int faith = p.getBoard().getResources().getResource().get(ResourceType.FAITHPOINT);
 				if(faith < (2+ currentEra)){
 					handlers.get(p).getOut().println("You recive an Excommunication, because you cannot pay to avoid it");
 					handlers.get(p).getOut().flush();
 					System.out.println(9);
-					p.getExcommunicationTile().add(currentEra-1, gameBoard.getExcommunications()[currentEra-1]);
+					p.getExcommunicationTile().get(currentEra -1).setEffect(gameBoard.getExcommunications()[currentEra-1].getEffect());
+					//p.getExcommunicationTile().add(currentEra-1, gameBoard.getExcommunications()[currentEra-1]);
 					System.out.println(10);
 					return;
 				}else{
