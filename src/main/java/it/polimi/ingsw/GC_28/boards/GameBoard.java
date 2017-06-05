@@ -186,6 +186,7 @@ public class GameBoard {
 		return towers;
 	}
 	
+	
 	public void setTowers(Map<CardType,Tower> towers){
 		this.towers = towers;
 	}

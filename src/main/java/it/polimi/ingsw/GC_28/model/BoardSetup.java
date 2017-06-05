@@ -2,6 +2,7 @@ package it.polimi.ingsw.GC_28.model;
 
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
+import java.util.EnumMap;
 import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
 import java.util.logging.Logger;
@@ -19,6 +20,7 @@ import it.polimi.ingsw.GC_28.model.Game;
 import it.polimi.ingsw.GC_28.model.Player;
 import it.polimi.ingsw.GC_28.boards.Cell;
 import it.polimi.ingsw.GC_28.boards.GameBoard;
+import it.polimi.ingsw.GC_28.boards.Tower;
 import it.polimi.ingsw.GC_28.cards.Building;
 import it.polimi.ingsw.GC_28.cards.Character;
 
@@ -26,6 +28,7 @@ public class BoardSetup {
 	
 	private Game game ;
 	private GameBoard gameBoard;
+	private Cell[] cells;
 	private static Deck deck = new Deck(); //once initialize it will not change 
 	
 	public BoardSetup(Game g){
@@ -60,7 +63,14 @@ public class BoardSetup {
 	}
 	
 	private void setUpTerritoriesTower(){
+		System.out.println(5);
+		GameBoard m = new GameBoard();
+		EnumMap<CardType, Tower> y = new EnumMap<>(CardType.class);
+		y = (EnumMap<CardType, Tower>) m.getTowers();
+		Tower b = y.get(CardType.TERRITORY);
+		Cell[] v = b.getCells();
 		Cell [] cell = gameBoard.getTowers().get(CardType.TERRITORY).getCells();
+		System.out.println(6);
 		for(int i = 0; i < cell.length; i++){
 			boolean x = false;
 			while(!x){
@@ -133,7 +143,9 @@ public class BoardSetup {
 	
 	
 	public void prepareTowers(){
+		System.out.println(3);
 		setUpTerritoriesTower();
+		System.out.println(4);
 		setUpBuildingsTower();
 		setUpCharacterTower();
 		setUpVentureTower();
