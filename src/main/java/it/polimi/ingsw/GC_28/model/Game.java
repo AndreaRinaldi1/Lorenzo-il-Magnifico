@@ -364,7 +364,7 @@ public class Game extends Observable<Action> implements Runnable, Observer<Messa
 	public boolean goToSpace(GoToHPEffect throughEffect){
 		FamilyMember familyMember;
 		
-		SpaceAction spaceAction = new SpaceAction(this);
+		SpaceAction spaceAction = new SpaceAction(this, gameModel);
 		Space chosenSpace;
 		
 		if(!(throughEffect == null)){
@@ -442,7 +442,7 @@ public class Game extends Observable<Action> implements Runnable, Observer<Messa
 		takeCardAction.setThroughEffect(throughEffect);
 		
 		this.notifyObserver(takeCardAction);
-		
+		System.out.println(5);
 		if(modifiedWithServants){
 			familyMember.modifyValue((-1)*(incrementThroughServants));
 		}
@@ -677,6 +677,7 @@ public class Game extends Observable<Action> implements Runnable, Observer<Messa
 
 	@Override
 	public void update(Message m) {
+		System.out.println(4);
 		handlers.get(currentPlayer).getOut().println(m.getMessage());
 		result = m.isResult();
 		if(m.isResult()){	

@@ -13,6 +13,7 @@ import it.polimi.ingsw.GC_28.effects.Effect;
 import it.polimi.ingsw.GC_28.effects.TakeCardEffect;
 import it.polimi.ingsw.GC_28.model.Game;
 import it.polimi.ingsw.GC_28.model.GameModel;
+import it.polimi.ingsw.GC_28.server.Message;
 
 public class TakeCardAction extends Action{
 	private Game game;
@@ -91,6 +92,8 @@ public class TakeCardAction extends Action{
 		}
 		cell.setCard(null);
 		cell.setFree(false);
+		gameModel.notifyObserver(new Message("Action completed successfully!", true));
+
 	}
 	
 	
