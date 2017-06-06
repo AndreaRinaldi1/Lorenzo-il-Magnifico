@@ -4,7 +4,7 @@ package it.polimi.ingsw.GC_28.cards;
 import com.google.gson.*;
 import com.google.gson.reflect.TypeToken;
 import com.google.gson.stream.JsonReader;
-
+import com.google.gson.typeadapters.RuntimeTypeAdapterFactory;
 
 import it.polimi.ingsw.GC_28.effects.DiscountEffect;
 import it.polimi.ingsw.GC_28.effects.Effect;
