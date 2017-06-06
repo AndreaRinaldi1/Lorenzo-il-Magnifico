@@ -7,19 +7,36 @@ import org.junit.Before;
 import org.junit.Test;
 
 import it.polimi.ingsw.GC_28.cards.CardType;
+import it.polimi.ingsw.GC_28.components.DiceColor;
+import it.polimi.ingsw.GC_28.components.FamilyMember;
 import it.polimi.ingsw.GC_28.effects.*;
+import it.polimi.ingsw.GC_28.model.Game;
+import it.polimi.ingsw.GC_28.model.Player;
+import it.polimi.ingsw.GC_28.model.PlayerColor;
 
-public class IncrementCardEffect {
-	private it.polimi.ingsw.GC_28.effects.IncrementCardEffect ic;
+public class IncrementCardEffectTest {
+	private IncrementCardEffect ic;
 	private int increment = 2;
 	private boolean discountPresence;
 	private DiscountEffect discount;
 	
+	private	Game g;
+	private FamilyMember fm;
+	private FamilyMember fm2;
+	private Player player;
+	private Player player2;
+	
 	@Before
 	public void incrementCardEffect(){
-		ic = new it.polimi.ingsw.GC_28.effects.IncrementCardEffect();
+		ic = new IncrementCardEffect();
 		discount = new DiscountEffect();
-		
+		player = new Player("gino", PlayerColor.GREEN);
+		player2 = new Player("Mariangiongianela", PlayerColor.BLUE);
+		g = new Game();
+		fm = new FamilyMember(player, false, DiceColor.ORANGE);
+		fm2 = new FamilyMember(player2, false, DiceColor.WHITE);
+		fm.setValue(2);
+		fm2.setValue(2);
 	}
 	
 	@AfterClass
@@ -28,7 +45,14 @@ public class IncrementCardEffect {
 
 	@Test
 	public void testApply() {
-		//fail("Not yet implemented");
+		ic.setIncrement(increment);
+		ic.setDiscountPresence(discountPresence);
+		ic.setCardType(CardType.BUILDING);
+		ic.setDiscount(discount);
+		ic.apply(this.fm, this.g);
+		fm2.modifyValue(increment);
+		boolean x = fm2.getValue().equals(fm.getValue());
+		assertTrue(x);
 	}
 
 	@Test

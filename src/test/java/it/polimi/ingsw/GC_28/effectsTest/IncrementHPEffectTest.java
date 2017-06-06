@@ -6,7 +6,12 @@ import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.Test;
 
+import it.polimi.ingsw.GC_28.components.DiceColor;
+import it.polimi.ingsw.GC_28.components.FamilyMember;
 import it.polimi.ingsw.GC_28.effects.IncrementHPEffect;
+import it.polimi.ingsw.GC_28.model.Game;
+import it.polimi.ingsw.GC_28.model.Player;
+import it.polimi.ingsw.GC_28.model.PlayerColor;
 
 public class IncrementHPEffectTest {
 	private IncrementHPEffect incHP;
@@ -14,9 +19,22 @@ public class IncrementHPEffectTest {
 	private boolean production;
 	private boolean harvest;
 	
+	private	Game g;
+	private FamilyMember fm;
+	private FamilyMember fm2;
+	private Player player;
+	private Player player2;
+	
 	@Before
 	public void incrementHPEffect(){
 		incHP = new IncrementHPEffect();
+		player = new Player("gino", PlayerColor.GREEN);
+		player2 = new Player("Mariangiongianela", PlayerColor.BLUE);
+		g = new Game();
+		fm = new FamilyMember(player, false, DiceColor.ORANGE);
+		fm2 = new FamilyMember(player2, false, DiceColor.WHITE);
+		fm.setValue(2);
+		fm2.setValue(2);
 	}
 	
 	@AfterClass
@@ -25,7 +43,14 @@ public class IncrementHPEffectTest {
 
 	@Test
 	public void testApply() {
-		//fail("Not yet implemented");
+		production = true;
+		incHP.setHarvest(harvest);
+		incHP.setProduction(production);
+		incHP.setIncrement(increment);
+		incHP.apply(fm, g);
+		fm2.modifyValue(increment);
+		boolean x = fm2.getValue().equals(fm.getValue());
+		assertTrue(x);
 	}
 
 	@Test
