@@ -12,16 +12,33 @@ import it.polimi.ingsw.GC_28.spaces.Space;
 public class SpaceAction extends Action{
 	private Game game;
 	private SpaceController marketController = new SpaceController();
+	private FamilyMember familyMember;
+	private Space space;
+	private GoToHPEffect throughEffect;
 	
 	public SpaceAction(Game game){
 		this.game = game;
 	}
 
-	public boolean isApplicable(FamilyMember familyMember, Space space, GoToHPEffect throughEffect){
+	public boolean isApplicable(){
 		return marketController.check(familyMember, space, throughEffect);
 	}
 	
-	public void apply(FamilyMember familyMember, Space space, GoToHPEffect throughEffect){
+	
+	
+	public void setFamilyMember(FamilyMember familyMember) {
+		this.familyMember = familyMember;
+	}
+
+	public void setSpace(Space space) {
+		this.space = space;
+	}
+
+	public void setThroughEffect(GoToHPEffect throughEffect) {
+		this.throughEffect = throughEffect;
+	}
+
+	public void apply(){
 		ProductionAndHarvestSpace prodHarv;
 		
 		if(space instanceof ProductionAndHarvestSpace){

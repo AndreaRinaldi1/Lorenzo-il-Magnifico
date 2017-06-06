@@ -58,7 +58,8 @@ public class BoardsInitializer {
 	private FinalBonus finalBonus;
 	private List<Player> players = new ArrayList<>();
 	public GameBoard gameBoard = new GameBoard();
-	private Game g = new Game();
+	//private Game g = new Game();
+	private GameModel gameModel;
 	
 	public Game initializeBoard(List<Player> players){
 		try {
@@ -67,18 +68,19 @@ public class BoardsInitializer {
 			initCouncilPrivilege();
 			initGameBoard();
 			initSpaces();
-			g.setGameBoard(gameBoard);
+			//gameModel.setGameBoard(gameBoard);
 			initExcommunication();
 			initBonusTile();
 			initPlayerBoard();
 			initFinalBonus();
 			initFamilyMember();
-			g.setPlayers(players);
+			gameModel = new GameModel(gameBoard, players);
+			//gameModel.setPlayers(players);
 			completeExcommunicationArray();
 		} catch (FileNotFoundException e) {
 			Logger.getAnonymousLogger().log(Level.SEVERE, "cannot start initialize" + e);
 		}
-		return g;
+		return new Game(gameModel);
 	}
 	
 	private static Cell[] prepareCell(CardType ct) throws FileNotFoundException{ //LinkedList allow the order of elements
@@ -283,7 +285,7 @@ public class BoardsInitializer {
 	}
 	
 	private void completeExcommunicationArray(){
-		for(Player p : g.getPlayers()){
+		for(Player p : gameModel.getPlayers()){
 			for(int i = 0; i < 3; i++){
 				ExcommunicationTile e = new ExcommunicationTile();
 				e.setEffect(null);

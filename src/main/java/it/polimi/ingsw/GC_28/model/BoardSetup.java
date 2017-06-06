@@ -26,11 +26,14 @@ public class BoardSetup {
 	
 	private Game game ;
 	private GameBoard gameBoard;
+	private GameModel gameModel;
 	private static Deck deck = new Deck(); //once initialize it will not change 
 	
 	public BoardSetup(Game g){
 		this.game = g;
-		gameBoard = game.getGameBoard();
+		this.gameModel = g.getGameModel();
+		gameBoard = gameModel.getGameBoard();
+		
 	}
 	
 	public void firstSetUpCards() {
@@ -39,10 +42,11 @@ public class BoardSetup {
 	}
 	
 	public void setUpBoard(){
-		game.setPlayers(getNextPlayerOrder());
+		//gameModel.setPlayers(getNextPlayerOrder());
+		getNextPlayerOrder();
 		freeFamilyMember();
 		freeSpace();
-		if(game.getPlayers().size() > 2){
+		if(gameModel.getPlayers().size() > 2){
 			freeSpaceMoreThanTwoPlayer();
 		}
 		prepareTowers();
@@ -148,7 +152,7 @@ public class BoardSetup {
 		setUpVentureTower();	
 	}
 	
-	private List<Player> getNextPlayerOrder(){
+	private void getNextPlayerOrder(){
 		List<FamilyMember> inCouncil = gameBoard.getCouncilPalace().getPlayerOrder();
 		List<Player> nextOrder = new ArrayList<>();
 		if(!(inCouncil.isEmpty())){
@@ -158,12 +162,14 @@ public class BoardSetup {
 				}
 			}
 		}
-		for(Player p : game.getPlayers()){
+		for(Player p : gameModel.getPlayers()){
 			if(!(nextOrder.contains(p))){
 				nextOrder.add(p);
 			}
-		} 
-		return nextOrder;
+		}
+		for(int i = 0; i < nextOrder.size(); i++){
+			gameModel.getPlayers().set(i, nextOrder.get(i));
+		}
 	}
 	
 	public void freeSpace(){
@@ -194,7 +200,7 @@ public class BoardSetup {
 	}
 	
 	private void freeSpaceMoreThanTwoPlayer(){
-		if(game.getPlayers().size() > 2){
+		if(gameModel.getPlayers().size() > 2){
 			for(FamilyMember fm : gameBoard.getProductionSpace().getPlayer()){
 				gameBoard.getProductionSpace().getPlayer().remove(fm);
 			}
@@ -202,7 +208,7 @@ public class BoardSetup {
 				gameBoard.getHarvestSpace().getPlayer().remove(fm);
 			}
 		}
-		if(game.getPlayers().size() == 4){
+		if(gameModel.getPlayers().size() == 4){
 			if(!(gameBoard.getMixedSpace().isFree())){
 				gameBoard.getMixedSpace().getPlayer().remove(0);
 				gameBoard.getMixedSpace().setFree(true);
@@ -215,7 +221,7 @@ public class BoardSetup {
 	}
 		
 	private void freeFamilyMember(){
-		for(Player p : game.getPlayers()){
+		for(Player p : gameModel.getPlayers()){
 			for(int i = 0; i < p.getFamilyMembers().length; i++){
 				p.getFamilyMembers()[i].setUsed(false);
 			}
@@ -230,7 +236,7 @@ public class BoardSetup {
 	}
 	
 	private void setFamilyMember(){
-		for(Player p : game.getPlayers()){
+		for(Player p : gameModel.getPlayers()){
 			FamilyMember[] f = p.getFamilyMembers();
 			for(FamilyMember fm : f){
 				fm.setValue(gameBoard.getDices());

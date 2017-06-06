@@ -73,9 +73,13 @@ public class Server {
 			game.setHandlers(handlers);
 			BoardSetup bs = new BoardSetup(game);
 			bs.firstSetUpCards();
-			game.getGameBoard().display();
-			game.setCurrentPlayer(game.getPlayers().get(0));
-			game.getCurrentPlayer().getBoard().display();
+			
+			
+			game.registerObserver(new Controller());
+			game.getGameModel().registerObserver(game);
+			//game.getGameBoard().display();
+			//game.setCurrentPlayer(gameModel.getPlayers().get(0));
+			//game.getCurrentPlayer().getBoard().display();
 			executor.submit(game);
 		}
 	}
