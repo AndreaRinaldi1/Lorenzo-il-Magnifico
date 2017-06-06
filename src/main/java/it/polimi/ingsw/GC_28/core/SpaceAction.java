@@ -9,7 +9,7 @@ import it.polimi.ingsw.GC_28.model.Game;
 import it.polimi.ingsw.GC_28.spaces.ProductionAndHarvestSpace;
 import it.polimi.ingsw.GC_28.spaces.Space;
 
-public class SpaceAction {
+public class SpaceAction extends Action{
 	private Game game;
 	private SpaceController marketController = new SpaceController();
 	

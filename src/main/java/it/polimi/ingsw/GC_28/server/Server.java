@@ -53,7 +53,7 @@ public class Server {
 			Map<Player, ClientHandler> handlers = new HashMap<>();
 			
 			System.out.println("Server ready");
-			while(handlers.size() < 1){
+			while(handlers.size() < 2){
 				Socket socket = server.accept();
 				p = new PrintStream(socket.getOutputStream());
 				scan = new Scanner(socket.getInputStream());

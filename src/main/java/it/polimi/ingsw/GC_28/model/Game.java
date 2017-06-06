@@ -7,6 +7,7 @@ import java.util.EnumMap;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Observable;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -38,7 +39,7 @@ import it.polimi.ingsw.GC_28.spaces.Space;
 
 
 
-public class Game implements Runnable {
+public class Game extends Observable implements Runnable{
 	private GameBoard gameBoard;
 
 	//Scanner currentPlayer.getIn() = new Scanner(System.in);
