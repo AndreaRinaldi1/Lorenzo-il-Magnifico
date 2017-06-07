@@ -7,6 +7,8 @@ import java.util.EnumMap;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Timer;
+import java.util.TimerTask;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -45,7 +47,7 @@ import it.polimi.ingsw.GC_28.spaces.Space;
 
 public class Game extends Observable<Action> implements Runnable, Observer<Message>{
 	private GameModel gameModel;
-	
+	Timer timer;
 	//Scanner currentPlayer.getIn() = new Scanner(System.in);
 	private Player currentPlayer;
 	boolean modifiedWithServants = false;
@@ -238,6 +240,16 @@ public class Game extends Observable<Action> implements Runnable, Observer<Messa
 		do{
 			handlers.get(currentPlayer).getOut().println("Which move do you want to undertake? [takeCard / goToSpace / skip/ askcost]");
 			handlers.get(currentPlayer).getOut().flush();	
+			
+			timer = new Timer();
+			timer.schedule(new TimerTask(){
+				@Override
+				public void run() {
+					System.out.println("passati 15 sec");
+					return;
+				}
+			}, 5000);
+			
 			String line = handlers.get(currentPlayer).getIn().nextLine();
 			if(line.equalsIgnoreCase("takeCard")){
 				if(askCard(null)){
@@ -250,7 +262,7 @@ public class Game extends Observable<Action> implements Runnable, Observer<Messa
 				}
 			}
 			else if(line.equalsIgnoreCase("skip")){
-				return;
+				skip();
 			}
 			else if(line.equalsIgnoreCase("askcost")){
 				askCost();
@@ -263,7 +275,9 @@ public class Game extends Observable<Action> implements Runnable, Observer<Messa
 	
 	}
 	
-
+	public void skip(){
+		return;
+	}
 
 	public Map<Player, ClientHandler> getHandlers() {
 		return handlers;

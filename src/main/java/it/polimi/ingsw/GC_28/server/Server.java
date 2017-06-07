@@ -59,7 +59,7 @@ public class Server {
 			handlers = new HashMap<>();
 			started = false;
 			System.out.println("Server ready");
-			while(handlers.size() < 3){
+			while(handlers.size() < 1){
 				Socket socket = server.accept();
 				p = new PrintStream(socket.getOutputStream());
 				scan = new Scanner(socket.getInputStream());
