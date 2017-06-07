@@ -74,7 +74,7 @@ public class BoardsInitializer {
 			initFinalBonus();
 			initFamilyMember();
 			gameModel = new GameModel(gameBoard, players);
-			initBonusTile();
+			placeBonusTile();
 			//gameModel.setPlayers(players);
 			completeExcommunicationArray();
 		/*} catch (FileNotFoundException e) {
@@ -204,7 +204,7 @@ public class BoardsInitializer {
 	
 	
 
-	private void initBonusTile()throws FileNotFoundException{
+	private void placeBonusTile()throws FileNotFoundException{
 		for(Player p : players){
 			p.getBoard().setBonusTile(bonusTile);
 		}

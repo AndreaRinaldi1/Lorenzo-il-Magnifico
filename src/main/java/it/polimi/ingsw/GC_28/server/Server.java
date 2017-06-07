@@ -10,13 +10,18 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.List;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
+import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
+import org.omg.CORBA.TIMEOUT;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -60,12 +65,12 @@ public class Server {
 		ExecutorService executor = Executors.newCachedThreadPool();
 		server = new ServerSocket(port);
 		//server.setReuseAddress(true);
-		List<BonusTile> bonusList = initBonusTile(); 
 		while(!noStop){
+			List<BonusTile> bonusList = initBonusTile(); 
 			Map<Player, ClientHandler> handlers = new HashMap<>();
-			
 			System.out.println("Server ready");
-			while(handlers.size() < 2){
+			Socket socket = server.accept();
+			/*while(handlers.size() < 4){
 				Socket socket = server.accept();
 				p = new PrintStream(socket.getOutputStream());
 				scan = new Scanner(socket.getInputStream());
@@ -76,6 +81,12 @@ public class Server {
 				Player player = new Player(name, color);
 				ClientHandler ch = new ClientHandler(socket);
 				handlers.put(player, ch);
+			}*/
+			ExecutorService execAcceptance = Executors.newSingleThreadExecutor();
+			try{
+				execAcceptance.invokeAll(Arrays.asList(new AcceptPlayer(server, handlers,socket)),20, TimeUnit.SECONDS);
+			}catch(InterruptedException e){
+				e.printStackTrace();
 			}
 			usedColors.clear();
 			BoardsInitializer bi = new BoardsInitializer();	
@@ -91,9 +102,6 @@ public class Server {
 				
 				game.registerObserver(new Controller());
 				game.getGameModel().registerObserver(game);
-				//game.getGameBoard().display();
-				//game.setCurrentPlayer(gameModel.getPlayers().get(0));
-				//game.getCurrentPlayer().getBoard().display();
 				executor.submit(game);
 			}catch(IOException e){
 				for(Player p : players){
@@ -180,6 +188,97 @@ public class Server {
 		JsonReader reader = new JsonReader(new FileReader("bonusTile2.json"));
 		List<BonusTile> bonusList = gson.fromJson(reader, bonusTileListType);
 		return bonusList;
+	}
+	
+}
+
+class AcceptPlayer implements Callable<Boolean>{
+	private ServerSocket server;
+	private Map<Player,ClientHandler> handlers;
+	private PrintStream p;
+	private Scanner scan;
+	List<PlayerColor> usedColors = new ArrayList<>();
+	private Socket s;
+	
+	public AcceptPlayer(ServerSocket server, Map<Player,ClientHandler> handlers, Socket s){
+		this.server = server;
+		this.handlers = handlers;
+		this.s = s;
+	}
+	/*@Override
+	public void run(){
+		/*while(handlers.size() < 4){
+			try{
+			Socket socket = server.accept();
+			p = new PrintStream(socket.getOutputStream());
+			scan = new Scanner(socket.getInputStream());
+			p.println("Enter your name:");
+			p.flush();
+			String name = scan.nextLine();
+			PlayerColor color = enterColor();
+			Player player = new Player(name, color);
+			ClientHandler ch = new ClientHandler(socket);
+			handlers.put(player, ch);
+			}catch(IOException e){
+				e.printStackTrace();
+			}
+		}
+		usedColors.clear();
+		
+	}*/
+
+	@Override
+	public Boolean call() throws Exception {
+		// TODO Auto-generated method stub
+		while(handlers.size() < 4){
+		Socket socket;
+		try{
+		if(handlers.size() == 0){
+			socket = s;
+		}
+		else{
+			socket = server.accept();
+		}
+		p = new PrintStream(socket.getOutputStream());
+		scan = new Scanner(socket.getInputStream());
+		p.println("Enter your name:");
+		p.flush();
+		String name = scan.nextLine();
+		PlayerColor color = enterColor();
+		Player player = new Player(name, color);
+		ClientHandler ch = new ClientHandler(socket);
+		handlers.put(player, ch);
+		}catch(IOException e){
+			e.printStackTrace();
+		}
+	}
+	usedColors.clear();
+		return true;
+	}
+	
+	private PlayerColor enterColor(){
+		boolean found = false;
+		do{
+			p.println("Enter the color you prefer: [red / blue / green / yellow] ");
+			p.flush();
+			String playerColor = scan.nextLine().toUpperCase();
+			for(PlayerColor color : PlayerColor.values()){
+				if(playerColor.equals(color.name())){
+					if(!usedColors.contains(color)){
+						usedColors.add(color);
+						return color;
+					}
+					else{
+						p.println("This color has already been choosed");
+						found = true;
+						break;
+					}
+				}
+			}
+			if(!found){
+				p.println("Not valid input!");
+			}
+		}while(true);
 	}
 	
 }
