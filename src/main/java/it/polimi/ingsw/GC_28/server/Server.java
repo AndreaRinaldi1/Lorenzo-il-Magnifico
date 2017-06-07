@@ -10,6 +10,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
+import java.util.Timer;
+import java.util.TimerTask;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.logging.Level;
@@ -28,7 +30,10 @@ public class Server {
 	private PrintStream p;
 	private Scanner scan;
 	List<PlayerColor> usedColors = new ArrayList<>();
-	Boolean noStop = false;
+	boolean noStop = false;
+	ExecutorService executor;
+	boolean started;
+	Map<Player, ClientHandler> handlers;
 	
 	public Server(int p){
 		this.port = p;
@@ -46,14 +51,15 @@ public class Server {
 	}
 	
 	private void startServer() throws IOException{
-		ExecutorService executor = Executors.newCachedThreadPool();
+		Timer timer = new Timer();
+		executor = Executors.newCachedThreadPool();
 		server = new ServerSocket(port);
 		//server.setReuseAddress(true);
 		while(!noStop){
-			Map<Player, ClientHandler> handlers = new HashMap<>();
-			
+			handlers = new HashMap<>();
+			started = false;
 			System.out.println("Server ready");
-			while(handlers.size() < 2){
+			while(handlers.size() < 3){
 				Socket socket = server.accept();
 				p = new PrintStream(socket.getOutputStream());
 				scan = new Scanner(socket.getInputStream());
@@ -63,25 +69,46 @@ public class Server {
 				PlayerColor color = enterColor();
 				Player player = new Player(name, color);
 				ClientHandler ch = new ClientHandler(socket);
+				if(started){
+					started = false;
+					handlers = new HashMap<>();
+				}
 				handlers.put(player, ch);
+				if(handlers.size() == 2){
+					timer = new Timer();
+					timer.schedule(new TimerTask(){
+						@Override
+						public void run() {
+							System.out.println("passati 15 sec");
+							startGame(handlers);
+						}
+					}, 15000);
+				}
 			}
-			usedColors.clear();
-			BoardsInitializer bi = new BoardsInitializer();	
-			List<Player> players = new ArrayList<>(handlers.keySet());
-			Game game = bi.initializeBoard(players);
-
-			game.setHandlers(handlers);
-			BoardSetup bs = new BoardSetup(game);
-			bs.firstSetUpCards();
-			
-			
-			game.registerObserver(new Controller());
-			game.getGameModel().registerObserver(game);
-			//game.getGameBoard().display();
-			//game.setCurrentPlayer(gameModel.getPlayers().get(0));
-			//game.getCurrentPlayer().getBoard().display();
-			executor.submit(game);
+			timer.cancel();
+			startGame(handlers);	
 		}
+	}
+
+	
+	public void startGame(Map<Player, ClientHandler> handlers){
+		usedColors.clear();
+		BoardsInitializer bi = new BoardsInitializer();	
+		List<Player> players = new ArrayList<>(handlers.keySet());
+		Game game = bi.initializeBoard(players);
+
+		game.setHandlers(handlers);
+		BoardSetup bs = new BoardSetup(game);
+		bs.firstSetUpCards();
+		
+		
+		game.registerObserver(new Controller());
+		game.getGameModel().registerObserver(game);
+		//game.getGameBoard().display();
+		//game.setCurrentPlayer(gameModel.getPlayers().get(0));
+		//game.getCurrentPlayer().getBoard().display();
+		started = true;
+		executor.submit(game);
 	}
 	
 	public void noStop(){
