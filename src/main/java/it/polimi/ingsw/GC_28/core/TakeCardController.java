@@ -15,18 +15,20 @@ import it.polimi.ingsw.GC_28.effects.IncrementCardEffect;
 import it.polimi.ingsw.GC_28.effects.OtherEffect;
 import it.polimi.ingsw.GC_28.effects.TakeCardEffect;
 import it.polimi.ingsw.GC_28.model.Game;
+import it.polimi.ingsw.GC_28.model.GameModel;
+import it.polimi.ingsw.GC_28.server.Message;
 import it.polimi.ingsw.GC_28.cards.Character;
 import it.polimi.ingsw.GC_28.cards.ExcommunicationTile;
 import it.polimi.ingsw.GC_28.cards.Venture;
 
 public class TakeCardController {
-
+	private GameModel g;
 	private GameBoard gameBoard;
 	protected CardType cardType;
 	//private Cell cell;
 	
-	public TakeCardController(GameBoard gameBoard){
-		this.gameBoard = gameBoard;
+	public TakeCardController(GameModel gameModel){
+		this.gameBoard = gameModel.getGameBoard();
 	}
 	
 	public boolean check(Game game, String name, FamilyMember familyMember, TakeCardEffect throughEffect){
@@ -42,6 +44,7 @@ public class TakeCardController {
 			}
 		}*/
 		if(!(checkCardExistance(name, throughEffect))){
+			g.notifyObserver(new Message("this card doesn't exist", false));
 			return false;
 		}
 		
