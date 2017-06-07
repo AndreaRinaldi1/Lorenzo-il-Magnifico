@@ -2,13 +2,19 @@ package it.polimi.ingsw.GC_28.effectsTest;
 
 import static org.junit.Assert.*;
 
+import java.util.EnumMap;
+
 import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.Test;
 
+import it.polimi.ingsw.GC_28.boards.BonusTile;
 import it.polimi.ingsw.GC_28.boards.GameBoard;
+import it.polimi.ingsw.GC_28.boards.PlayerBoard;
 import it.polimi.ingsw.GC_28.components.DiceColor;
 import it.polimi.ingsw.GC_28.components.FamilyMember;
+import it.polimi.ingsw.GC_28.components.Resource;
+import it.polimi.ingsw.GC_28.components.ResourceType;
 import it.polimi.ingsw.GC_28.effects.GoToHPEffect;
 import it.polimi.ingsw.GC_28.model.Game;
 import it.polimi.ingsw.GC_28.model.Player;
@@ -26,13 +32,26 @@ public class GoToHPEffectTest {
 	private Game g;
 	private GameBoard gb;
 	private ProductionAndHarvestSpace productionSpace2;
+	private Resource res;
+	EnumMap<ResourceType, Integer> w;
 
 	
 	@Before
 	public void goToHPEffect(){
+		//creazione effetto
 		gt = new GoToHPEffect();
+		//fatti player e family member 
 		player = new Player("Gino", PlayerColor.BLUE);
 		fm = new FamilyMember(player, false, DiceColor.BLACK);
+		//creazione playerBoard
+		w = new EnumMap<ResourceType, Integer>(ResourceType.class);
+		for(ResourceType resType : ResourceType.values()){
+			w.put(resType, 0);
+		}
+		res = Resource.of(w);
+		BonusTile bt = new BonusTile();
+		PlayerBoard pb = new PlayerBoard(bt, res);
+		player.setBoard(pb);
 		g = new Game();
 		g.setCurrentPlayer(player);
 		gb = new GameBoard();
@@ -45,12 +64,7 @@ public class GoToHPEffectTest {
 
 	@Test
 	public void testApply() {
-		harvest = true;
-		gt.setActionValue(actionValue);
-		gt.setHarvest(harvest);
-		gt.setProduction(production);
-		gt.apply(this.fm, this.g);
-		assertTrue(this.g.goToSpace(gt));
+		gt.apply(fm, g);
 	}
 
 	@Test

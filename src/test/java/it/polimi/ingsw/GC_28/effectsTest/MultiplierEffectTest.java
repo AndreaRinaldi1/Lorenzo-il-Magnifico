@@ -104,7 +104,7 @@ public class MultiplierEffectTest {
 	public static void tearDownAfterClass() throws Exception {
 	}
 
-	//TEST OF APPLY(FAMILYMEMBER, GAME)
+	//TEST OF APPLY(FAMILYMEMBER, GAME), con i resourceCost
 	@Test
 	public void testApply1() {
 		//me.setCardType(cardType);
@@ -120,7 +120,18 @@ public class MultiplierEffectTest {
 		assertTrue(x);
 	}
 	
-	//TEST OF APPLY(PLAYER, GAME)
+	//APPLY (FAMILYMEMBER, GAME) con la carta
+	@Test
+	public void testApply3(){
+		me.setCardType(cardType);
+		pb.addCard(b);
+		me.setResourceBonus(resourceBonus);
+		me.apply(fm, g);
+		boolean x = resourceBonus.equals(fm.getPlayer().getBoard().getResources());
+		assertTrue(x);
+	}
+	
+	//TEST OF APPLY(PLAYER, GAME) CON CARD TYPE
 	@Test
 	public void testApply2(){
 		me.setCardType(cardType);
@@ -129,6 +140,19 @@ public class MultiplierEffectTest {
 		pb.addCard(b);
 		
 		me.apply(player, g);
+		boolean x = resourceBonus.equals(player.getBoard().getResources());
+		assertTrue(x);
+	}
+	
+	//TEST OF APPLY(PLAYER, GAME) CON RESOURCE COST
+	@Test
+	public void testApply4() {
+		fm.getPlayer().addResource(resourceCost);
+		me.setResourceCost(resourceCost);
+		me.setResourceBonus(resourceBonus);
+
+		me.apply(player, g);
+		resourceBonus.modifyResource(resourceCost, true);
 		boolean x = resourceBonus.equals(player.getBoard().getResources());
 		assertTrue(x);
 	}
