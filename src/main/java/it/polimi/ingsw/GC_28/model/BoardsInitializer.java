@@ -233,11 +233,11 @@ public class BoardsInitializer {
 	private void initFinalBonus()throws FileNotFoundException{
 		Gson gson = new GsonBuilder().create();
 		try {
-			JsonReader readerTerritoryBonus = new JsonReader(new FileReader("finalBonus.json"));
+			JsonReader readerFinalBonus = new JsonReader(new FileReader("finalBonus.json"));
 			//Type hashMapType = new TypeToken<HashMap<String,ArrayList<Resource>>>() {}.getType();
-			finalBonus = gson.fromJson(readerTerritoryBonus, FinalBonus.class);
+			finalBonus = gson.fromJson(readerFinalBonus, FinalBonus.class);
 			FinalBonus.setFinalBonus(finalBonus);
-			readerTerritoryBonus.close();
+			readerFinalBonus.close();
 		} catch (IOException e) {
 			Logger.getAnonymousLogger().log(Level.SEVERE, "file not found" + e);
 		}

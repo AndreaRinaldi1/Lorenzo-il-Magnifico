@@ -167,6 +167,7 @@ public class BoardSetup {
 	}
 	
 	public void freeSpace(){
+		System.out.println(2);
 		if(!(gameBoard.getCoinSpace().isFree())){
 			gameBoard.getCoinSpace().getPlayer().remove(0);
 			gameBoard.getCoinSpace().setFree(true);
@@ -185,12 +186,10 @@ public class BoardSetup {
 			gameBoard.getHarvestSpace().freeFirstPlayer();
 			gameBoard.getHarvestSpace().setFree(true);
 		}
-		int i = 0;
 		while(gameBoard.getCouncilPalace().getPlayerOrder().size() > 0){
 			if(gameBoard.getCouncilPalace().getPlayerOrder().size() != 0){
-				gameBoard.getCouncilPalace().getPlayerOrder().remove(i);
+				gameBoard.getCouncilPalace().getPlayerOrder().remove(0);
 			}
-			i++;
 		}
 	}
 	

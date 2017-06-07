@@ -17,7 +17,7 @@ public class ClientWriter implements Runnable{
 		Scanner stdin = null;
 		try {
 			PrintWriter socketOut = new PrintWriter(socket.getOutputStream());
-			stdin = new Scanner(System.in);;
+			stdin = new Scanner(System.in);
 			while(true){
 				String inputLine = stdin.nextLine();
 				socketOut.println(inputLine);

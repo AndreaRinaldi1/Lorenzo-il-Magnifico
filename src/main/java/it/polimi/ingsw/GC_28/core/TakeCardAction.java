@@ -13,7 +13,7 @@ import it.polimi.ingsw.GC_28.effects.Effect;
 import it.polimi.ingsw.GC_28.effects.TakeCardEffect;
 import it.polimi.ingsw.GC_28.model.Game;
 
-public class TakeCardAction {
+public class TakeCardAction extends Action{
 	private Game game;
 	private GameBoard gameBoard;
 	private TakeCardController takeCardController;

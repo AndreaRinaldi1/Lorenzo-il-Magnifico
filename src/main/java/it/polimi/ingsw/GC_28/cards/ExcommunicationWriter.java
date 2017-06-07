@@ -9,8 +9,6 @@ import java.util.Scanner;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import javax.print.attribute.standard.MediaSize.Other;
-
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
@@ -26,7 +24,6 @@ import it.polimi.ingsw.GC_28.effects.NoFinalBonusEffect;
 import it.polimi.ingsw.GC_28.effects.OtherEffect;
 import it.polimi.ingsw.GC_28.effects.ReduceDiceEffect;
 import it.polimi.ingsw.GC_28.effects.ServantEffect;
-import jdk.nashorn.internal.runtime.regexp.joni.ScanEnvironment;
 
 public class ExcommunicationWriter {
 	Scanner scanner = new Scanner(System.in);

@@ -85,7 +85,7 @@ public class FinalBonusWriter {
 			enterResourceBonus(r);
 			Resource resource = Resource.of(r);
 			finalBonus.getFinalCharactersBonus().add(resource);
-		}*/
+		}
 		FinalBonus finalBonus = FinalBonus.instance();
 		for(int i = 0; i< 4; i++){
 			Integer p = i+1;
@@ -97,7 +97,7 @@ public class FinalBonusWriter {
 			l.add(resource);
 		}
 		finalBonus.setFinalMilitaryTrack(l);
-		/*System.out.println("Enter Resource divide value for resource final bonus:");
+		System.out.println("Enter Resource divide value for resource final bonus:");
 		Integer resourceBonus = scanner.nextInt();
 		scanner.nextLine();
 		finalBonus.setResourceFactor(resourceBonus);
@@ -111,6 +111,17 @@ public class FinalBonusWriter {
 			Resource resource = Resource.of(r);
 			finalBonus.getResourceForTerritories().add(resource);
 		}*/
+		FinalBonus finalBonus = FinalBonus.instance();
+		for(int i = 0; i< 15; i++){
+			Integer p = i+1;
+			String place = p.toString();
+			System.out.println("Bonus for "+ place + " place:");
+			EnumMap<ResourceType, Integer> r = new EnumMap<>(ResourceType.class);
+			enterResourceBonus(r);
+			Resource resource = Resource.of(r);
+			l.add(resource);
+		}
+		finalBonus.setFaithPointTrack(l);
 		try{
 			FileWriter f = new FileWriter("finalBonus.json", true);
 			String tmp = gson.toJson(finalBonus);
