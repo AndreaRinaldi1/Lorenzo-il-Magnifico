@@ -11,9 +11,11 @@ import org.junit.Test;
 import it.polimi.ingsw.GC_28.boards.BonusTile;
 import it.polimi.ingsw.GC_28.boards.GameBoard;
 import it.polimi.ingsw.GC_28.boards.PlayerBoard;
+import it.polimi.ingsw.GC_28.cards.ExcommunicationTile;
 import it.polimi.ingsw.GC_28.components.FamilyMember;
 import it.polimi.ingsw.GC_28.components.Resource;
 import it.polimi.ingsw.GC_28.components.ResourceType;
+import it.polimi.ingsw.GC_28.effects.DiscountEffect;
 import it.polimi.ingsw.GC_28.effects.PrivilegesEffect;
 import it.polimi.ingsw.GC_28.model.Game;
 import it.polimi.ingsw.GC_28.model.Player;
@@ -32,10 +34,13 @@ public class PrivilegesEffectTest {
 	private Resource res;
 	private EnumMap<ResourceType, Integer> w;
 	private GameBoard gb;
+	private ExcommunicationTile et;
+	private DiscountEffect de;
 	
 	@Before
 	public void privilegesEffect(){
 		pe = new PrivilegesEffect();
+		de = new DiscountEffect();
 		game = new Game();
 		player = new Player("gino", PlayerColor.GREEN);
 		
@@ -48,9 +53,14 @@ public class PrivilegesEffectTest {
 		pb = new PlayerBoard(bt, res);
 		player.setBoard(pb);
 	
+		de.setAlternativeDiscountPresence(false);
+		de.setDiscount(res);
+		
 		gb = new GameBoard();
 		game.setGameBoard(gb);
 		game.setCurrentPlayer(player);
+		et = new ExcommunicationTile();
+		et.setEffect(de);
 	
 	}
 	
@@ -64,6 +74,9 @@ public class PrivilegesEffectTest {
 		pe.setNumberOfCouncilPrivileges(numberOfCouncilPrivileges);
 		different = true;
 		pe.setDifferent(different);
+		game.setCurrentPlayer(player);
+		game.checkResourceExcommunication(res);
+		
 		
 		pe.apply(familyMember, game);
 		
