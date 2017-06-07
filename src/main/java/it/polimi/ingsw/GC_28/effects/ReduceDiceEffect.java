@@ -15,6 +15,11 @@ public class ReduceDiceEffect extends Effect{
 	private List<DiceColor> diceColor = new ArrayList<>();
 	int reduce = 1;
 	
+	//FOR TEST
+	public void setDiceColor(List<DiceColor> diceColor){
+		this.diceColor = diceColor;
+	}
+	
 	@Override
 	public void apply(Player player, Game game) {
 		for(FamilyMember fm : player.getFamilyMembers()){
@@ -22,10 +27,9 @@ public class ReduceDiceEffect extends Effect{
 				if(fm.getDiceColor().equals(color)){
 					fm.modifyValue(reduce);
 				}
-
 			}
-			
 		}
-		
+	
 	}
+	
 }

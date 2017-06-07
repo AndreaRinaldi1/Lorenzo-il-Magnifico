@@ -4,7 +4,9 @@ import static org.junit.Assert.*;
 
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
+import java.util.ArrayList;
 import java.util.EnumMap;
+import java.util.List;
 
 import org.junit.After;
 import org.junit.AfterClass;
@@ -20,6 +22,7 @@ import it.polimi.ingsw.GC_28.components.Resource;
 import it.polimi.ingsw.GC_28.components.ResourceType;
 import it.polimi.ingsw.GC_28.effects.NoEffect;
 import it.polimi.ingsw.GC_28.model.Game;
+import it.polimi.ingsw.GC_28.model.GameModel;
 import it.polimi.ingsw.GC_28.model.Player;
 import it.polimi.ingsw.GC_28.model.PlayerColor;
 
@@ -32,6 +35,8 @@ public class NoEffectTest {
 	private Resource res;
 	EnumMap<ResourceType, Integer> w;
 	private GameBoard gb;
+	private GameModel gameModel;
+	private List<Player> players = new ArrayList<>();
 	
 	@Before
 	public void noEffect(){
@@ -46,7 +51,9 @@ public class NoEffectTest {
 		BonusTile bt = new BonusTile();
 		PlayerBoard pb = new PlayerBoard(bt, res);
 		player.setBoard(pb);
-		g = new Game();
+		players.add(player);
+		gameModel = new GameModel(gb, players);
+		g = new Game(gameModel);
 		g.setCurrentPlayer(player);
 		gb = new GameBoard();
 	}

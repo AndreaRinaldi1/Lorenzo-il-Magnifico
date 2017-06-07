@@ -4,6 +4,7 @@ import static org.junit.Assert.*;
 
 import java.util.ArrayList;
 import java.util.EnumMap;
+import java.util.List;
 
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -25,6 +26,7 @@ import it.polimi.ingsw.GC_28.components.ResourceType;
 import it.polimi.ingsw.GC_28.effects.MultiplierEffect;
 import it.polimi.ingsw.GC_28.effects.NoFinalBonusEffect;
 import it.polimi.ingsw.GC_28.model.Game;
+import it.polimi.ingsw.GC_28.model.GameModel;
 import it.polimi.ingsw.GC_28.model.Player;
 import it.polimi.ingsw.GC_28.model.PlayerColor;
 
@@ -42,7 +44,8 @@ public class NoFinalBonusEffectTest {
 	
 	private GameBoard gb;
 	private PlayerBoard pb;
-	
+	private GameModel gameModel;
+	private List<Player> players = new ArrayList<>();
 	private BonusTile bt;
 	
 	private Building b;
@@ -86,17 +89,19 @@ public class NoFinalBonusEffectTest {
 		resourceBonus = Resource.of(resource1);
 			
 		b = new Building("casa", 2, 1);
+		nfbe.setCardType(cardType);
 				
 		//fai il game
-		g = new Game();
-				
+		players.add(player);
+		gameModel = new GameModel(gb, players);
+		g = new Game(gameModel);
+		
 		//fai i familyMember
 		fm = new FamilyMember(player, false, DiceColor.ORANGE);
 		fm.setValue(2);
 				
 		//fai gb e la setti in game e setti currentPlayer in game
 		gb = new GameBoard();
-		g.setGameBoard(gb);
 		g.setCurrentPlayer(player);
 		
 	}
@@ -110,7 +115,6 @@ public class NoFinalBonusEffectTest {
 		System.out.println(fm.getPlayer().getBoard().getVentures());
 		System.out.println(fm.getPlayer().getBoard().getResources());
 		
-		nfbe.setCardType(cardType);
 		nfbe.apply(player, g);
 		
 		
@@ -119,6 +123,7 @@ public class NoFinalBonusEffectTest {
 
 	@Test
 	public void testGetCardType() {
+		cardType = CardType.BUILDING;
 		boolean x = cardType.equals(nfbe.getCardType());
 		assertTrue(x);
 	}

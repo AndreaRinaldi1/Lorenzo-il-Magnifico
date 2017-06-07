@@ -2,7 +2,9 @@ package it.polimi.ingsw.GC_28.effectsTest;
 
 import static org.junit.Assert.*;
 
+import java.util.ArrayList;
 import java.util.EnumMap;
+import java.util.List;
 
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -20,6 +22,7 @@ import it.polimi.ingsw.GC_28.components.Resource;
 import it.polimi.ingsw.GC_28.components.ResourceType;
 import it.polimi.ingsw.GC_28.effects.MultiplierEffect;
 import it.polimi.ingsw.GC_28.model.Game;
+import it.polimi.ingsw.GC_28.model.GameModel;
 import it.polimi.ingsw.GC_28.model.Player;
 import it.polimi.ingsw.GC_28.model.PlayerColor;
 
@@ -40,7 +43,8 @@ public class MultiplierEffectTest {
 	private GameBoard gb;
 	private PlayerBoard pb;
 	
-	
+	private GameModel gameModel;
+	private List<Player> players = new ArrayList<>();
 	
 	private BonusTile bt;
 	
@@ -82,7 +86,10 @@ public class MultiplierEffectTest {
 		
 		
 		//fai il game
-		g = new Game();
+		players.add(player);
+		players.add(player2);
+		gameModel = new GameModel(gb, players);
+		g = new Game(gameModel);
 		
 		//fai i familyMember
 		fm = new FamilyMember(player, false, DiceColor.ORANGE);
@@ -92,7 +99,6 @@ public class MultiplierEffectTest {
 		
 		//fai gb e la setti in game e setti currentPlayer in game
 		gb = new GameBoard();
-		g.setGameBoard(gb);
 		g.setCurrentPlayer(player);
 		
 		

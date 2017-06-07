@@ -2,7 +2,11 @@ package it.polimi.ingsw.GC_28.effectsTest;
 
 import static org.junit.Assert.*;
 
+import java.io.IOException;
+import java.net.Socket;
+import java.util.ArrayList;
 import java.util.EnumMap;
+import java.util.HashMap;
 
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -18,8 +22,10 @@ import it.polimi.ingsw.GC_28.components.ResourceType;
 import it.polimi.ingsw.GC_28.effects.DiscountEffect;
 import it.polimi.ingsw.GC_28.effects.PrivilegesEffect;
 import it.polimi.ingsw.GC_28.model.Game;
+import it.polimi.ingsw.GC_28.model.GameModel;
 import it.polimi.ingsw.GC_28.model.Player;
 import it.polimi.ingsw.GC_28.model.PlayerColor;
+import it.polimi.ingsw.GC_28.server.ClientHandler;
 
 public class PrivilegesEffectTest {
 	private PrivilegesEffect pe;
@@ -34,15 +40,23 @@ public class PrivilegesEffectTest {
 	private Resource res;
 	private EnumMap<ResourceType, Integer> w;
 	private GameBoard gb;
-	private ExcommunicationTile et;
-	private DiscountEffect de;
+	private GameModel gameModel;
+	private ArrayList<Player> players;
+	private Socket socket;
+	private ClientHandler ch;
+	private HashMap<Player, ClientHandler> handlers = new HashMap<>();
+
 	
 	@Before
-	public void privilegesEffect(){
+	public void privilegesEffect()throws IOException{
 		pe = new PrivilegesEffect();
-		de = new DiscountEffect();
-		game = new Game();
 		player = new Player("gino", PlayerColor.GREEN);
+		socket = new Socket("127.0.0.1", 3333);
+		ch = new ClientHandler(socket);
+		handlers.put(player, ch);
+		
+		players = new ArrayList<>();
+		players.add(player);
 		
 		w = new EnumMap<ResourceType, Integer>(ResourceType.class);
 		for(ResourceType resType : ResourceType.values()){
@@ -53,14 +67,12 @@ public class PrivilegesEffectTest {
 		pb = new PlayerBoard(bt, res);
 		player.setBoard(pb);
 	
-		de.setAlternativeDiscountPresence(false);
-		de.setDiscount(res);
 		
 		gb = new GameBoard();
-		game.setGameBoard(gb);
+		gameModel  = new GameModel(gb, players);  
+		game = new Game(gameModel);
 		game.setCurrentPlayer(player);
-		et = new ExcommunicationTile();
-		et.setEffect(de);
+		
 	
 	}
 	

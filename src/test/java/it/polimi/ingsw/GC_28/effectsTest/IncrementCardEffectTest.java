@@ -2,15 +2,20 @@ package it.polimi.ingsw.GC_28.effectsTest;
 
 import static org.junit.Assert.*;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.Test;
 
+import it.polimi.ingsw.GC_28.boards.GameBoard;
 import it.polimi.ingsw.GC_28.cards.CardType;
 import it.polimi.ingsw.GC_28.components.DiceColor;
 import it.polimi.ingsw.GC_28.components.FamilyMember;
 import it.polimi.ingsw.GC_28.effects.*;
 import it.polimi.ingsw.GC_28.model.Game;
+import it.polimi.ingsw.GC_28.model.GameModel;
 import it.polimi.ingsw.GC_28.model.Player;
 import it.polimi.ingsw.GC_28.model.PlayerColor;
 
@@ -25,6 +30,9 @@ public class IncrementCardEffectTest {
 	private FamilyMember fm2;
 	private Player player;
 	private Player player2;
+	private GameModel gameModel;
+	private GameBoard gameBoard; 
+	private List<Player> players = new ArrayList<>();
 	
 	@Before
 	public void incrementCardEffect(){
@@ -32,7 +40,11 @@ public class IncrementCardEffectTest {
 		discount = new DiscountEffect();
 		player = new Player("gino", PlayerColor.GREEN);
 		player2 = new Player("Mariangiongianela", PlayerColor.BLUE);
-		g = new Game();
+		players.add(player);
+		players.add(player2);
+		gameBoard = new GameBoard();
+		gameModel = new GameModel(gameBoard, players);
+		g = new Game(gameModel);
 		fm = new FamilyMember(player, false, DiceColor.ORANGE);
 		fm2 = new FamilyMember(player2, false, DiceColor.WHITE);
 		fm.setValue(2);
