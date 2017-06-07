@@ -36,7 +36,7 @@ public class BoardSetup {
 		
 	}
 	
-	public void firstSetUpCards() {
+	public void firstSetUpCards()throws FileNotFoundException {
 		prepareDeck();
 		prepareTowers();
 	}
@@ -54,13 +54,13 @@ public class BoardSetup {
 		setFamilyMember();
 	}
 	
-	private static void prepareDeck(){
-		try{
+	private static void prepareDeck()throws FileNotFoundException{
+		//try{
 			CardReader cardReader = new CardReader();
 			deck =  cardReader.startRead();
-			}catch(FileNotFoundException e){
+			/*}catch(FileNotFoundException e){
 				Logger.getAnonymousLogger().log(Level.SEVERE, "deck not found" + e);
-			}
+			}*/
 	}
 	
 	private void setUpTerritoriesTower(){

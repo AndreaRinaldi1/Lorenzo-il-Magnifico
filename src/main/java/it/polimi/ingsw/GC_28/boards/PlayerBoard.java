@@ -21,7 +21,7 @@ public class PlayerBoard {
 	
 
 	
-	private final BonusTile bonusTile;
+	private BonusTile bonusTile;
 	private Resource resources;
 	
 	
@@ -81,13 +81,6 @@ public class PlayerBoard {
 		String vent = ventTab.render() + "\n";
 		ret.append(vent);
 		
-		/*ret.append("Excommunication: \n");
-		AsciiTable excom = new AsciiTable();
-		excom.addRule();
-		excom.addRow("First Era", "Second Era", "Third Era");
-		excom.addRule();
-		excom.addRow()*/
-		
 		ret.append("Resources: \n");
 		AsciiTable res = new AsciiTable();
 		res.addRule();
@@ -104,6 +97,8 @@ public class PlayerBoard {
 		ret.append(res.render() + "\n");
 		//ret.append(resources.toString()); 
 		ret.append("\n" + retLine);
+		
+		
 		
 		return ret.toString();
 		
@@ -153,6 +148,10 @@ public class PlayerBoard {
 
 	public void setResources(Resource resources) {
 		this.resources = resources;
+	}
+	
+	public void setBonusTile(BonusTile bonusTile){
+		this.bonusTile = bonusTile;
 	}
 
 }

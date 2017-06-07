@@ -1,0 +1,154 @@
+[
+  {
+    "productionEffect": {
+      "productionValue": 1,
+      "resourceBonus": {
+        "resourceBonus": {
+          "resource": {
+            "COIN": 2,
+            "WOOD": 0,
+            "STONE": 0,
+            "SERVANT": 1,
+            "MILITARYPOINT": 0,
+            "VICTORYPOINT": 0,
+            "FAITHPOINT": 0
+          }
+        },
+        "type": "RESOURCEEFFECT"
+      },
+      "type": "PRODUCTIONEFFECT"
+    },
+    "harvestEffect": {
+      "harvestValue": 1,
+      "resourceHarvestBonus": {
+        "resourceBonus": {
+          "resource": {
+            "COIN": 0,
+            "WOOD": 1,
+            "STONE": 1,
+            "SERVANT": 0,
+            "MILITARYPOINT": 1,
+            "VICTORYPOINT": 0,
+            "FAITHPOINT": 0
+          }
+        },
+        "type": "RESOURCEEFFECT"
+      },
+      "type": "HARVESTEFFECT"
+    }
+  },
+  {
+    "productionEffect": {
+      "productionValue": 1,
+      "resourceBonus": {
+        "resourceBonus": {
+          "resource": {
+            "COIN": 0,
+            "WOOD": 0,
+            "STONE": 0,
+            "SERVANT": 1,
+            "MILITARYPOINT": 2,
+            "VICTORYPOINT": 0,
+            "FAITHPOINT": 0
+          }
+        },
+        "type": "RESOURCEEFFECT"
+      },
+      "type": "PRODUCTIONEFFECT"
+    },
+    "harvestEffect": {
+      "harvestValue": 1,
+      "resourceHarvestBonus": {
+        "resourceBonus": {
+          "resource": {
+            "COIN": 1,
+            "WOOD": 1,
+            "STONE": 1,
+            "SERVANT": 0,
+            "MILITARYPOINT": 0,
+            "VICTORYPOINT": 0,
+            "FAITHPOINT": 0
+          }
+        },
+        "type": "RESOURCEEFFECT"
+      },
+      "type": "HARVESTEFFECT"
+    }
+  },
+  {
+    "productionEffect": {
+      "productionValue": 1,
+      "resourceBonus": {
+        "resourceBonus": {
+          "resource": {
+            "COIN": 1,
+            "WOOD": 0,
+            "STONE": 0,
+            "SERVANT": 2,
+            "MILITARYPOINT": 0,
+            "VICTORYPOINT": 0,
+            "FAITHPOINT": 0
+          }
+        },
+        "type": "RESOURCEEFFECT"
+      },
+      "type": "PRODUCTIONEFFECT"
+    },
+    "harvestEffect": {
+      "harvestValue": 1,
+      "resourceHarvestBonus": {
+        "resourceBonus": {
+          "resource": {
+            "COIN": 0,
+            "WOOD": 1,
+            "STONE": 1,
+            "SERVANT": 0,
+            "MILITARYPOINT": 1,
+            "VICTORYPOINT": 0,
+            "FAITHPOINT": 0
+          }
+        },
+        "type": "RESOURCEEFFECT"
+      },
+      "type": "HARVESTEFFECT"
+    }
+  },
+  {
+    "productionEffect": {
+      "productionValue": 1,
+      "resourceBonus": {
+        "resourceBonus": {
+          "resource": {
+            "COIN": 1,
+            "WOOD": 0,
+            "STONE": 0,
+            "SERVANT": 0,
+            "MILITARYPOINT": 2,
+            "VICTORYPOINT": 0,
+            "FAITHPOINT": 0
+          }
+        },
+        "type": "RESOURCEEFFECT"
+      },
+      "type": "PRODUCTIONEFFECT"
+    },
+    "harvestEffect": {
+      "harvestValue": 1,
+      "resourceHarvestBonus": {
+        "resourceBonus": {
+          "resource": {
+            "COIN": 0,
+            "WOOD": 1,
+            "STONE": 1,
+            "SERVANT": 1,
+            "MILITARYPOINT": 0,
+            "VICTORYPOINT": 0,
+            "FAITHPOINT": 0
+          }
+        },
+        "type": "RESOURCEEFFECT"
+      },
+      "type": "HARVESTEFFECT"
+    }
+  }
+]

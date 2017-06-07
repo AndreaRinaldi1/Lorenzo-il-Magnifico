@@ -41,8 +41,6 @@ import it.polimi.ingsw.GC_28.server.Observable;
 import it.polimi.ingsw.GC_28.server.Observer;
 import it.polimi.ingsw.GC_28.spaces.Space;
 
-
-
 public class Game extends Observable<Action> implements Runnable, Observer<Message>{
 	private GameModel gameModel;
 	

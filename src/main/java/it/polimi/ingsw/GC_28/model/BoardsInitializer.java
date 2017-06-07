@@ -61,8 +61,8 @@ public class BoardsInitializer {
 	//private Game g = new Game();
 	private GameModel gameModel;
 	
-	public Game initializeBoard(List<Player> players){
-		try {
+	public Game initializeBoard(List<Player> players)throws FileNotFoundException,IOException{
+		//try {
 			this.players  = players;
 			initDices();
 			initCouncilPrivilege();
@@ -70,16 +70,16 @@ public class BoardsInitializer {
 			initSpaces();
 			//gameModel.setGameBoard(gameBoard);
 			initExcommunication();
-			initBonusTile();
 			initPlayerBoard();
 			initFinalBonus();
 			initFamilyMember();
 			gameModel = new GameModel(gameBoard, players);
+			initBonusTile();
 			//gameModel.setPlayers(players);
 			completeExcommunicationArray();
-		} catch (FileNotFoundException e) {
+		/*} catch (FileNotFoundException e) {
 			Logger.getAnonymousLogger().log(Level.SEVERE, "cannot start initialize" + e);
-		}
+		}*/
 		return new Game(gameModel);
 	}
 	
@@ -204,8 +204,11 @@ public class BoardsInitializer {
 	
 	
 
-	private void initBonusTile(){
-		Gson gson = new GsonBuilder().create();
+	private void initBonusTile()throws FileNotFoundException{
+		for(Player p : players){
+			p.getBoard().setBonusTile(bonusTile);
+		}
+		/*Gson gson = new GsonBuilder().create();
 		try {
 			JsonReader jRead = new JsonReader(new FileReader("bonusTile.json"));
 			BonusTile bonusTi = gson.fromJson(jRead, BonusTile.class);
@@ -213,7 +216,7 @@ public class BoardsInitializer {
 			bonusTile.setProductionEffect(bonusTi.getProductionEffect());
 		}catch(FileNotFoundException e){
 			Logger.getAnonymousLogger().log(Level.SEVERE, "cannot start initialize" + e);
-		}
+		}*/
 	}
 	
 	void initFamilyMember(){
@@ -232,17 +235,17 @@ public class BoardsInitializer {
 		}
 	}
 	
-	private void initFinalBonus()throws FileNotFoundException{
+	private void initFinalBonus() throws IOException{
 		Gson gson = new GsonBuilder().create();
-		try {
+		//try {
 			JsonReader readerFinalBonus = new JsonReader(new FileReader("finalBonus.json"));
 			//Type hashMapType = new TypeToken<HashMap<String,ArrayList<Resource>>>() {}.getType();
 			finalBonus = gson.fromJson(readerFinalBonus, FinalBonus.class);
 			FinalBonus.setFinalBonus(finalBonus);
 			readerFinalBonus.close();
-		} catch (IOException e) {
+		/*} catch (IOException e) {
 			Logger.getAnonymousLogger().log(Level.SEVERE, "file not found" + e);
-		}
+		}*/
 		
 	}
 	
@@ -265,7 +268,7 @@ public class BoardsInitializer {
 		}
 	}
 	
-	private void initExcommunication(){
+	private void initExcommunication()throws IOException{
 		System.out.println(1);
 		ExcommunicationReader exReader = new ExcommunicationReader();
 		List<ExcommunicationTile> ex = new ArrayList<>();
