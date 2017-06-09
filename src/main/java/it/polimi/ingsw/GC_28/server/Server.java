@@ -69,8 +69,7 @@ public class Server {
 			List<BonusTile> bonusList = initBonusTile(); 
 			Map<Player, ClientHandler> handlers = new HashMap<>();
 			System.out.println("Server ready");
-			Socket socket = server.accept();
-			/*while(handlers.size() < 4){
+			while(handlers.size() < 1){
 				Socket socket = server.accept();
 				p = new PrintStream(socket.getOutputStream());
 				scan = new Scanner(socket.getInputStream());
@@ -81,27 +80,24 @@ public class Server {
 				Player player = new Player(name, color);
 				ClientHandler ch = new ClientHandler(socket);
 				handlers.put(player, ch);
-			}*/
-			ExecutorService execAcceptance = Executors.newSingleThreadExecutor();
-			try{
-				execAcceptance.invokeAll(Arrays.asList(new AcceptPlayer(server, handlers,socket)),20, TimeUnit.SECONDS);
-			}catch(InterruptedException e){
-				e.printStackTrace();
 			}
 			usedColors.clear();
 			BoardsInitializer bi = new BoardsInitializer();	
 			List<Player> players = new ArrayList<>(handlers.keySet());
 			try{
+				
 				Game game = bi.initializeBoard(players);
 				game.setHandlers(handlers);
 				BoardSetup bs = new BoardSetup(game);
 				bs.firstSetUpCards();
+				
 				for(Player p : players){
 					enterBonusTile(bonusList, handlers, p);
 				}
 				
 				game.registerObserver(new Controller());
 				game.getGameModel().registerObserver(game);
+				
 				executor.submit(game);
 			}catch(IOException e){
 				for(Player p : players){
@@ -110,7 +106,6 @@ public class Server {
 					handlers.get(p).getOut().flush();
 				}
 				Logger.getAnonymousLogger().log(Level.SEVERE,"Cannot start the server" + e);
-				e.printStackTrace();
 			}
 
 			/*game.setHandlers(handlers);
@@ -192,12 +187,12 @@ public class Server {
 	
 }
 
-class AcceptPlayer implements Callable<Boolean>{
+/*class AcceptPlayer implements Runnable{
 	private ServerSocket server;
 	private Map<Player,ClientHandler> handlers;
 	private PrintStream p;
 	private Scanner scan;
-	List<PlayerColor> usedColors = new ArrayList<>();
+	//List<PlayerColor> usedColors = new ArrayList<>();
 	private Socket s;
 	
 	public AcceptPlayer(ServerSocket server, Map<Player,ClientHandler> handlers, Socket s){
@@ -205,7 +200,7 @@ class AcceptPlayer implements Callable<Boolean>{
 		this.handlers = handlers;
 		this.s = s;
 	}
-	/*@Override
+	@Override
 	public void run(){
 		/*while(handlers.size() < 4){
 			try{
@@ -225,15 +220,16 @@ class AcceptPlayer implements Callable<Boolean>{
 		}
 		usedColors.clear();
 		
-	}*/
+	}
 
 	@Override
-	public Boolean call() throws Exception {
+	public void run() {
 		// TODO Auto-generated method stub
+		System.out.println("handlers size :"+handlers.size());
 		while(handlers.size() < 4){
 		Socket socket;
 		try{
-		if(handlers.size() == 0){
+		if(handlers.size() == 1){
 			socket = s;
 		}
 		else{
@@ -253,7 +249,6 @@ class AcceptPlayer implements Callable<Boolean>{
 		}
 	}
 	usedColors.clear();
-		return true;
 	}
 	
 	private PlayerColor enterColor(){
@@ -281,10 +276,37 @@ class AcceptPlayer implements Callable<Boolean>{
 		}while(true);
 	}
 	
-}
+}*/
+
+/*while(handlers.size() < 4){
+Socket socket = server.accept();
+p = new PrintStream(socket.getOutputStream());
+scan = new Scanner(socket.getInputStream());
+p.println("Enter your name:");
+p.flush();
+String name = scan.nextLine();
+PlayerColor color = enterColor();
+Player player = new Player(name, color);
+ClientHandler ch = new ClientHandler(socket);
+handlers.put(player, ch);
+}*/
 
 
-
+/*Socket socket = server.accept();
+p = new PrintStream(socket.getOutputStream());
+scan = new Scanner(socket.getInputStream());
+p.println("Enter your name:");
+p.flush();
+String name = scan.nextLine();
+PlayerColor color = enterColor();
+Player player = new Player(name, color);
+ClientHandler ch = new ClientHandler(socket);
+handlers.put(player, ch);
+System.out.println("qua");
+Socket socket2 = server.accept();
+System.out.println(socket);
+System.out.println(socket2);
+System.out.println("ot");*/
 
 
 

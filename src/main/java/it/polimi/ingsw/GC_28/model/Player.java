@@ -17,6 +17,7 @@ import java.util.logging.Logger;
 import de.vandermeer.asciitable.AsciiTable;
 import it.polimi.ingsw.GC_28.boards.PlayerBoard;
 import it.polimi.ingsw.GC_28.cards.ExcommunicationTile;
+import it.polimi.ingsw.GC_28.cards.LeaderCard;
 import it.polimi.ingsw.GC_28.components.FamilyMember;
 import it.polimi.ingsw.GC_28.components.Resource;
 import it.polimi.ingsw.GC_28.components.ResourceType;
@@ -29,6 +30,7 @@ public class Player {
 	private PlayerBoard board;
 	private FamilyMember[] familyMembers = new FamilyMember[4];
 	private List<ExcommunicationTile> excommunicationTile = new ArrayList<>();
+	private List<LeaderCard> leaderCards = new ArrayList<>();
 	
 	public Player(String name, PlayerColor color){ //Used for local test. KEEP IT!
 		this.name = name;
@@ -78,6 +80,16 @@ public class Player {
 		this.color = color;
 	}
 	
+	public List<LeaderCard> getLeaderCards() {
+		return leaderCards;
+	}
+
+
+	public void setLeaderCards(List<LeaderCard> leaderCards) {
+		this.leaderCards = leaderCards;
+	}
+
+
 	public String displayExcommunication(){
 		AsciiTable tab = new AsciiTable();
 		tab.addRule();
@@ -97,6 +109,14 @@ public class Player {
 		for(FamilyMember f : familyMembers){
 			s.append("Color: " + f.getDiceColor().name() + "  ");
 			s.append("Value: " + f.getValue() + "\n");
+		}
+		return s.toString();
+	}
+	
+	public String displayLeader(){
+		StringBuilder s = new StringBuilder();
+		for(LeaderCard lc : leaderCards){
+			s.append(lc.toString());
 		}
 		return s.toString();
 	}

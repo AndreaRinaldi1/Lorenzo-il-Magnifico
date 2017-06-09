@@ -1,0 +1,418 @@
+[
+  {
+    "name": "Francesco Sforza",
+    "cardCost": {
+      "TERRITORY": 0,
+      "BUILDING": 0,
+      "CHARACTER": 0,
+      "VENTURE": 5
+    },
+    "played": false,
+    "active": false,
+    "permanent": false,
+    "effect": {
+      "actionValue": 1,
+      "production": false,
+      "harvest": true,
+      "type": "GOTOHP"
+    }
+  },
+  {
+    "name": "Girolamo Savonarola",
+    "resourceCost": {
+      "resource": {
+        "COIN": 18,
+        "WOOD": 0,
+        "STONE": 0,
+        "SERVANT": 0,
+        "MILITARYPOINT": 0,
+        "VICTORYPOINT": 0,
+        "FAITHPOINT": 0
+      }
+    },
+    "played": false,
+    "active": false,
+    "permanent": false,
+    "effect": {
+      "resourceBonus": {
+        "resource": {
+          "COIN": 0,
+          "WOOD": 0,
+          "STONE": 0,
+          "SERVANT": 0,
+          "MILITARYPOINT": 0,
+          "VICTORYPOINT": 0,
+          "FAITHPOINT": 1
+        }
+      },
+      "type": "RESOURCEEFFECT"
+    }
+  },
+  {
+    "name": "Michelangelo Buonarroti",
+    "resourceCost": {
+      "resource": {
+        "COIN": 0,
+        "WOOD": 0,
+        "STONE": 10,
+        "SERVANT": 0,
+        "MILITARYPOINT": 0,
+        "VICTORYPOINT": 0,
+        "FAITHPOINT": 0
+      }
+    },
+    "played": false,
+    "active": false,
+    "permanent": false,
+    "effect": {
+      "resourceBonus": {
+        "resource": {
+          "COIN": 3,
+          "WOOD": 0,
+          "STONE": 0,
+          "SERVANT": 0,
+          "MILITARYPOINT": 0,
+          "VICTORYPOINT": 0,
+          "FAITHPOINT": 0
+        }
+      },
+      "type": "RESOURCEEFFECT"
+    }
+  },
+  {
+    "name": "Giovanni dalle Bande Nere",
+    "resourceCost": {
+      "resource": {
+        "COIN": 0,
+        "WOOD": 0,
+        "STONE": 0,
+        "SERVANT": 0,
+        "MILITARYPOINT": 12,
+        "VICTORYPOINT": 0,
+        "FAITHPOINT": 0
+      }
+    },
+    "played": false,
+    "active": false,
+    "permanent": false,
+    "effect": {
+      "resourceBonus": {
+        "resource": {
+          "COIN": 1,
+          "WOOD": 1,
+          "STONE": 1,
+          "SERVANT": 0,
+          "MILITARYPOINT": 0,
+          "VICTORYPOINT": 0,
+          "FAITHPOINT": 0
+        }
+      },
+      "type": "RESOURCEEFFECT"
+    }
+  },
+  {
+    "name": "Cosimo de Medici",
+    "cardCost": {
+      "TERRITORY": 0,
+      "BUILDING": 4,
+      "CHARACTER": 2,
+      "VENTURE": 0
+    },
+    "played": false,
+    "active": false,
+    "permanent": false,
+    "effect": {
+      "resourceBonus": {
+        "resource": {
+          "COIN": 0,
+          "WOOD": 0,
+          "STONE": 0,
+          "SERVANT": 3,
+          "MILITARYPOINT": 0,
+          "VICTORYPOINT": 1,
+          "FAITHPOINT": 0
+        }
+      },
+      "type": "RESOURCEEFFECT"
+    }
+  },
+  {
+    "name": "Leonardo da Vinci",
+    "cardCost": {
+      "TERRITORY": 2,
+      "BUILDING": 0,
+      "CHARACTER": 4,
+      "VENTURE": 0
+    },
+    "played": false,
+    "active": false,
+    "permanent": false,
+    "effect": {
+      "actionValue": 0,
+      "production": true,
+      "harvest": false,
+      "type": "GOTOHP"
+    }
+  },
+  {
+    "name": "Bartolomeo Colleoni",
+    "cardCost": {
+      "TERRITORY": 4,
+      "BUILDING": 0,
+      "CHARACTER": 0,
+      "VENTURE": 2
+    },
+    "played": false,
+    "active": false,
+    "permanent": false,
+    "effect": {
+      "resourceBonus": {
+        "resource": {
+          "COIN": 0,
+          "WOOD": 0,
+          "STONE": 0,
+          "SERVANT": 0,
+          "MILITARYPOINT": 0,
+          "VICTORYPOINT": 4,
+          "FAITHPOINT": 0
+        }
+      },
+      "type": "RESOURCEEFFECT"
+    }
+  },
+  {
+    "name": "Sandro Botticelli",
+    "resourceCost": {
+      "resource": {
+        "COIN": 0,
+        "WOOD": 10,
+        "STONE": 0,
+        "SERVANT": 0,
+        "MILITARYPOINT": 0,
+        "VICTORYPOINT": 0,
+        "FAITHPOINT": 0
+      }
+    },
+    "played": false,
+    "active": false,
+    "permanent": false,
+    "effect": {
+      "resourceBonus": {
+        "resource": {
+          "COIN": 0,
+          "WOOD": 0,
+          "STONE": 0,
+          "SERVANT": 0,
+          "MILITARYPOINT": 2,
+          "VICTORYPOINT": 1,
+          "FAITHPOINT": 0
+        }
+      },
+      "type": "RESOURCEEFFECT"
+    }
+  },
+  {
+    "name": "Ludovico Gonzaga",
+    "resourceCost": {
+      "resource": {
+        "COIN": 0,
+        "WOOD": 0,
+        "STONE": 0,
+        "SERVANT": 15,
+        "MILITARYPOINT": 0,
+        "VICTORYPOINT": 0,
+        "FAITHPOINT": 0
+      }
+    },
+    "played": false,
+    "active": false,
+    "permanent": false,
+    "effect": {
+      "numberOfCouncilPrivileges": 1,
+      "different": false,
+      "type": "PRIVILEGESEFFECT"
+    }
+  },
+  {
+    "name": "Sisto IV",
+    "resourceCost": {
+      "resource": {
+        "COIN": 6,
+        "WOOD": 6,
+        "STONE": 6,
+        "SERVANT": 6,
+        "MILITARYPOINT": 0,
+        "VICTORYPOINT": 0,
+        "FAITHPOINT": 0
+      }
+    },
+    "played": false,
+    "active": false,
+    "permanent": true,
+    "effect": {
+      "bonus": {
+        "resource": {
+          "COIN": 0,
+          "WOOD": 0,
+          "STONE": 0,
+          "SERVANT": 0,
+          "MILITARYPOINT": 0,
+          "VICTORYPOINT": 5,
+          "FAITHPOINT": 0
+        }
+      }
+    }
+  },
+  {
+    "name": "Federico da Montefeltro",
+    "cardCost": {
+      "TERRITORY": 5,
+      "BUILDING": 0,
+      "CHARACTER": 0,
+      "VENTURE": 0
+    },
+    "played": false,
+    "active": false,
+    "permanent": false,
+    "effect": {
+      "colored": true,
+      "value": 6,
+      "type": "SETFAMILYMEMBERVALUEEFFECT"
+    }
+  },
+  {
+    "name": "Ludovico il Moro",
+    "cardCost": {
+      "TERRITORY": 2,
+      "BUILDING": 2,
+      "CHARACTER": 2,
+      "VENTURE": 2
+    },
+    "played": false,
+    "active": false,
+    "permanent": true,
+    "effect": {
+      "colored": true,
+      "value": 5,
+      "type": "SETFAMILYMEMBERVALUEEFFECT"
+    }
+  },
+  {
+    "name": "Sigismondo Malatesta",
+    "resourceCost": {
+      "resource": {
+        "COIN": 0,
+        "WOOD": 0,
+        "STONE": 0,
+        "SERVANT": 0,
+        "MILITARYPOINT": 7,
+        "VICTORYPOINT": 0,
+        "FAITHPOINT": 3
+      }
+    },
+    "played": false,
+    "active": false,
+    "permanent": true,
+    "effect": {
+      "colored": false,
+      "value": 3,
+      "type": "SETFAMILYMEMBERVALUEEFFECT"
+    }
+  },
+  {
+    "name": "Pico della Mirandola",
+    "cardCost": {
+      "TERRITORY": 0,
+      "BUILDING": 2,
+      "CHARACTER": 0,
+      "VENTURE": 4
+    },
+    "played": false,
+    "active": false,
+    "permanent": true,
+    "effect": {
+      "type": "OTHEREFFECT",
+      "specificType": "COINDISCOUNTEFFECT"
+    }
+  },
+  {
+    "name": "Cesare Borgia",
+    "resourceCost": {
+      "resource": {
+        "COIN": 12,
+        "WOOD": 0,
+        "STONE": 0,
+        "SERVANT": 0,
+        "MILITARYPOINT": 0,
+        "VICTORYPOINT": 0,
+        "FAITHPOINT": 2
+      }
+    },
+    "cardCost": {
+      "TERRITORY": 0,
+      "BUILDING": 3,
+      "CHARACTER": 0,
+      "VENTURE": 0
+    },
+    "played": false,
+    "active": false,
+    "permanent": true,
+    "effect": {
+      "type": "OTHEREFFECT",
+      "specificType": "NOMILITARYFORTERRITORYEFFECT"
+    }
+  },
+  {
+    "name": "Filippo Brunelleschi",
+    "cardCost": {
+      "TERRITORY": 0,
+      "BUILDING": 5,
+      "CHARACTER": 0,
+      "VENTURE": 0
+    },
+    "played": false,
+    "active": false,
+    "permanent": true,
+    "effect": {
+      "type": "OTHEREFFECT",
+      "specificType": "NOEXTRACOSTINTOWEREFFECT"
+    }
+  },
+  {
+    "name": "Ludovico Ariosto",
+    "cardCost": {
+      "TERRITORY": 0,
+      "BUILDING": 0,
+      "CHARACTER": 5,
+      "VENTURE": 0
+    },
+    "played": false,
+    "active": false,
+    "permanent": true,
+    "effect": {
+      "type": "OTHEREFFECT",
+      "specificType": "FREESPACEEFFECT"
+    }
+  },
+  {
+    "name": "Santa Rita",
+    "resourceCost": {
+      "resource": {
+        "COIN": 0,
+        "WOOD": 0,
+        "STONE": 0,
+        "SERVANT": 0,
+        "MILITARYPOINT": 0,
+        "VICTORYPOINT": 0,
+        "FAITHPOINT": 8
+      }
+    },
+    "played": false,
+    "active": false,
+    "permanent": true,
+    "effect": {
+      "type": "OTHEREFFECT",
+      "specificType": "DOUBLERESOURCEEFFECT"
+    }
+  }
+]

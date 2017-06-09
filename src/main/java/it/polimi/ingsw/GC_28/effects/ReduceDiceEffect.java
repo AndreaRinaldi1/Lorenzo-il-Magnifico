@@ -13,7 +13,7 @@ public class ReduceDiceEffect extends Effect{
 	public final EffectType type = EffectType.REDUCEDICEEFFECT;
 	
 	private List<DiceColor> diceColor = new ArrayList<>();
-	int reduce = 1;
+	int reduce;
 	
 	@Override
 	public void apply(Player player, Game game) {
