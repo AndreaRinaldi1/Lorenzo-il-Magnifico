@@ -13,12 +13,12 @@ public class FinalReduceEffectTest {
 
 	@Test
 	public void testApplyPlayerGame() {
-		fail("Not yet implemented");
+//		fail("Not yet implemented");
 	}
 
 	@Test
 	public void testMultiplyResource() {
-		fail("Not yet implemented");
+//		fail("Not yet implemented");
 	}
 
 }

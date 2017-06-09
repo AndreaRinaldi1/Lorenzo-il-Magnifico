@@ -64,12 +64,8 @@ public class NoEffectTest {
 
 	@Test
 	public void testApply() {
-		System.out.println(res);
-		System.out.println(fm.getPlayer().getBoard().getResources());
 		ne.apply(fm, g);
 
-		System.out.println(res);
-		System.out.println(fm.getPlayer().getBoard().getResources());
 		boolean x = res.equals(fm.getPlayer().getBoard().getResources());
 		assertTrue(x);
 	}

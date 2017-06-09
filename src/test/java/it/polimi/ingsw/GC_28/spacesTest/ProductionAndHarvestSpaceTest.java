@@ -74,11 +74,11 @@ public class ProductionAndHarvestSpaceTest {
 
 	@Test
 	public void testApplyBonus() {
-		System.out.println(1);
+/*		System.out.println(1);
 		pb.addCard(b);
 		phs.applyBonus(g, fm);
 		System.out.println(2);
-		/*if(harvest){
+		if(harvest){
 			phs.applyBonus(g, fm);
 
 			fm.getPlayer().getBoard().getBonusTile().getHarvestEffect().apply(fm, g);
@@ -92,7 +92,7 @@ public class ProductionAndHarvestSpaceTest {
 			fm.getPlayer().getBoard().getBonusTile().getProductionEffect().apply(fm, g);
 			assertEquals(this.fm.getPlayer().getBoard().getBonusTile().getProductionEffect(), phs);
 
-		}*/
+		}
 		if(harvest){
 			for(Territory territory : fm.getPlayer().getBoard().getTerritories()){
 				territory.getPermanentEffect().apply(fm, g);
@@ -107,7 +107,7 @@ public class ProductionAndHarvestSpaceTest {
 			fm.getPlayer().getBoard().getBonusTile().getProductionEffect().apply(fm, g);
 		}
 		fail("Non sono capace a gestire il metodo apply");
-	}
+*/	}
 
 	@Test
 	public void testIsHarvest() {

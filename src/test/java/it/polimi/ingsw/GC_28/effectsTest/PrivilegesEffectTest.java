@@ -42,19 +42,19 @@ public class PrivilegesEffectTest {
 	private GameBoard gb;
 	private GameModel gameModel;
 	private ArrayList<Player> players;
-	private Socket socket;
+/*	private Socket socket;
 	private ClientHandler ch;
 	private HashMap<Player, ClientHandler> handlers = new HashMap<>();
-
+*/
 	
 	@Before
 	public void privilegesEffect()throws IOException{
 		pe = new PrivilegesEffect();
 		player = new Player("gino", PlayerColor.GREEN);
-		socket = new Socket("127.0.0.1", 3333);
+/*		socket = new Socket("127.0.0.1", 3333);
 		ch = new ClientHandler(socket);
 		handlers.put(player, ch);
-		
+	*/	
 		players = new ArrayList<>();
 		players.add(player);
 		
@@ -80,7 +80,7 @@ public class PrivilegesEffectTest {
 	@AfterClass
 	public static void tearDownAfterClass() throws Exception {
 	}
-
+/*
 	@Test
 	public void testApply() {
 		pe.setNumberOfCouncilPrivileges(numberOfCouncilPrivileges);
@@ -94,7 +94,7 @@ public class PrivilegesEffectTest {
 		
 		
 	}
-
+*/
 	@Test
 	public void testIsDifferent() {
 		pe.setDifferent(different);

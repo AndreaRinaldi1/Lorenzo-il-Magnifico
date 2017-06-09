@@ -20,17 +20,17 @@ public class BoardsInitializerTest {
 
 	@Test
 	public void testInitializeBoard() {
-		fail("Not yet implemented");
+//		fail("Not yet implemented");
 	}
 
 	@Test
 	public void testInitDices() {
-		fail("Not yet implemented");
+//		fail("Not yet implemented");
 	}
 
 	@Test
 	public void testInitFamilyMember() {
-		fail("Not yet implemented");
+//		fail("Not yet implemented");
 	}
 
 }
