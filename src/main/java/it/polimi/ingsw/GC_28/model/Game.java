@@ -7,7 +7,6 @@ import java.util.EnumMap;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Observable;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -21,6 +20,7 @@ import it.polimi.ingsw.GC_28.components.DiceColor;
 import it.polimi.ingsw.GC_28.components.FamilyMember;
 import it.polimi.ingsw.GC_28.components.Resource;
 import it.polimi.ingsw.GC_28.components.ResourceType;
+import it.polimi.ingsw.GC_28.core.Action;
 import it.polimi.ingsw.GC_28.core.SpaceAction;
 import it.polimi.ingsw.GC_28.core.TakeCardAction;
 import it.polimi.ingsw.GC_28.effects.DiscountEffect;
@@ -35,13 +35,16 @@ import it.polimi.ingsw.GC_28.effects.ReduceDiceEffect;
 import it.polimi.ingsw.GC_28.effects.ServantEffect;
 import it.polimi.ingsw.GC_28.effects.TakeCardEffect;
 import it.polimi.ingsw.GC_28.server.ClientHandler;
+import it.polimi.ingsw.GC_28.server.Message;
+import it.polimi.ingsw.GC_28.server.Observable;
+import it.polimi.ingsw.GC_28.server.Observer;
 import it.polimi.ingsw.GC_28.spaces.Space;
 
 
 
-public class Game extends Observable implements Runnable{
-	private GameBoard gameBoard;
-
+public class Game extends Observable<Action> implements Runnable, Observer<Message>{
+	private GameModel gameModel;
+	
 	//Scanner currentPlayer.getIn() = new Scanner(System.in);
 	private Player currentPlayer;
 	boolean modifiedWithServants = false;
@@ -49,16 +52,26 @@ public class Game extends Observable implements Runnable{
 	private int currentPeriod = 1;
 	private int currentRound = 1;
 	private int currentTurn = 0;
-	private List<Player> players = new ArrayList<>();
 	private Map<Player, ClientHandler> handlers = new HashMap<>();
 	private List<Player> skipped = new ArrayList<>();
-	public Game(){
-		
+	private boolean result;
+	//private List<Player> players;
+	//private GameBoard gameBoard;
+	EnumMap<ResourceType, Integer> decrement = new EnumMap<>(ResourceType.class);
+	Resource res ;
+	int incrementThroughServants;
+	
+	
+	public Game(GameModel gameModel){
+		//players = gameModel.getPlayers();
+		//gameBoard = gameModel.getGameBoard();
+		this.gameModel = gameModel;
 	}
 	
 	
 	@Override
 	public void run(){
+		setCurrentPlayer(gameModel.getPlayers().get(0));
 		System.out.println(1);
 		BoardSetup bs = new BoardSetup(this);
 		for(currentEra = 1; currentEra <= 3; currentEra++){
@@ -66,16 +79,16 @@ public class Game extends Observable implements Runnable{
 			for(currentPeriod = 1; currentPeriod <= 2; currentPeriod++){
 				checkDiceReduction();				
 				for(currentRound = 1; currentRound <= 4; currentRound++){					
-					for(currentTurn = 0; currentTurn < players.size(); currentTurn++){
+					for(currentTurn = 0; currentTurn < gameModel.getPlayers().size(); currentTurn++){
 						try {
 							play();
 						} catch (IOException e) {
 							Logger.getAnonymousLogger().log(Level.SEVERE,"Cannot play that move in method run()" + e);
 						}
-						if(currentTurn == (players.size()-1)){
-							currentPlayer = players.get(0);
+						if(currentTurn == (gameModel.getPlayers().size()-1)){
+							currentPlayer = gameModel.getPlayers().get(0);
 						}else{
-							currentPlayer = players.get((currentTurn+1));
+							currentPlayer = gameModel.getPlayers().get((currentTurn+1));
 						}
 					} 	
 				}
@@ -95,7 +108,7 @@ public class Game extends Observable implements Runnable{
 	
 	
 	public void applyFinalMalus(){
-		for(Player p : players){
+		for(Player p : gameModel.getPlayers()){
 			ExcommunicationTile t = p.getExcommunicationTile().get(currentEra-1);
 			if(t != null){
 				t.getEffect().apply(p, this);
@@ -104,7 +117,7 @@ public class Game extends Observable implements Runnable{
 	}
 
 	public void checkDiceReduction(){  //se i giocatori tra le scomuniche hanno reducedice applico effetto
-		for(Player p : players){
+		for(Player p : gameModel.getPlayers()){
 			for(ExcommunicationTile t : p.getExcommunicationTile()){
 				if(t.getEffect() instanceof ReduceDiceEffect){
 					t.getEffect().apply(p, this);
@@ -128,7 +141,7 @@ public class Game extends Observable implements Runnable{
 	
 	
 	public void skipPlayers(){
-		for(Player p : players){
+		for(Player p : gameModel.getPlayers()){
 			//System.out.println("1");
 			for(ExcommunicationTile t : p.getExcommunicationTile()){
 				//System.out.println("2");
@@ -145,8 +158,8 @@ public class Game extends Observable implements Runnable{
 	}
 	
 	public void display(){
-		for(Player p: players){
-			handlers.get(p).getOut().println(gameBoard.display());
+		for(Player p: gameModel.getPlayers()){
+			handlers.get(p).getOut().println(gameModel.getGameBoard().display());
 			handlers.get(p).getOut().println(p.getBoard().display());
 			handlers.get(p).getOut().println(p.displayExcommunication());
 			
@@ -223,24 +236,11 @@ public class Game extends Observable implements Runnable{
 	public void setCurrentEra(int currentEra) {
 		this.currentEra = currentEra;
 	}
-
-	public GameBoard getGameBoard() {
-		return gameBoard;
-	}
 	
-	public void setGameBoard(GameBoard gb){
-		this.gameBoard = gb;
+	public GameModel getGameModel() {
+		return gameModel;
 	}
 
-	public List<Player> getPlayers() {
-		return players;
-	}
-	
-	public void setPlayers(List<Player> p){
-		players = p;
-	}
-	
-	
 	public Resource checkResourceExcommunication(Resource amount){
 		for(ExcommunicationTile t : currentPlayer.getExcommunicationTile()){ //guardo tra le scomuniche del currentPlayer
 			if(t.getEffect() instanceof DiscountEffect){ //se trovo un discounteffect
@@ -333,25 +333,25 @@ public class Game extends Observable implements Runnable{
 			else{
 				String chosenSpace = handlers.get(currentPlayer).getIn().nextLine();
 				if(chosenSpace.equalsIgnoreCase("coinspace")){
-					return gameBoard.getCoinSpace();
+					return gameModel.getGameBoard().getCoinSpace();
 				}
 				if(chosenSpace.equalsIgnoreCase("servantspace")){
-					return gameBoard.getServantSpace();
+					return gameModel.getGameBoard().getServantSpace();
 				}
 				if(chosenSpace.equalsIgnoreCase("mixedspace")){
-					return gameBoard.getMixedSpace();
+					return gameModel.getGameBoard().getMixedSpace();
 				}
 				if(chosenSpace.equalsIgnoreCase("privilegesspace")){
-					return gameBoard.getPrivilegesSpace();
+					return gameModel.getGameBoard().getPrivilegesSpace();
 				}
 				if(chosenSpace.equalsIgnoreCase("councilpalace")){
-					return gameBoard.getCouncilPalace();
+					return gameModel.getGameBoard().getCouncilPalace();
 				}
 				if(chosenSpace.equalsIgnoreCase("productionspace")){
-					return gameBoard.getProductionSpace();
+					return gameModel.getGameBoard().getProductionSpace();
 				}
 				if(chosenSpace.equalsIgnoreCase("harvestspace")){
-					return gameBoard.getHarvestSpace();
+					return gameModel.getGameBoard().getHarvestSpace();
 				}
 				else{
 					handlers.get(currentPlayer).getOut().println("Not valid input!");
@@ -363,7 +363,7 @@ public class Game extends Observable implements Runnable{
 	
 	public boolean goToSpace(GoToHPEffect throughEffect){
 		FamilyMember familyMember;
-		int incrementThroughServants;
+		
 		SpaceAction spaceAction = new SpaceAction(this);
 		Space chosenSpace;
 		
@@ -371,10 +371,10 @@ public class Game extends Observable implements Runnable{
 			familyMember = new FamilyMember(currentPlayer, false, null); //familyMember fittizio
 			familyMember.setValue(throughEffect.getActionValue());
 			if(throughEffect.isHarvest()){
-				chosenSpace = gameBoard.getHarvestSpace();
+				chosenSpace = gameModel.getGameBoard().getHarvestSpace();
 			}
 			else{
-				chosenSpace = gameBoard.getProductionSpace();
+				chosenSpace = gameModel.getGameBoard().getProductionSpace();
 			}
 		}
 		else{
@@ -384,33 +384,31 @@ public class Game extends Observable implements Runnable{
 		
 		incrementThroughServants = askForServantsIncrement();
 		familyMember.modifyValue(incrementThroughServants);
-		EnumMap<ResourceType, Integer> decrement = new EnumMap<>(ResourceType.class);
+		
 		decrement.put(ResourceType.SERVANT, incrementThroughServants);
-		Resource res = Resource.of(decrement);
-
-		if(spaceAction.isApplicable(familyMember, chosenSpace, throughEffect)){
-			spaceAction.apply(familyMember, chosenSpace, throughEffect);
-			if(modifiedWithServants){
-				familyMember.modifyValue((-1)*(incrementThroughServants));
-			}
-			return true;
+		res = Resource.of(decrement);
+		
+		familyMember.modifyValue(incrementThroughServants);
+		decrement.put(ResourceType.SERVANT, incrementThroughServants);
+		res = Resource.of(decrement);
+		
+		spaceAction.setFamilyMember(familyMember);
+		spaceAction.setSpace(chosenSpace);
+		spaceAction.setThroughEffect(throughEffect);
+		
+		this.notifyObserver(spaceAction);
+		if(modifiedWithServants){
+			familyMember.modifyValue((-1)*(incrementThroughServants));
 		}
-		else{
-			if(modifiedWithServants){
-				familyMember.modifyValue((-1)*(incrementThroughServants));
-				currentPlayer.addResource(res);
-			}
-			handlers.get(currentPlayer).getOut().println("Not valid action!");
-			handlers.get(currentPlayer).getOut().flush();
-			return false;
-		}
+		
+		return result;
+		
 		
 	}
 	
 	public boolean askCard(TakeCardEffect throughEffect){ //throughEffect = null se non è un askcard che viene da effetto ma da mossa normale
 		FamilyMember familyMember;							// if it's null the first condition will throw a null pointer exception(N)
-		int incrementThroughServants;
-		TakeCardAction takeCardAction = new TakeCardAction(this, gameBoard);
+		TakeCardAction takeCardAction = new TakeCardAction(this, gameModel);
 		
 		if(!(throughEffect == null)){ //se viene da effetto gli dico cosa può prendere 
 			if(throughEffect.getCardType() == null){
@@ -433,32 +431,25 @@ public class Game extends Observable implements Runnable{
 		}
 
 		
+		
 		incrementThroughServants = askForServantsIncrement();
 		familyMember.modifyValue(incrementThroughServants);
-		EnumMap<ResourceType, Integer> decrement = new EnumMap<>(ResourceType.class);
 		decrement.put(ResourceType.SERVANT, incrementThroughServants);
-		Resource res = Resource.of(decrement);
+		res = Resource.of(decrement);
 		
-		if(takeCardAction.isApplicable(name, familyMember, throughEffect)){
-			takeCardAction.apply(name, familyMember, throughEffect);
-			if(modifiedWithServants){
-				familyMember.modifyValue((-1)*(incrementThroughServants));
-			}
-			System.out.println("tutto bene");
-			return true;
+		takeCardAction.setFamilyMember(familyMember);
+		takeCardAction.setName(name);
+		takeCardAction.setThroughEffect(throughEffect);
+		
+		this.notifyObserver(takeCardAction);
+		
+		if(modifiedWithServants){
+			familyMember.modifyValue((-1)*(incrementThroughServants));
 		}
-		else{
-			if(modifiedWithServants){
-				familyMember.modifyValue((-1)*(incrementThroughServants));
-				currentPlayer.addResource(res);
-			}
-			handlers.get(currentPlayer).getOut().println("Not valid action!");
-			handlers.get(currentPlayer).getOut().flush();
-			System.out.println("tutto male");
-
-			return false;
-		}
+		
+		return result;
 	}
+	
 	
 	public String askCardName(){
 		do{
@@ -475,18 +466,6 @@ public class Game extends Observable implements Runnable{
 		}while(true);
 		
 	}
-	
-	/*public CardType askCardType(){
-		do{
-			System.out.println("Enter CardType [ Territory / Building / Character / Venture ]");
-			String choice = currentPlayer.getIn().nextLine();
-			for(CardType ct : CardType.values()){
-				if(choice.toUpperCase().equals(ct.name()))
-					return ct;
-			}
-			System.out.println("Not valid input!");
-		}while(true);
-	}*/
 	
 	public FamilyMember askFamilyMember(){
 		boolean x = true;
@@ -660,7 +639,7 @@ public class Game extends Observable implements Runnable{
 		String name = askCardName();
 		Cell c;
 		for(CardType ct : CardType.values()){
-			if((c = gameBoard.getTowers().get(ct).findCard(name)) != null){
+			if((c = gameModel.getGameBoard().getTowers().get(ct).findCard(name)) != null){
 				handlers.get(currentPlayer).getOut().println(c.getCard().getCost().toString());
 				handlers.get(currentPlayer).getOut().flush();
 				return;
@@ -669,19 +648,19 @@ public class Game extends Observable implements Runnable{
 	}
 	
 	private void giveExcommunication(){
-		for(Player p : players){
+		for(Player p : gameModel.getPlayers()){
 				int faith = p.getBoard().getResources().getResource().get(ResourceType.FAITHPOINT);
 				if(faith < (2+ currentEra)){
 					handlers.get(p).getOut().println("You recive an Excommunication, because you cannot pay to avoid it");
 					handlers.get(p).getOut().flush();
-					p.getExcommunicationTile().get(currentEra -1).setEffect(gameBoard.getExcommunications()[currentEra-1].getEffect());
+					p.getExcommunicationTile().get(currentEra -1).setEffect(gameModel.getGameBoard().getExcommunications()[currentEra-1].getEffect());
 					//p.getExcommunicationTile().add(currentEra-1, gameBoard.getExcommunications()[currentEra-1]);
 					return;
 				}else{
 					handlers.get(p).getOut().println("Do you want to pay to avoid Excommunication?[y/n]");
 					handlers.get(p).getOut().flush();
 					if(handlers.get(p).getIn().nextLine().equalsIgnoreCase("n")){
-						p.getExcommunicationTile().add(currentEra-1, gameBoard.getExcommunications()[currentEra-1]);
+						p.getExcommunicationTile().add(currentEra-1, gameModel.getGameBoard().getExcommunications()[currentEra-1]);
 						return;
 					}else{
 						handlers.get(p).getOut().println("You paid to avoid Excommunication, your faith points have been reset to 0");
@@ -695,6 +674,21 @@ public class Game extends Observable implements Runnable{
 				}
 			}
 	}
+
+	@Override
+	public void update(Message m) {
+		handlers.get(currentPlayer).getOut().println(m.getMessage());
+		result = m.isResult();
+		if(m.isResult()){	
+			if(modifiedWithServants){
+				currentPlayer.addResource(res);
+			}
+		}	
+	}
 	
-	
+	@Override
+	public void update() {
+		// TODO Auto-generated method stub
+		
+	}
 }

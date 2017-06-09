@@ -29,7 +29,7 @@ public class DiceTest {
 
 	@Test
 	public void testGetValue() {
-		for(int i = 0; i<6; i++){
+		for(int i = 1; i<7; i++){
 			if(i == dice.getValue()){
 				assertEquals(i, dice.getValue());
 			}

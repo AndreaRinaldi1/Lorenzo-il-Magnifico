@@ -3,14 +3,17 @@ package it.polimi.ingsw.GC_28.spacesTest;
 import static org.junit.Assert.*;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.Test;
 
+import it.polimi.ingsw.GC_28.boards.GameBoard;
 import it.polimi.ingsw.GC_28.components.DiceColor;
 import it.polimi.ingsw.GC_28.components.FamilyMember;
 import it.polimi.ingsw.GC_28.model.Game;
+import it.polimi.ingsw.GC_28.model.GameModel;
 import it.polimi.ingsw.GC_28.model.Player;
 import it.polimi.ingsw.GC_28.model.PlayerColor;
 import it.polimi.ingsw.GC_28.spaces.Space;
@@ -18,13 +21,15 @@ import it.polimi.ingsw.GC_28.spaces.Space;
 public class SpaceTest {
 	private boolean free = true;
 	private boolean neutral = true;
-	private ArrayList<FamilyMember> players = new ArrayList<FamilyMember>();
+	private ArrayList<FamilyMember> players1 = new ArrayList<FamilyMember>();
 	private int actionValue = 1;
 	private Space s;
 	
 	private FamilyMember fm;
 	private Player p;
-	
+	private GameModel gameModel;
+	private GameBoard gameBoard; 
+	private List<Player> players = new ArrayList<>();
 	private Game g;
 	
 	@Before
@@ -32,10 +37,14 @@ public class SpaceTest {
 		s = new Space(){};
 		p = new Player("Rob", PlayerColor.YELLOW);
 		fm = new FamilyMember(p, neutral, DiceColor.ORANGE);
-		g = new Game();
+	
+		players.add(p);
+		gameBoard = new GameBoard();
+		gameModel = new GameModel(gameBoard, players);
+		g = new Game(gameModel); 
 		s.setFree(free);
 		s.addPlayer(fm);
-		players.add(fm);
+		players1.add(fm);
 		s.setActionValue(actionValue);
 		s.applyBonus(g, fm);
 	}
@@ -52,7 +61,7 @@ public class SpaceTest {
 
 	@Test
 	public void testGetPlayer() {
-		assertArrayEquals(this.players.toArray(), 
+		assertArrayEquals(this.players1.toArray(), 
 				this.s.getPlayer().toArray());
 		//fail("Not yet implemented");
 	}

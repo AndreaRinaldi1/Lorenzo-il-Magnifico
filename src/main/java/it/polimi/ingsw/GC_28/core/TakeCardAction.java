@@ -12,25 +12,43 @@ import it.polimi.ingsw.GC_28.components.Resource;
 import it.polimi.ingsw.GC_28.effects.Effect;
 import it.polimi.ingsw.GC_28.effects.TakeCardEffect;
 import it.polimi.ingsw.GC_28.model.Game;
+import it.polimi.ingsw.GC_28.model.GameModel;
 
 public class TakeCardAction extends Action{
 	private Game game;
 	private GameBoard gameBoard;
 	private TakeCardController takeCardController;
+	private FamilyMember familyMember;
+	private String name;
+	private TakeCardEffect throughEffect;
+	private GameModel gameModel;
 	
-	public TakeCardAction(Game game, GameBoard gameBoard){
+	public TakeCardAction(Game game, GameModel gameModel){
 		this.game = game;
-		this.gameBoard = gameBoard;
-		takeCardController = new TakeCardController(gameBoard);
+		this.gameBoard = gameModel.getGameBoard();
+		this.gameModel = gameModel;
+		takeCardController = new TakeCardController(gameModel);
 	}
 
-	public boolean isApplicable(String name, FamilyMember familyMember, TakeCardEffect throughEffect){
+	public void setFamilyMember(FamilyMember familyMember) {
+		this.familyMember = familyMember;
+	}
+
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+
+	public void setThroughEffect(TakeCardEffect throughEffect) {
+		this.throughEffect = throughEffect;
+	}
+	
+	public boolean isApplicable(){
 		return takeCardController.check(game, name, familyMember, throughEffect);
 	}
 	
-	
-	
-	public void apply(String name, FamilyMember familyMember, TakeCardEffect throughEffect){
+	public void apply(){
 		takeCardController.reduce3Coins(familyMember, false, null);
 		takeCardController.lookForNoCellBonus(game, familyMember, false, null, name);
 		takeCardController.lookForTakeCardDiscount(familyMember, false, null, game, throughEffect);
