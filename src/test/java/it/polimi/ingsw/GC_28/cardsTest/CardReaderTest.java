@@ -31,7 +31,7 @@ public class CardReaderTest {
 	private Deck d = new Deck();
 	private CardReader cr;
 	
-	private Venture v = new Venture("Ammazzo Tutti", 1, 1);
+/*	private Venture v = new Venture("Ammazzo Tutti", 1, 1);
 	private EnumMap<ResourceType, Integer> resource;
 	private EnumMap<ResourceType, Integer> resource1;
 	private EnumMap<ResourceType, Integer> resource2;
@@ -40,7 +40,7 @@ public class CardReaderTest {
 	private Resource immediateBonus;
 	private Resource permanentBonus;
 	private ResourceEffect re = new ResourceEffect();
-	private ResourceEffect re1 = new ResourceEffect();
+	private ResourceEffect re1 = new ResourceEffect();*/
 	
 	
 	@Before
