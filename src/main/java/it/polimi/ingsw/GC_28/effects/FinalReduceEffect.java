@@ -67,6 +67,23 @@ public class FinalReduceEffect  extends Effect{
 		}
 		player.addResource(multiplyResource(times));
 	}
+
+	//FOR TEST 
+	public CardType getCardType() {
+		return cardType;
+	}
+
+	public Resource getResourceCost() {
+		return resourceCost;
+	}
+
+	public Resource getResourceBonus() {
+		return resourceBonus;
+	}
+
+	public EffectType getType() {
+		return type;
+	}
 	
 	
 
