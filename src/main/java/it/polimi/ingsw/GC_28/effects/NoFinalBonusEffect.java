@@ -26,7 +26,6 @@ public class NoFinalBonusEffect extends Effect {
 		PlayerBoard pb = player.getBoard();
 		switch(cardType){
 		case TERRITORY:
-			
 			pb.getResources().modifyResource(finalBonus.getFinalTerritoriesBonus().get(pb.getTerritories().size()), false);
 			break;
 		case CHARACTER:

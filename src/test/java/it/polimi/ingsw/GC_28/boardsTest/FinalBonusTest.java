@@ -17,6 +17,7 @@ import it.polimi.ingsw.GC_28.components.ResourceType;
 public class FinalBonusTest {
 	
 	private FinalBonus fb;
+	private FinalBonus fb2;
 	private List<Resource> finalTerritoriesBonus;
 	private List<Resource> finalCharactersBonus;
 	private List<Resource> resourceForTerritories;
@@ -28,6 +29,7 @@ public class FinalBonusTest {
 	@Before
 	public void finalBonus(){
 		fb = FinalBonus.instance();
+		fb2 = FinalBonus.instance();
 		finalTerritoriesBonus = new ArrayList<>();
 		finalCharactersBonus = new ArrayList<>();
 		resourceForTerritories = new ArrayList<>();
@@ -53,6 +55,12 @@ public class FinalBonusTest {
 	public static void tearDownAfterClass() throws Exception {
 	}
 
+	@Test
+	public void testSetFinalBonus(){
+		this.fb2.setFinalBonus(fb);
+		assertEquals(this.fb, this.fb2);
+	}
+	
 	@Test
 	public void testGetResourceFactor() {
 		assertEquals(resourceFactor, this.fb.getResourceFactor());

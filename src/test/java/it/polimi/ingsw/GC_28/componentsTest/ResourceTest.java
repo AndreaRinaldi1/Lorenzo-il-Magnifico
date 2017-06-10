@@ -4,6 +4,7 @@ import static org.junit.Assert.*;
 
 import java.util.EnumMap;
 import java.util.Map;
+import java.util.Set;
 
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -56,5 +57,16 @@ public class ResourceTest {
 	@Test 
 	public void testEquals(){
 		assertEquals(true, this.bonus.equals(bonus3));
+	}
+	
+	@Test
+	public void testToString(){
+		Set<ResourceType> keySet = resource.keySet();
+		StringBuilder s = new StringBuilder();
+		
+		for(ResourceType resType : keySet){
+			s.append(resType.name() + ": " + resource.get(resType) +"\n");
+		}
+		assertEquals(s.toString(), this.bonus.toString());
 	}
 }
