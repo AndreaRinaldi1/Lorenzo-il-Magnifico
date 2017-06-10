@@ -75,7 +75,7 @@ public class IncrementHPEffectTest {
 	@Test
 	public void testIsProduction() {
 		incHP.setProduction(production);
-		assertEquals(this.production, this.incHP.isHarvest());
+		assertEquals(this.production, this.incHP.isProduction());
 	}
 
 	@Test

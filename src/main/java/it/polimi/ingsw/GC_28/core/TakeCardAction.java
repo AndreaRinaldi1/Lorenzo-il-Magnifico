@@ -13,6 +13,7 @@ import it.polimi.ingsw.GC_28.effects.Effect;
 import it.polimi.ingsw.GC_28.effects.TakeCardEffect;
 import it.polimi.ingsw.GC_28.model.Game;
 import it.polimi.ingsw.GC_28.model.GameModel;
+import it.polimi.ingsw.GC_28.server.Message;
 
 public class TakeCardAction extends Action{
 	private Game game;
@@ -55,6 +56,7 @@ public class TakeCardAction extends Action{
 		takeCardController.lookForIncrementCardDiscount(familyMember, false, null, game);
 		Cell cell = gameBoard.getTowers().get(takeCardController.cardType).findCard(name);
 		Resource cardCost = cell.getCard().getCost();
+		takeCardController.lookForPicoDellaMirandola(familyMember, cardCost, game);//modify card cost if pico is present FIXME
 		familyMember.getPlayer().reduceResources(cardCost);
 		familyMember.setUsed(true);
 		
@@ -91,6 +93,8 @@ public class TakeCardAction extends Action{
 		}
 		cell.setCard(null);
 		cell.setFree(false);
+		gameModel.notifyObserver(new Message("Action completed successfully!", true));
+
 	}
 	
 	

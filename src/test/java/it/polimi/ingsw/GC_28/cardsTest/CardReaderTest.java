@@ -45,51 +45,9 @@ public class CardReaderTest {
 	
 	@Before
 	public void cardReader() throws FileNotFoundException{
-		cr = new CardReader();
-		
-		/*try{
-        	JsonReader reader = new JsonReader(new FileReader("cards.json"));
-            JsonReader reader2 = new JsonReader(new FileReader("cards.json"));
-        	
-        	d = gson.fromJson(reader, Deck.class);
-        	
-        	
-        	JsonObject c = gson.fromJson(reader2, JsonObject.class);
-        	JsonArray arrayVentures = c.get("ventures").getAsJsonArray();
-        	
-        	for(int i = 0; i < arrayVentures.size(); i++){
-            	JsonObject j = arrayVentures.get(i).getAsJsonObject();
-            	d.getVentures().get(i).setImmediateEffect(gson, j);
-        	}
-
-	        reader.close();
-	        reader2.close();
-    	}
-    	catch(IOException e){
-    		Logger.getAnonymousLogger().log(Level.SEVERE, "Deck file not found" + e);
-    	}
-    	*/
+		cr = new CardReader();		
 		d.equals(cr.startRead());
 		
-/*		resource = new EnumMap<>(ResourceType.class);
-		resource.put(ResourceType.COIN, 1);
-		cost = Resource.of(resource);
-		v.setCost(cost);
-		
-		resource1 = new EnumMap<>(ResourceType.class);
-		resource1.put(ResourceType.VICTORYPOINT, 2);
-		immediateBonus = Resource.of(resource1);
-		re.setResourceBonus(immediateBonus);
-		immediateEffect.add(re);
-		v.setImmediateEffect(immediateEffect);
-		
-		resource2 = new EnumMap<>(ResourceType.class);
-		resource2.put(ResourceType.VICTORYPOINT,3);
-		permanentBonus = Resource.of(resource2);
-		re1.setResourceBonus(permanentBonus);
-		v.setPermanentEffect(re1);
-*/		        
-
 	}
 	
 	@AfterClass

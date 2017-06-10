@@ -22,5 +22,15 @@ public class BonusTile {
 	public void setHarvestEffect(HarvestEffect harvestEffect) {
 		this.harvestEffect = harvestEffect;
 	}
+	
+	@Override
+	public String toString(){
+		StringBuilder s = new StringBuilder();
+		s.append("Production Bonus of bonusTile: \n");
+		s.append(this.getProductionEffect().getResourceBonus().getResourceBonus().toString());
+		s.append("Harvest Bonus of bonusTile: \n");
+		s.append(this.getHarvestEffect().getResourceHarvestBonus().getResourceBonus().toString()+ "\n");
+		return s.toString();
+	}
 
 }
