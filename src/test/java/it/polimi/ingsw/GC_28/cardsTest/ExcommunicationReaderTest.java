@@ -2,8 +2,11 @@ package it.polimi.ingsw.GC_28.cardsTest;
 
 import static org.junit.Assert.*;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -37,12 +40,16 @@ public class ExcommunicationReaderTest {
 */
 	@Test
 	public void testStartRead() {
-		for(int i = 0; i < this.reader1.startRead().size(); i++){
-			for(int j = 0; j < this.reader.startRead().size(); j++){
-				if(this.reader1.startRead().get(i).equals(this.reader.startRead().get(j))){
-					assertEquals(this.reader1.startRead().get(i), this.reader.startRead().get(j));
+		try{
+			for(int i = 0; i < this.reader1.startRead().size(); i++){
+				for(int j = 0; j < this.reader.startRead().size(); j++){
+					if(this.reader1.startRead().get(i).equals(this.reader.startRead().get(j))){
+						assertEquals(this.reader1.startRead().get(i), this.reader.startRead().get(j));
+					}
 				}
 			}
+		}catch(IOException e){
+			Logger.getAnonymousLogger().log(Level.SEVERE, "IOException "+ e);
 		}
 	}
 
