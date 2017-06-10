@@ -13,13 +13,16 @@ public class ReduceDiceEffect extends Effect{
 	public final EffectType type = EffectType.REDUCEDICEEFFECT;
 	
 	private List<DiceColor> diceColor = new ArrayList<>();
-	int reduce;
+	private int reduce;
 	
 	//FOR TEST
 	public void setDiceColor(List<DiceColor> diceColor){
 		this.diceColor = diceColor;
 	}
 	
+	public void setReduce(int value){
+		this.reduce = value;
+	}
 	@Override
 	public void apply(Player player, Game game) {
 		for(FamilyMember fm : player.getFamilyMembers()){

@@ -272,7 +272,7 @@ public class Game extends Observable<Action> implements Runnable, Observer<Messa
 			else if(line.equalsIgnoreCase("specialaction")){
 				specialAction();
 			}
-			else if(line.equalsIgnoreCase("askLeaderCost")){
+			else if(("askLeaderCost").equalsIgnoreCase(line)){
 				askLeaderCost();
 			}
 			else{
