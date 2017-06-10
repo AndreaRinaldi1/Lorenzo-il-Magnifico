@@ -55,4 +55,14 @@ public class BonusTileTest {
 		assertEquals(this.harvestEffect, this.bt.getHarvestEffect());
 	}
 
+	@Test
+	public void testToString(){
+		StringBuilder s = new StringBuilder();
+		s.append("Production Bonus of bonusTile: \n");
+		s.append(this.bt.getProductionEffect().getResourceBonus().getResourceBonus().toString());
+		s.append("Harvest Bonus of bonusTile: \n");
+		s.append(this.bt.getHarvestEffect().getResourceHarvestBonus().getResourceBonus().toString()+ "\n");
+		assertEquals(s.toString(), this.bt.toString());
+	}
+	
 }
