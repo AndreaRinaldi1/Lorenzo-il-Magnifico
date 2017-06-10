@@ -78,10 +78,8 @@ public class TowerTest {
 	//Test dopo aver messo le carte nella cella
 	@Test
 	public void testFindCard() {
-		assertEquals(this.c0, this.tower.getCells()[0].getCard());
-		assertEquals(this.c1, this.tower.getCells()[1].getCard());
-		assertEquals(this.c2, this.tower.getCells()[2].getCard());
-		assertEquals(this.c3, this.tower.getCells()[3].getCard());
+		assertEquals(this.cells[1], this.tower.findCard("Bosco"));
+		//this.tower.findCard("RinoTheBest");	
 	}
 	
 	//TEST senza aver posizionato le carte
@@ -95,9 +93,7 @@ public class TowerTest {
 
 		tower1 = new Tower(cells1);
 		tower1.setCells(cells1);
-		for (int i = 0; i < tower1.getCells().length; i++){
-			assertEquals(null, this.tower1.getCells()[i].getCard());
-		}
+		assertEquals(null, this.tower1.findCard("Tuborg"));
 	}
 
 	@Test
@@ -110,6 +106,7 @@ public class TowerTest {
 				this.tower.isThisPlayerPresent(fm2.getPlayer().getColor()));
 		assertEquals(this.fm3.isUsed(), 
 				this.tower.isThisPlayerPresent(fm3.getPlayer().getColor()));
+		assertEquals(false, this.tower.isThisPlayerPresent(PlayerColor.GREEN));
 	}
 
 	@Test
