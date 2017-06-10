@@ -7,7 +7,8 @@ import it.polimi.ingsw.GC_28.model.Player;
 public class PopeEffect extends Effect{
 	
 	private Resource bonus;
-
+	private EffectType type = EffectType.POPEEFFECT;
+	
 	public Resource getBonus() {
 		return bonus;
 	}

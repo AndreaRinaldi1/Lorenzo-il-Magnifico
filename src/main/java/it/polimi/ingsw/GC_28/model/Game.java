@@ -72,7 +72,7 @@ public class Game extends Observable<Action> implements Runnable, Observer<Messa
 	Resource res ;
 	int incrementThroughServants;
 	
-	private Map<Player,Long> t = new HashMap<>();
+	
 	
 	public Game(GameModel gameModel){
 		//players = gameModel.getPlayers();
@@ -230,7 +230,7 @@ public class Game extends Observable<Action> implements Runnable, Observer<Messa
 			handlers.get(p).getOut().println(gameModel.getGameBoard().display());
 			handlers.get(p).getOut().println(p.getBoard().display());
 			handlers.get(p).getOut().println(p.displayExcommunication());
-			
+			handlers.get(p).getOut().println(p.displayLeader());
 			for(int i = 0; i < 4; i++){
 				handlers.get(p).getOut().println(p.getFamilyMembers()[i].toString());
 			}
@@ -247,7 +247,7 @@ public class Game extends Observable<Action> implements Runnable, Observer<Messa
 			return;
 		}
 		do{
-			handlers.get(currentPlayer).getOut().println("Which move do you want to undertake? [takeCard / goToSpace / skip/ askcost/specialAction]");
+			handlers.get(currentPlayer).getOut().println("Which move do you want to undertake? [takeCard / goToSpace / skip/ askcost/askLeaderCost/specialAction]");
 			handlers.get(currentPlayer).getOut().flush();	
 			String line = handlers.get(currentPlayer).getIn().nextLine();
 			if(line.equalsIgnoreCase("takeCard")){
@@ -271,6 +271,9 @@ public class Game extends Observable<Action> implements Runnable, Observer<Messa
 			}
 			else if(line.equalsIgnoreCase("specialaction")){
 				specialAction();
+			}
+			else if(line.equalsIgnoreCase("askLeaderCost")){
+				askLeaderCost();
 			}
 			else{
 				handlers.get(currentPlayer).getOut().println("Not valid input!");
@@ -726,8 +729,16 @@ public class Game extends Observable<Action> implements Runnable, Observer<Messa
 		}	
 	}
 	
+	private void askLeaderCost(){
+		handlers.get(currentPlayer).getOut().println(currentPlayer.displayLeaderCost());
+		handlers.get(currentPlayer).getOut().flush();
+		return;
+	}
+	
 	private void giveExcommunication(){
 		for(Player p : gameModel.getPlayers()){
+				handlers.get(p).getOut().println(p.displayExcommunication());
+				handlers.get(p).getOut().flush();
 				int faith = p.getBoard().getResources().getResource().get(ResourceType.FAITHPOINT);
 				if(faith < (2+ currentEra)){
 					handlers.get(p).getOut().println("You recive an Excommunication, because you cannot pay to avoid it");
@@ -883,17 +894,9 @@ public class Game extends Observable<Action> implements Runnable, Observer<Messa
 	
 	@Override
 	public void update() {
-		// TODO Auto-generated method stub
 		
 	}
 	
-	public int getCurrentRound(){
-		return currentRound;
-	}
-	
-	public List<Player> getSkipped(){
-		return skipped;
-	}
 	
 	
 }

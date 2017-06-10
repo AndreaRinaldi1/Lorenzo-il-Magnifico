@@ -32,6 +32,8 @@ import it.polimi.ingsw.GC_28.boards.Tower;
 import it.polimi.ingsw.GC_28.cards.CardType;
 import it.polimi.ingsw.GC_28.cards.ExcommunicationReader;
 import it.polimi.ingsw.GC_28.cards.ExcommunicationTile;
+import it.polimi.ingsw.GC_28.cards.LeaderCard;
+import it.polimi.ingsw.GC_28.cards.LeaderCardReader;
 import it.polimi.ingsw.GC_28.components.CouncilPrivilege;
 import it.polimi.ingsw.GC_28.components.Dice;
 import it.polimi.ingsw.GC_28.components.DiceColor;
@@ -77,6 +79,7 @@ public class BoardsInitializer {
 			placeBonusTile();
 			//gameModel.setPlayers(players);
 			completeExcommunicationArray();
+			initLeaderCard();
 		/*} catch (FileNotFoundException e) {
 			Logger.getAnonymousLogger().log(Level.SEVERE, "cannot start initialize" + e);
 		}*/
@@ -296,7 +299,23 @@ public class BoardsInitializer {
 			}
 		}
 	}
+	
+	private void initLeaderCard(){
+		List<LeaderCard> leaders = new ArrayList<>();
+		LeaderCardReader reader = new LeaderCardReader();
+		leaders = reader.start();
+		for(Player p : players){
+			for(int i = 0; i < 4; i++){
+				int randomInt = ThreadLocalRandom.current().nextInt(0, leaders.size());
+				p.getLeaderCards().add(leaders.get(randomInt));
+				leaders.remove(randomInt);
+			}
+			System.out.println(p.getLeaderCards().toString());
+		}
+	}
 }
+
+	
 
 class EnumMapInstanceCreator<K extends Enum<K>, V> implements InstanceCreator<EnumMap<K, V>> {
 private final Class<K> enumClazz;

@@ -260,7 +260,8 @@
           "VICTORYPOINT": 5,
           "FAITHPOINT": 0
         }
-      }
+      },
+      "type": "POPEFFECT"
     }
   },
   {
