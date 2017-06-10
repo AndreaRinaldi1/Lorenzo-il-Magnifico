@@ -6,25 +6,29 @@ import it.polimi.ingsw.GC_28.components.FamilyMember;
 import it.polimi.ingsw.GC_28.effects.GoToHPEffect;
 import it.polimi.ingsw.GC_28.effects.IncrementHPEffect;
 import it.polimi.ingsw.GC_28.model.Game;
+import it.polimi.ingsw.GC_28.model.GameModel;
+import it.polimi.ingsw.GC_28.server.Message;
 import it.polimi.ingsw.GC_28.spaces.ProductionAndHarvestSpace;
 import it.polimi.ingsw.GC_28.spaces.Space;
 
 public class SpaceAction extends Action{
 	private Game game;
-	private SpaceController marketController = new SpaceController();
+	private SpaceController spaceController;
 	private FamilyMember familyMember;
 	private Space space;
 	private GoToHPEffect throughEffect;
+	private GameModel gameModel;
 	
-	public SpaceAction(Game game){
+	public SpaceAction(Game game, GameModel gameModel){
+		this.gameModel = gameModel;
 		this.game = game;
+		spaceController = new SpaceController(gameModel);
+
 	}
 
 	public boolean isApplicable(){
-		return marketController.check(familyMember, space, throughEffect);
+		return spaceController.check(familyMember, space, throughEffect);
 	}
-	
-	
 	
 	public void setFamilyMember(FamilyMember familyMember) {
 		this.familyMember = familyMember;
@@ -75,5 +79,7 @@ public class SpaceAction extends Action{
 		}
 		space.applyBonus(game, familyMember);
 		familyMember.setUsed(true);
+		gameModel.notifyObserver(new Message("Action completed successfully!", true));
+
 	}
 }

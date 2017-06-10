@@ -13,7 +13,7 @@ public class ReduceDiceEffect extends Effect{
 	public final EffectType type = EffectType.REDUCEDICEEFFECT;
 	
 	private List<DiceColor> diceColor = new ArrayList<>();
-	int reduce = 1;
+	int reduce;
 	
 	//FOR TEST
 	public void setDiceColor(List<DiceColor> diceColor){

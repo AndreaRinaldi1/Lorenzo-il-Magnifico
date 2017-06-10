@@ -221,7 +221,7 @@ public class CardWriter1 {
 		deck.getVentures().add(venture);
 	}
 	
-	private void enterResourceCost(EnumMap<ResourceType, Integer> cost){
+	void enterResourceCost(EnumMap<ResourceType, Integer> cost){
 		
 		coin = enterCost(ResourceType.COIN.name());
 		wood = enterCost(ResourceType.WOOD.name());
@@ -242,7 +242,7 @@ public class CardWriter1 {
 
 	}
 	
-private void enterResourceBonus(EnumMap<ResourceType, Integer> bonus){
+protected void enterResourceBonus(EnumMap<ResourceType, Integer> bonus){
 		
 		coin = enterBonus(ResourceType.COIN.name());
 		wood = enterBonus(ResourceType.WOOD.name());
