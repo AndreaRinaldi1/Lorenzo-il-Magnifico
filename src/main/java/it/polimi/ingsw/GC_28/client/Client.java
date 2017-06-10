@@ -42,6 +42,7 @@ public class Client{
 		new Thread(new ClientWriter(socket)).start();
 		
 
+		
 	}
 	
 	

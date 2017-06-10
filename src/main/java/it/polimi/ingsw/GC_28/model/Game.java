@@ -2,6 +2,7 @@ package it.polimi.ingsw.GC_28.model;
 
 
 import java.io.IOException;
+import java.nio.BufferOverflowException;
 import java.util.ArrayList;
 import java.util.EnumMap;
 import java.util.HashMap;
@@ -58,6 +59,7 @@ public class Game extends Observable<Action> implements Runnable, Observer<Messa
 	private Map<Player, ClientHandler> handlers = new HashMap<>();
 	private List<Player> skipped = new ArrayList<>();
 	private boolean result;
+	private List<Player> suspended = new ArrayList<>();
 	//private List<Player> players;
 	//private GameBoard gameBoard;
 	EnumMap<ResourceType, Integer> decrement = new EnumMap<>(ResourceType.class);
@@ -83,16 +85,81 @@ public class Game extends Observable<Action> implements Runnable, Observer<Messa
 				checkDiceReduction();				
 				for(currentRound = 1; currentRound <= 4; currentRound++){					
 					for(currentTurn = 0; currentTurn < gameModel.getPlayers().size(); currentTurn++){
-						try {
-							play();
-						} catch (IOException e) {
-							Logger.getAnonymousLogger().log(Level.SEVERE,"Cannot play that move in method run()" + e);
-						}
-						if(currentTurn == (gameModel.getPlayers().size()-1)){
-							currentPlayer = gameModel.getPlayers().get(0);
-						}else{
-							currentPlayer = gameModel.getPlayers().get((currentTurn+1));
-						}
+							
+							boolean x = false;
+							long time = System.currentTimeMillis() + 16000;
+							Thread t = new Thread(){
+								public void run(){
+									System.out.println(2);
+									try {
+										play();
+									} catch (IOException e) {
+										Logger.getAnonymousLogger().log(Level.SEVERE,"Cannot play that move in method run()" + e);
+									}
+									catch(IndexOutOfBoundsException ee){
+										
+										System.out.println("dentro exception");
+										for(Player p : suspended){
+											System.out.println(p.getName());
+										}
+									}
+									System.out.println(3);
+								}
+							};
+							t.start();
+							System.out.println(4);
+							while(t.isAlive()){
+								if(System.currentTimeMillis() > time){
+									
+									x = true;
+									break;
+								}
+							}
+							if(x){
+								t.interrupt();
+								
+								handlers.get(currentPlayer).getOut().println("sospeso");
+								handlers.get(currentPlayer).getOut().flush();
+								System.out.println("sono passati 15 sec");
+								suspended.add(currentPlayer);
+								handlers.get(currentPlayer).getOut().println("you have been suspended. Type 'reconnect' to play again");
+								handlers.get(currentPlayer).getOut().flush();
+
+								new Thread(new Listener(suspended,currentPlayer, handlers.get(currentPlayer))).start();
+								System.out.println("dentro if(x)");
+								for(Player p : suspended){
+									System.out.println(p.getName());
+								}
+							}
+							
+							if(currentTurn == (gameModel.getPlayers().size()-1)){
+								currentPlayer = gameModel.getPlayers().get(0);
+							}else{
+								currentPlayer = gameModel.getPlayers().get((currentTurn+1));
+							}
+							/*
+							t.start();
+							try {
+								t.join(15000);
+							} catch (InterruptedException e) {
+								System.out.println("sono passati 15 sec");
+								suspended.add(currentPlayer);
+								for(Player p : suspended){
+									System.out.println(p.getName());
+								}
+								handlers.get(currentPlayer).getOut().println("you have been suspended");
+							}
+							finally{
+								System.out.println(5);
+
+								if(currentTurn == (gameModel.getPlayers().size()-1)){
+									currentPlayer = gameModel.getPlayers().get(0);
+								}else{
+									currentPlayer = gameModel.getPlayers().get((currentTurn+1));
+								}
+							}
+								*/	
+						
 					} 	
 				}
 				checkSkippedPlayers();
@@ -112,6 +179,7 @@ public class Game extends Observable<Action> implements Runnable, Observer<Messa
 	
 	public void declareWinner(){
 		handlers.get(gameModel.getPlayers().get(0)).getOut().println("YOU WIN!!!");
+		handlers.get(gameModel.getPlayers().get(0)).getOut().flush();
 		displayFinalChart();
 	}
 	
@@ -121,6 +189,7 @@ public class Game extends Observable<Action> implements Runnable, Observer<Messa
 			for(int i = 0; i < gameModel.getPlayers().size(); i++){
 				handlers.get(p).getOut().println((i+1) + "\t" + gameModel.getPlayers().get(i).getName() + "\t" + gameModel.getPlayers().get(i).getBoard().getResources().getResource().get(ResourceType.VICTORYPOINT));
 			}
+			handlers.get(p).getOut().flush();
 		}
 	}
 	
@@ -218,39 +287,34 @@ public class Game extends Observable<Action> implements Runnable, Observer<Messa
 	
 	public void display(){
 		for(Player p: gameModel.getPlayers()){
-			handlers.get(p).getOut().println(gameModel.getGameBoard().display());
-			handlers.get(p).getOut().println(p.getBoard().display());
-			handlers.get(p).getOut().println(p.displayExcommunication());
-			
-			for(int i = 0; i < 4; i++){
-				handlers.get(p).getOut().println(p.getFamilyMembers()[i].toString());
+			if(!suspended.contains(p)){
+				handlers.get(p).getOut().println(gameModel.getGameBoard().display());
+				handlers.get(p).getOut().println(p.getBoard().display());
+				handlers.get(p).getOut().println(p.displayExcommunication());
+				
+				for(int i = 0; i < 4; i++){
+					handlers.get(p).getOut().println(p.getFamilyMembers()[i].toString());
+				}
+				handlers.get(p).getOut().flush();
 			}
-			handlers.get(p).getOut().flush();
 		}
 	}
 
-	public void play() throws IOException{
+	public void play() throws IOException, IndexOutOfBoundsException{
 		display();
-		
-		
+		if(suspended.contains(currentPlayer)){
+			return;
+		}
 		if(skipped.contains(currentPlayer) && currentRound == 1){ //se è tra i giocatori in skipped allora salta turno
 			handlers.get(currentPlayer).getOut().println("Skipped first turn due to excommunication");
 			return;
 		}
 		do{
-			handlers.get(currentPlayer).getOut().println("Which move do you want to undertake? [takeCard / goToSpace / skip/ askcost]");
+			handlers.get(currentPlayer).getOut().println("Which move do you want to undertake? [takeCard / goToSpace / skip / disconnect / askcost]");
 			handlers.get(currentPlayer).getOut().flush();	
 			
-			timer = new Timer();
-			timer.schedule(new TimerTask(){
-				@Override
-				public void run() {
-					System.out.println("passati 15 sec");
-					return;
-				}
-			}, 5000);
-			
 			String line = handlers.get(currentPlayer).getIn().nextLine();
+			
 			if(line.equalsIgnoreCase("takeCard")){
 				if(askCard(null)){
 					return;
@@ -262,10 +326,14 @@ public class Game extends Observable<Action> implements Runnable, Observer<Messa
 				}
 			}
 			else if(line.equalsIgnoreCase("skip")){
-				skip();
+				return;
 			}
 			else if(line.equalsIgnoreCase("askcost")){
 				askCost();
+			}
+			else if(line.equals("disconnect")){
+				
+				return;
 			}
 			else{
 				handlers.get(currentPlayer).getOut().println("Not valid input!");
@@ -274,10 +342,9 @@ public class Game extends Observable<Action> implements Runnable, Observer<Messa
 		}while(true);
 	
 	}
+
+
 	
-	public void skip(){
-		return;
-	}
 
 	public Map<Player, ClientHandler> getHandlers() {
 		return handlers;
@@ -744,7 +811,6 @@ public class Game extends Observable<Action> implements Runnable, Observer<Messa
 
 	@Override
 	public void update(Message m) {
-		System.out.println(4);
 		handlers.get(currentPlayer).getOut().println(m.getMessage());
 		result = m.isResult();
 		if(m.isResult()){	
