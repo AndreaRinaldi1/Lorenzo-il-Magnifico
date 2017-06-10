@@ -156,11 +156,12 @@ public class Server {
 		do{
 			int i = 1;
 			for(BonusTile bt : bonusList){
+				handlers.get(p).getOut().println(i + "\n");
 				handlers.get(p).getOut().println("bonusTile n°: "+ i+ "\n");
 				handlers.get(p).getOut().println(bt.toString());
 				i++;
 			}
-			handlers.get(p).getOut().println("Choose from above your personal bonusTile: [1/2/3/4]");
+			handlers.get(p).getOut().println("Choose from above your personal bonusTile: [input number from 1 to " + bonusList.size()+ "]");
 			handlers.get(p).getOut().flush();
 			Integer bonusTile = handlers.get(p).getIn().nextInt();
 			handlers.get(p).getIn().nextLine();
