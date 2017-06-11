@@ -80,7 +80,6 @@ public class FinalBonus {
 	public void setFaithPointTrack(List<Resource> faithPointTrack) {
 		this.faithPointTrack = faithPointTrack;
 	}
-	
-	
+
 
 }
