@@ -14,6 +14,7 @@ import com.google.gson.reflect.TypeToken;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.typeadapters.RuntimeTypeAdapterFactory;
 
+import it.polimi.ingsw.GC_28.effects.CopyEffect;
 import it.polimi.ingsw.GC_28.effects.Effect;
 import it.polimi.ingsw.GC_28.effects.GoToHPEffect;
 import it.polimi.ingsw.GC_28.effects.OtherEffect;
@@ -41,7 +42,8 @@ public class LeaderCardReader {
 				.registerSubtype(OtherEffect.class, "OTHEREFFECT")
 				.registerSubtype(GoToHPEffect.class,"GOTOHP")
 				.registerSubtype(SetFamilyMemberValueEffect.class,"SETFAMILYMEMBERVALUEEFFECT")
-				.registerSubtype(PopeEffect.class,"POPEFFECT");
+				.registerSubtype(PopeEffect.class,"POPEFFECT")
+				.registerSubtype(CopyEffect.class, "COPYEFFECT");
 		
 		Gson gson = new GsonBuilder().registerTypeAdapterFactory(typeFactory).create();
 		
