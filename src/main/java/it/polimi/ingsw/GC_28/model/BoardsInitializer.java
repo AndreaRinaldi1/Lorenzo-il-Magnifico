@@ -232,7 +232,7 @@ public class BoardsInitializer {
 		}
 	}
 	
-	private void initFinalBonus()throws FileNotFoundException{
+	public void initFinalBonus() throws FileNotFoundException{
 		Gson gson = new GsonBuilder().create();
 		try {
 			JsonReader readerFinalBonus = new JsonReader(new FileReader("finalBonus.json"));

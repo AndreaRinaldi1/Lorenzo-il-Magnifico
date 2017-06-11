@@ -26,6 +26,7 @@ public class TakeCardController {
 	private GameBoard gameBoard;
 	protected CardType cardType;
 	//private Cell cell;
+	private final int MAX_SIZE = 6;
 	
 	public TakeCardController(GameModel gameModel){
 		this.gameBoard = gameModel.getGameBoard();
@@ -101,27 +102,27 @@ public class TakeCardController {
 	private boolean checkMoreThanSix(FamilyMember familyMember){
 		switch(cardType){
 		case TERRITORY:
-			if(familyMember.getPlayer().getBoard().getTerritories().size() == 6){
+			if(familyMember.getPlayer().getBoard().getTerritories().size() == MAX_SIZE){
 				return true;
 			}
 		break;
 		case BUILDING:
-			if(familyMember.getPlayer().getBoard().getBuildings().size() == 6){
+			if(familyMember.getPlayer().getBoard().getBuildings().size() == MAX_SIZE){
 				return true;
 			}
 		break;
 		case CHARACTER:
-			if(familyMember.getPlayer().getBoard().getCharacters().size() == 6){
+			if(familyMember.getPlayer().getBoard().getCharacters().size() == MAX_SIZE){
 				return true;
 			}
 		break;
 		case VENTURE:
-			if(familyMember.getPlayer().getBoard().getVentures().size() == 6){
+			if(familyMember.getPlayer().getBoard().getVentures().size() == MAX_SIZE){
 				return true;
 			}
 		break;
 		}
-		System.out.println("ritorno che ho gia sei carte di quel tipo");
+		System.out.println("ritorno che NON ho sei carte di quel tipo");
 		return false;
 	}
 	
@@ -166,13 +167,10 @@ public class TakeCardController {
 	private boolean checkResource(Game game, String cardName, FamilyMember familyMember, TakeCardEffect throughEffect){
 		
 		if(cardType.equals(CardType.TERRITORY)){
-			for(int i = 0; i < familyMember.getPlayer().getBoard().getTerritories().size(); i++){
-				if(familyMember.getPlayer().getBoard().getTerritories().get(i) == null){
-					for(ResourceType resType : FinalBonus.instance().getResourceForTerritories().get(i).getResource().keySet()){
-						if(familyMember.getPlayer().getBoard().getResources().getResource().get(resType) < FinalBonus.instance().getResourceForTerritories().get(i).getResource().get(resType)){
-							return false;
-						}
-					}
+			int size = familyMember.getPlayer().getBoard().getTerritories().size();
+			for(ResourceType resType : FinalBonus.instance().getResourceForTerritories().get(size+1).getResource().keySet()){
+				if(familyMember.getPlayer().getBoard().getResources().getResource().get(resType) < FinalBonus.instance().getResourceForTerritories().get(size+1).getResource().get(resType)){
+					return false;
 				}
 			}
 		}

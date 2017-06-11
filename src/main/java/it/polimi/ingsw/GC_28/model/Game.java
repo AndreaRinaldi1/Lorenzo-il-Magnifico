@@ -10,11 +10,13 @@ import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import de.vandermeer.asciitable.AsciiTable;
 import it.polimi.ingsw.GC_28.boards.Cell;
 import it.polimi.ingsw.GC_28.boards.FinalBonus;
 import it.polimi.ingsw.GC_28.boards.GameBoard;
 import it.polimi.ingsw.GC_28.cards.CardType;
 import it.polimi.ingsw.GC_28.cards.ExcommunicationTile;
+import it.polimi.ingsw.GC_28.cards.Venture;
 import it.polimi.ingsw.GC_28.components.CouncilPrivilege;
 import it.polimi.ingsw.GC_28.components.DiceColor;
 import it.polimi.ingsw.GC_28.components.FamilyMember;
@@ -99,21 +101,100 @@ public class Game extends Observable<Action> implements Runnable, Observer<Messa
 		}
 		
 		//FINE DEL GIOCO
+		applyFinalBonus();
 		applyFinalMalus();
+		sortBy(gameModel.getPlayers(), ResourceType.MILITARYPOINT);
+		assignBonusForMilitary();
+		sortBy(gameModel.getPlayers(), ResourceType.VICTORYPOINT);
+		declareWinner();
+		
+	}
+	
+	public void declareWinner(){
+		handlers.get(gameModel.getPlayers().get(0)).getOut().println("YOU WIN!!!");
+		handlers.get(gameModel.getPlayers().get(0)).getOut().flush();
+		displayFinalChart();
+	}
+	
+	public String getChartTable(){
+		StringBuilder ret = new StringBuilder();
+		AsciiTable chart = new AsciiTable();
+		chart.addRule();
+		chart.addRow("Position", "Name", "Points");
+		chart.addRule();
+		for(int i = 0; i < gameModel.getPlayers().size(); i++){
+			chart.addRow((i+1) , gameModel.getPlayers().get(i).getName(), gameModel.getPlayers().get(i).getBoard().getResources().getResource().get(ResourceType.VICTORYPOINT));
+			chart.addRule();
+		}
+		ret.append(chart.render() + "\n");
+		
+		return ret.toString();
+	}
+	
+	public void displayFinalChart(){
+		for(Player p : gameModel.getPlayers()){
+			handlers.get(p).getOut().println(getChartTable());
+			handlers.get(p).getOut().flush();
+		}
+	}
+	
+	public void assignBonusForMilitary(){
+		FinalBonus finalBonus = FinalBonus.instance();
+		int i = 0;
+		while(i < gameModel.getPlayers().size() - 1){
+			gameModel.getPlayers().get(i).addResource(finalBonus.getFinalMilitaryTrack().get(i));
+			int j = i + 1;
+			while(j < gameModel.getPlayers().size() && (gameModel.getPlayers().get(i).getBoard().getResources().getResource().get(ResourceType.MILITARYPOINT) ==
+						gameModel.getPlayers().get(j).getBoard().getResources().getResource().get(ResourceType.MILITARYPOINT))){
+				gameModel.getPlayers().get(j).addResource(finalBonus.getFinalMilitaryTrack().get(i));
+				j++;
+			}
+			i = j;
+		}
 	}
 	
 	public void setHandlers(Map<Player, ClientHandler> handlers) {
 		this.handlers = handlers;
 	}
 	
+	public void sortBy(List<Player> players, ResourceType type){
+		players.sort((p1, p2) -> p2.getBoard().getResources().getResource().get(type) - p1.getBoard().getResources().getResource().get(type));
+	}
+	
+	public void applyFinalBonus(){
+		FinalBonus finalBonus = FinalBonus.instance();
+		for(Player p : gameModel.getPlayers()){
+			p.getBoard().getResources().modifyResource(finalBonus.getFinalTerritoriesBonus().get(p.getBoard().getTerritories().size()), true);
+			
+			p.getBoard().getResources().modifyResource(finalBonus.getFinalCharactersBonus().get(p.getBoard().getCharacters().size()), true);
+			
+			for(Venture v : p.getBoard().getVentures()){
+				p.addResource(v.getPermanentEffect().getResourceBonus());
+			}
+			
+			int finalResources = 0;
+			for(ResourceType type : p.getBoard().getResources().getResource().keySet()){
+				if(!type.equals(ResourceType.VICTORYPOINT) && !type.equals(ResourceType.MILITARYPOINT) && !type.equals(ResourceType.FAITHPOINT)){
+					finalResources += p.getBoard().getResources().getResource().get(type);
+				}
+			}
+			int actualVictoryPoints = p.getBoard().getResources().getResource().get(ResourceType.VICTORYPOINT);
+			
+			p.getBoard().getResources().getResource().put(ResourceType.VICTORYPOINT, actualVictoryPoints + (finalResources/finalBonus.getResourceFactor()));
+			
+		}
+	}
+	
 	
 	public void applyFinalMalus(){
+		ExcommunicationTile t;
 		for(Player p : gameModel.getPlayers()){
-			ExcommunicationTile t = p.getExcommunicationTile().get(currentEra-1);
+			t = p.getExcommunicationTile().get(currentEra-1);
 			if(t != null){
 				t.getEffect().apply(p, this);
 			}
 		}
+		
 	}
 
 	public void checkDiceReduction(){  //se i giocatori tra le scomuniche hanno reducedice applico effetto
