@@ -12,6 +12,7 @@ import java.util.logging.Logger;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
+import it.polimi.ingsw.GC_28.components.DiceColor;
 import it.polimi.ingsw.GC_28.components.Resource;
 import it.polimi.ingsw.GC_28.components.ResourceType;
 import it.polimi.ingsw.GC_28.effects.DiscountEffect;
@@ -22,7 +23,7 @@ import it.polimi.ingsw.GC_28.effects.IncrementHPEffect;
 import it.polimi.ingsw.GC_28.effects.MultiplierEffect;
 import it.polimi.ingsw.GC_28.effects.NoFinalBonusEffect;
 import it.polimi.ingsw.GC_28.effects.OtherEffect;
-import it.polimi.ingsw.GC_28.effects.ReduceDiceEffect;
+import it.polimi.ingsw.GC_28.effects.ModifyDiceEffect;
 import it.polimi.ingsw.GC_28.effects.ServantEffect;
 
 public class ExcommunicationWriter {
@@ -58,7 +59,7 @@ public class ExcommunicationWriter {
 				System.out.println("Type 'nf' for NOFINALBONUS" );
 				System.out.println("Type 'mult' for MULTIPLIEREFFECT");
 				System.out.println("Type 'd' for DISCOUNTEFFECT");
-				System.out.println("Type 'rd' for REDUCEDICEEFFECT");
+				System.out.println("Type 'rd' for MODIFYDICEEFFECT");
 				System.out.println("Type 'skip' for SKIPROUNDEFFECT");
 				System.out.println("Type 'nm' for NOMARKETEFFECT");
 				System.out.println("Type 'se' for SERVANTEFFECT");
@@ -101,7 +102,10 @@ public class ExcommunicationWriter {
 					exList.add(ex);
 					break;
 				case "rd":
-					ReduceDiceEffect rd = new ReduceDiceEffect();
+					ModifyDiceEffect rd = new ModifyDiceEffect();
+					rd.setReduce(enterReduceValue());
+
+					rd.setDiceColor(enterDiceColor());
 					ex.setEffect(rd);
 					exList.add(ex);
 					break;
@@ -151,6 +155,29 @@ public class ExcommunicationWriter {
 		}catch(IOException e){
 			Logger.getAnonymousLogger().log(Level.SEVERE, "error"+e);
 		}
+	}
+	
+	private int enterReduceValue(){
+		System.out.println("Enter the reduce value");
+		return scanner.nextInt();
+	}
+	
+	private List<DiceColor> enterDiceColor(){
+		List<DiceColor> list = new ArrayList<>();
+		while(true){
+			System.out.println("enter the dice color. Type end to finish");
+			String color = scanner.nextLine();
+			if(color.equals("end")){
+				break;
+			}
+			for(DiceColor c : DiceColor.values()){
+				if(color.equalsIgnoreCase(c.name())){
+					list.add(c);
+					break;
+				}
+			}
+		}
+		return list;
 	}
 	
 	private CardType enterCardType(){

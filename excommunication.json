@@ -103,9 +103,13 @@
   {
     "era": 1,
     "effect": {
-      "type": "REDUCEDICEEFFECT",
-      "diceColor": [],
-      "reduce": 1
+      "type": "MODIFYDICEEFFECT",
+      "diceColor": [
+        "ORANGE",
+        "BLACK",
+        "WHITE"
+      ],
+      "reduce": -1
     }
   },
   {

@@ -8,16 +8,20 @@ import it.polimi.ingsw.GC_28.components.FamilyMember;
 import it.polimi.ingsw.GC_28.model.Game;
 import it.polimi.ingsw.GC_28.model.Player;
 
-public class ReduceDiceEffect extends Effect{
+public class ModifyDiceEffect extends Effect{
 	
-	public final EffectType type = EffectType.REDUCEDICEEFFECT;
+	public final EffectType type = EffectType.MODIFYDICEEFFECT;
 	
 	private List<DiceColor> diceColor = new ArrayList<>();
-	int reduce = 1;
+	int reduce;
 	
 	//FOR TEST
 	public void setDiceColor(List<DiceColor> diceColor){
 		this.diceColor = diceColor;
+	}
+	
+	public void setReduce(int reduce){
+		this.reduce = reduce;
 	}
 	
 	@Override

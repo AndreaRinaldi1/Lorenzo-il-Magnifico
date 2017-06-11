@@ -33,7 +33,7 @@ import it.polimi.ingsw.GC_28.effects.MultiplierEffect;
 import it.polimi.ingsw.GC_28.effects.NoEffect;
 import it.polimi.ingsw.GC_28.effects.NoFinalBonusEffect;
 import it.polimi.ingsw.GC_28.effects.OtherEffect;
-import it.polimi.ingsw.GC_28.effects.ReduceDiceEffect;
+import it.polimi.ingsw.GC_28.effects.ModifyDiceEffect;
 import it.polimi.ingsw.GC_28.effects.ServantEffect;
 import it.polimi.ingsw.GC_28.effects.TakeCardEffect;
 import it.polimi.ingsw.GC_28.server.ClientHandler;
@@ -200,7 +200,7 @@ public class Game extends Observable<Action> implements Runnable, Observer<Messa
 	public void checkDiceReduction(){  //se i giocatori tra le scomuniche hanno reducedice applico effetto
 		for(Player p : gameModel.getPlayers()){
 			for(ExcommunicationTile t : p.getExcommunicationTile()){
-				if(t.getEffect() instanceof ReduceDiceEffect){
+				if(t.getEffect() instanceof ModifyDiceEffect){
 					t.getEffect().apply(p, this);
 				}
 			}

@@ -106,6 +106,7 @@ public class Prova {
 			System.out.println(player.getBoard().getResources().toString());
 		}
 		
+		
 		g.sortBy(l, ResourceType.VICTORYPOINT);
 		System.out.println("winner: " + l.get(0).getName());
 
