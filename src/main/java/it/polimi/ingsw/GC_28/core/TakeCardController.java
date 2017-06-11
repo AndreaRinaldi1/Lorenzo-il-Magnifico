@@ -19,16 +19,18 @@ import it.polimi.ingsw.GC_28.model.GameModel;
 import it.polimi.ingsw.GC_28.server.Message;
 import it.polimi.ingsw.GC_28.cards.Character;
 import it.polimi.ingsw.GC_28.cards.ExcommunicationTile;
+import it.polimi.ingsw.GC_28.cards.LeaderCard;
 import it.polimi.ingsw.GC_28.cards.Venture;
 
 public class TakeCardController {
-	private GameModel g;
+	private GameModel gameModel;
 	private GameBoard gameBoard;
 	protected CardType cardType;
 	//private Cell cell;
 	private final int MAX_SIZE = 6;
 	
 	public TakeCardController(GameModel gameModel){
+		this.gameModel = gameModel;
 		this.gameBoard = gameModel.getGameBoard();
 	}
 	
@@ -45,17 +47,21 @@ public class TakeCardController {
 			}
 		}*/
 		if(!(checkCardExistance(name, throughEffect))){
-			g.notifyObserver(new Message("this card doesn't exist", false));
+			System.out.println(2);
+			gameModel.notifyObserver(new Message("this card doesn't exist", false));
+			System.out.println(3);
 			return false;
 		}
 		
 		if(checkMoreThanSix(familyMember)){
+			gameModel.notifyObserver(new Message("You already have six cards of the type " + cardType.name().toLowerCase() , false));
 			return false;
 		}
 		
 		
 		if(throughEffect == null){
 			if(checkThisPlayerPresent(familyMember)){
+				gameModel.notifyObserver(new Message("You already are in this tower" , false));
 				return false;
 			}
 		}
@@ -79,7 +85,6 @@ public class TakeCardController {
 				if(!(throughEffect == null)){ //se ho l'effetto
 					if(throughEffect.getCardType() == null){ //se posso prendere qualunque cardType
 						cardType = ct;
-						System.out.println("ritorno true in checkcardExistance. posso prendere qualunque cardType");
 						return true; 
 					}
 					else{
@@ -95,7 +100,6 @@ public class TakeCardController {
 				}
 			}
 		}
-		System.out.println("ritorno false nel checkcardexistance perche o non esiste o cardType sbagliato");
 		return false;
 	}
 	
@@ -122,7 +126,6 @@ public class TakeCardController {
 			}
 		break;
 		}
-		System.out.println("ritorno che NON ho sei carte di quel tipo");
 		return false;
 	}
 	
@@ -136,13 +139,10 @@ public class TakeCardController {
 		for(Cell c : gameBoard.getTowers().get(cardType).getCells()){
 			if(!c.isFree()){
 				if((c.getFamilyMember().getPlayer().getColor().equals(familyMember.getPlayer().getColor())) && !(c.getFamilyMember().isNeutral()) && !(familyMember.isNeutral())){
-					System.out.println("ritorno true in checkthisplayer");
 					return true; 
 				}
 			}
 		}
-		System.out.println("ritorno false in checkthisplayer");
-
 		return false;
 	}
 	
@@ -167,10 +167,23 @@ public class TakeCardController {
 	private boolean checkResource(Game game, String cardName, FamilyMember familyMember, TakeCardEffect throughEffect){
 		
 		if(cardType.equals(CardType.TERRITORY)){
-			int size = familyMember.getPlayer().getBoard().getTerritories().size();
-			for(ResourceType resType : FinalBonus.instance().getResourceForTerritories().get(size+1).getResource().keySet()){
-				if(familyMember.getPlayer().getBoard().getResources().getResource().get(resType) < FinalBonus.instance().getResourceForTerritories().get(size+1).getResource().get(resType)){
-					return false;
+			for(int i = 0; i < familyMember.getPlayer().getBoard().getTerritories().size(); i++){
+				if(familyMember.getPlayer().getBoard().getTerritories().get(i) == null){
+					boolean active = false;//FIXME
+					for(LeaderCard lc : familyMember.getPlayer().getLeaderCards()){ //check if Cesare Borgia leader is active for the currentPlayer, if so skip the check of his resources requested for territories
+						if(lc.getName().equalsIgnoreCase("Cesare Borgia") && lc.getPlayed() && lc.getActive()){
+							active = true;
+						}
+					}
+					if(!active){
+						int size = familyMember.getPlayer().getBoard().getTerritories().size();
+						for(ResourceType resType : FinalBonus.instance().getResourceForTerritories().get(size+1).getResource().keySet()){
+							if(familyMember.getPlayer().getBoard().getResources().getResource().get(resType) < FinalBonus.instance().getResourceForTerritories().get(size+1).getResource().get(resType)){
+								gameModel.notifyObserver(new Message("You don'have the requested resources to take another " + cardType.name().toLowerCase() , false));
+								return false;
+							}
+						}
+					}
 				}
 			}
 		}
@@ -180,11 +193,18 @@ public class TakeCardController {
 		Resource tmp = Resource.of(res);
 		tmp.modifyResource(familyMember.getPlayer().getBoard().getResources(), true);
 		
-		
-		reduce3Coins(familyMember, true, tmp);
+		boolean active = false;
+		for(LeaderCard lc : familyMember.getPlayer().getLeaderCards()){ //check if current player can avoid to pay the 3 coins FIXME
+			if(lc.getName().equalsIgnoreCase("Filippo Brunelleschi") && lc.getPlayed() && lc.getActive()){
+				active = true;
+			}
+		}
+		if(!active){
+			reduce3Coins(familyMember, true, tmp);
+		}
 		
 		if(tmp.getResource().get(ResourceType.COIN) < 0){
-			System.out.println("ritorno false in checkresource perche non ho montete per altro giocatore su torre");
+			gameModel.notifyObserver(new Message("You don't have the three coins to enter this tower, since there's already another player", false));
 			return false;
 		}
 		
@@ -224,7 +244,7 @@ public class TakeCardController {
 					tmp.modifyResource(venture.getAlternativeCost(), false);
 				}
 				else{
-					System.out.println("no abbastanza pti mil");
+					gameModel.notifyObserver(new Message("You don't have the necessary military points to pay for this card" , false));
 					return false; //se non ha suff. military points non può prendere la carta
 				}
 			}
@@ -235,7 +255,7 @@ public class TakeCardController {
 		
 		for(ResourceType resType : tmp.getResource().keySet()){
 			if(tmp.getResource().get(resType) < 0){
-				System.out.println("ritorno false in checkresource perceh non ho risorse nec");
+				gameModel.notifyObserver(new Message("You don't have the necessary resources to pay for this card" , false));
 				return false;
 			}
 		}
@@ -348,7 +368,7 @@ public class TakeCardController {
 			if(character.getPermanentEffect() instanceof IncrementCardEffect){
 				eff = (IncrementCardEffect) character.getPermanentEffect();
 				if(eff.getCardType().equals(cardType)){
-					eff.apply(familyMember, game);
+					tmp += eff.getIncrement();
 				}
 			}
 		}
@@ -358,7 +378,7 @@ public class TakeCardController {
 			if(t.getEffect() instanceof IncrementCardEffect){
 				eff = (IncrementCardEffect) t.getEffect();
 				if(eff.getCardType().equals(cardType)){ //se il cardType coincide allora gli tolgo il valore della scomun
-					eff.apply(familyMember, game);
+					tmp += eff.getIncrement();
 				}
 			}
 		}
@@ -367,6 +387,22 @@ public class TakeCardController {
 		if(tmp >= gameBoard.getTowers().get(cardType).findCard(cardName).getActionValue()){
 			return true;
 		}
+		gameModel.notifyObserver(new Message("Your action value is not high enough to take this card", false));
 		return false;
+	}
+	
+	protected void lookForPicoDellaMirandola(FamilyMember familyMember, Resource tmp, Game game){//FIXME
+		for(LeaderCard lc : familyMember.getPlayer().getLeaderCards()){//check if the player has the card and  if it's played and activate 
+			if(lc.getName().equalsIgnoreCase("Pico della Mirandola") && lc.getPlayed() && lc.getActive()){
+				System.out.println("Pico della Mirandola");
+				EnumMap<ResourceType, Integer> temp = new EnumMap<>(ResourceType.class);
+				temp.put(ResourceType.COIN, 3);
+				Resource tempResource = Resource.of(temp);
+				tmp.modifyResource(tempResource, false);
+				if(tmp.getResource().get(ResourceType.COIN) < 0){ //if the coin cost go below zero, it's reset to zero
+					tmp.getResource().put(ResourceType.COIN, 0);
+				}
+			}
+		}
 	}
 }

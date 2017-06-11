@@ -30,12 +30,12 @@ public class ExcommunicationReader {
 	
 	
 	
-	public static void main(String[] args) {
+	/*public static void main(String[] args) {
 		ExcommunicationReader reader = new ExcommunicationReader();
 		reader.startRead();
-	}
+	}*/
 	
-	public List<ExcommunicationTile> startRead(){
+	public List<ExcommunicationTile> startRead()throws IOException{
 		List<ExcommunicationTile> excomm = new ArrayList<>();
 		
 		Type requestListTypeToken = new TypeToken<ArrayList<ExcommunicationTile>>() {}.getType();
@@ -54,13 +54,13 @@ public class ExcommunicationReader {
 		
 		Gson gson = new GsonBuilder().registerTypeAdapterFactory(typeFactory).create();
 		
-		try{
+		//try{
 			JsonReader read = new JsonReader(new FileReader("excommunication.json"));
 			excomm = gson.fromJson(read, requestListTypeToken);
 			read.close();
-		}catch(IOException e){
+		/*}catch(IOException e){
 			Logger.getAnonymousLogger().log(Level.SEVERE, "excommunication file not found"+ e);
-		}
+		}*/
 		return excomm;
 	}
 }

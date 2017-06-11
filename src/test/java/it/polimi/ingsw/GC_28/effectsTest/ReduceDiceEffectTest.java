@@ -42,6 +42,7 @@ public class ReduceDiceEffectTest {
 	private Dice dice3 = new Dice(DiceColor.WHITE);
 	private Dice[] dices;
 	
+	
 	@Before
 	public void reduceDiceEffect(){
 		reduceDiceEffect = new ModifyDiceEffect();
@@ -98,6 +99,7 @@ public class ReduceDiceEffectTest {
 
 		gameBoard.setDices(dices);
 		reduceDiceEffect.setDiceColor(diceColor);
+		reduceDiceEffect.setReduce(reduce);
 		reduceDiceEffect.apply(this.player1, game);
 
 		//provare col familymembers array

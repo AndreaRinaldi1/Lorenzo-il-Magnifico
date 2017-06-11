@@ -1,11 +1,9 @@
 package it.polimi.ingsw.GC_28.model;
 
-import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.EnumMap;
 import java.util.List;
-
-import org.stringtemplate.v4.compiler.STParser.mapExpr_return;
 
 import it.polimi.ingsw.GC_28.boards.GameBoard;
 import it.polimi.ingsw.GC_28.boards.PlayerBoard;
@@ -16,7 +14,7 @@ import it.polimi.ingsw.GC_28.components.ResourceType;
 import it.polimi.ingsw.GC_28.effects.ResourceEffect;
 
 public class Prova {
-	public static void main(String[] args) throws FileNotFoundException {
+	public static void main(String[] args) throws IOException {
 		BoardsInitializer bi = new BoardsInitializer();
 		bi.initFinalBonus();
 		

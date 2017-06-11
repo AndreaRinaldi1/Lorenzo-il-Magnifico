@@ -13,7 +13,7 @@ public class ModifyDiceEffect extends Effect{
 	public final EffectType type = EffectType.MODIFYDICEEFFECT;
 	
 	private List<DiceColor> diceColor = new ArrayList<>();
-	int reduce;
+	private int reduce;
 	
 	//FOR TEST
 	public void setDiceColor(List<DiceColor> diceColor){
@@ -24,7 +24,6 @@ public class ModifyDiceEffect extends Effect{
 		this.reduce = reduce;
 	}
 	
-	@Override
 	public void apply(Player player, Game game) {
 		for(FamilyMember fm : player.getFamilyMembers()){
 			for(DiceColor color : diceColor){
