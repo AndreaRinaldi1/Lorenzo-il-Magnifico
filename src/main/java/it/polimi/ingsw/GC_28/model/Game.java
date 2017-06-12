@@ -28,6 +28,7 @@ import it.polimi.ingsw.GC_28.effects.DiscountEffect;
 import it.polimi.ingsw.GC_28.effects.EffectType;
 import it.polimi.ingsw.GC_28.effects.GoToHPEffect;
 import it.polimi.ingsw.GC_28.effects.OtherEffect;
+import it.polimi.ingsw.GC_28.effects.PopeEffect;
 import it.polimi.ingsw.GC_28.effects.ModifyDiceEffect;
 import it.polimi.ingsw.GC_28.effects.ServantEffect;
 import it.polimi.ingsw.GC_28.effects.TakeCardEffect;
@@ -90,6 +91,7 @@ public class Game extends Observable<Action> implements Runnable, Observer<Messa
 				}
 				checkSkippedPlayers();
 				bs.setUpBoard();
+				currentPlayer = gameModel.getPlayers().get(0);
 			}
 			giveExcommunication();
 		}
@@ -753,13 +755,13 @@ public class Game extends Observable<Action> implements Runnable, Observer<Messa
 					handlers.get(p).getOut().flush();
 					p.getExcommunicationTile().get(currentEra -1).setEffect(gameModel.getGameBoard().getExcommunications()[currentEra-1].getEffect());
 					//p.getExcommunicationTile().add(currentEra-1, gameBoard.getExcommunications()[currentEra-1]);
-					return;
+					//return;
 				}else{
 					handlers.get(p).getOut().println("Do you want to pay to avoid Excommunication?[y/n]");
 					handlers.get(p).getOut().flush();
 					if(handlers.get(p).getIn().nextLine().equalsIgnoreCase("n")){
 						p.getExcommunicationTile().add(currentEra-1, gameModel.getGameBoard().getExcommunications()[currentEra-1]);
-						return;
+						//return;
 					}else{
 						handlers.get(p).getOut().println("You paid to avoid Excommunication, your faith points have been reset to 0");
 						handlers.get(p).getOut().flush();
@@ -768,11 +770,11 @@ public class Game extends Observable<Action> implements Runnable, Observer<Messa
 						p.addResource(bonusForFaithPoint);
 						p.getBoard().getResources().getResource().put(ResourceType.FAITHPOINT, 0);
 						for(LeaderCard lc : p.getLeaderCards()){
-							if(lc.getName().equalsIgnoreCase("Sisto IV") && lc.getPlayed() && lc.getActive()){//FIXME
+							if(CheckForPopeEffect(lc)){//FIXME
 								lc.getEffect().apply(p, this);
 							}
 						}
-						return;
+						//return;
 					}
 				}
 			}
@@ -793,7 +795,10 @@ public class Game extends Observable<Action> implements Runnable, Observer<Messa
 				for(LeaderCard l :currentPlayer.getLeaderCards()){
 					if(l.getName().equalsIgnoreCase(card)){
 						currentPlayer.getLeaderCards().remove(l);
-						askPrivilege(1, false); 
+						ArrayList<java.lang.Character> choices = askPrivilege(1, false);
+						for(int i = 0; i < choices.size(); i++){//TODO test me 
+							currentPlayer.addResource(checkResourceExcommunication(CouncilPrivilege.instance().getOptions().get(choices.get(i))));
+						}
 						break;
 					}
 				}	
@@ -804,8 +809,12 @@ public class Game extends Observable<Action> implements Runnable, Observer<Messa
 				for(LeaderCard l : currentPlayer.getLeaderCards()){
 					if(l.getName().equalsIgnoreCase(card)){
 						Resource cardResourceCost = l.getResourceCost();
-						Map<CardType,Integer> cardCost = l.getCardCost(); 
-						if(enoughResources(cardResourceCost) && enoughCard(cardCost)){
+						Map<CardType,Integer> cardCost = l.getCardCost();
+						if(checkForLucreziaBorgiaCost(l)){
+							l.setPlayed(true);
+							break;
+						}
+						else if(enoughResources(cardResourceCost) && enoughCard(cardCost)){
 							l.setPlayed(true);
 							break;
 						}
@@ -845,6 +854,13 @@ public class Game extends Observable<Action> implements Runnable, Observer<Messa
 			handlers.get(currentPlayer).getOut().flush();
 			procede = handlers.get(currentPlayer).getIn().nextLine();
 		}while(!procede.equalsIgnoreCase("n"));
+	}
+	
+	private boolean CheckForPopeEffect(LeaderCard lc){
+			if(lc.getEffect().getClass().equals(PopeEffect.class) && lc.getPlayed() && lc.getActive()){
+				return true;
+			}
+		return false;
 	}
 	
 	boolean enoughResources(Resource resourceCost){
@@ -887,13 +903,32 @@ public class Game extends Observable<Action> implements Runnable, Observer<Messa
 		}
 		return true;
 	}
+	
+	private boolean checkForLucreziaBorgiaCost(LeaderCard lc){
+		if(lc.getName().equalsIgnoreCase("Lucrezia Borgia")){
+			if(currentPlayer.getBoard().getTerritories().size() == 6){
+				return true;
+			}else if(currentPlayer.getBoard().getBuildings().size() == 6){
+				return true;
+			}else if(currentPlayer.getBoard().getCharacters().size() == 6){
+				return true;
+			}else if(currentPlayer.getBoard().getVentures().size() == 6){
+				return true;
+			}else{
+				handlers.get(currentPlayer).getOut().println("You haven't enough card to play thi leader");
+				handlers.get(currentPlayer).getOut().flush();
+				return false;
+			}
+		}
+		return false;
+	}
 
 	@Override
 	public void update(Message m) {
 		System.out.println(4);
 		handlers.get(currentPlayer).getOut().println(m.getMessage());
 		result = m.isResult();
-		if(m.isResult()){	
+		if(!(m.isResult())){	
 			if(modifiedWithServants){
 				currentPlayer.addResource(res);
 			}

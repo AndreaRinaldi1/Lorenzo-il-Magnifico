@@ -11,6 +11,8 @@ import java.net.Socket;
 import java.util.List;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
@@ -69,7 +71,7 @@ public class Server {
 			List<BonusTile> bonusList = initBonusTile(); 
 			Map<Player, ClientHandler> handlers = new HashMap<>();
 			System.out.println("Server ready");
-			while(handlers.size() < 1){
+			while(handlers.size() < 3){
 				Socket socket = server.accept();
 				p = new PrintStream(socket.getOutputStream());
 				scan = new Scanner(socket.getInputStream());
@@ -91,7 +93,12 @@ public class Server {
 				BoardSetup bs = new BoardSetup(game);
 				bs.firstSetUpCards();
 				
+				List<Player> reversePlayer = new ArrayList<>();
 				for(Player p : players){
+					reversePlayer.add(p);
+				}
+				Collections.reverse(reversePlayer);
+				for(Player p : reversePlayer){
 					enterBonusTile(bonusList, handlers, p);
 				}
 				
@@ -168,9 +175,8 @@ public class Server {
 			if(0 < bonusTile && bonusTile <= bonusList.size()){
 				BonusTile bt = bonusList.get(bonusTile-1);
 				System.out.println(bt.toString());
-				p.getBoard().getBonusTile().setHarvestEffect(bt.getHarvestEffect());
-				p.getBoard().getBonusTile().setProductionEffect(bt.getProductionEffect());
-				bonusList.remove(bonusTile-1);
+				p.getBoard().setBonusTile(bt);
+				bonusList.remove(bt);
 				found = true;
 			}else{
 				handlers.get(p).getOut().println("Not valid input!");

@@ -16,6 +16,7 @@ import it.polimi.ingsw.GC_28.effects.OtherEffect;
 import it.polimi.ingsw.GC_28.effects.TakeCardEffect;
 import it.polimi.ingsw.GC_28.model.Game;
 import it.polimi.ingsw.GC_28.model.GameModel;
+import it.polimi.ingsw.GC_28.model.Player;
 import it.polimi.ingsw.GC_28.server.Message;
 import it.polimi.ingsw.GC_28.cards.Character;
 import it.polimi.ingsw.GC_28.cards.ExcommunicationTile;
@@ -169,12 +170,12 @@ public class TakeCardController {
 		if(cardType.equals(CardType.TERRITORY)){
 			for(int i = 0; i < familyMember.getPlayer().getBoard().getTerritories().size(); i++){
 				if(familyMember.getPlayer().getBoard().getTerritories().get(i) == null){
-					boolean active = false;//FIXME
-					for(LeaderCard lc : familyMember.getPlayer().getLeaderCards()){ //check if Cesare Borgia leader is active for the currentPlayer, if so skip the check of his resources requested for territories
+					boolean active = checkForNoMilitaryForTerritoryEffect(familyMember.getPlayer());//FIXME
+					/*for(LeaderCard lc : familyMember.getPlayer().getLeaderCards()){ //check if Cesare Borgia leader is active for the currentPlayer, if so skip the check of his resources requested for territories
 						if(lc.getName().equalsIgnoreCase("Cesare Borgia") && lc.getPlayed() && lc.getActive()){
 							active = true;
 						}
-					}
+					}*/
 					if(!active){
 						int size = familyMember.getPlayer().getBoard().getTerritories().size();
 						for(ResourceType resType : FinalBonus.instance().getResourceForTerritories().get(size+1).getResource().keySet()){
@@ -193,12 +194,8 @@ public class TakeCardController {
 		Resource tmp = Resource.of(res);
 		tmp.modifyResource(familyMember.getPlayer().getBoard().getResources(), true);
 		
-		boolean active = false;
-		for(LeaderCard lc : familyMember.getPlayer().getLeaderCards()){ //check if current player can avoid to pay the 3 coins FIXME
-			if(lc.getName().equalsIgnoreCase("Filippo Brunelleschi") && lc.getPlayed() && lc.getActive()){
-				active = true;
-			}
-		}
+		boolean active = checkForNoExtraCostInTowerEffect(familyMember.getPlayer());
+		
 		if(!active){
 			reduce3Coins(familyMember, true, tmp);
 		}
@@ -260,6 +257,30 @@ public class TakeCardController {
 			}
 		}
 		return true;
+	}
+	
+	private boolean checkForNoMilitaryForTerritoryEffect(Player player){
+		for(LeaderCard ls : player.getLeaderCards()){
+			if(ls.getEffect().getClass().equals(OtherEffect.class)){
+				OtherEffect e = (OtherEffect)ls.getEffect();
+				if(e.getType().equals(EffectType.NOMILITARYFORTERRITORYEFFECT) && ls.getPlayed() && ls.getActive()){
+					return true;
+				}
+			}
+		}
+		return false;
+	}
+	
+	private boolean checkForNoExtraCostInTowerEffect(Player player){
+		for(LeaderCard lc : player.getLeaderCards()){ //check if current player can avoid to pay the 3 coins FIXME
+			if(lc.getEffect().getClass().equals(OtherEffect.class)){
+				OtherEffect e = (OtherEffect)lc.getEffect();
+				if(e.getType().equals(EffectType.NOEXTRACOSTINTOWEREFFECT) && lc.getPlayed() && lc.getActive()){
+					return true;
+				}
+			}
+		}
+		return false;
 	}
 	
 	
