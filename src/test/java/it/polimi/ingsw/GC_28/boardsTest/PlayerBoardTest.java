@@ -24,7 +24,7 @@ public class PlayerBoardTest {
 	private PlayerBoard pb;
 	private BonusTile bonusTile;
 	private Resource resource;
-	EnumMap<ResourceType, Integer> resourcesBonus;
+	EnumMap<ResourceType, Integer> resources;
 	
 	private List<Territory> territories;
 	private List<Building> buildings = new ArrayList<>();
@@ -38,55 +38,33 @@ public class PlayerBoardTest {
 	//private ArrayList<ExcommunicationTile> et = new ArrayList<>(); 	TODO ExcommunicationTile class	
 	
 	
-	EnumMap<ResourceType, Integer> resource1;
 
 
 	
 	@Before
 	public void playerBoard(){
-		
 		bonusTile = new BonusTile();
- 		resourcesBonus = new EnumMap<ResourceType, Integer>(ResourceType.class);
-		resourcesBonus.put(ResourceType.STONE, 2);
-		resource = Resource.of(resourcesBonus);
-		pb = new PlayerBoard(bonusTile, resource);
 		territories = new ArrayList<>();
 		
+		resources = new EnumMap<ResourceType, Integer>(ResourceType.class);
+		for(ResourceType resType : ResourceType.values()){
+			resources.put(resType, 0);
+		}
+		resource = Resource.of(resources);
+		this.pb = new PlayerBoard(bonusTile, resource);
 		
-		resource1 = new EnumMap<>(ResourceType.class);
-		resource1.put(ResourceType.COIN, 3);
-		//Resource res = Resource.of(resource1);
+		
 	}
 	
 	@AfterClass
 	public static void tearDownAfterClass() throws Exception {
 	}
 	
-//	@Test
-	//public void testDisplay(){
-		/*s = "PLAYER BOARD" + "\n" + 
-		"┌──────────────────────────────────────────────────────────────────────────────┐" + "\n" +
-		"│Territory Cards:                                                              │" + "\n" +
-		"└──────────────────────────────────────────────────────────────────────────────┘" + "\n" +
-		"┌──────────────────────────────────────────────────────────────────────────────┐" + "\n" +
-		"│Building Cards:                                                               │" + "\n" +
-		"└──────────────────────────────────────────────────────────────────────────────┘" + "\n" +
-		"┌──────────────────────────────────────────────────────────────────────────────┐" + "\n" +
-		"│Character Cards:                                                              │" + "\n" +
-		"└──────────────────────────────────────────────────────────────────────────────┘" + "\n" +
-		"┌──────────────────────────────────────────────────────────────────────────────┐" + "\n" +
-		"│Ventures Cards:                                                               │" + "\n" +
-		"└──────────────────────────────────────────────────────────────────────────────┘" + "\n" +
-		"Resources: " + "\n" +
-		"┌───────────┬───────────┬──────────┬──────────┬──────────┬──────────┬──────────┐" + "\n" +
-		"│COIN       │WOOD       │STONE     │SERVANT   │MILITARYPO│VICTORYPOI│FAITHPOINT│" + "\n" +
-		"│           │           │          │          │INT       │NT        │          │" + "\n" +
-		"├───────────┼───────────┼──────────┼──────────┼──────────┼──────────┼──────────┤" + "\n" +
-		"│6          │2          │2         │3         │0         │0         │0         │" + "\n" + 
-		"└───────────┴───────────┴──────────┴──────────┴──────────┴──────────┴──────────┘" + "\n" +
-		"\n" +		
-		"------------------------" ;*/
-		/*ret.append("PLAYER BOARD\n");
+	@Test
+	public void testDisplay(){
+		StringBuilder ret = new StringBuilder();
+		String retLine = "------------------------\n";
+		ret.append("PLAYER BOARD\n");
 		
 		AsciiTable territoryTab = new AsciiTable();
 		territoryTab.addRule();
@@ -137,20 +115,21 @@ public class PlayerBoardTest {
 		res.addRule();
 		res.addRow(ResourceType.COIN, ResourceType.WOOD, ResourceType.STONE, ResourceType.SERVANT, ResourceType.MILITARYPOINT, ResourceType.VICTORYPOINT, ResourceType.FAITHPOINT );
 		res.addRule();
-		res.addRow(resources.getResource().get(ResourceType.COIN), 
-				resources.getResource().get(ResourceType.WOOD), 
-				resources.getResource().get(ResourceType.STONE), 
-				resources.getResource().get(ResourceType.SERVANT), 
-				resources.getResource().get(ResourceType.MILITARYPOINT), 
-				resources.getResource().get(ResourceType.VICTORYPOINT), 
-				resources.getResource().get(ResourceType.FAITHPOINT));
+		res.addRow(pb.getResources().getResource().get(ResourceType.COIN), 
+				pb.getResources().getResource().get(ResourceType.WOOD), 
+				pb.getResources().getResource().get(ResourceType.STONE), 
+				pb.getResources().getResource().get(ResourceType.SERVANT), 
+				pb.getResources().getResource().get(ResourceType.MILITARYPOINT), 
+				pb.getResources().getResource().get(ResourceType.VICTORYPOINT), 
+				pb.getResources().getResource().get(ResourceType.FAITHPOINT));
 		res.addRule();
 		ret.append(res.render() + "\n");
 		//ret.append(resources.toString()); 
 		ret.append("\n" + retLine);
-		assertEquals(this.ret.toString(), this.pb.display());
+		
+		assertEquals(ret.toString(), this.pb.display());
 	}
-*/
+	
 	@Test
 	public void testGetTerritories() {
 		territories.add(t);
@@ -194,11 +173,6 @@ public class PlayerBoardTest {
 	public void testGetResources() {
 		pb.setResources(resource);
 		assertEquals(this.resource, this.pb.getResources());
-		//fail("Not yet implemented");
-	}
-
-	@Test
-	public void testGetExcommunicationTile() {
 		//fail("Not yet implemented");
 	}
 
