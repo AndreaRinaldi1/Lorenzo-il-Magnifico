@@ -3,14 +3,17 @@ package it.polimi.ingsw.GC_28.spacesTest;
 import static org.junit.Assert.*;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.Test;
 
+import it.polimi.ingsw.GC_28.boards.GameBoard;
 import it.polimi.ingsw.GC_28.components.DiceColor;
 import it.polimi.ingsw.GC_28.components.FamilyMember;
 import it.polimi.ingsw.GC_28.model.Game;
+import it.polimi.ingsw.GC_28.model.GameModel;
 import it.polimi.ingsw.GC_28.model.Player;
 import it.polimi.ingsw.GC_28.model.PlayerColor;
 import it.polimi.ingsw.GC_28.spaces.Space;
@@ -32,10 +35,19 @@ public class SpaceTest {
 		s = new Space(){};
 		p = new Player("Rob", PlayerColor.YELLOW);
 		fm = new FamilyMember(p, neutral, DiceColor.ORANGE);
-		g = new Game();
+		
+		List<Player> players = new ArrayList<>();
+		players.add(p);
+		GameBoard gb = new GameBoard();
+		GameModel gm = new GameModel(gb,players);
+		
+		g = new Game(gm);
+	
+		g.setCurrentPlayer(p);
+		
 		s.setFree(free);
 		s.addPlayer(fm);
-		players.add(fm);
+
 		s.setActionValue(actionValue);
 		s.applyBonus(g, fm);
 	}
@@ -52,6 +64,7 @@ public class SpaceTest {
 
 	@Test
 	public void testGetPlayer() {
+		players.add(fm);
 		assertArrayEquals(this.players.toArray(), 
 				this.s.getPlayer().toArray());
 		//fail("Not yet implemented");

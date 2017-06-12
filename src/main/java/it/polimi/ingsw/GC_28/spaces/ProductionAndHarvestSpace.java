@@ -64,15 +64,10 @@ public class ProductionAndHarvestSpace extends Space{
 			familyMember.getPlayer().getBoard().getBonusTile().getHarvestEffect().apply(familyMember, game);
 		}
 		else{
-			System.out.println(5);
 			for(Building building : familyMember.getPlayer().getBoard().getBuildings()){
-				System.out.println(6);
 				building.getPermanentEffect().apply(familyMember, game);
-				System.out.println(7);
 			}
-			System.out.println(8);
 			familyMember.getPlayer().getBoard().getBonusTile().getProductionEffect().apply(familyMember, game);
-			System.out.println(9);
 		}
 	}
 	
