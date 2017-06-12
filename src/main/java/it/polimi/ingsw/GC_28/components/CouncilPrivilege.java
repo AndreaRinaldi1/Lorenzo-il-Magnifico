@@ -30,10 +30,11 @@ public class CouncilPrivilege {
 		this.options = options;
 	}
 	
-	public static void setCouncilPrivilege(CouncilPrivilege cp){
+	public static CouncilPrivilege setCouncilPrivilege(CouncilPrivilege cp){
 		if(instance == null){
 			instance = cp;
 		}
+		return instance;
 	}
 	
 }
