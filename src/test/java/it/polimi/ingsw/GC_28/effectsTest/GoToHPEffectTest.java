@@ -87,7 +87,7 @@ public class GoToHPEffectTest {
 		gb = new GameBoard();
 		gameModel = new GameModel(gb, players);
 		g = new Game(gameModel);
-		//g.setHandlers(handlers);
+		g.setHandlers(handlers);
 		g.setCurrentPlayer(player);
 		gb = new GameBoard();
 		productionSpace2 = new ProductionAndHarvestSpace(true, 1);
