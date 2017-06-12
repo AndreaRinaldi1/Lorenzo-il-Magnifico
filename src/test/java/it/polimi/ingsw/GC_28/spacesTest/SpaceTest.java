@@ -26,7 +26,9 @@ public class SpaceTest {
 	private Space s;
 	
 	private FamilyMember fm;
+	private FamilyMember fm1;
 	private Player p;
+	private Player p1;
 	private GameModel gameModel;
 	private GameBoard gameBoard; 
 	private List<Player> players = new ArrayList<>();
@@ -36,9 +38,12 @@ public class SpaceTest {
 	public void space(){
 		s = new Space(){};
 		p = new Player("Rob", PlayerColor.YELLOW);
+		p1 = new Player("Rob", PlayerColor.BLUE);
 		fm = new FamilyMember(p, neutral, DiceColor.ORANGE);
-	
+		fm1 = new FamilyMember(p, neutral, DiceColor.ORANGE);
+		
 		players.add(p);
+		players.add(p1);
 		gameBoard = new GameBoard();
 		gameModel = new GameModel(gameBoard, players);
 		g = new Game(gameModel); 
@@ -65,7 +70,14 @@ public class SpaceTest {
 				this.s.getPlayer().toArray());
 		//fail("Not yet implemented");
 	}
-
+	
+	//Test with space not free
+	@Test
+	public void testGetPlayer1(){
+		s.addPlayer(fm1);
+		assertArrayEquals(this.players1.toArray(), this.s.getPlayer().toArray());
+	}
+	
 	@Test
 	public void testGetActionValue() {
 		assertEquals(this.actionValue, 

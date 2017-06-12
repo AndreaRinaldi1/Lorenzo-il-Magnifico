@@ -53,6 +53,12 @@ public class ResourceTest {
 		//fail("Not yet implemented");
 	}
 
+	//test modify Resource with null in input
+	public void testModifyResourceNull(){
+		this.bonus1.modifyResource(null, true);
+		assertEquals(true, this.bonus1.equals(this.bonus1));
+	}
+	
 	@Test
 	public void testModifyResource() {
 		assertEquals(true, bonus1.equals(bonus2));

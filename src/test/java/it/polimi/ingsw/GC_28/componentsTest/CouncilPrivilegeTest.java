@@ -19,20 +19,10 @@ public class CouncilPrivilegeTest {
 	private CouncilPrivilege cp = CouncilPrivilege.instance();
 	private Resource resourceBonus;
 	EnumMap<ResourceType, Integer> resource;
-	private CouncilPrivilege cp2;
+	private CouncilPrivilege cp1;
 	
 	@Before
 	public void councilPrivilege(){
-		/*Gson gson = new GsonBuilder().create();
-		try{
-			JsonReader reader =new JsonReader(new FileReader("priv.json"));
-			cp = gson.fromJson(reader, CouncilPrivilege.class);
-			CouncilPrivilege.setCouncilPrivilege(cp);
-			reader.close();
-		}catch(IOException e){
-			Logger.getAnonymousLogger().log(Level.SEVERE, "file not found" + e);
-		}*/
-		
 		resource = new EnumMap<>(ResourceType.class);
 		resource.put(ResourceType.COIN, 5);
 		resourceBonus = Resource.of(resource);
@@ -65,9 +55,8 @@ public class CouncilPrivilegeTest {
 
 	@Test 
 	public void testSetCouncilPrivilege() {
-		cp2 = CouncilPrivilege.instance();
-		cp2.setCouncilPrivilege(cp);
-		assertEquals(this.cp, this.cp2);
+		cp1 = CouncilPrivilege.setCouncilPrivilege(cp);
+		assertEquals(this.cp, this.cp1);
 	}
 	
 }
