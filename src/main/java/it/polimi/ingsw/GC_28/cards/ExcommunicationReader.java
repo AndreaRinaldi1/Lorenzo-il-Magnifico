@@ -22,7 +22,7 @@ import it.polimi.ingsw.GC_28.effects.IncrementHPEffect;
 import it.polimi.ingsw.GC_28.effects.MultiplierEffect;
 import it.polimi.ingsw.GC_28.effects.NoFinalBonusEffect;
 import it.polimi.ingsw.GC_28.effects.OtherEffect;
-import it.polimi.ingsw.GC_28.effects.ReduceDiceEffect;
+import it.polimi.ingsw.GC_28.effects.ModifyDiceEffect;
 import it.polimi.ingsw.GC_28.effects.ServantEffect;
 
 public class ExcommunicationReader {
@@ -47,7 +47,7 @@ public class ExcommunicationReader {
 				.registerSubtype(IncrementHPEffect.class, "INCREMENTHPEFFECT")
 				.registerSubtype(NoFinalBonusEffect.class, "NOFINALBONUSEFFECT")
 				.registerSubtype(MultiplierEffect.class, "MULTIPLIEREFFECT")
-				.registerSubtype(ReduceDiceEffect.class, "REDUCEDICEEFFECT")
+				.registerSubtype(ModifyDiceEffect.class, "MODIFYDICEEFFECT")
 				.registerSubtype(OtherEffect.class, "OTHEREFFECT")
 				.registerSubtype(ServantEffect.class, "SERVANTEFFECT")
 				.registerSubtype(FinalReduceEffect.class, "FINALREDUCEEFFECT");

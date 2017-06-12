@@ -415,5 +415,26 @@
       "type": "OTHEREFFECT",
       "specificType": "DOUBLERESOURCEEFFECT"
     }
+  },
+  {
+    "name": "Lorenzo de Medici",
+    "resourceCost": {
+      "resource": {
+        "COIN": 0,
+        "WOOD": 0,
+        "STONE": 0,
+        "SERVANT": 0,
+        "MILITARYPOINT": 0,
+        "VICTORYPOINT": 35,
+        "FAITHPOINT": 0
+      }
+    },
+    "played": false,
+    "active": false,
+    "permanent": true,
+    "effect": {
+      "copied": false,
+      "type": "COPYEFFECT"
+    }
   }
 ]

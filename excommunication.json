@@ -103,8 +103,17 @@
   {
     "era": 1,
     "effect": {
+<<<<<<< HEAD
+      "type": "MODIFYDICEEFFECT",
+      "diceColor": [
+        "ORANGE",
+        "BLACK",
+        "WHITE"
+      ],
+=======
       "type": "REDUCEDICEEFFECT",
       "diceColor": [],
+>>>>>>> 02ad3a6238c1cfdeef3e954b7952971ab53a9558
       "reduce": -1
     }
   },

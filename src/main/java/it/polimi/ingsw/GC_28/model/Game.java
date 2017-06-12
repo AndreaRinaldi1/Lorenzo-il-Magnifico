@@ -3,27 +3,15 @@ package it.polimi.ingsw.GC_28.model;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.EnumMap;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.concurrent.ExecutionException;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-import java.util.concurrent.Future;
-import java.util.concurrent.ScheduledExecutorService;
-import java.util.concurrent.ThreadFactory;
-import java.util.concurrent.TimeUnit;
-import java.util.concurrent.TimeoutException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
-import org.omg.CORBA.TIMEOUT;
-
+import de.vandermeer.asciitable.AsciiTable;
 import it.polimi.ingsw.GC_28.boards.Cell;
 import it.polimi.ingsw.GC_28.boards.FinalBonus;
-import it.polimi.ingsw.GC_28.boards.GameBoard;
 import it.polimi.ingsw.GC_28.cards.CardType;
 import it.polimi.ingsw.GC_28.cards.ExcommunicationTile;
 import it.polimi.ingsw.GC_28.cards.LeaderCard;
@@ -39,12 +27,8 @@ import it.polimi.ingsw.GC_28.core.TakeCardAction;
 import it.polimi.ingsw.GC_28.effects.DiscountEffect;
 import it.polimi.ingsw.GC_28.effects.EffectType;
 import it.polimi.ingsw.GC_28.effects.GoToHPEffect;
-import it.polimi.ingsw.GC_28.effects.IncrementCardEffect;
-import it.polimi.ingsw.GC_28.effects.MultiplierEffect;
-import it.polimi.ingsw.GC_28.effects.NoEffect;
-import it.polimi.ingsw.GC_28.effects.NoFinalBonusEffect;
 import it.polimi.ingsw.GC_28.effects.OtherEffect;
-import it.polimi.ingsw.GC_28.effects.ReduceDiceEffect;
+import it.polimi.ingsw.GC_28.effects.ModifyDiceEffect;
 import it.polimi.ingsw.GC_28.effects.ServantEffect;
 import it.polimi.ingsw.GC_28.effects.TakeCardEffect;
 import it.polimi.ingsw.GC_28.server.ClientHandler;
@@ -109,7 +93,7 @@ public class Game extends Observable<Action> implements Runnable, Observer<Messa
 			}
 			giveExcommunication();
 		}
-		
+
 		applyFinalBonus();
 		applyFinalMalus();
 		sortBy(gameModel.getPlayers(), ResourceType.MILITARYPOINT);
@@ -121,15 +105,30 @@ public class Game extends Observable<Action> implements Runnable, Observer<Messa
 	
 	public void declareWinner(){
 		handlers.get(gameModel.getPlayers().get(0)).getOut().println("YOU WIN!!!");
+		handlers.get(gameModel.getPlayers().get(0)).getOut().flush();
 		displayFinalChart();
 	}
 	
+	public String getChartTable(){
+		StringBuilder ret = new StringBuilder();
+		AsciiTable chart = new AsciiTable();
+		chart.addRule();
+		chart.addRow("Position", "Name", "Points");
+		chart.addRule();
+		for(int i = 0; i < gameModel.getPlayers().size(); i++){
+			chart.addRow((i+1) , gameModel.getPlayers().get(i).getName(), gameModel.getPlayers().get(i).getBoard().getResources().getResource().get(ResourceType.VICTORYPOINT));
+			chart.addRule();
+		}
+		ret.append(chart.render() + "\n");
+		
+		return ret.toString();
+	}
+	
 	public void displayFinalChart(){
+		String chart = getChartTable();
 		for(Player p : gameModel.getPlayers()){
-			handlers.get(p).getOut().println("Pos.\tName   \tPoints");
-			for(int i = 0; i < gameModel.getPlayers().size(); i++){
-				handlers.get(p).getOut().println((i+1) + "\t" + gameModel.getPlayers().get(i).getName() + "\t" + gameModel.getPlayers().get(i).getBoard().getResources().getResource().get(ResourceType.VICTORYPOINT));
-			}
+			handlers.get(p).getOut().println(chart);
+			handlers.get(p).getOut().flush();
 		}
 	}
 	
@@ -139,12 +138,13 @@ public class Game extends Observable<Action> implements Runnable, Observer<Messa
 		while(i < gameModel.getPlayers().size() - 1){
 			gameModel.getPlayers().get(i).addResource(finalBonus.getFinalMilitaryTrack().get(i));
 			int j = i + 1;
-			while(gameModel.getPlayers().get(i).getBoard().getResources().getResource().get(ResourceType.MILITARYPOINT) ==
-						gameModel.getPlayers().get(j).getBoard().getResources().getResource().get(ResourceType.MILITARYPOINT)){
+			while(j < gameModel.getPlayers().size() && (gameModel.getPlayers().get(i).getBoard().getResources().getResource().get(ResourceType.MILITARYPOINT) ==
+						gameModel.getPlayers().get(j).getBoard().getResources().getResource().get(ResourceType.MILITARYPOINT))){
 				gameModel.getPlayers().get(j).addResource(finalBonus.getFinalMilitaryTrack().get(i));
 				j++;
 			}
-			i = j+1;
+			i = j;
+
 		}
 	}
 	
@@ -153,22 +153,30 @@ public class Game extends Observable<Action> implements Runnable, Observer<Messa
 	}
 	
 	public void sortBy(List<Player> players, ResourceType type){
-		players.sort((p1, p2) -> p1.getBoard().getResources().getResource().get(type) - p2.getBoard().getResources().getResource().get(type));
+		players.sort((p1, p2) -> p2.getBoard().getResources().getResource().get(type) - p1.getBoard().getResources().getResource().get(type));
 	}
+
 	
 	public void applyFinalBonus(){
 		FinalBonus finalBonus = FinalBonus.instance();
 		for(Player p : gameModel.getPlayers()){
-			p.getBoard().getResources().modifyResource(finalBonus.getFinalTerritoriesBonus().get(p.getBoard().getTerritories().size()), true);
-			p.getBoard().getResources().modifyResource(finalBonus.getFinalCharactersBonus().get(p.getBoard().getTerritories().size()), true);
+			p.getBoard().getResources().modifyResource(finalBonus.getFinalTerritoriesBonus().get(p.getBoard().getTerritories().size()), true);			
+			p.getBoard().getResources().modifyResource(finalBonus.getFinalCharactersBonus().get(p.getBoard().getCharacters().size()), true);
+			
 			for(Venture v : p.getBoard().getVentures()){
-				p.getBoard().getResources().modifyResource(v.getPermanentEffect().getResourceBonus(), true);
+				p.addResource(v.getPermanentEffect().getResourceBonus());
 			}
+			
 			int finalResources = 0;
 			for(ResourceType type : p.getBoard().getResources().getResource().keySet()){
-				finalResources += p.getBoard().getResources().getResource().get(type);
+				if(!type.equals(ResourceType.VICTORYPOINT) && !type.equals(ResourceType.MILITARYPOINT) && !type.equals(ResourceType.FAITHPOINT)){
+					finalResources += p.getBoard().getResources().getResource().get(type);
+				}
 			}
-			p.getBoard().getResources().getResource().put(ResourceType.VICTORYPOINT, p.getBoard().getResources().getResource().get(ResourceType.VICTORYPOINT) + (finalResources/finalBonus.getResourceFactor()));
+			int actualVictoryPoints = p.getBoard().getResources().getResource().get(ResourceType.VICTORYPOINT);
+			
+			p.getBoard().getResources().getResource().put(ResourceType.VICTORYPOINT, actualVictoryPoints + (finalResources/finalBonus.getResourceFactor()));
+			
 		}
 	}
 	
@@ -187,7 +195,7 @@ public class Game extends Observable<Action> implements Runnable, Observer<Messa
 	public void checkDiceReduction(){  //se i giocatori tra le scomuniche hanno reducedice applico effetto
 		for(Player p : gameModel.getPlayers()){
 			for(ExcommunicationTile t : p.getExcommunicationTile()){
-				if(t.getEffect() instanceof ReduceDiceEffect){
+				if(t.getEffect() instanceof ModifyDiceEffect){
 					t.getEffect().apply(p, this);
 				}
 			}

@@ -27,6 +27,7 @@ public class TakeCardController {
 	private GameBoard gameBoard;
 	protected CardType cardType;
 	//private Cell cell;
+	private final int MAX_SIZE = 6;
 	
 	public TakeCardController(GameModel gameModel){
 		this.gameModel = gameModel;
@@ -105,22 +106,22 @@ public class TakeCardController {
 	private boolean checkMoreThanSix(FamilyMember familyMember){
 		switch(cardType){
 		case TERRITORY:
-			if(familyMember.getPlayer().getBoard().getTerritories().size() == 6){
+			if(familyMember.getPlayer().getBoard().getTerritories().size() == MAX_SIZE){
 				return true;
 			}
 		break;
 		case BUILDING:
-			if(familyMember.getPlayer().getBoard().getBuildings().size() == 6){
+			if(familyMember.getPlayer().getBoard().getBuildings().size() == MAX_SIZE){
 				return true;
 			}
 		break;
 		case CHARACTER:
-			if(familyMember.getPlayer().getBoard().getCharacters().size() == 6){
+			if(familyMember.getPlayer().getBoard().getCharacters().size() == MAX_SIZE){
 				return true;
 			}
 		break;
 		case VENTURE:
-			if(familyMember.getPlayer().getBoard().getVentures().size() == 6){
+			if(familyMember.getPlayer().getBoard().getVentures().size() == MAX_SIZE){
 				return true;
 			}
 		break;
@@ -175,8 +176,9 @@ public class TakeCardController {
 						}
 					}
 					if(!active){
-						for(ResourceType resType : FinalBonus.instance().getResourceForTerritories().get(i).getResource().keySet()){
-							if(familyMember.getPlayer().getBoard().getResources().getResource().get(resType) < FinalBonus.instance().getResourceForTerritories().get(i).getResource().get(resType)){
+						int size = familyMember.getPlayer().getBoard().getTerritories().size();
+						for(ResourceType resType : FinalBonus.instance().getResourceForTerritories().get(size+1).getResource().keySet()){
+							if(familyMember.getPlayer().getBoard().getResources().getResource().get(resType) < FinalBonus.instance().getResourceForTerritories().get(size+1).getResource().get(resType)){
 								gameModel.notifyObserver(new Message("You don'have the requested resources to take another " + cardType.name().toLowerCase() , false));
 								return false;
 							}

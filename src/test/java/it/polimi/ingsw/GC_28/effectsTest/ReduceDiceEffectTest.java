@@ -13,14 +13,14 @@ import it.polimi.ingsw.GC_28.boards.GameBoard;
 import it.polimi.ingsw.GC_28.components.Dice;
 import it.polimi.ingsw.GC_28.components.DiceColor;
 import it.polimi.ingsw.GC_28.components.FamilyMember;
-import it.polimi.ingsw.GC_28.effects.ReduceDiceEffect;
+import it.polimi.ingsw.GC_28.effects.ModifyDiceEffect;
 import it.polimi.ingsw.GC_28.model.Game;
 import it.polimi.ingsw.GC_28.model.GameModel;
 import it.polimi.ingsw.GC_28.model.Player;
 import it.polimi.ingsw.GC_28.model.PlayerColor;
 
 public class ReduceDiceEffectTest {
-	private ReduceDiceEffect reduceDiceEffect;
+	private ModifyDiceEffect reduceDiceEffect;
 	private List<DiceColor> diceColor = new ArrayList<>();
 	int reduce = 1;	
 	private FamilyMember familyMember1;
@@ -45,7 +45,7 @@ public class ReduceDiceEffectTest {
 	
 	@Before
 	public void reduceDiceEffect(){
-		reduceDiceEffect = new ReduceDiceEffect();
+		reduceDiceEffect = new ModifyDiceEffect();
 		player1 = new Player("gino", PlayerColor.BLUE);
 		player2 = new Player("gino2", PlayerColor.GREEN);
 		familyMember1 = new FamilyMember(player1, false, DiceColor.BLACK);

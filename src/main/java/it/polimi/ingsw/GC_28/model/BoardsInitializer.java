@@ -238,7 +238,7 @@ public class BoardsInitializer {
 		}
 	}
 	
-	private void initFinalBonus() throws IOException{
+	public void initFinalBonus() throws IOException{
 		Gson gson = new GsonBuilder().create();
 		//try {
 			JsonReader readerFinalBonus = new JsonReader(new FileReader("finalBonus.json"));
