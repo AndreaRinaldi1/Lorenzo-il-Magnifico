@@ -2,7 +2,9 @@ package it.polimi.ingsw.GC_28.effectsTest;
 
 import static org.junit.Assert.*;
 
+import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.net.Socket;
 import java.util.ArrayList;
 import java.util.EnumMap;
@@ -14,6 +16,7 @@ import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mock;
+import static org.mockito.Mockito.*;
 
 import it.polimi.ingsw.GC_28.boards.BonusTile;
 import it.polimi.ingsw.GC_28.boards.GameBoard;
@@ -46,13 +49,13 @@ public class GoToHPEffectTest {
 	EnumMap<ResourceType, Integer> w;
 	private GameModel gameModel;
 	private List<Player> players = new ArrayList<>();
-	/*
+	
 	private Socket socket = new Socket();
 	private ClientHandler clientHandler;
 	private Map<Player, ClientHandler> handlers = new HashMap<>();
-	*/
+	
 	@Before
-	public void goToHPEffect(){
+	public void goToHPEffect() throws IOException{
 		//creazione effetto
 		gt = new GoToHPEffect();
 		//fatti player e family member 
@@ -71,13 +74,15 @@ public class GoToHPEffectTest {
 	    byte[] emptyPayload = new byte[1001];
 
 	    // Using Mockito
-        /*final Socket socket = mock(Socket.class);
+        final Socket socket = mock(Socket.class);
+        final ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream(emptyPayload);
         final ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+        when(socket.getInputStream()).thenReturn(byteArrayInputStream);
 	    when(socket.getOutputStream()).thenReturn(byteArrayOutputStream);
 	    
 
 		clientHandler = new ClientHandler(socket);
-		handlers.put(player, clientHandler);*/
+		handlers.put(player, clientHandler);
 		players.add(player);
 		gb = new GameBoard();
 		gameModel = new GameModel(gb, players);
@@ -92,7 +97,7 @@ public class GoToHPEffectTest {
 	public static void tearDownAfterClass() throws Exception {
 	}
 
-/*	@Test
+	@Test
 	public void testApply() {
 		harvest = true;
 		gt.setActionValue(actionValue);
@@ -102,7 +107,7 @@ public class GoToHPEffectTest {
 
 		assertTrue(g.goToSpace(gt));
 	}
-*/
+
 	@Test
 	public void testGetActionValue() {
 		gt.setActionValue(actionValue);
