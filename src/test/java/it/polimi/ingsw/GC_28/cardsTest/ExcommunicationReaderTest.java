@@ -2,55 +2,92 @@ package it.polimi.ingsw.GC_28.cardsTest;
 
 import static org.junit.Assert.*;
 
+import java.io.FileReader;
 import java.io.IOException;
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.Test;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.reflect.TypeToken;
+import com.google.gson.stream.JsonReader;
+import com.google.gson.typeadapters.RuntimeTypeAdapterFactory;
+
 import it.polimi.ingsw.GC_28.cards.ExcommunicationReader;
 import it.polimi.ingsw.GC_28.cards.ExcommunicationTile;
+import it.polimi.ingsw.GC_28.effects.DiscountEffect;
+import it.polimi.ingsw.GC_28.effects.Effect;
+import it.polimi.ingsw.GC_28.effects.FinalReduceEffect;
+import it.polimi.ingsw.GC_28.effects.IncrementCardEffect;
+import it.polimi.ingsw.GC_28.effects.IncrementHPEffect;
+import it.polimi.ingsw.GC_28.effects.ModifyDiceEffect;
+import it.polimi.ingsw.GC_28.effects.MultiplierEffect;
+import it.polimi.ingsw.GC_28.effects.NoFinalBonusEffect;
+import it.polimi.ingsw.GC_28.effects.OtherEffect;
+import it.polimi.ingsw.GC_28.effects.ServantEffect;
 
 public class ExcommunicationReaderTest {
+
+	private ExcommunicationReader excommunicationReader;
+	private List<ExcommunicationTile> excomm = new ArrayList<>();
+	private List<ExcommunicationTile> test1 = new ArrayList<>();
+	private List<ExcommunicationTile> test2 = new ArrayList<>();
+
+	private	Type requestListTypeToken = new TypeToken<ArrayList<ExcommunicationTile>>() {}.getType();
+	private JsonReader read;	
+	private final RuntimeTypeAdapterFactory<Effect> typeFactory = RuntimeTypeAdapterFactory
+			.of(Effect.class, "type")
+			.registerSubtype(DiscountEffect.class, "DISCOUNTEFFECT")
+			.registerSubtype(IncrementCardEffect.class, "INCREMENTCARDEFFECT")
+			.registerSubtype(IncrementHPEffect.class, "INCREMENTHPEFFECT")
+			.registerSubtype(NoFinalBonusEffect.class, "NOFINALBONUSEFFECT")
+			.registerSubtype(MultiplierEffect.class, "MULTIPLIEREFFECT")
+			.registerSubtype(ModifyDiceEffect.class, "MODIFYDICEEFFECT")
+			.registerSubtype(OtherEffect.class, "OTHEREFFECT")
+			.registerSubtype(ServantEffect.class, "SERVANTEFFECT")
+			.registerSubtype(FinalReduceEffect.class, "FINALREDUCEEFFECT");
 	
-	private ExcommunicationReader reader;
-	private ExcommunicationReader reader1;
-
-	private ArrayList<ExcommunicationTile> excomm = new ArrayList<ExcommunicationTile>();
-
+	private Gson gson = new GsonBuilder().registerTypeAdapterFactory(typeFactory).create();
+	
 	@Before
-	public void excommunicationReader(){
-		reader = new ExcommunicationReader();
-		reader1 = new ExcommunicationReader();
-		//excomm.equals(reader.startRead());
+	public void excommunicationReader() throws IOException{
+		//excomm.equals(excommunicationReader.startRead());
+		read = new JsonReader(new FileReader("excommunication.json"));
+		excommunicationReader = new ExcommunicationReader();
+		this.excommunicationReader.startRead();
 	}
 	
 	@AfterClass
 	public static void tearDownAfterClass() throws Exception {
 	}
 
-/*	@Test
-	public void testMain() {
-		fail("Not yet implemented");
-	}
-*/
 	@Test
-	public void testStartRead() {
-		try{
-			for(int i = 0; i < this.reader1.startRead().size(); i++){
-				for(int j = 0; j < this.reader.startRead().size(); j++){
-					if(this.reader1.startRead().get(i).equals(this.reader.startRead().get(j))){
-						assertEquals(this.reader1.startRead().get(i), this.reader.startRead().get(j));
-					}
-				}
-			}
-		}catch(IOException e){
-			Logger.getAnonymousLogger().log(Level.SEVERE, "IOException "+ e);
+	public void testStartRead() throws IOException {	
+		for(int l = 0; l < this.excommunicationReader.startRead().size(); l++){
+			this.excomm.add(this.excommunicationReader.startRead().get(l));
 		}
+		//this.excomm.equals(this.excommunicationReader.startRead()); 
+		/*excomm = gson.fromJson(read, requestListTypeToken);
+		read.close();*/
+		System.out.println(this.excomm);
+		System.out.println(this.excommunicationReader.startRead());
+		for(int i = 0; i < excomm.size(); i++){
+			for (int j = 0; j<excommunicationReader.startRead().size(); j++){
+				if(this.excomm.get(i).getEra() == this.excommunicationReader.startRead().get(j).getEra()){
+					test1.add(this.excomm.get(i));
+					test2.add(this.excommunicationReader.startRead().get(j));
+				}
+			}		
+		}
+		System.out.println(this.test1);
+		System.out.println(this.test2);
+		assertArrayEquals(this.test1.toArray(), this.test2.toArray());
+		System.out.println(1);
 	}
 
 }

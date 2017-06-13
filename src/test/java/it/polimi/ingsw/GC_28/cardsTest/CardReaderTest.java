@@ -56,9 +56,7 @@ public class CardReaderTest {
 
 	@Test
 	public void testStartRead() throws FileNotFoundException {
-		System.out.println(9);
 		for (int i = 0; i<d.getVentures().size(); i++){ 
-			System.out.println(4);
 			assertEquals(this.d.getVentures().get(i), this.cr.startRead().getVentures().get(i));
 			//fail("Not yet implemented");
 		}
@@ -74,7 +72,6 @@ public class CardReaderTest {
 			assertEquals(this.d.getTerritories().get(i), this.cr.startRead().getTerritories().get(i));
 			//fail("Not yet implemented");
 		}
-		System.out.println(5);
 	}
 
 }
