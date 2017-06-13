@@ -14,7 +14,9 @@ import it.polimi.ingsw.GC_28.components.*;
 
 public class ResourceTest {
 	private Resource prova;
-	private EnumMap<ResourceType, Integer> resource, resource1, resource2;
+	private EnumMap<ResourceType, Integer> resource;
+	private EnumMap<ResourceType, Integer> resource1;
+	private EnumMap<ResourceType, Integer> resource2;
 	private Resource bonus;
 	private Resource bonus1; 
 	private Resource bonus2;
