@@ -29,7 +29,7 @@ public class NoFinalBonusEffect extends Effect {
 			pb.getResources().modifyResource(finalBonus.getFinalTerritoriesBonus().get(pb.getTerritories().size()), false);
 			break;
 		case CHARACTER:
-			pb.getResources().modifyResource(finalBonus.getFinalCharactersBonus().get(pb.getTerritories().size()), false);
+			pb.getResources().modifyResource(finalBonus.getFinalCharactersBonus().get(pb.getCharacters().size()), false);
 			break;
 		case VENTURE:
 			for(Venture v : pb.getVentures()){

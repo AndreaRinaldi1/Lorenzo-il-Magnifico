@@ -2,6 +2,7 @@ package it.polimi.ingsw.GC_28.core;
 
 import it.polimi.ingsw.GC_28.cards.Character;
 import it.polimi.ingsw.GC_28.cards.ExcommunicationTile;
+import it.polimi.ingsw.GC_28.cards.LeaderCard;
 import it.polimi.ingsw.GC_28.components.FamilyMember;
 import it.polimi.ingsw.GC_28.effects.EffectType;
 import it.polimi.ingsw.GC_28.effects.GoToHPEffect;
@@ -74,6 +75,11 @@ public class SpaceController {
 	
 	
 	private boolean checkFree(FamilyMember familyMember, Space space){
+		for(LeaderCard lc : familyMember.getPlayer().getLeaderCards()){ //if L.Ariosto is active the player can always go into a space
+			if(lc.getName().equalsIgnoreCase("Ludovico Ariosto") && lc.getPlayed() && lc.getActive()){
+				return true;
+			}
+		}
 		if(space.isFree()){
 			return true;
 		}

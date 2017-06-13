@@ -48,8 +48,14 @@ public class MarketSpaceTest {
 		bonus.setResourceBonus(r);
 		ms.setBonus(bonus);
 		
+		EnumMap<ResourceType, Integer> w = new EnumMap<>(ResourceType.class);
+		for(ResourceType resType : ResourceType.values()){
+			w.put(resType, 0);
+		}
+		Resource res = Resource.of(w);
+
 		bonusTile = new BonusTile();
-		pb = new PlayerBoard(bonusTile, r);
+		pb = new PlayerBoard(bonusTile, res);
 		
 		p = new Player("bob", PlayerColor.YELLOW);
 		p.setBoard(pb);
@@ -69,18 +75,18 @@ public class MarketSpaceTest {
 	public static void tearDownAfterClass() throws Exception {
 	}
 
-/*	@Test
+	@Test
 	public void testApplyBonus() {
 		ms.applyBonus(g, fm);
-		assertEquals(this.r, this.fm.getPlayer().getBoard().getResources());
 
-		//assertEquals();
-		//fail("Not yet implemented");
+		boolean x = r.equals(fm.getPlayer().getBoard().getResources());
+		assertTrue(x);
 	}
-*/
+
 	@Test
 	public void testGetBonus() {
 		assertEquals(this.bonus, this.ms.getBonus());
 	}
 
 }
+

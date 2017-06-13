@@ -16,9 +16,11 @@ import it.polimi.ingsw.GC_28.model.*;
 public class TowerTest {
 	
 	private Cell[] cells;
+	private Cell[] cells1;
 	private boolean atLeastOne = true;
 	private boolean free = true;
 	private Tower tower;
+	private Tower tower1;
 	private FamilyMember fm;
 	private FamilyMember fm1;
 	private FamilyMember fm2;
@@ -71,13 +73,27 @@ public class TowerTest {
 	@AfterClass
 	public static void tearDownAfterClass() throws Exception {
 	}
-
+	
+	
+	//Test dopo aver messo le carte nella cella
 	@Test
 	public void testFindCard() {
-		assertEquals(this.c0, this.tower.getCells()[0].getCard());
-		assertEquals(this.c1, this.tower.getCells()[1].getCard());
-		assertEquals(this.c2, this.tower.getCells()[2].getCard());
-		assertEquals(this.c3, this.tower.getCells()[3].getCard());
+		assertEquals(this.cells[1], this.tower.findCard("Bosco"));
+		//this.tower.findCard("RinoTheBest");	
+	}
+	
+	//TEST senza aver posizionato le carte
+	@Test
+	public void testFindCardNULL(){
+		cells1 = new Cell[4];		
+		cells1[0] = new Cell(bonus, 3, free);
+		cells1[1] = new Cell(bonus, 5, free);
+		cells1[2] = new Cell(bonus, 1, free);
+		cells1[3] = new Cell(bonus, 7, free);
+
+		tower1 = new Tower(cells1);
+		tower1.setCells(cells1);
+		assertEquals(null, this.tower1.findCard("Tuborg"));
 	}
 
 	@Test
@@ -90,6 +106,7 @@ public class TowerTest {
 				this.tower.isThisPlayerPresent(fm2.getPlayer().getColor()));
 		assertEquals(this.fm3.isUsed(), 
 				this.tower.isThisPlayerPresent(fm3.getPlayer().getColor()));
+		assertEquals(false, this.tower.isThisPlayerPresent(PlayerColor.GREEN));
 	}
 
 	@Test

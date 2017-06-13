@@ -22,7 +22,7 @@ import it.polimi.ingsw.GC_28.effects.IncrementHPEffect;
 import it.polimi.ingsw.GC_28.effects.MultiplierEffect;
 import it.polimi.ingsw.GC_28.effects.NoFinalBonusEffect;
 import it.polimi.ingsw.GC_28.effects.OtherEffect;
-import it.polimi.ingsw.GC_28.effects.ReduceDiceEffect;
+import it.polimi.ingsw.GC_28.effects.ModifyDiceEffect;
 import it.polimi.ingsw.GC_28.effects.ServantEffect;
 
 public class ExcommunicationReader {
@@ -30,12 +30,12 @@ public class ExcommunicationReader {
 	
 	
 	
-	public static void main(String[] args) {
+	/*public static void main(String[] args) {
 		ExcommunicationReader reader = new ExcommunicationReader();
 		reader.startRead();
-	}
+	}*/
 	
-	public List<ExcommunicationTile> startRead(){
+	public List<ExcommunicationTile> startRead()throws IOException{
 		List<ExcommunicationTile> excomm = new ArrayList<>();
 		
 		Type requestListTypeToken = new TypeToken<ArrayList<ExcommunicationTile>>() {}.getType();
@@ -47,20 +47,20 @@ public class ExcommunicationReader {
 				.registerSubtype(IncrementHPEffect.class, "INCREMENTHPEFFECT")
 				.registerSubtype(NoFinalBonusEffect.class, "NOFINALBONUSEFFECT")
 				.registerSubtype(MultiplierEffect.class, "MULTIPLIEREFFECT")
-				.registerSubtype(ReduceDiceEffect.class, "REDUCEDICEEFFECT")
+				.registerSubtype(ModifyDiceEffect.class, "MODIFYDICEEFFECT")
 				.registerSubtype(OtherEffect.class, "OTHEREFFECT")
 				.registerSubtype(ServantEffect.class, "SERVANTEFFECT")
 				.registerSubtype(FinalReduceEffect.class, "FINALREDUCEEFFECT");
 		
 		Gson gson = new GsonBuilder().registerTypeAdapterFactory(typeFactory).create();
 		
-		try{
+		//try{
 			JsonReader read = new JsonReader(new FileReader("excommunication.json"));
 			excomm = gson.fromJson(read, requestListTypeToken);
 			read.close();
-		}catch(IOException e){
+		/*}catch(IOException e){
 			Logger.getAnonymousLogger().log(Level.SEVERE, "excommunication file not found"+ e);
-		}
+		}*/
 		return excomm;
 	}
 }

@@ -32,12 +32,19 @@ import it.polimi.ingsw.GC_28.boards.Tower;
 import it.polimi.ingsw.GC_28.cards.CardType;
 import it.polimi.ingsw.GC_28.cards.ExcommunicationReader;
 import it.polimi.ingsw.GC_28.cards.ExcommunicationTile;
+import it.polimi.ingsw.GC_28.cards.LeaderCard;
+import it.polimi.ingsw.GC_28.cards.LeaderCardReader;
 import it.polimi.ingsw.GC_28.components.CouncilPrivilege;
 import it.polimi.ingsw.GC_28.components.Dice;
 import it.polimi.ingsw.GC_28.components.DiceColor;
 import it.polimi.ingsw.GC_28.components.FamilyMember;
 import it.polimi.ingsw.GC_28.components.Resource;
 import it.polimi.ingsw.GC_28.components.ResourceType;
+import it.polimi.ingsw.GC_28.effects.DiscountEffect;
+import it.polimi.ingsw.GC_28.effects.GoToHPEffect;
+import it.polimi.ingsw.GC_28.effects.IncrementCardEffect;
+import it.polimi.ingsw.GC_28.effects.IncrementHPEffect;
+import it.polimi.ingsw.GC_28.effects.OtherEffect;
 import it.polimi.ingsw.GC_28.model.Player;
 import it.polimi.ingsw.GC_28.spaces.EverySpace;
 
@@ -61,8 +68,8 @@ public class BoardsInitializer {
 	//private Game g = new Game();
 	private GameModel gameModel;
 	
-	public Game initializeBoard(List<Player> players){
-		try {
+	public Game initializeBoard(List<Player> players)throws FileNotFoundException,IOException{
+		//try {
 			this.players  = players;
 			initDices();
 			initCouncilPrivilege();
@@ -70,16 +77,17 @@ public class BoardsInitializer {
 			initSpaces();
 			//gameModel.setGameBoard(gameBoard);
 			initExcommunication();
-			initBonusTile();
 			initPlayerBoard();
 			initFinalBonus();
 			initFamilyMember();
 			gameModel = new GameModel(gameBoard, players);
+			placeBonusTile();
 			//gameModel.setPlayers(players);
 			completeExcommunicationArray();
-		} catch (FileNotFoundException e) {
+			initLeaderCard();
+		/*} catch (FileNotFoundException e) {
 			Logger.getAnonymousLogger().log(Level.SEVERE, "cannot start initialize" + e);
-		}
+		}*/
 		return new Game(gameModel);
 	}
 	
@@ -204,8 +212,11 @@ public class BoardsInitializer {
 	
 	
 
-	private void initBonusTile(){
-		Gson gson = new GsonBuilder().create();
+	private void placeBonusTile()throws FileNotFoundException{
+		for(Player p : players){
+			p.getBoard().setBonusTile(bonusTile);
+		}
+		/*Gson gson = new GsonBuilder().create();
 		try {
 			JsonReader jRead = new JsonReader(new FileReader("bonusTile.json"));
 			BonusTile bonusTi = gson.fromJson(jRead, BonusTile.class);
@@ -213,7 +224,7 @@ public class BoardsInitializer {
 			bonusTile.setProductionEffect(bonusTi.getProductionEffect());
 		}catch(FileNotFoundException e){
 			Logger.getAnonymousLogger().log(Level.SEVERE, "cannot start initialize" + e);
-		}
+		}*/
 	}
 	
 	void initFamilyMember(){
@@ -232,17 +243,17 @@ public class BoardsInitializer {
 		}
 	}
 	
-	private void initFinalBonus()throws FileNotFoundException{
+	public void initFinalBonus() throws IOException{
 		Gson gson = new GsonBuilder().create();
-		try {
+		//try {
 			JsonReader readerFinalBonus = new JsonReader(new FileReader("finalBonus.json"));
 			//Type hashMapType = new TypeToken<HashMap<String,ArrayList<Resource>>>() {}.getType();
 			finalBonus = gson.fromJson(readerFinalBonus, FinalBonus.class);
 			FinalBonus.setFinalBonus(finalBonus);
 			readerFinalBonus.close();
-		} catch (IOException e) {
+		/*} catch (IOException e) {
 			Logger.getAnonymousLogger().log(Level.SEVERE, "file not found" + e);
-		}
+		}*/
 		
 	}
 	
@@ -265,7 +276,7 @@ public class BoardsInitializer {
 		}
 	}
 	
-	private void initExcommunication(){
+	private void initExcommunication()throws IOException{
 		System.out.println(1);
 		ExcommunicationReader exReader = new ExcommunicationReader();
 		List<ExcommunicationTile> ex = new ArrayList<>();
@@ -280,6 +291,23 @@ public class BoardsInitializer {
 			int randomInt = ThreadLocalRandom.current().nextInt(0, tmp.size());
 			gameBoard.getExcommunications()[i] = tmp.get(randomInt);
 			System.out.println(gameBoard.getExcommunications()[i].getEffect());
+			if(gameBoard.getExcommunications()[i].getEffect().getClass().equals(OtherEffect.class)){
+				OtherEffect e = (OtherEffect)gameBoard.getExcommunications()[i].getEffect();
+				System.out.println(e.getType());
+			}
+			if(gameBoard.getExcommunications()[i].getEffect().getClass().equals(DiscountEffect.class)){
+				DiscountEffect e = (DiscountEffect)gameBoard.getExcommunications()[i].getEffect();
+				System.out.println(e.getDiscount().toString());
+			}
+			if(gameBoard.getExcommunications()[i].getEffect().getClass().equals(IncrementCardEffect.class)){
+				IncrementCardEffect e = (IncrementCardEffect)gameBoard.getExcommunications()[i].getEffect();
+				System.out.println(e.getCardType());
+			}
+			if(gameBoard.getExcommunications()[i].getEffect().getClass().equals(IncrementHPEffect.class)){
+				IncrementHPEffect e = (IncrementHPEffect)gameBoard.getExcommunications()[i].getEffect();
+				System.out.println(e.isHarvest());
+			}
+			
 		}
 		
 	}
@@ -293,7 +321,23 @@ public class BoardsInitializer {
 			}
 		}
 	}
+	
+	private void initLeaderCard(){
+		List<LeaderCard> leaders = new ArrayList<>();
+		LeaderCardReader reader = new LeaderCardReader();
+		leaders = reader.start();
+		for(Player p : players){
+			for(int i = 0; i < 4; i++){
+				int randomInt = ThreadLocalRandom.current().nextInt(0, leaders.size());
+				p.getLeaderCards().add(leaders.get(randomInt));
+				leaders.remove(randomInt);
+			}
+			System.out.println(p.getLeaderCards().toString());
+		}
+	}
 }
+
+	
 
 class EnumMapInstanceCreator<K extends Enum<K>, V> implements InstanceCreator<EnumMap<K, V>> {
 private final Class<K> enumClazz;
