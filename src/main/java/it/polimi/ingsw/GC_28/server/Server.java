@@ -16,6 +16,8 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
+import java.util.Timer;
+import java.util.TimerTask;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -46,7 +48,11 @@ public class Server {
 	private PrintStream p;
 	private Scanner scan;
 	List<PlayerColor> usedColors = new ArrayList<>();
-	Boolean noStop = false;
+	boolean noStop = false;
+	ExecutorService executor;
+	boolean started;
+	Map<Player, ClientHandler> handlers;
+	List<BonusTile> bonusList;
 	
 	public Server(int p){
 		this.port = p;
@@ -64,12 +70,16 @@ public class Server {
 	}
 	
 	private void startServer()throws IOException{
-		ExecutorService executor = Executors.newCachedThreadPool();
+		Timer timer = new Timer();
+
+		executor = Executors.newCachedThreadPool();
 		server = new ServerSocket(port);
 		//server.setReuseAddress(true);
 		while(!noStop){
-			List<BonusTile> bonusList = initBonusTile(); 
-			Map<Player, ClientHandler> handlers = new HashMap<>();
+			bonusList = initBonusTile(); 
+			handlers = new HashMap<>();
+			started = false;
+			
 			System.out.println("Server ready");
 			while(handlers.size() < 1){
 				Socket socket = server.accept();
@@ -81,40 +91,31 @@ public class Server {
 				PlayerColor color = enterColor();
 				Player player = new Player(name, color);
 				ClientHandler ch = new ClientHandler(socket);
+				if(started){
+					started = false;
+					handlers = new HashMap<>();
+				}
 				handlers.put(player, ch);
-			}
-			usedColors.clear();
-			BoardsInitializer bi = new BoardsInitializer();	
-			List<Player> players = new ArrayList<>(handlers.keySet());
-			try{
-				
-				Game game = bi.initializeBoard(players);
-				game.setHandlers(handlers);
-				BoardSetup bs = new BoardSetup(game);
-				bs.firstSetUpCards();
-				
-				List<Player> reversePlayer = new ArrayList<>();
-				for(Player p : players){
-					reversePlayer.add(p);
+				if(handlers.size() == 2){
+					timer = new Timer();
+					timer.schedule(new TimerTask(){
+						@Override
+						public void run() {
+							System.out.println("passati 15 sec");
+							startGame(handlers);
+						}
+					}, 15000);
 				}
-				Collections.reverse(reversePlayer);
-				for(Player p : reversePlayer){
-					enterBonusTile(bonusList, handlers, p);
-				}
-				
-				game.registerObserver(new Controller());
-				game.getGameModel().registerObserver(game);
-				
-				executor.submit(game);
-			}catch(IOException e){
-				for(Player p : players){
-					handlers.get(p).getOut().println("The server didn't start the game due to an IOException,\n"
-							+ " we're trying to fix the problem asap. Thanks for your patience!");
-					handlers.get(p).getOut().flush();
-				}
-				Logger.getAnonymousLogger().log(Level.SEVERE,"Cannot start the server" + e);
 			}
 
+			/*
+			 * QUESTE DUE RIGHE ERANO DA ANDREA
+			timer.cancel();
+			startGame(handlers);	*/
+
+			
+			startGame(handlers);
+			
 			/*game.setHandlers(handlers);
 			BoardSetup bs = new BoardSetup(game);
 			bs.firstSetUpCards();
@@ -126,6 +127,55 @@ public class Server {
 			//game.setCurrentPlayer(gameModel.getPlayers().get(0));
 			//game.getCurrentPlayer().getBoard().display();
 			executor.submit(game);*/
+		}
+	}
+
+	
+	public void startGame(Map<Player, ClientHandler> handlers){
+		usedColors.clear();
+		BoardsInitializer bi = new BoardsInitializer();	
+		List<Player> players = new ArrayList<>(handlers.keySet());
+		
+		try{
+			Game game = bi.initializeBoard(players);
+
+			game.setHandlers(handlers);
+			BoardSetup bs = new BoardSetup(game);
+			bs.firstSetUpCards();
+			
+
+			List<Player> reversePlayer = new ArrayList<>();
+			for(Player p : players){
+				reversePlayer.add(p);
+			}
+			Collections.reverse(reversePlayer);
+			for(Player p : reversePlayer){
+				enterBonusTile(bonusList, handlers, p);
+			}
+			
+			
+			game.registerObserver(new Controller());
+			game.getGameModel().registerObserver(game);
+			//game.getGameBoard().display();
+			//game.setCurrentPlayer(gameModel.getPlayers().get(0));
+			//game.getCurrentPlayer().getBoard().display();
+			started = true;
+			executor.submit(game);
+			
+		}catch(FileNotFoundException e){
+			for(Player p : players){
+				handlers.get(p).getOut().println("The server didn't start the game due to an FileNotFoundException,\n"
+						+ " we're trying to fix the problem asap. Thanks for your patience!");
+				handlers.get(p).getOut().flush();
+			}
+			Logger.getAnonymousLogger().log(Level.SEVERE,"Cannot start the server" + e);
+		}catch(IOException e){
+			for(Player p : players){
+				handlers.get(p).getOut().println("The server didn't start the game due to an IOException,\n"
+						+ " we're trying to fix the problem asap. Thanks for your patience!");
+				handlers.get(p).getOut().flush();
+			}
+			Logger.getAnonymousLogger().log(Level.SEVERE,"Cannot start the server" + e);
 		}
 	}
 	

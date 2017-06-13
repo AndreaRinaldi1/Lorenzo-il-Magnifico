@@ -56,6 +56,7 @@ public class ProductionAndHarvestSpace extends Space{
 	
 	@Override
 	public void applyBonus(Game game, FamilyMember familyMember){
+		System.out.println(3);
 		if(harvest){
 			for(Territory territory : familyMember.getPlayer().getBoard().getTerritories()){
 				territory.getPermanentEffect().apply(familyMember, game);
@@ -64,16 +65,13 @@ public class ProductionAndHarvestSpace extends Space{
 		}
 		else{
 			for(Building building : familyMember.getPlayer().getBoard().getBuildings()){
-				System.out.println(6);
 				building.getPermanentEffect().apply(familyMember, game);
-				System.out.println(7);
 			}
-			System.out.println(8);
 			familyMember.getPlayer().getBoard().getBonusTile().getProductionEffect().apply(familyMember, game);
-			System.out.println(9);
 		}
 	}
 	
 	
 	
 }
+

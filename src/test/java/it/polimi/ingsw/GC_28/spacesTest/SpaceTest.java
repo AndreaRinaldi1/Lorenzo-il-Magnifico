@@ -21,15 +21,13 @@ import it.polimi.ingsw.GC_28.spaces.Space;
 public class SpaceTest {
 	private boolean free = true;
 	private boolean neutral = true;
-	private ArrayList<FamilyMember> players1 = new ArrayList<FamilyMember>();
+	private ArrayList<FamilyMember> players = new ArrayList<FamilyMember>();
 	private int actionValue = 1;
 	private Space s;
 	
 	private FamilyMember fm;
 	private Player p;
-	private GameModel gameModel;
-	private GameBoard gameBoard; 
-	private List<Player> players = new ArrayList<>();
+	
 	private Game g;
 	
 	@Before
@@ -37,14 +35,19 @@ public class SpaceTest {
 		s = new Space(){};
 		p = new Player("Rob", PlayerColor.YELLOW);
 		fm = new FamilyMember(p, neutral, DiceColor.ORANGE);
-	
+		
+		List<Player> players = new ArrayList<>();
 		players.add(p);
-		gameBoard = new GameBoard();
-		gameModel = new GameModel(gameBoard, players);
-		g = new Game(gameModel); 
+		GameBoard gb = new GameBoard();
+		GameModel gm = new GameModel(gb,players);
+		
+		g = new Game(gm);
+	
+		g.setCurrentPlayer(p);
+		
 		s.setFree(free);
 		s.addPlayer(fm);
-		players1.add(fm);
+
 		s.setActionValue(actionValue);
 		s.applyBonus(g, fm);
 	}
@@ -61,7 +64,8 @@ public class SpaceTest {
 
 	@Test
 	public void testGetPlayer() {
-		assertArrayEquals(this.players1.toArray(), 
+		players.add(fm);
+		assertArrayEquals(this.players.toArray(), 
 				this.s.getPlayer().toArray());
 		//fail("Not yet implemented");
 	}
