@@ -53,25 +53,28 @@ public class TakeCardController {
 			System.out.println(3);
 			return false;
 		}
-		
+		System.out.println("carte esiste");
 		if(checkMoreThanSix(familyMember)){
 			gameModel.notifyObserver(new Message("You already have six cards of the type " + cardType.name().toLowerCase() , false));
 			return false;
 		}
 		
-		
+		System.out.println("non ne ho 6");
 		if(throughEffect == null){
 			if(checkThisPlayerPresent(familyMember)){
 				gameModel.notifyObserver(new Message("You already are in this tower" , false));
 				return false;
 			}
 		}
+		System.out.println("io non presente");
 		if(!(checkResource(game, name,  familyMember, throughEffect))){
 			return false;
 		}
+		System.out.println("ho le risorse");
 		if(!(checkActionValue(game, name, familyMember))){
 			return false;
 		}
+		System.out.println("ho action value");
 		return true;
 	}
 	
@@ -166,19 +169,26 @@ public class TakeCardController {
 	 * @return true if the player has enough resources to take the card
 	 */
 	private boolean checkResource(Game game, String cardName, FamilyMember familyMember, TakeCardEffect throughEffect){
-		
+		System.out.println("checkResource 1");
 		if(cardType.equals(CardType.TERRITORY)){
+			System.out.println("checkResource 2");
 			for(int i = 0; i < familyMember.getPlayer().getBoard().getTerritories().size(); i++){
-				if(familyMember.getPlayer().getBoard().getTerritories().get(i) == null){
+				System.out.println("checkResourceLoop");
+				if(familyMember.getPlayer().getBoard().getTerritories().size() > 1){
+				//if(familyMember.getPlayer().getBoard().getTerritories().get(i) == null){
 					boolean active = checkForNoMilitaryForTerritoryEffect(familyMember.getPlayer());//FIXME
+					//System.out.println("controllo valore active" + active);
 					/*for(LeaderCard lc : familyMember.getPlayer().getLeaderCards()){ //check if Cesare Borgia leader is active for the currentPlayer, if so skip the check of his resources requested for territories
 						if(lc.getName().equalsIgnoreCase("Cesare Borgia") && lc.getPlayed() && lc.getActive()){
 							active = true;
 						}
 					}*/
 					if(!active){
+						System.out.println("checkResource 3");
 						int size = familyMember.getPlayer().getBoard().getTerritories().size();
-						for(ResourceType resType : FinalBonus.instance().getResourceForTerritories().get(size+1).getResource().keySet()){
+						for(ResourceType resType : FinalBonus.instance().getResourceForTerritories().get(size).getResource().keySet()){
+							System.out.println("checkResource 4");
+							System.out.println(FinalBonus.instance().getResourceForTerritories().get(size).getResource().toString());
 							if(familyMember.getPlayer().getBoard().getResources().getResource().get(resType) < FinalBonus.instance().getResourceForTerritories().get(size+1).getResource().get(resType)){
 								gameModel.notifyObserver(new Message("You don'have the requested resources to take another " + cardType.name().toLowerCase() , false));
 								return false;
@@ -301,24 +311,32 @@ public class TakeCardController {
 	
 	protected void lookForNoCellBonus(Game game, FamilyMember familyMember, boolean check, Resource tmp, String cardName){
 		boolean noCellBonus = false;
+		System.out.println("nocell 1");
 		for(Character character : familyMember.getPlayer().getBoard().getCharacters()){
 			if(character.getPermanentEffect() instanceof OtherEffect){
+				System.out.println("noCell 2");
 				OtherEffect otherEffect = (OtherEffect) character.getPermanentEffect();
+				System.out.println("noCell 3");
 				if(otherEffect.getType().equals(EffectType.NOCELLBONUS)){
+					System.out.println("noCell 4");
 					noCellBonus = true;
 				}
 			}
 		}
 		if(!noCellBonus){
+			System.out.println("noCell 5");
 			Resource bonus = gameBoard.getTowers().get(cardType).findCard(cardName).getBonus();
+			System.out.println("noCell 6");
 			if(check){
+				System.out.println("nocCell 7");
 				tmp.modifyResource(bonus, true);
 			}
 			else{
+				System.out.println("noCell 8");
 				familyMember.getPlayer().addResource(game.checkResourceExcommunication(bonus));
 			}
 		}
-		
+		System.out.println("noCell 9");
 	}
 	
 	

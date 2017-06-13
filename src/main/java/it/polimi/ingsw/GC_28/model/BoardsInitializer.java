@@ -17,6 +17,7 @@ import java.util.ArrayList;
 import java.util.EnumMap;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Random;
 import java.util.concurrent.ThreadLocalRandom;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -277,7 +278,6 @@ public class BoardsInitializer {
 	}
 	
 	private void initExcommunication()throws IOException{
-		System.out.println(1);
 		ExcommunicationReader exReader = new ExcommunicationReader();
 		List<ExcommunicationTile> ex = new ArrayList<>();
 		ex = exReader.startRead();
@@ -288,7 +288,8 @@ public class BoardsInitializer {
 					tmp.add(e);
 				}
 			}
-			int randomInt = ThreadLocalRandom.current().nextInt(0, tmp.size());
+			Random rand = new Random();
+			int randomInt = rand.nextInt(tmp.size()+1);
 			gameBoard.getExcommunications()[i] = tmp.get(randomInt);
 			System.out.println(gameBoard.getExcommunications()[i].getEffect());
 			if(gameBoard.getExcommunications()[i].getEffect().getClass().equals(OtherEffect.class)){

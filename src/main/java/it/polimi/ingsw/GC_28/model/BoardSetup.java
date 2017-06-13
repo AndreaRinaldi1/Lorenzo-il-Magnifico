@@ -14,6 +14,7 @@ import it.polimi.ingsw.GC_28.cards.LeaderCard;
 import it.polimi.ingsw.GC_28.cards.Territory;
 import it.polimi.ingsw.GC_28.cards.Venture;
 import it.polimi.ingsw.GC_28.components.Dice;
+import it.polimi.ingsw.GC_28.components.DiceColor;
 import it.polimi.ingsw.GC_28.components.FamilyMember;
 
 import it.polimi.ingsw.GC_28.model.Game;
@@ -243,6 +244,7 @@ public class BoardSetup {
 			for(FamilyMember fm : f){
 				fm.setValue(gameBoard.getDices());
 			}
+			f[3].setValue(0);
 		}
 	}
 	

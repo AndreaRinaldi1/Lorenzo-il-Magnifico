@@ -157,7 +157,8 @@ public class MultiplierEffectTest {
 	}
 	@Test
 	public void testApply5(){
-		me.setCardType(CardType.TERRITORY);
+		cardType = CardType.TERRITORY;
+		me.setCardType(cardType);
 		me.setResourceBonus(resourceBonus);
 		//me.setResourceCost(resourceCost);
 		pb.addCard(t);
@@ -169,7 +170,8 @@ public class MultiplierEffectTest {
 	
 	@Test
 	public void testApply6(){
-		me.setCardType(CardType.CHARACTER);
+		cardType = CardType.CHARACTER;
+		me.setCardType(cardType);
 		me.setResourceBonus(resourceBonus);
 		//me.setResourceCost(resourceCost);
 		pb.addCard(c);
@@ -181,7 +183,8 @@ public class MultiplierEffectTest {
 	
 	@Test
 	public void testApply7(){
-		me.setCardType(CardType.VENTURE);
+		cardType = CardType.VENTURE;
+		me.setCardType(cardType);
 		me.setResourceBonus(resourceBonus);
 		//me.setResourceCost(resourceCost);
 		pb.addCard(v);

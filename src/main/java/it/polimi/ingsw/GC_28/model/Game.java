@@ -90,12 +90,13 @@ public class Game extends Observable<Action> implements Runnable, Observer<Messa
 					} 	
 				}
 				checkSkippedPlayers();
-				bs.setUpBoard();
-				currentPlayer = gameModel.getPlayers().get(0);
+				if(!(currentEra == 3 && currentPeriod == 2)){//if it's the third Era and the second period it's evaluate as false;
+					bs.setUpBoard();
+					currentPlayer = gameModel.getPlayers().get(0);
+				}
 			}
 			giveExcommunication();
 		}
-
 		applyFinalBonus();
 		applyFinalMalus();
 		sortBy(gameModel.getPlayers(), ResourceType.MILITARYPOINT);
@@ -186,12 +187,11 @@ public class Game extends Observable<Action> implements Runnable, Observer<Messa
 	public void applyFinalMalus(){
 		ExcommunicationTile t;
 		for(Player p : gameModel.getPlayers()){
-			t = p.getExcommunicationTile().get(currentEra-1);
+			t = p.getExcommunicationTile().get(currentEra-2);
 			if(t != null){
 				t.getEffect().apply(p, this);
 			}
 		}
-		
 	}
 
 	public void checkDiceReduction(){  //se i giocatori tra le scomuniche hanno reducedice applico effetto
@@ -202,7 +202,6 @@ public class Game extends Observable<Action> implements Runnable, Observer<Messa
 				}
 			}
 		}
-		//System.out.println("6");
 	}
 	
 	public void checkSkippedPlayers(){ // se i giocatori hanno saltato il primo turno ora possono rifare il turno che gli spetta alla fine
@@ -220,9 +219,7 @@ public class Game extends Observable<Action> implements Runnable, Observer<Messa
 	
 	public void skipPlayers(){
 		for(Player p : gameModel.getPlayers()){
-			//System.out.println("1");
 			for(ExcommunicationTile t : p.getExcommunicationTile()){
-				//System.out.println("2");
 				if(t.getEffect() instanceof OtherEffect){
 					OtherEffect otherEffect = (OtherEffect) t.getEffect();
 					if(otherEffect.getType().equals(EffectType.SKIPROUNDEFFECT)){
@@ -230,7 +227,6 @@ public class Game extends Observable<Action> implements Runnable, Observer<Messa
 					}
 				}
 			}
-			//System.out.println("3");
 		}
 		
 	}
@@ -241,6 +237,8 @@ public class Game extends Observable<Action> implements Runnable, Observer<Messa
 			handlers.get(p).getOut().println(p.getBoard().display());
 			handlers.get(p).getOut().println(p.displayExcommunication());
 			handlers.get(p).getOut().println(p.displayLeader());
+			//handlers.get(p).getOut().println(p.getBoard().getBonusTile().getHarvestEffect().getResourceHarvestBonus().getResourceBonus().toString());
+			//handlers.get(p).getOut().println(p.getBoard().getBonusTile().getProductionEffect().getResourceBonus().getResourceBonus().toString());
 			for(int i = 0; i < 4; i++){
 				handlers.get(p).getOut().println(p.getFamilyMembers()[i].toString());
 			}
@@ -340,13 +338,17 @@ public class Game extends Observable<Action> implements Runnable, Observer<Messa
 	public Resource checkResourceExcommunication(Resource amount){
 		for(ExcommunicationTile t : currentPlayer.getExcommunicationTile()){ //guardo tra le scomuniche del currentPlayer
 			if(t.getEffect() instanceof DiscountEffect){ //se trovo un discounteffect
+				System.out.println("checkEx 1");
 				DiscountEffect eff = (DiscountEffect) t.getEffect();
 				boolean disc = false;
 				boolean altDisc = false;
 				
 				for(ResourceType resType : eff.getDiscount().getResource().keySet()){ //guardo tra i resourceType del discounteff
+					System.out.println("checkEx 2");
 					if(!(eff.getDiscount().getResource().get(resType).equals(0))){ //se ne trovo uno diverso da 0
+						System.out.println("checkEx 3");
 						if(!amount.getResource().get(resType).equals(0)){ // e se io l'ho preso quel tipo di risorsa
+							System.out.println("checkEx 4");
 							disc = true; //allora setto un bool
 							break;
 						}
@@ -489,9 +491,9 @@ public class Game extends Observable<Action> implements Runnable, Observer<Messa
 		spaceAction.setThroughEffect(throughEffect);
 		
 		this.notifyObserver(spaceAction);
-		if(modifiedWithServants){
+		/*if(modifiedWithServants){
 			familyMember.modifyValue((-1)*(incrementThroughServants));
-		}
+		}*/
 		
 		return result;
 		
@@ -535,9 +537,9 @@ public class Game extends Observable<Action> implements Runnable, Observer<Messa
 		
 		this.notifyObserver(takeCardAction);
 		System.out.println(5);
-		if(modifiedWithServants){
+		/*if(modifiedWithServants){
 			familyMember.modifyValue((-1)*(incrementThroughServants));
-		}
+		}*/
 		
 		return result;
 	}
@@ -755,13 +757,11 @@ public class Game extends Observable<Action> implements Runnable, Observer<Messa
 					handlers.get(p).getOut().flush();
 					p.getExcommunicationTile().get(currentEra -1).setEffect(gameModel.getGameBoard().getExcommunications()[currentEra-1].getEffect());
 					//p.getExcommunicationTile().add(currentEra-1, gameBoard.getExcommunications()[currentEra-1]);
-					//return;
 				}else{
 					handlers.get(p).getOut().println("Do you want to pay to avoid Excommunication?[y/n]");
 					handlers.get(p).getOut().flush();
 					if(handlers.get(p).getIn().nextLine().equalsIgnoreCase("n")){
 						p.getExcommunicationTile().add(currentEra-1, gameModel.getGameBoard().getExcommunications()[currentEra-1]);
-						//return;
 					}else{
 						handlers.get(p).getOut().println("You paid to avoid Excommunication, your faith points have been reset to 0");
 						handlers.get(p).getOut().flush();
@@ -774,7 +774,6 @@ public class Game extends Observable<Action> implements Runnable, Observer<Messa
 								lc.getEffect().apply(p, this);
 							}
 						}
-						//return;
 					}
 				}
 			}
@@ -785,7 +784,7 @@ public class Game extends Observable<Action> implements Runnable, Observer<Messa
 		handlers.get(currentPlayer).getOut().flush();
 		String procede;
 		do{
-			handlers.get(currentPlayer).getOut().println("Which special action do you want to undertake?[discard/play/active]");
+			handlers.get(currentPlayer).getOut().println("Which special action do you want to undertake?[discard/play/activate]");
 			handlers.get(currentPlayer).getOut().flush();
 			String line = handlers.get(currentPlayer).getIn().nextLine();
 			if(line.equalsIgnoreCase("discard")){
