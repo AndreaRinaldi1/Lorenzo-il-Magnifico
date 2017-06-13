@@ -148,7 +148,7 @@ public class GameBoardTest {
 	public static void tearDownAfterClass() throws Exception {
 	}
 
-	@Test
+	/*@Test
 	public void testDisplay() {
 		StringBuilder ret = new StringBuilder();
 		ret.append("GAME BOARD\n");
@@ -212,7 +212,7 @@ public class GameBoardTest {
 
 		assertEquals(ret.toString(), this.gb.display());
 		
-	}
+	}*/
 	
 	@Test
 	public void testGetTowers() {
