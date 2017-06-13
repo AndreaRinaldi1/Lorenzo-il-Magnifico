@@ -16,9 +16,11 @@ import it.polimi.ingsw.GC_28.effects.OtherEffect;
 import it.polimi.ingsw.GC_28.effects.TakeCardEffect;
 import it.polimi.ingsw.GC_28.model.Game;
 import it.polimi.ingsw.GC_28.model.GameModel;
+import it.polimi.ingsw.GC_28.model.Player;
 import it.polimi.ingsw.GC_28.server.Message;
 import it.polimi.ingsw.GC_28.cards.Character;
 import it.polimi.ingsw.GC_28.cards.ExcommunicationTile;
+import it.polimi.ingsw.GC_28.cards.LeaderCard;
 import it.polimi.ingsw.GC_28.cards.Venture;
 
 public class TakeCardController {
@@ -26,6 +28,7 @@ public class TakeCardController {
 	private GameBoard gameBoard;
 	protected CardType cardType;
 	//private Cell cell;
+	private final int MAX_SIZE = 6;
 	
 	public TakeCardController(GameModel gameModel){
 		this.gameModel = gameModel;
@@ -50,25 +53,28 @@ public class TakeCardController {
 			System.out.println(3);
 			return false;
 		}
-		
+		System.out.println("carte esiste");
 		if(checkMoreThanSix(familyMember)){
 			gameModel.notifyObserver(new Message("You already have six cards of the type " + cardType.name().toLowerCase() , false));
 			return false;
 		}
 		
-		
+		System.out.println("non ne ho 6");
 		if(throughEffect == null){
 			if(checkThisPlayerPresent(familyMember)){
 				gameModel.notifyObserver(new Message("You already are in this tower" , false));
 				return false;
 			}
 		}
+		System.out.println("io non presente");
 		if(!(checkResource(game, name,  familyMember, throughEffect))){
 			return false;
 		}
+		System.out.println("ho le risorse");
 		if(!(checkActionValue(game, name, familyMember))){
 			return false;
 		}
+		System.out.println("ho action value");
 		return true;
 	}
 	
@@ -104,22 +110,22 @@ public class TakeCardController {
 	private boolean checkMoreThanSix(FamilyMember familyMember){
 		switch(cardType){
 		case TERRITORY:
-			if(familyMember.getPlayer().getBoard().getTerritories().size() == 6){
+			if(familyMember.getPlayer().getBoard().getTerritories().size() == MAX_SIZE){
 				return true;
 			}
 		break;
 		case BUILDING:
-			if(familyMember.getPlayer().getBoard().getBuildings().size() == 6){
+			if(familyMember.getPlayer().getBoard().getBuildings().size() == MAX_SIZE){
 				return true;
 			}
 		break;
 		case CHARACTER:
-			if(familyMember.getPlayer().getBoard().getCharacters().size() == 6){
+			if(familyMember.getPlayer().getBoard().getCharacters().size() == MAX_SIZE){
 				return true;
 			}
 		break;
 		case VENTURE:
-			if(familyMember.getPlayer().getBoard().getVentures().size() == 6){
+			if(familyMember.getPlayer().getBoard().getVentures().size() == MAX_SIZE){
 				return true;
 			}
 		break;
@@ -163,14 +169,30 @@ public class TakeCardController {
 	 * @return true if the player has enough resources to take the card
 	 */
 	private boolean checkResource(Game game, String cardName, FamilyMember familyMember, TakeCardEffect throughEffect){
-		
+		System.out.println("checkResource 1");
 		if(cardType.equals(CardType.TERRITORY)){
+			System.out.println("checkResource 2");
 			for(int i = 0; i < familyMember.getPlayer().getBoard().getTerritories().size(); i++){
-				if(familyMember.getPlayer().getBoard().getTerritories().get(i) == null){
-					for(ResourceType resType : FinalBonus.instance().getResourceForTerritories().get(i).getResource().keySet()){
-						if(familyMember.getPlayer().getBoard().getResources().getResource().get(resType) < FinalBonus.instance().getResourceForTerritories().get(i).getResource().get(resType)){
-							gameModel.notifyObserver(new Message("You don'have the requested resources to take another " + cardType.name().toLowerCase() , false));
-							return false;
+				System.out.println("checkResourceLoop");
+				if(familyMember.getPlayer().getBoard().getTerritories().size() > 1){
+				//if(familyMember.getPlayer().getBoard().getTerritories().get(i) == null){
+					boolean active = checkForNoMilitaryForTerritoryEffect(familyMember.getPlayer());//FIXME
+					//System.out.println("controllo valore active" + active);
+					/*for(LeaderCard lc : familyMember.getPlayer().getLeaderCards()){ //check if Cesare Borgia leader is active for the currentPlayer, if so skip the check of his resources requested for territories
+						if(lc.getName().equalsIgnoreCase("Cesare Borgia") && lc.getPlayed() && lc.getActive()){
+							active = true;
+						}
+					}*/
+					if(!active){
+						System.out.println("checkResource 3");
+						int size = familyMember.getPlayer().getBoard().getTerritories().size();
+						for(ResourceType resType : FinalBonus.instance().getResourceForTerritories().get(size).getResource().keySet()){
+							System.out.println("checkResource 4");
+							System.out.println(FinalBonus.instance().getResourceForTerritories().get(size).getResource().toString());
+							if(familyMember.getPlayer().getBoard().getResources().getResource().get(resType) < FinalBonus.instance().getResourceForTerritories().get(size+1).getResource().get(resType)){
+								gameModel.notifyObserver(new Message("You don'have the requested resources to take another " + cardType.name().toLowerCase() , false));
+								return false;
+							}
 						}
 					}
 				}
@@ -182,7 +204,11 @@ public class TakeCardController {
 		Resource tmp = Resource.of(res);
 		tmp.modifyResource(familyMember.getPlayer().getBoard().getResources(), true);
 		
-		reduce3Coins(familyMember, true, tmp);
+		boolean active = checkForNoExtraCostInTowerEffect(familyMember.getPlayer());
+		
+		if(!active){
+			reduce3Coins(familyMember, true, tmp);
+		}
 		
 		if(tmp.getResource().get(ResourceType.COIN) < 0){
 			gameModel.notifyObserver(new Message("You don't have the three coins to enter this tower, since there's already another player", false));
@@ -243,6 +269,30 @@ public class TakeCardController {
 		return true;
 	}
 	
+	private boolean checkForNoMilitaryForTerritoryEffect(Player player){
+		for(LeaderCard ls : player.getLeaderCards()){
+			if(ls.getEffect().getClass().equals(OtherEffect.class)){
+				OtherEffect e = (OtherEffect)ls.getEffect();
+				if(e.getType().equals(EffectType.NOMILITARYFORTERRITORYEFFECT) && ls.getPlayed() && ls.getActive()){
+					return true;
+				}
+			}
+		}
+		return false;
+	}
+	
+	private boolean checkForNoExtraCostInTowerEffect(Player player){
+		for(LeaderCard lc : player.getLeaderCards()){ //check if current player can avoid to pay the 3 coins FIXME
+			if(lc.getEffect().getClass().equals(OtherEffect.class)){
+				OtherEffect e = (OtherEffect)lc.getEffect();
+				if(e.getType().equals(EffectType.NOEXTRACOSTINTOWEREFFECT) && lc.getPlayed() && lc.getActive()){
+					return true;
+				}
+			}
+		}
+		return false;
+	}
+	
 	
 	protected void reduce3Coins(FamilyMember familyMember, boolean check, Resource tmp){
 		if(checkAnyPlayerPresent()){
@@ -261,24 +311,32 @@ public class TakeCardController {
 	
 	protected void lookForNoCellBonus(Game game, FamilyMember familyMember, boolean check, Resource tmp, String cardName){
 		boolean noCellBonus = false;
+		System.out.println("nocell 1");
 		for(Character character : familyMember.getPlayer().getBoard().getCharacters()){
 			if(character.getPermanentEffect() instanceof OtherEffect){
+				System.out.println("noCell 2");
 				OtherEffect otherEffect = (OtherEffect) character.getPermanentEffect();
+				System.out.println("noCell 3");
 				if(otherEffect.getType().equals(EffectType.NOCELLBONUS)){
+					System.out.println("noCell 4");
 					noCellBonus = true;
 				}
 			}
 		}
 		if(!noCellBonus){
+			System.out.println("noCell 5");
 			Resource bonus = gameBoard.getTowers().get(cardType).findCard(cardName).getBonus();
+			System.out.println("noCell 6");
 			if(check){
+				System.out.println("nocCell 7");
 				tmp.modifyResource(bonus, true);
 			}
 			else{
+				System.out.println("noCell 8");
 				familyMember.getPlayer().addResource(game.checkResourceExcommunication(bonus));
 			}
 		}
-		
+		System.out.println("noCell 9");
 	}
 	
 	
@@ -370,5 +428,20 @@ public class TakeCardController {
 		}
 		gameModel.notifyObserver(new Message("Your action value is not high enough to take this card", false));
 		return false;
+	}
+	
+	protected void lookForPicoDellaMirandola(FamilyMember familyMember, Resource tmp, Game game){//FIXME
+		for(LeaderCard lc : familyMember.getPlayer().getLeaderCards()){//check if the player has the card and  if it's played and activate 
+			if(lc.getName().equalsIgnoreCase("Pico della Mirandola") && lc.getPlayed() && lc.getActive()){
+				System.out.println("Pico della Mirandola");
+				EnumMap<ResourceType, Integer> temp = new EnumMap<>(ResourceType.class);
+				temp.put(ResourceType.COIN, 3);
+				Resource tempResource = Resource.of(temp);
+				tmp.modifyResource(tempResource, false);
+				if(tmp.getResource().get(ResourceType.COIN) < 0){ //if the coin cost go below zero, it's reset to zero
+					tmp.getResource().put(ResourceType.COIN, 0);
+				}
+			}
+		}
 	}
 }

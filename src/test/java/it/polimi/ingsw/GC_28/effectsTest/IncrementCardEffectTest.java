@@ -10,33 +10,34 @@ import org.junit.Before;
 import org.junit.Test;
 
 import it.polimi.ingsw.GC_28.boards.GameBoard;
+import it.polimi.ingsw.GC_28.cards.CardType;
 import it.polimi.ingsw.GC_28.components.DiceColor;
 import it.polimi.ingsw.GC_28.components.FamilyMember;
-import it.polimi.ingsw.GC_28.effects.IncrementHPEffect;
+import it.polimi.ingsw.GC_28.effects.*;
 import it.polimi.ingsw.GC_28.model.Game;
 import it.polimi.ingsw.GC_28.model.GameModel;
 import it.polimi.ingsw.GC_28.model.Player;
 import it.polimi.ingsw.GC_28.model.PlayerColor;
 
-public class IncrementHPEffectTest {
-	private IncrementHPEffect incHP;
-	private int increment = 3;
-	private boolean production;
-	private boolean harvest;
+public class IncrementCardEffectTest {
+	private IncrementCardEffect ic;
+	private int increment = 2;
+	private boolean discountPresence;
+	private DiscountEffect discount;
 	
 	private	Game g;
 	private FamilyMember fm;
 	private FamilyMember fm2;
 	private Player player;
 	private Player player2;
-	
 	private GameModel gameModel;
 	private GameBoard gameBoard; 
 	private List<Player> players = new ArrayList<>();
 	
 	@Before
-	public void incrementHPEffect(){
-		incHP = new IncrementHPEffect();
+	public void incrementCardEffect(){
+		ic = new IncrementCardEffect();
+		discount = new DiscountEffect();
 		player = new Player("gino", PlayerColor.GREEN);
 		player2 = new Player("Mariangiongianela", PlayerColor.BLUE);
 		players.add(player);
@@ -56,11 +57,11 @@ public class IncrementHPEffectTest {
 
 	@Test
 	public void testApply() {
-		production = true;
-		incHP.setHarvest(harvest);
-		incHP.setProduction(production);
-		incHP.setIncrement(increment);
-		incHP.apply(fm, g);
+		ic.setIncrement(increment);
+		ic.setDiscountPresence(discountPresence);
+		ic.setCardType(CardType.BUILDING);
+		ic.setDiscount(discount);
+		ic.apply(this.fm, this.g);
 		fm2.modifyValue(increment);
 		boolean x = fm2.getValue().equals(fm.getValue());
 		assertTrue(x);
@@ -68,20 +69,26 @@ public class IncrementHPEffectTest {
 
 	@Test
 	public void testGetIncrement() {
-		incHP.setIncrement(increment);
-		assertEquals(this.increment, this.incHP.getIncrement());
+		ic.setIncrement(increment);
+		assertEquals(this.increment, this.ic.getIncrement());
 	}
 
 	@Test
-	public void testIsProduction() {
-		incHP.setProduction(production);
-		assertEquals(this.production, this.incHP.isProduction());
+	public void testGetCardType() {
+		ic.setCardType(CardType.BUILDING);
+		assertEquals(CardType.BUILDING, this.ic.getCardType());
 	}
 
 	@Test
-	public void testIsHarvest() {
-		incHP.setHarvest(harvest);
-		assertEquals(this.harvest, this.incHP.isHarvest());
+	public void testIsDiscountPresence() {
+		ic.setDiscountPresence(discountPresence);
+		assertEquals(this.discountPresence, this.ic.isDiscountPresence());
+	}
+
+	@Test
+	public void testGetDiscount() {
+		ic.setDiscount(discount);
+		assertEquals(this.discount, this.ic.getDiscount());
 	}
 
 }

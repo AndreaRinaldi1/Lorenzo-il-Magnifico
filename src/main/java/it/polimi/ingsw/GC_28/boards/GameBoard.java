@@ -16,7 +16,7 @@ import it.polimi.ingsw.GC_28.spaces.PrivilegesSpace;
 
 
 public class GameBoard {
-	private static final int N_DICE = 3;
+	//private static final int N_DICE = 3;
 	private static final int N_EXCOMMUNICATIONTILE = 3;
 	private Map<CardType, Tower> towers = new EnumMap<>(CardType.class);
 	private Dice[] dices = new Dice[3];
@@ -47,12 +47,12 @@ public class GameBoard {
 		
 		AsciiTable at = new AsciiTable();
 		at.addRule();
-		at.addRow("TERRITORY","BUILDING", "CHARACTER", "VENTURE");
+		at.addRow("TERRITORY","CHARACTER","BUILDING", "VENTURE");
 		for(int i = 3; i >= 0; i--){
 			at.addRule();
 			at.addRow(towers.get(CardType.TERRITORY).getCells()[i].getCard()  != null ? towers.get(CardType.TERRITORY).getCells()[i].getCard().getName() :  "***",
-					  towers.get(CardType.BUILDING).getCells()[i].getCard() != null ? towers.get(CardType.BUILDING).getCells()[i].getCard().getName() :  "***",
 					  towers.get(CardType.CHARACTER).getCells()[i].getCard() != null ? towers.get(CardType.CHARACTER).getCells()[i].getCard().getName() : "***",
+					  towers.get(CardType.BUILDING).getCells()[i].getCard() != null ? towers.get(CardType.BUILDING).getCells()[i].getCard().getName() :  "***",
 					  towers.get(CardType.VENTURE).getCells()[i].getCard() != null ? towers.get(CardType.VENTURE).getCells()[i].getCard().getName() :  "***" );
 		}
 		at.addRule();
@@ -72,15 +72,6 @@ public class GameBoard {
 		}
 		String cp = councilTable.render() + "\n";
 		ret.append(cp);
-		
-		/*AsciiTable excomm = new AsciiTable();
-		excomm.addRule();
-		excomm.addRow("First Era","Second Era", "Third Era");
-		excomm.addRule();
-		excomm.addRow(excommunications[0].ge,excommunications[1],excommunications[2]);
-		excomm.addRule();
-		String excommunicationBoard = excomm.render();
-		ret.append(excommunicationBoard + "\n");*/
 		
 		AsciiTable church = new AsciiTable();
 		church.addRule();
@@ -111,83 +102,13 @@ public class GameBoard {
 		ret.append(prodHarv.render() + "\n");
 		
 		
-		ret.append("Dice Values \n");
+		/*ret.append("Dice Values \n");
 		for(int j = 0; j < N_DICE; j++){
 			ret.append(dices[j].getColor().toString()+": " + dices[j].getValue() + '\n');
-		}
+		}*/
 	
 		return ret.toString();
 
-		
-		/*AsciiTable diceSpace = new AsciiTable();
-		diceSpace.addRule();
-		diceSpace.addRow(dices[0].getColor(), dices[1].getColor(), dices[2].getColor());
-		diceSpace.addRule();
-		diceSpace.addRow(dices[0].getValue(), dices[1].getValue(), dices[2].getValue());
-		diceSpace.addRule();
-		ret.append(diceSpace.render() + "\n");*/
-		
-		/*
-		//hHarvest and Production Space
-		ret.append("Harverst Space: \n");
-		if(!(harvestSpace.isFree())){
-			ret.append(occSpace);
-		}
-		else{
-			ret.append(emptySpace);
-		}
-		ret.append("(    )\n");
-		
-		ret.append("Production Space: \n");
-		if(!(productionSpace.isFree())){
-			ret.append(occSpace);
-		}
-		else{
-			ret.append(emptySpace);
-		}
-		ret.append("(    )\n");
-		
-		//Market Space
-		ret.append("Coin Space: \n");
-		if(!(coinSpace.isFree())){
-			ret.append(occSpace);
-		}
-		else{
-			ret.append(emptySpace);
-		}
-		ret.append("Servant Space: \n");
-		if(!(servantSpace.isFree())){
-			ret.append(occSpace);
-		}
-		else{
-			ret.append(emptySpace);
-		}
-		ret.append("Mixed Space: \n");
-		if(!(mixedSpace.isFree())){
-			ret.append(occSpace);
-		}
-		else{
-			ret.append(emptySpace);
-		}
-		
-		ret.append("Two Privileges Space: \n");
-		if(!(privilegesSpace.isFree())){
-			ret.append(occSpace);
-
-		}
-		else{
-			ret.append(emptySpace);
-		}
-		ret.append("\n");
-	
-		//Dice Space
-		//ret.append("Dice Values \n");
-				for(int j = 0; j < N_DICE; j++){
-					ret.append(dices[j].getColor().toString()+": " + dices[j].getValue() + '\n');
-				}
-				return ret.toString();
-			}
-		*/	
 		
 	}
 

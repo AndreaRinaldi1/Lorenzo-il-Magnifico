@@ -2,19 +2,28 @@ package it.polimi.ingsw.GC_28.effectsTest;
 
 import static org.junit.Assert.*;
 
+import java.util.ArrayList;
 import java.util.EnumMap;
 import java.util.HashMap;
+import java.util.List;
 
 import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.Test;
 
+import it.polimi.ingsw.GC_28.boards.GameBoard;
 import it.polimi.ingsw.GC_28.components.CouncilPrivilege;
+import it.polimi.ingsw.GC_28.components.DiceColor;
+import it.polimi.ingsw.GC_28.components.FamilyMember;
 import it.polimi.ingsw.GC_28.components.Resource;
 import it.polimi.ingsw.GC_28.components.ResourceType;
 import it.polimi.ingsw.GC_28.effects.HarvestEffect;
 import it.polimi.ingsw.GC_28.effects.PrivilegesEffect;
 import it.polimi.ingsw.GC_28.effects.ResourceEffect;
+import it.polimi.ingsw.GC_28.model.Game;
+import it.polimi.ingsw.GC_28.model.GameModel;
+import it.polimi.ingsw.GC_28.model.Player;
+import it.polimi.ingsw.GC_28.model.PlayerColor;
 
 public class HarvestEffectTest {
 	private HarvestEffect he;
@@ -25,6 +34,13 @@ public class HarvestEffectTest {
 	HashMap<Character, Resource> options;
 	private Resource bonus;
 	EnumMap<ResourceType, Integer> resource;
+	
+	private Player player;
+	private FamilyMember familyMember;
+	private Game game;
+	private GameModel gameModel;
+	private GameBoard gb;
+	private List<Player> players = new ArrayList<>();
 	
 	@Before
 	public void harvestEffect(){
@@ -40,6 +56,14 @@ public class HarvestEffectTest {
 		options.put('c', bonus);
 		//cp.setOptions(options);
 		
+		player = new Player("aiuto", PlayerColor.BLUE);
+		familyMember = new FamilyMember(player, false, DiceColor.BLACK);
+		gb = new GameBoard();
+		players.add(player);
+		gameModel = new GameModel(gb, players);
+		game = new Game(gameModel);
+		
+		
 		he.setCouncilPrivilegeBonus(councilPrivilegeBonus);
 		he.setHarvestValue(harvestValue);
 		he.setResourceHarvestBonus(resourceHarvestBonus);
@@ -51,7 +75,9 @@ public class HarvestEffectTest {
 
 	@Test
 	public void testApply() {
-		//fail("Not yet implemented");
+	
+		he.apply(familyMember, game);
+	
 	}
 
 	@Test

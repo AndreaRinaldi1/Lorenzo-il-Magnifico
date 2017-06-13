@@ -2,13 +2,16 @@ package it.polimi.ingsw.GC_28.effectsTest;
 
 import static org.junit.Assert.*;
 
+import java.util.ArrayList;
 import java.util.EnumMap;
 import java.util.HashMap;
+import java.util.List;
 
 import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.Test;
 
+import it.polimi.ingsw.GC_28.boards.GameBoard;
 import it.polimi.ingsw.GC_28.boards.PlayerBoard;
 import it.polimi.ingsw.GC_28.components.CouncilPrivilege;
 import it.polimi.ingsw.GC_28.components.DiceColor;
@@ -18,6 +21,7 @@ import it.polimi.ingsw.GC_28.components.ResourceType;
 import it.polimi.ingsw.GC_28.effects.ExchangeEffect;
 import it.polimi.ingsw.GC_28.effects.PrivilegesEffect;
 import it.polimi.ingsw.GC_28.model.Game;
+import it.polimi.ingsw.GC_28.model.GameModel;
 import it.polimi.ingsw.GC_28.model.Player;
 import it.polimi.ingsw.GC_28.model.PlayerColor;
 import it.polimi.ingsw.GC_28.spaces.PrivilegesSpace;
@@ -68,13 +72,18 @@ public class ExchangeEffectTest {
 		}
 		Resource res = Resource.of(w);
 		PlayerBoard pb = new PlayerBoard(null, res);
-		
-		g = new Game();
 		p = new Player("bob", PlayerColor.YELLOW);
 		p.setBoard(pb);
 		fm = new FamilyMember(p, false, DiceColor.WHITE);
+		//g.setCurrentPlayer(p);
+		List<Player> players = new ArrayList<>();
+		players.add(p);
+		GameBoard gb = new GameBoard();
+		GameModel gm = new GameModel(gb,players);
+		
+		g = new Game(gm);
+	
 		g.setCurrentPlayer(p);
-
 	}
 	
 	@AfterClass

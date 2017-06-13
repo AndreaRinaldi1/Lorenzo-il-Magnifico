@@ -2,13 +2,16 @@ package it.polimi.ingsw.GC_28.spacesTest;
 
 import static org.junit.Assert.*;
 
+import java.util.ArrayList;
 import java.util.EnumMap;
+import java.util.List;
 
 import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.Test;
 
 import it.polimi.ingsw.GC_28.boards.BonusTile;
+import it.polimi.ingsw.GC_28.boards.GameBoard;
 import it.polimi.ingsw.GC_28.boards.PlayerBoard;
 import it.polimi.ingsw.GC_28.components.DiceColor;
 import it.polimi.ingsw.GC_28.components.FamilyMember;
@@ -16,6 +19,7 @@ import it.polimi.ingsw.GC_28.components.Resource;
 import it.polimi.ingsw.GC_28.components.ResourceType;
 import it.polimi.ingsw.GC_28.effects.ResourceEffect;
 import it.polimi.ingsw.GC_28.model.Game;
+import it.polimi.ingsw.GC_28.model.GameModel;
 import it.polimi.ingsw.GC_28.model.Player;
 import it.polimi.ingsw.GC_28.model.PlayerColor;
 import it.polimi.ingsw.GC_28.spaces.MarketSpace;
@@ -44,30 +48,45 @@ public class MarketSpaceTest {
 		bonus.setResourceBonus(r);
 		ms.setBonus(bonus);
 		
-		g = new Game(); 
-		p = new Player("Pippo", PlayerColor.YELLOW);
-		fm = new FamilyMember(p, neutral, DiceColor.ORANGE);
+		EnumMap<ResourceType, Integer> w = new EnumMap<>(ResourceType.class);
+		for(ResourceType resType : ResourceType.values()){
+			w.put(resType, 0);
+		}
+		Resource res = Resource.of(w);
+
 		bonusTile = new BonusTile();
-		pb = new PlayerBoard(bonusTile, r);
+		pb = new PlayerBoard(bonusTile, res);
 		
+		p = new Player("bob", PlayerColor.YELLOW);
+		p.setBoard(pb);
+		fm = new FamilyMember(p, false, DiceColor.WHITE);
+		
+		List<Player> players = new ArrayList<>();
+		players.add(p);
+		GameBoard gb = new GameBoard();
+		GameModel gm = new GameModel(gb,players);
+		
+		g = new Game(gm);
+	
+		g.setCurrentPlayer(p);
 	}
 	
 	@AfterClass
 	public static void tearDownAfterClass() throws Exception {
 	}
 
-/*	@Test
+	@Test
 	public void testApplyBonus() {
 		ms.applyBonus(g, fm);
-		assertEquals(this.r, this.fm.getPlayer().getBoard().getResources());
 
-		//assertEquals();
-		//fail("Not yet implemented");
+		boolean x = r.equals(fm.getPlayer().getBoard().getResources());
+		assertTrue(x);
 	}
-*/
+
 	@Test
 	public void testGetBonus() {
 		assertEquals(this.bonus, this.ms.getBonus());
 	}
 
 }
+

@@ -2698,7 +2698,8 @@
         }
       ],
       "permanentEffect": {
-        "type": "OTHEREFFECT"
+        "type": "OTHEREFFECT",
+        "specificType": "NOCELLBONUS"
       },
       "name": "Predicatore",
       "IDNumber": 55,

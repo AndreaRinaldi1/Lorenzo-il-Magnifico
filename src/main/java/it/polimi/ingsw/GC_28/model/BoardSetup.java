@@ -10,9 +10,11 @@ import java.util.logging.Level;
 import it.polimi.ingsw.GC_28.cards.CardReader;
 import it.polimi.ingsw.GC_28.cards.CardType;
 import it.polimi.ingsw.GC_28.cards.Deck;
+import it.polimi.ingsw.GC_28.cards.LeaderCard;
 import it.polimi.ingsw.GC_28.cards.Territory;
 import it.polimi.ingsw.GC_28.cards.Venture;
 import it.polimi.ingsw.GC_28.components.Dice;
+import it.polimi.ingsw.GC_28.components.DiceColor;
 import it.polimi.ingsw.GC_28.components.FamilyMember;
 
 import it.polimi.ingsw.GC_28.model.Game;
@@ -36,7 +38,7 @@ public class BoardSetup {
 		
 	}
 	
-	public void firstSetUpCards() {
+	public void firstSetUpCards()throws FileNotFoundException {
 		prepareDeck();
 		prepareTowers();
 	}
@@ -52,15 +54,16 @@ public class BoardSetup {
 		prepareTowers();
 		setDicesValue(gameBoard.getDices());
 		setFamilyMember();
+		deActiveLeaderCard();
 	}
 	
-	private static void prepareDeck(){
-		try{
+	private static void prepareDeck()throws FileNotFoundException{
+		//try{
 			CardReader cardReader = new CardReader();
 			deck =  cardReader.startRead();
-			}catch(FileNotFoundException e){
+			/*}catch(FileNotFoundException e){
 				Logger.getAnonymousLogger().log(Level.SEVERE, "deck not found" + e);
-			}
+			}*/
 	}
 	
 	private void setUpTerritoriesTower(){
@@ -241,8 +244,22 @@ public class BoardSetup {
 			for(FamilyMember fm : f){
 				fm.setValue(gameBoard.getDices());
 			}
+			f[3].setValue(0);
 		}
 	}
+	
+	private void deActiveLeaderCard(){
+		List<Player> players = new ArrayList<>();
+		players = gameModel.getPlayers();
+		for(Player p : players){
+			for(LeaderCard lc : p.getLeaderCards()){
+				if(!(lc.getPermanent()) && lc.getPlayed()){
+					lc.setActive(false);
+				}
+			}
+		}
+	}
+	
 	
 	
 }
