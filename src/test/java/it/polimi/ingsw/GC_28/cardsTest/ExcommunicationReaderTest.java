@@ -24,7 +24,8 @@ import it.polimi.ingsw.GC_28.effects.DiscountEffect;
 import it.polimi.ingsw.GC_28.effects.Effect;
 import it.polimi.ingsw.GC_28.effects.FinalReduceEffect;
 import it.polimi.ingsw.GC_28.effects.IncrementCardEffect;
-import it.polimi.ingsw.GC_28.effects.IncrementHPEffect;
+import it.polimi.ingsw.GC_28.effects.IncrementHarvestEffect;
+import it.polimi.ingsw.GC_28.effects.IncrementProductionEffect;
 import it.polimi.ingsw.GC_28.effects.ModifyDiceEffect;
 import it.polimi.ingsw.GC_28.effects.MultiplierEffect;
 import it.polimi.ingsw.GC_28.effects.NoFinalBonusEffect;
@@ -43,7 +44,8 @@ public class ExcommunicationReaderTest {
 			.of(Effect.class, "type")
 			.registerSubtype(DiscountEffect.class, "DISCOUNTEFFECT")
 			.registerSubtype(IncrementCardEffect.class, "INCREMENTCARDEFFECT")
-			.registerSubtype(IncrementHPEffect.class, "INCREMENTHPEFFECT")
+			.registerSubtype(IncrementHarvestEffect.class, "INCREMENTHARVESTEFFECT")
+			.registerSubtype(IncrementProductionEffect.class, "INCREMENTPRODUCTION")
 			.registerSubtype(NoFinalBonusEffect.class, "NOFINALBONUSEFFECT")
 			.registerSubtype(MultiplierEffect.class, "MULTIPLIEREFFECT")
 			.registerSubtype(ModifyDiceEffect.class, "MODIFYDICEEFFECT")
