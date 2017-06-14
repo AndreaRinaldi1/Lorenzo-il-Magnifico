@@ -19,7 +19,8 @@ import it.polimi.ingsw.GC_28.effects.DiscountEffect;
 import it.polimi.ingsw.GC_28.effects.EffectType;
 import it.polimi.ingsw.GC_28.effects.FinalReduceEffect;
 import it.polimi.ingsw.GC_28.effects.IncrementCardEffect;
-import it.polimi.ingsw.GC_28.effects.IncrementHPEffect;
+import it.polimi.ingsw.GC_28.effects.IncrementHarvestEffect;
+import it.polimi.ingsw.GC_28.effects.IncrementProductionEffect;
 import it.polimi.ingsw.GC_28.effects.MultiplierEffect;
 import it.polimi.ingsw.GC_28.effects.NoFinalBonusEffect;
 import it.polimi.ingsw.GC_28.effects.OtherEffect;
@@ -72,8 +73,21 @@ public class ExcommunicationWriter {
 					exList.add(ex);
 					break;
 				case "incrhp":
-					IncrementHPEffect iHP = new IncrementHPEffect();
-					ex.setEffect(enterHPEffect(iHP));
+					System.out.println("Harvest or Production:");
+					String choice = scanner.nextLine();
+					if(choice.toLowerCase().equals("harvest")){
+						IncrementHarvestEffect harvEffect = new IncrementHarvestEffect();
+						System.out.println("Enter increment:");
+						harvEffect.setIncrement(scanner.nextInt());
+						ex.setEffect(harvEffect);
+					}else{
+						IncrementProductionEffect prodEffect = new IncrementProductionEffect();
+						System.out.println("Enter increment:");
+						prodEffect.setIncrement(scanner.nextInt());
+						ex.setEffect(prodEffect);
+					}
+					scanner.nextLine();
+					
 					exList.add(ex);
 					break;
 				case "nf":
@@ -211,22 +225,7 @@ public class ExcommunicationWriter {
 		
 		return incAV;
 	} 
-	
-	private IncrementHPEffect enterHPEffect(IncrementHPEffect hopEff){
-		System.out.println("Harvest or Production:");
-		String choice = scanner.nextLine();
-		if(choice.toLowerCase().equals("harvest")){
-			hopEff.setHarvest(true);
-			hopEff.setProduction(false);
-		}else{
-			hopEff.setHarvest(false);
-			hopEff.setProduction(true);
-		}
-		System.out.println("Enter increment:");
-		hopEff.setIncrement(scanner.nextInt());
-		scanner.nextLine();
-		return hopEff;
-	}
+
 	
 	private int enterCost(String resourceType){
 		System.out.print("Enter " + resourceType + " cost: ");

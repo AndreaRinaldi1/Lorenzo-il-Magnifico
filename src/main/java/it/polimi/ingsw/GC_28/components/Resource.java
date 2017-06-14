@@ -4,7 +4,7 @@ import java.util.EnumMap;
 import java.util.Map;
 import java.util.Set;
 
-public class Resource {
+public class Resource{
 	//attributes and methods parameters in class Resource need Map and not EnumMap (fromJson's fault)
 	
 	private Map<ResourceType, Integer> resource; 
@@ -88,5 +88,14 @@ public class Resource {
 			}
 			return true;
 		}
+	}
+
+	public boolean greaterOrEqual(Resource res) {
+		for(ResourceType rt : res.getResource().keySet()){
+			if(resource.get(rt) < res.getResource().get(rt)){
+				return false;
+			}
+		}
+		return true;
 	}
 }

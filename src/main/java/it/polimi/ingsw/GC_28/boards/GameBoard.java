@@ -11,8 +11,9 @@ import it.polimi.ingsw.GC_28.components.Resource;
 
 import it.polimi.ingsw.GC_28.spaces.CouncilPalace;
 import it.polimi.ingsw.GC_28.spaces.MarketSpace;
-import it.polimi.ingsw.GC_28.spaces.ProductionAndHarvestSpace;
+import it.polimi.ingsw.GC_28.spaces.HarvestSpace;
 import it.polimi.ingsw.GC_28.spaces.PrivilegesSpace;
+import it.polimi.ingsw.GC_28.spaces.ProductionSpace;
 
 
 public class GameBoard {
@@ -22,8 +23,8 @@ public class GameBoard {
 	private Dice[] dices = new Dice[3];
 	private ExcommunicationTile[] excommunications = new ExcommunicationTile[N_EXCOMMUNICATIONTILE];
 	
-	private ProductionAndHarvestSpace harvestSpace;
-	private ProductionAndHarvestSpace productionSpace;
+	private HarvestSpace harvestSpace;
+	private ProductionSpace productionSpace;
 	private MarketSpace coinSpace;
 	private MarketSpace servantSpace;
 	private MarketSpace mixedSpace;
@@ -138,19 +139,19 @@ public class GameBoard {
 		this.excommunications = excommunications;
 	}
 
-	public ProductionAndHarvestSpace getHarvestSpace() {
+	public HarvestSpace getHarvestSpace() {
 		return harvestSpace;
 	}
 
-	public void setHarvestSpace(ProductionAndHarvestSpace harvestSpace2) {
+	public void setHarvestSpace(HarvestSpace harvestSpace2) {
 		this.harvestSpace = harvestSpace2;
 	}
 
-	public ProductionAndHarvestSpace getProductionSpace() {
+	public ProductionSpace getProductionSpace() {
 		return productionSpace;
 	}
 
-	public void setProductionSpace(ProductionAndHarvestSpace productionSpace2) {
+	public void setProductionSpace(ProductionSpace productionSpace2) {
 		this.productionSpace = productionSpace2;
 	}
 

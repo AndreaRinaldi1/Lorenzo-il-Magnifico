@@ -59,9 +59,7 @@ public class Game extends Observable<Action> implements Runnable, Observer<Messa
 	//private GameBoard gameBoard;
 	EnumMap<ResourceType, Integer> decrement = new EnumMap<>(ResourceType.class);
 	Resource res ;
-	int incrementThroughServants;
-	
-	
+	int incrementThroughServants;	
 	
 	public Game(GameModel gameModel){
 		//players = gameModel.getPlayers();
@@ -91,8 +89,8 @@ public class Game extends Observable<Action> implements Runnable, Observer<Messa
 						}else{
 							currentPlayer = gameModel.getPlayers().get((currentTurn+1));
 						}
-						/*
-						 * TIMER CHE "FUNZIONA" SOLO SU PRIMA DOMANDA (FINO ALLA FINE DI QUESTO COMMENTO)
+						
+						// TIMER CHE "FUNZIONA" SOLO SU PRIMA DOMANDA 
 						boolean x = false;
 						long time = System.currentTimeMillis() + 16000;
 						Thread t = new Thread(){
@@ -143,7 +141,7 @@ public class Game extends Observable<Action> implements Runnable, Observer<Messa
 							currentPlayer = gameModel.getPlayers().get(0);
 						}else{
 							currentPlayer = gameModel.getPlayers().get((currentTurn+1));
-						}*/
+						}
 					
 						/*
 						t.start();
@@ -580,13 +578,28 @@ public class Game extends Observable<Action> implements Runnable, Observer<Messa
 		spaceAction.setThroughEffect(throughEffect);
 		
 		this.notifyObserver(spaceAction);
-		/*if(modifiedWithServants){
+		if(modifiedWithServants){
 			familyMember.modifyValue((-1)*(incrementThroughServants));
-		}*/
+		}
 		
 		return result;
 		
 		
+	}
+	
+	
+	public boolean askPermission(){
+		while(true){
+			handlers.get(currentPlayer).getOut().println("Do you want to apply this effect? [y/n]");
+			String line = handlers.get(currentPlayer).getIn().nextLine();
+			if(line.equals("y")){
+				return true;
+			}
+			else if(line.equals("n")){
+				return false;
+			}
+			handlers.get(currentPlayer).getOut().println("Not valid input!");
+		}
 	}
 	
 	public boolean askCard(TakeCardEffect throughEffect){ //throughEffect = null se non è un askcard che viene da effetto ma da mossa normale
@@ -626,9 +639,9 @@ public class Game extends Observable<Action> implements Runnable, Observer<Messa
 		
 		this.notifyObserver(takeCardAction);
 		System.out.println(5);
-		/*if(modifiedWithServants){
+		if(modifiedWithServants){
 			familyMember.modifyValue((-1)*(incrementThroughServants));
-		}*/
+		}
 		
 		return result;
 	}
@@ -723,6 +736,7 @@ public class Game extends Observable<Action> implements Runnable, Observer<Messa
 					}
 				}
 				else if (choice.equals("n")){
+					modifiedWithServants = false;
 					return 0;
 				}
 				else{

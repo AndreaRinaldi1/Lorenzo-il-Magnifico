@@ -65,14 +65,14 @@ public class SpacesCreator {
 					break;
 				case('x'):
 					String pht = enterProdHarvType();
-					ProductionAndHarvestSpace phSpace = new ProductionAndHarvestSpace(true, 1);
+					
 					if(pht.equals("harvest")){
-						phSpace.setHarvest(true);
-						everySpace.setHarvest(phSpace);	
+						HarvestSpace hSpace = new HarvestSpace(true, 1);
+						everySpace.setHarvest(hSpace);	
 						}
 					else{
-						phSpace.setHarvest(false);
-						everySpace.setProduction(phSpace);	
+						ProductionSpace pSpace = new ProductionSpace(true, 1);
+						everySpace.setProduction(pSpace);	
 					}
 					break;
 				}

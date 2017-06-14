@@ -48,9 +48,7 @@ public class TakeCardController {
 			}
 		}*/
 		if(!(checkCardExistance(name, throughEffect))){
-			System.out.println(2);
 			gameModel.notifyObserver(new Message("this card doesn't exist", false));
-			System.out.println(3);
 			return false;
 		}
 		System.out.println("carte esiste");
@@ -142,8 +140,10 @@ public class TakeCardController {
 	private boolean checkThisPlayerPresent(FamilyMember familyMember){
 		for(Cell c : gameBoard.getTowers().get(cardType).getCells()){
 			if(!c.isFree()){
-				if((c.getFamilyMember().getPlayer().getColor().equals(familyMember.getPlayer().getColor())) && !(c.getFamilyMember().isNeutral()) && !(familyMember.isNeutral())){
-					return true; 
+				if(c.getFamilyMember() != null){
+					if((c.getFamilyMember().getPlayer().getColor().equals(familyMember.getPlayer().getColor())) && !(c.getFamilyMember().isNeutral()) && !(familyMember.isNeutral())){
+						return true; 
+					}
 				}
 			}
 		}
@@ -157,7 +157,9 @@ public class TakeCardController {
 	protected boolean checkAnyPlayerPresent(){
 		for(Cell c : gameBoard.getTowers().get(cardType).getCells()){
 			if(!(c.isFree())){
-				return true; 
+				if(c.getFamilyMember() != null){
+					return true; 
+				}
 			}
 		}
 		return false;

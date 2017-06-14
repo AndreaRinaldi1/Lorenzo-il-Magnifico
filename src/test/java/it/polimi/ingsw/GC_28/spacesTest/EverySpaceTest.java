@@ -10,7 +10,7 @@ import it.polimi.ingsw.GC_28.spaces.CouncilPalace;
 import it.polimi.ingsw.GC_28.spaces.EverySpace;
 import it.polimi.ingsw.GC_28.spaces.MarketSpace;
 import it.polimi.ingsw.GC_28.spaces.PrivilegesSpace;
-import it.polimi.ingsw.GC_28.spaces.ProductionAndHarvestSpace;
+import it.polimi.ingsw.GC_28.spaces.HarvestSpace;
 
 public class EverySpaceTest {
 	private MarketSpace coinSpace;
@@ -18,8 +18,8 @@ public class EverySpaceTest {
 	private MarketSpace mixedSpace;
 	private PrivilegesSpace privilegesSpace;
 	private CouncilPalace councilPalace;
-	private ProductionAndHarvestSpace productionSpace;
-	private ProductionAndHarvestSpace harvestSpace;
+	private HarvestSpace productionSpace;
+	private HarvestSpace harvestSpace;
 	
 	private EverySpace es;
 	
@@ -32,8 +32,8 @@ public class EverySpaceTest {
 		mixedSpace = new MarketSpace(true, 1);
 		privilegesSpace = new PrivilegesSpace(true, 1);
 		councilPalace = CouncilPalace.instance();
-		productionSpace = new ProductionAndHarvestSpace(true, 1);
-		harvestSpace = new ProductionAndHarvestSpace(true, 1);
+		productionSpace = new HarvestSpace(true, 1);
+		harvestSpace = new HarvestSpace(true, 1);
 	
 		es.setCoinSpace(coinSpace);
 		es.setCouncilPalace(councilPalace);

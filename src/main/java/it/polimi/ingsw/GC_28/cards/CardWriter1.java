@@ -155,10 +155,20 @@ public class CardWriter1 {
 			deck.getCharacters().add(character);
 			z = true;
 		}else if(et.equals("incrhp")){
-			IncrementHPEffect hopEffect = new IncrementHPEffect();
-			enterHPEffect(hopEffect);
-			//character.type = EffectType.INCREMENTHPEFFECT;
-			character.setPermanentEffect(hopEffect);
+			System.out.println("Harvest or Production:");
+			String choice = scanner.nextLine();
+			if(choice.toLowerCase().equals("harvest")){
+				IncrementHarvestEffect harvEffect = new IncrementHarvestEffect();
+				System.out.println("Enter increment:");
+				harvEffect.setIncrement(scanner.nextInt());
+				character.setPermanentEffect(harvEffect);
+			}else{
+				IncrementProductionEffect prodEffect = new IncrementProductionEffect();
+				System.out.println("Enter increment:");
+				prodEffect.setIncrement(scanner.nextInt());
+				character.setPermanentEffect(prodEffect);
+			}
+			scanner.nextLine();
 			deck.getCharacters().add(character);
 			z = true;
 		}else if(et.equals("nc")){
@@ -644,22 +654,6 @@ protected void enterResourceBonus(EnumMap<ResourceType, Integer> bonus){
 		return incAV;
 	} 
 	
-	private IncrementHPEffect enterHPEffect(IncrementHPEffect hopEff){
-		System.out.println("Harvest or Production:");
-		String choice = scanner.nextLine();
-		if(choice.toLowerCase().equals("harvest")){
-			hopEff.setHarvest(true);
-			hopEff.setProduction(false);
-		}else{
-			hopEff.setHarvest(false);
-			hopEff.setProduction(true);
-		}
-		System.out.println("Enter increment:");
-		hopEff.setIncrement(scanner.nextInt());
-		scanner.nextLine();
-		return hopEff;
-	}
-
 	private ExchangeEffect enterExchangeEffect(ExchangeEffect exEff){
 		EnumMap<ResourceType, Integer> cost = new EnumMap<ResourceType, Integer>(ResourceType.class);
 

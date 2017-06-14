@@ -86,18 +86,14 @@
     "era": 1,
     "effect": {
       "increment": -3,
-      "production": false,
-      "harvest": true,
-      "type": "INCREMENTHPEFFECT"
+      "type": "INCREMENTHARVESTEFFECT"
     }
   },
   {
     "era": 1,
     "effect": {
       "increment": -3,
-      "production": true,
-      "harvest": false,
-      "type": "INCREMENTHPEFFECT"
+      "type": "INCREMENTPRODUCTIONEFFECT"
     }
   },
   {

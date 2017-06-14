@@ -79,6 +79,7 @@ public class BoardSetup {
 					Territory t = deck.getTerritories().get(randomInt);
 					cell[i].setCard(t);
 					cell[i].setFree(true);
+					cell[i].setFamilyMember(null);
 					deck.getTerritories().remove(t);
 					x = true;
 				}
@@ -99,6 +100,7 @@ public class BoardSetup {
 					Building b = deck.getBuildings().get(randomInt);
 					cell[i].setCard(b);
 					cell[i].setFree(true);
+					cell[i].setFamilyMember(null);
 					deck.getBuildings().remove(b);
 					x = true;
 				}
@@ -119,6 +121,7 @@ public class BoardSetup {
 					Character c = deck.getCharacters().get(randomInt);
 					cell[i].setCard(c);
 					cell[i].setFree(true);
+					cell[i].setFamilyMember(null);
 					deck.getCharacters().remove(c);
 					x = true;
 				}
@@ -139,6 +142,7 @@ public class BoardSetup {
 					Venture v = deck.getVentures().get(randomInt);
 					cell[i].setCard(v);
 					cell[i].setFree(true);
+					cell[i].setFamilyMember(null);
 					deck.getVentures().remove(v);
 					x = true;
 				}
@@ -176,7 +180,6 @@ public class BoardSetup {
 	}
 	
 	public void freeSpace(){
-		System.out.println(2);
 		if(!(gameBoard.getCoinSpace().isFree())){
 			gameBoard.getCoinSpace().getPlayer().remove(0);
 			gameBoard.getCoinSpace().setFree(true);
@@ -242,9 +245,14 @@ public class BoardSetup {
 		for(Player p : gameModel.getPlayers()){
 			FamilyMember[] f = p.getFamilyMembers();
 			for(FamilyMember fm : f){
-				fm.setValue(gameBoard.getDices());
+				if(fm.isNeutral()){
+					fm.setValue(0);
+				}
+				else{
+					fm.setValue(gameBoard.getDices());
+				}
+				
 			}
-			f[3].setValue(0);
 		}
 	}
 	

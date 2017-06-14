@@ -87,30 +87,45 @@ public class ExchangeEffect extends Effect{
 	@Override
 	public void apply(FamilyMember familyMember, Game game){
 		System.out.println("apply di ExchangeEffect");
-		if(!this.alternative){
-			if(this.privilegeBonus != null){
-				familyMember.getPlayer().reduceResources(privilegeCost);
-				System.out.println(familyMember.getPlayer().getBoard().getResources().toString());
-				privilegeBonus.apply(familyMember, game);
+		if(game.askPermission()){
+			
+			if(!this.alternative){
+				if(this.privilegeBonus != null){
+					if(familyMember.getPlayer().getBoard().getResources().greaterOrEqual(privilegeCost)){
+						familyMember.getPlayer().reduceResources(privilegeCost);
+						privilegeBonus.apply(familyMember, game);
+					}
+				}
+				else{
+					if(familyMember.getPlayer().getBoard().getResources().greaterOrEqual(firstCost)){
+						familyMember.getPlayer().reduceResources(firstCost);
+						familyMember.getPlayer().addResource(game.checkResourceExcommunication(firstBonus));
+					}
+				}
 			}
 			else{
-				familyMember.getPlayer().reduceResources(firstCost);
-				System.out.println(familyMember.getPlayer().getBoard().getResources().toString());
-				familyMember.getPlayer().addResource(game.checkResourceExcommunication(firstBonus));
-
-			}
-		}
-		else{
-			if(game.askAlternativeExchange(firstCost, firstBonus, secondCost, secondBonus) == 1){
-				familyMember.getPlayer().reduceResources(firstCost);
-				System.out.println(familyMember.getPlayer().getBoard().getResources().toString());
-				familyMember.getPlayer().addResource(game.checkResourceExcommunication(firstBonus));
-
-			}
-			else{
-				familyMember.getPlayer().reduceResources(secondCost);
-				System.out.println(familyMember.getPlayer().getBoard().getResources().toString());
-				familyMember.getPlayer().addResource(game.checkResourceExcommunication(secondBonus));
+				while(true){
+					if(game.askAlternativeExchange(firstCost, firstBonus, secondCost, secondBonus) == 1){
+						if(familyMember.getPlayer().getBoard().getResources().greaterOrEqual(firstCost)){
+							familyMember.getPlayer().reduceResources(firstCost);
+							familyMember.getPlayer().addResource(game.checkResourceExcommunication(firstBonus));
+							return;
+						}
+					}
+					else{
+						if(familyMember.getPlayer().getBoard().getResources().greaterOrEqual(secondCost)){
+							familyMember.getPlayer().reduceResources(secondCost);
+							familyMember.getPlayer().addResource(game.checkResourceExcommunication(secondBonus));
+							return;
+						}
+					}
+					game.getHandlers().get(familyMember.getPlayer()).getOut().println("Are you unable to pay for anything and you want to skip? [y/n]");
+					game.getHandlers().get(familyMember.getPlayer()).getOut().flush();
+					if (game.getHandlers().get(familyMember.getPlayer()).getIn().nextLine().equals("y")){
+						return;
+					}
+				}
+				
 			}
 		}
 	}

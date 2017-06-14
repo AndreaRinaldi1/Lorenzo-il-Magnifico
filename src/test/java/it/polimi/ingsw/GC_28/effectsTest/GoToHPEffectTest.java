@@ -32,7 +32,7 @@ import it.polimi.ingsw.GC_28.model.Player;
 import it.polimi.ingsw.GC_28.model.PlayerColor;
 import it.polimi.ingsw.GC_28.server.ClientHandler;
 import it.polimi.ingsw.GC_28.server.Server;
-import it.polimi.ingsw.GC_28.spaces.ProductionAndHarvestSpace;
+import it.polimi.ingsw.GC_28.spaces.HarvestSpace;
 
 public class GoToHPEffectTest {
 	private GoToHPEffect gt;
@@ -44,7 +44,7 @@ public class GoToHPEffectTest {
 	private Player player;
 	private Game g;
 	private GameBoard gb;
-	private ProductionAndHarvestSpace productionSpace2;
+	private HarvestSpace productionSpace2;
 	private Resource res;
 	EnumMap<ResourceType, Integer> w;
 	private GameModel gameModel;
@@ -90,7 +90,7 @@ public class GoToHPEffectTest {
 		g.setHandlers(handlers);
 		g.setCurrentPlayer(player);
 		gb = new GameBoard();
-		productionSpace2 = new ProductionAndHarvestSpace(true, 1);
+		productionSpace2 = new HarvestSpace(true, 1);
 	}
 	
 	@AfterClass

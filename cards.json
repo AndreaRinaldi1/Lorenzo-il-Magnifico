@@ -2638,9 +2638,7 @@
       ],
       "permanentEffect": {
         "increment": 2,
-        "production": false,
-        "harvest": true,
-        "type": "INCREMENTHPEFFECT"
+        "type": "INCREMENTHARVESTEFFECT"
       },
       "name": "Contadino",
       "IDNumber": 53,
@@ -2663,9 +2661,7 @@
       ],
       "permanentEffect": {
         "increment": 2,
-        "production": true,
-        "harvest": false,
-        "type": "INCREMENTHPEFFECT"
+        "type": "INCREMENTPRODUCTIONEFFECT"
       },
       "name": "Artigiano",
       "IDNumber": 54,
@@ -2914,9 +2910,7 @@
       ],
       "permanentEffect": {
         "increment": 3,
-        "production": false,
-        "harvest": true,
-        "type": "INCREMENTHPEFFECT"
+        "type": "INCREMENTHARVESTEFFECT"
       },
       "name": "Fattore",
       "IDNumber": 61,
@@ -2939,9 +2933,7 @@
       ],
       "permanentEffect": {
         "increment": 3,
-        "production": true,
-        "harvest": false,
-        "type": "INCREMENTHPEFFECT"
+        "type": "INCREMENTPRODUCTIONEFFECT"
       },
       "name": "Studioso",
       "IDNumber": 62,
