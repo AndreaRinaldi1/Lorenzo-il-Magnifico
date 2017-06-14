@@ -67,10 +67,11 @@ public class TakeCardAction extends Action{
 		System.out.println("step 7");
 		familyMember.getPlayer().reduceResources(cardCost);
 		System.out.println("step 8");
-		familyMember.setUsed(true);
+		
 		
 		if(throughEffect == null){
 			cell.setFamilyMember(familyMember);
+			familyMember.setUsed(true);
 		}
 		Card card = cell.getCard();
 		if(card instanceof Territory){ 

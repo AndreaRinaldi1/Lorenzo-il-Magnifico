@@ -12,14 +12,14 @@ import org.junit.Test;
 import it.polimi.ingsw.GC_28.boards.GameBoard;
 import it.polimi.ingsw.GC_28.components.DiceColor;
 import it.polimi.ingsw.GC_28.components.FamilyMember;
-import it.polimi.ingsw.GC_28.effects.IncrementHPEffect;
+import it.polimi.ingsw.GC_28.effects.IncrementHarvestEffect;
 import it.polimi.ingsw.GC_28.model.Game;
 import it.polimi.ingsw.GC_28.model.GameModel;
 import it.polimi.ingsw.GC_28.model.Player;
 import it.polimi.ingsw.GC_28.model.PlayerColor;
 
 public class IncrementHPEffectTest {
-	private IncrementHPEffect incHP;
+	private IncrementHarvestEffect incHP;
 	private int increment = 3;
 	private boolean production;
 	private boolean harvest;
@@ -36,7 +36,7 @@ public class IncrementHPEffectTest {
 	
 	@Before
 	public void incrementHPEffect(){
-		incHP = new IncrementHPEffect();
+		incHP = new IncrementHarvestEffect();
 		player = new Player("gino", PlayerColor.GREEN);
 		player2 = new Player("Mariangiongianela", PlayerColor.BLUE);
 		players.add(player);

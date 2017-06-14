@@ -26,10 +26,10 @@ import it.polimi.ingsw.GC_28.model.Game;
 import it.polimi.ingsw.GC_28.model.GameModel;
 import it.polimi.ingsw.GC_28.model.Player;
 import it.polimi.ingsw.GC_28.model.PlayerColor;
-import it.polimi.ingsw.GC_28.spaces.ProductionAndHarvestSpace;
+import it.polimi.ingsw.GC_28.spaces.HarvestSpace;
 
 public class ProductionAndHarvestSpaceTest {
-	private ProductionAndHarvestSpace phs;
+	private HarvestSpace phs;
 	private FamilyMember firstPlayer;
 	private boolean secondarySpace;
 	private boolean harvest;
@@ -49,7 +49,7 @@ public class ProductionAndHarvestSpaceTest {
 	
 	@Before
 	public void productionAndHarvestSpace(){
-		phs = new ProductionAndHarvestSpace(true, 1);
+		phs = new HarvestSpace(true, 1);
 		p = new Player("Rob", PlayerColor.BLUE);
 		firstPlayer = new FamilyMember(p, true, DiceColor.NEUTRAL);
 		

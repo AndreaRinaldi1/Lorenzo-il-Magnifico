@@ -44,7 +44,7 @@ import it.polimi.ingsw.GC_28.components.ResourceType;
 import it.polimi.ingsw.GC_28.effects.DiscountEffect;
 import it.polimi.ingsw.GC_28.effects.GoToHPEffect;
 import it.polimi.ingsw.GC_28.effects.IncrementCardEffect;
-import it.polimi.ingsw.GC_28.effects.IncrementHPEffect;
+import it.polimi.ingsw.GC_28.effects.IncrementHarvestEffect;
 import it.polimi.ingsw.GC_28.effects.OtherEffect;
 import it.polimi.ingsw.GC_28.model.Player;
 import it.polimi.ingsw.GC_28.spaces.EverySpace;
@@ -303,10 +303,6 @@ public class BoardsInitializer {
 			if(gameBoard.getExcommunications()[i].getEffect().getClass().equals(IncrementCardEffect.class)){
 				IncrementCardEffect e = (IncrementCardEffect)gameBoard.getExcommunications()[i].getEffect();
 				System.out.println(e.getCardType());
-			}
-			if(gameBoard.getExcommunications()[i].getEffect().getClass().equals(IncrementHPEffect.class)){
-				IncrementHPEffect e = (IncrementHPEffect)gameBoard.getExcommunications()[i].getEffect();
-				System.out.println(e.isHarvest());
 			}
 			
 		}

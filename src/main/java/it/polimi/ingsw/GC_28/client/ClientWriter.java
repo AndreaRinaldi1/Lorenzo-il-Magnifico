@@ -28,6 +28,7 @@ public class ClientWriter implements Runnable{
 			stdin = new Scanner(System.in);
 			while(true){
 				String inputLine = stdin.nextLine();
+				
 				socketOut.println(inputLine);
 				socketOut.flush();
 				if(inputLine.equals("end")){

@@ -7,19 +7,20 @@ import it.polimi.ingsw.GC_28.components.FamilyMember;
 import it.polimi.ingsw.GC_28.effects.EffectType;
 import it.polimi.ingsw.GC_28.effects.GoToHPEffect;
 import it.polimi.ingsw.GC_28.effects.IncrementCardEffect;
-import it.polimi.ingsw.GC_28.effects.IncrementHPEffect;
+import it.polimi.ingsw.GC_28.effects.IncrementHarvestEffect;
 import it.polimi.ingsw.GC_28.effects.OtherEffect;
 import it.polimi.ingsw.GC_28.model.GameModel;
 import it.polimi.ingsw.GC_28.server.Message;
 import it.polimi.ingsw.GC_28.spaces.MarketSpace;
 import it.polimi.ingsw.GC_28.spaces.PrivilegesSpace;
-import it.polimi.ingsw.GC_28.spaces.ProductionAndHarvestSpace;
+import it.polimi.ingsw.GC_28.spaces.ProductionSpace;
+import it.polimi.ingsw.GC_28.spaces.HarvestSpace;
 import it.polimi.ingsw.GC_28.spaces.Space;
 
 public class SpaceController {
 	private GameModel gameModel;
-	ProductionAndHarvestSpace prodHarv;
-
+	HarvestSpace harv;
+	ProductionSpace prod;
 	
 	public SpaceController(GameModel gameModel){
 		this.gameModel = gameModel;
@@ -84,9 +85,15 @@ public class SpaceController {
 			return true;
 		}
 		else{
-			if(space instanceof ProductionAndHarvestSpace){
-				prodHarv = (ProductionAndHarvestSpace) space;
-				if(prodHarv.isSecondarySpace()){
+			if(space instanceof HarvestSpace){
+				harv = (HarvestSpace) space;
+				if(harv.isSecondarySpace()){
+					return true;
+				}
+			}
+			else if(space instanceof ProductionSpace){
+				prod = (ProductionSpace) space;
+				if(prod.isSecondarySpace()){
 					return true;
 				}
 			}

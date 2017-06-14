@@ -75,14 +75,12 @@
   },
   "productionSpace": {
     "secondarySpace": false,
-    "harvest": false,
     "free": true,
     "players": [],
     "actionValue": 1
   },
   "harvestSpace": {
     "secondarySpace": false,
-    "harvest": true,
     "free": true,
     "players": [],
     "actionValue": 1

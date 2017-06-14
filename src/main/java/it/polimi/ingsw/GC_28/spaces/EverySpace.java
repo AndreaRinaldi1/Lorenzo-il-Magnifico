@@ -6,8 +6,8 @@ public class EverySpace {
 	private MarketSpace mixedSpace;
 	private PrivilegesSpace privilegesSpace;
 	private CouncilPalace councilPalace;
-	private ProductionAndHarvestSpace productionSpace;
-	private ProductionAndHarvestSpace harvestSpace;
+	private ProductionSpace productionSpace;
+	private HarvestSpace harvestSpace;
 
 	
 	public PrivilegesSpace getPrivilegesSpace() {
@@ -22,16 +22,16 @@ public class EverySpace {
 	public void setCouncilPalace(CouncilPalace councilPalace) {
 		this.councilPalace = councilPalace;
 	}
-	public ProductionAndHarvestSpace getProduction() {
+	public ProductionSpace getProduction() {
 		return productionSpace;
 	}
-	public void setProduction(ProductionAndHarvestSpace production) {
+	public void setProduction(ProductionSpace production) {
 		this.productionSpace = production;
 	}
-	public ProductionAndHarvestSpace getHarvest() {
+	public HarvestSpace getHarvest() {
 		return harvestSpace;
 	}
-	public void setHarvest(ProductionAndHarvestSpace harvest) {
+	public void setHarvest(HarvestSpace harvest) {
 		this.harvestSpace = harvest;
 	}
 

@@ -24,10 +24,6 @@ public class SpacesReader {
 	        try{
 	        	JsonReader reader = new JsonReader(new FileReader("spaces.json"));
 	        	everySpace = gson.fromJson(reader, EverySpace.class);
-	        	
-	        	//d.getDeck().get(CardType.VENTURE).get(0).
-	        	//System.out.println(gameBoard.);   
-	        	//System.out.println(d.getVentures().get(0).getAlternativeCostPresence());
 		        reader.close();
 	    	}
 	    	catch(IOException e){
