@@ -12,8 +12,8 @@ import it.polimi.ingsw.GC_28.effects.ExchangeEffect;
 import it.polimi.ingsw.GC_28.effects.GoToHPEffect;
 import it.polimi.ingsw.GC_28.effects.HarvestEffect;
 import it.polimi.ingsw.GC_28.effects.IncrementCardEffect;
-import it.polimi.ingsw.GC_28.effects.IncrementHarvestEffect;
-import it.polimi.ingsw.GC_28.effects.IncrementProductionEffect;
+import it.polimi.ingsw.GC_28.effects.IncrementHPEffect;
+
 import it.polimi.ingsw.GC_28.effects.MultiplierEffect;
 import it.polimi.ingsw.GC_28.effects.NoEffect;
 import it.polimi.ingsw.GC_28.effects.OtherEffect;
@@ -48,8 +48,7 @@ public class CardReader{
         		.registerSubtype(GoToHPEffect.class,"GOTOHP")
         		.registerSubtype(HarvestEffect.class,"HARVESTEFFECT")
         		.registerSubtype(IncrementCardEffect.class,"INCREMENTCARDEFFECT")
-        		.registerSubtype(IncrementHarvestEffect.class,"INCREMENTHARVESTEFFECT")
-        		.registerSubtype(IncrementProductionEffect.class,"INCREMENTPRODUCTIONEFFECT")        		
+        		.registerSubtype(IncrementHPEffect.class,"INCREMENTHPEFFECT")
         		.registerSubtype(MultiplierEffect.class,"MULTIPLIEREFFECT")
         		.registerSubtype(OtherEffect.class,"OTHEREFFECT")
         		.registerSubtype(PrivilegesEffect.class,"PRIVILEGESEFFECT")

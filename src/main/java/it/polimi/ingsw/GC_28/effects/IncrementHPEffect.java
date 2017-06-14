@@ -3,13 +3,13 @@ package it.polimi.ingsw.GC_28.effects;
 import it.polimi.ingsw.GC_28.components.FamilyMember;
 import it.polimi.ingsw.GC_28.model.Game;
 
-public class IncrementProductionEffect extends Effect{
+public class IncrementHPEffect extends Effect{
 
 	private int increment;
+	public final EffectType type = EffectType.INCREMENTHPEFFECT;
+	public EffectType specificType;
 
-	public final EffectType type = EffectType.INCREMENTPRODUCTIONEFFECT;
-
-	public IncrementProductionEffect(){
+	public IncrementHPEffect(){
 		super();
 	}
 
@@ -19,6 +19,14 @@ public class IncrementProductionEffect extends Effect{
 
 	public void setIncrement(int increment) {
 		this.increment = increment;
+	}
+
+	public EffectType getType() {
+		return specificType;
+	}
+
+	public void setType(EffectType type) {
+		this.specificType = type;
 	}
 
 	@Override

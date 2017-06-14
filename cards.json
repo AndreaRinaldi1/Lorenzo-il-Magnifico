@@ -2638,7 +2638,8 @@
       ],
       "permanentEffect": {
         "increment": 2,
-        "type": "INCREMENTHARVESTEFFECT"
+        "type": "INCREMENTHPEFFECT",
+        "specificType": "INCREMENTHARVESTEFFECT"
       },
       "name": "Contadino",
       "IDNumber": 53,
@@ -2661,7 +2662,8 @@
       ],
       "permanentEffect": {
         "increment": 2,
-        "type": "INCREMENTPRODUCTIONEFFECT"
+        "type": "INCREMENTHPEFFECT",
+        "specificType": "INCREMENTPRODUCTIONEFFECT"
       },
       "name": "Artigiano",
       "IDNumber": 54,
@@ -2910,7 +2912,8 @@
       ],
       "permanentEffect": {
         "increment": 3,
-        "type": "INCREMENTHARVESTEFFECT"
+        "type": "INCREMENTHPEFFECT",
+        "specificType": "INCREMENTHARVESTEFFECT"
       },
       "name": "Fattore",
       "IDNumber": 61,
@@ -2933,7 +2936,8 @@
       ],
       "permanentEffect": {
         "increment": 3,
-        "type": "INCREMENTPRODUCTIONEFFECT"
+        "type": "INCREMENTHPEFFECT",
+        "specificType": "INCREMENTPRODUCTIONEFFECT"
       },
       "name": "Studioso",
       "IDNumber": 62,
@@ -3151,9 +3155,8 @@
       "immediateEffect": [
         {
           "actionValue": 4,
-          "production": false,
-          "harvest": true,
-          "type": "GOTOHP"
+          "type": "GOTOHP",
+          "specificType": "HARVEST"
         },
         {
           "resourceBonus": {
@@ -3191,9 +3194,8 @@
       "immediateEffect": [
         {
           "actionValue": 4,
-          "production": true,
-          "harvest": false,
-          "type": "GOTOHP"
+          "type": "GOTOHP",
+          "specificType": "PRODUCTION"
         },
         {
           "resourceBonus": {
@@ -3886,9 +3888,8 @@
       "immediateEffect": [
         {
           "actionValue": 4,
-          "production": false,
-          "harvest": true,
-          "type": "GOTOHP"
+          "type": "GOTOHP",
+          "specificType": "HARVEST"
         }
       ],
       "permanentEffect": {
@@ -4317,9 +4318,8 @@
       "immediateEffect": [
         {
           "actionValue": 3,
-          "production": true,
-          "harvest": false,
-          "type": "GOTOHP"
+          "type": "GOTOHP",
+          "specificType": "PRODUCTION"
         }
       ],
       "permanentEffect": {

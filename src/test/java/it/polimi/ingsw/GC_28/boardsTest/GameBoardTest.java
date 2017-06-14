@@ -29,8 +29,8 @@ public class GameBoardTest {
 	
 	private GameBoard gb;
 	
-	private HarvestSpace harvestSpace;
-	private HarvestSpace productionSpace;
+	private ProdHarvSpace harvestSpace;
+	private ProdHarvSpace productionSpace;
 	private MarketSpace coinSpace;
 	private MarketSpace servantSpace;
 	private MarketSpace mixedSpace;
@@ -50,8 +50,8 @@ public class GameBoardTest {
 	//copy of gameboard
 	private GameBoard gb1;
 	
-	private HarvestSpace harvestSpace1;
-	private HarvestSpace productionSpace1;
+	private ProdHarvSpace harvestSpace1;
+	private ProdHarvSpace productionSpace1;
 	private MarketSpace coinSpace1;
 	private MarketSpace servantSpace1;
 	private MarketSpace mixedSpace1;
@@ -81,8 +81,8 @@ public class GameBoardTest {
 		boolean free = true;
 		EnumMap<ResourceType, Integer> resource = new EnumMap<>(ResourceType.class);
 		resource.put(ResourceType.FAITHPOINT, 2);
-		this.productionSpace = new HarvestSpace(free, actionValue);
-		this.harvestSpace = new HarvestSpace(free, actionValue);
+		this.productionSpace = new ProdHarvSpace(free, actionValue);
+		this.harvestSpace = new ProdHarvSpace(free, actionValue);
 		this.coinSpace = new MarketSpace(free, actionValue);
 		this.servantSpace = new MarketSpace(free, actionValue);
 		this.mixedSpace = new MarketSpace(free, actionValue);
@@ -120,8 +120,8 @@ public class GameBoardTest {
 		//gameboardSetup
 		gb1 = new GameBoard();
 		
-		this.productionSpace1 = new HarvestSpace(free, actionValue);
-		this.harvestSpace1 = new HarvestSpace(free, actionValue);
+		this.productionSpace1 = new ProdHarvSpace(free, actionValue);
+		this.harvestSpace1 = new ProdHarvSpace(free, actionValue);
 		this.coinSpace1 = new MarketSpace(free, actionValue);
 		this.servantSpace1 = new MarketSpace(free, actionValue);
 		this.mixedSpace1 = new MarketSpace(free, actionValue);

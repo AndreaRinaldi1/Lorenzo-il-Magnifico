@@ -28,3 +28,69 @@
   ],
   "ventures": []
 }
+{
+  "territories": [],
+  "buildings": [],
+  "characters": [
+    {
+      "immediateEffect": [
+        {
+          "type": "NOEFFECT"
+        }
+      ],
+      "permanentEffect": {
+        "increment": 5,
+        "type": "INCREMENTHPEFFECT",
+        "specificType": "INCREMENTHARVESTEFFECT"
+      },
+      "name": "culo",
+      "idNumber": 3,
+      "era": 4,
+      "color": {
+        "value": -16776961,
+        "falpha": 0.0
+      },
+      "cost": {
+        "resource": {
+          "COIN": 4
+        }
+      }
+    }
+  ],
+  "ventures": []
+}{
+  "territories": [],
+  "buildings": [],
+  "characters": [
+    {
+      "immediateEffect": [
+        {
+          "actionValue": 4,
+          "type": "GOTOHP",
+          "specificType": "HARVEST"
+        },
+        {
+          "actionValue": 3,
+          "type": "GOTOHP",
+          "specificType": "PRODUCTION"
+        }
+      ],
+      "permanentEffect": {
+        "type": "NOEFFECT"
+      },
+      "name": "DSA",
+      "idNumber": 4,
+      "era": 3,
+      "color": {
+        "value": -16776961,
+        "falpha": 0.0
+      },
+      "cost": {
+        "resource": {
+          "COIN": 4
+        }
+      }
+    }
+  ],
+  "ventures": []
+}

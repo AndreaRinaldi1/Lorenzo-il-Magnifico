@@ -6,12 +6,13 @@ import it.polimi.ingsw.GC_28.components.FamilyMember;
 import it.polimi.ingsw.GC_28.components.ResourceType;
 import it.polimi.ingsw.GC_28.model.Game;
 import it.polimi.ingsw.GC_28.model.Player;
+import it.polimi.ingsw.GC_28.spaces.ProdHarvType;
 
 public class GoToHPEffect extends Effect{
 	private int actionValue;
-	private boolean production;
-	private boolean harvest;
 	public final EffectType type = EffectType.GOTOHP;
+	private ProdHarvType specificType;
+
 
 	public GoToHPEffect(){
 		super();
@@ -25,22 +26,15 @@ public class GoToHPEffect extends Effect{
 		this.actionValue = actionValue;
 	}
 
-	public boolean isProduction() {
-		return production;
-	}
-
-	public void setProduction(boolean production) {
-		this.production = production;
-	}
-
-	public boolean isHarvest() {
-		return harvest;
-	}
-
-	public void setHarvest(boolean harvest) {
-		this.harvest = harvest;
-	}
 	
+	public ProdHarvType getSpecificType() {
+		return specificType;
+	}
+
+	public void setSpecificType(ProdHarvType specificType) {
+		this.specificType = specificType;
+	}
+
 	@Override
 	public void apply(FamilyMember familyMember, Game game){
 		System.out.println("apply di GoToHPEffect");

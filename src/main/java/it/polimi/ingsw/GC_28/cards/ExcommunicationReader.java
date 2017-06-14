@@ -5,8 +5,7 @@ import java.io.IOException;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -18,7 +17,8 @@ import it.polimi.ingsw.GC_28.effects.DiscountEffect;
 import it.polimi.ingsw.GC_28.effects.Effect;
 import it.polimi.ingsw.GC_28.effects.FinalReduceEffect;
 import it.polimi.ingsw.GC_28.effects.IncrementCardEffect;
-import it.polimi.ingsw.GC_28.effects.IncrementHarvestEffect;
+import it.polimi.ingsw.GC_28.effects.IncrementHPEffect;
+
 import it.polimi.ingsw.GC_28.effects.MultiplierEffect;
 import it.polimi.ingsw.GC_28.effects.NoFinalBonusEffect;
 import it.polimi.ingsw.GC_28.effects.OtherEffect;
@@ -44,7 +44,7 @@ public class ExcommunicationReader {
 				.of(Effect.class, "type")
 				.registerSubtype(DiscountEffect.class, "DISCOUNTEFFECT")
 				.registerSubtype(IncrementCardEffect.class, "INCREMENTCARDEFFECT")
-				.registerSubtype(IncrementHarvestEffect.class, "INCREMENTHPEFFECT")
+				.registerSubtype(IncrementHPEffect.class, "INCREMENTHPEFFECT")
 				.registerSubtype(NoFinalBonusEffect.class, "NOFINALBONUSEFFECT")
 				.registerSubtype(MultiplierEffect.class, "MULTIPLIEREFFECT")
 				.registerSubtype(ModifyDiceEffect.class, "MODIFYDICEEFFECT")

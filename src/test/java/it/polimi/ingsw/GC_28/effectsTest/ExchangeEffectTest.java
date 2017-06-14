@@ -90,7 +90,7 @@ public class ExchangeEffectTest {
 	public static void tearDownAfterClass() throws Exception {
 	}
 
-	@Test
+	/*@Test
 	public void testApply() {
 		resource.put(ResourceType.COIN, 2);
 		firstCost = Resource.of(resource);
@@ -106,7 +106,7 @@ public class ExchangeEffectTest {
 		boolean x = res.equals(fm.getPlayer().getBoard().getResources());
 		
 		assertTrue(x);
-	}
+	}*/
 
 	@Test
 	public void testGetFirstCost() {

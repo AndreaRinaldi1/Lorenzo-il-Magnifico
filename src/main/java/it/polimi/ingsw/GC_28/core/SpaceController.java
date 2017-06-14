@@ -1,26 +1,22 @@
 package it.polimi.ingsw.GC_28.core;
 
-import it.polimi.ingsw.GC_28.cards.Character;
 import it.polimi.ingsw.GC_28.cards.ExcommunicationTile;
 import it.polimi.ingsw.GC_28.cards.LeaderCard;
 import it.polimi.ingsw.GC_28.components.FamilyMember;
 import it.polimi.ingsw.GC_28.effects.EffectType;
 import it.polimi.ingsw.GC_28.effects.GoToHPEffect;
-import it.polimi.ingsw.GC_28.effects.IncrementCardEffect;
-import it.polimi.ingsw.GC_28.effects.IncrementHarvestEffect;
 import it.polimi.ingsw.GC_28.effects.OtherEffect;
 import it.polimi.ingsw.GC_28.model.GameModel;
 import it.polimi.ingsw.GC_28.server.Message;
 import it.polimi.ingsw.GC_28.spaces.MarketSpace;
 import it.polimi.ingsw.GC_28.spaces.PrivilegesSpace;
-import it.polimi.ingsw.GC_28.spaces.ProductionSpace;
-import it.polimi.ingsw.GC_28.spaces.HarvestSpace;
+import it.polimi.ingsw.GC_28.spaces.ProdHarvSpace;
+
 import it.polimi.ingsw.GC_28.spaces.Space;
 
 public class SpaceController {
 	private GameModel gameModel;
-	HarvestSpace harv;
-	ProductionSpace prod;
+	ProdHarvSpace phs;
 	
 	public SpaceController(GameModel gameModel){
 		this.gameModel = gameModel;
@@ -85,15 +81,9 @@ public class SpaceController {
 			return true;
 		}
 		else{
-			if(space instanceof HarvestSpace){
-				harv = (HarvestSpace) space;
-				if(harv.isSecondarySpace()){
-					return true;
-				}
-			}
-			else if(space instanceof ProductionSpace){
-				prod = (ProductionSpace) space;
-				if(prod.isSecondarySpace()){
+			if(space instanceof ProdHarvSpace){
+				phs = (ProdHarvSpace) space;
+				if(phs.isSecondarySpace()){
 					return true;
 				}
 			}

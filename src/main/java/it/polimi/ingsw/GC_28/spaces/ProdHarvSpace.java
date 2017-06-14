@@ -1,14 +1,15 @@
 package it.polimi.ingsw.GC_28.spaces;
 
-import it.polimi.ingsw.GC_28.cards.Building;
+import it.polimi.ingsw.GC_28.cards.Territory;
 import it.polimi.ingsw.GC_28.components.FamilyMember;
 import it.polimi.ingsw.GC_28.model.Game;
 
-public class ProductionSpace extends Space{
+public class ProdHarvSpace extends Space{
 	private FamilyMember firstPlayer;
 	private boolean secondarySpace;
-
-	public ProductionSpace(boolean free, int actionValue) {
+	private ProdHarvType type;
+	
+	public ProdHarvSpace(boolean free, int actionValue) {
 		super(free, actionValue);
 	}
 	
@@ -28,7 +29,14 @@ public class ProductionSpace extends Space{
 		this.firstPlayer = null;
 	}
 	
-	
+	public ProdHarvType getType() {
+		return type;
+	}
+
+	public void setType(ProdHarvType type) {
+		this.type = type;
+	}
+
 	@Override
 	public void addPlayer(FamilyMember player){
 		if(this.isFree() == true){
@@ -43,13 +51,12 @@ public class ProductionSpace extends Space{
 			
 	}	
 	
-	
 	@Override
 	public void applyBonus(Game game, FamilyMember familyMember){
-		for(Building building : familyMember.getPlayer().getBoard().getBuildings()){
-			building.getPermanentEffect().apply(familyMember, game);
-		}
-		familyMember.getPlayer().getBoard().getBonusTile().getProductionEffect().apply(familyMember, game);
+			for(Territory territory : familyMember.getPlayer().getBoard().getTerritories()){
+				territory.getPermanentEffect().apply(familyMember, game);
+			}
+			familyMember.getPlayer().getBoard().getBonusTile().getHarvestEffect().apply(familyMember, game);
 	}
-
+		
 }
