@@ -22,6 +22,7 @@ import it.polimi.ingsw.GC_28.components.*;
 
 public class PlayerBoardTest {
 	private PlayerBoard pb;
+	private PlayerBoard pb1;
 	private BonusTile bonusTile;
 	private Resource resource;
 	EnumMap<ResourceType, Integer> resources;
@@ -52,7 +53,7 @@ public class PlayerBoardTest {
 		}
 		resource = Resource.of(resources);
 		this.pb = new PlayerBoard(bonusTile, resource);
-		
+		this.pb1 = new PlayerBoard(null, resource);
 		
 	}
 	
@@ -162,12 +163,19 @@ public class PlayerBoardTest {
 		//fail("Not yet implemented");
 	}
 
+	//set bonusTile in constructor
 	@Test
 	public void testGetBonusTile() {
 		assertEquals(true, this.pb.getBonusTile().equals(bonusTile));
 		//fail("Not yet implemented");
 	}
 
+	//set bonusTile with setBonusTile method
+	@Test
+	public void testGetBonusTile1(){
+		this.pb1.setBonusTile(bonusTile);
+		assertEquals(true, this.pb1.getBonusTile().equals(bonusTile));
+	}
 
 	@Test
 	public void testGetResources() {

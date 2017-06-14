@@ -97,7 +97,7 @@ public class GoToHPEffectTest {
 	public static void tearDownAfterClass() throws Exception {
 	}
 
-	@Test
+/*	@Test
 	public void testApply() {
 		harvest = true;
 		gt.setActionValue(actionValue);
@@ -108,7 +108,7 @@ public class GoToHPEffectTest {
 
 		//assertTrue(g.goToSpace(gt));
 	}
-
+*/
 	@Test
 	public void testGetActionValue() {
 		gt.setActionValue(actionValue);

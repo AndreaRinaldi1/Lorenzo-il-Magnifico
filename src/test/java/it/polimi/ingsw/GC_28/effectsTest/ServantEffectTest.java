@@ -24,12 +24,12 @@ public class ServantEffectTest {
 	@AfterClass
 	public static void tearDownAfterClass() throws Exception {
 	}
-
+/*
 	@Test
 	public void testApplyPlayerGame() {
 		fail("Not yet implemented");
 	}
-
+*/
 	@Test
 	public void testGetNumberOfServant() {
 		assertEquals(this.numberOfServant, this.servantEffect.getNumberOfServant());

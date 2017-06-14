@@ -44,6 +44,11 @@ public class Player {
 	public List<ExcommunicationTile> getExcommunicationTile() {
 		return excommunicationTile;
 	}
+	
+	public void setExcommunicationTile(List<ExcommunicationTile> excommunicationTile) {
+		this.excommunicationTile = excommunicationTile;
+	}
+
 
 	public void setFamilyMembers(FamilyMember[] familyMembers) {
 		this.familyMembers = familyMembers;

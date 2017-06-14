@@ -55,8 +55,7 @@ public class CouncilPrivilegeTest {
 
 	@Test 
 	public void testSetCouncilPrivilege() {
-		cp1 = CouncilPrivilege.setCouncilPrivilege(cp);
-		assertEquals(this.cp, this.cp1);
+		assertEquals(this.cp, this.cp1  =  CouncilPrivilege.setCouncilPrivilege(cp));
 	}
 	
 }
