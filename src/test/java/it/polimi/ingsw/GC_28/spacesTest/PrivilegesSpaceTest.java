@@ -2,17 +2,26 @@ package it.polimi.ingsw.GC_28.spacesTest;
 
 import static org.junit.Assert.*;
 
+import java.util.ArrayList;
 import java.util.EnumMap;
 import java.util.HashMap;
+import java.util.List;
 
 import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.Test;
 
+import it.polimi.ingsw.GC_28.boards.GameBoard;
 import it.polimi.ingsw.GC_28.components.CouncilPrivilege;
+import it.polimi.ingsw.GC_28.components.DiceColor;
+import it.polimi.ingsw.GC_28.components.FamilyMember;
 import it.polimi.ingsw.GC_28.components.Resource;
 import it.polimi.ingsw.GC_28.components.ResourceType;
 import it.polimi.ingsw.GC_28.effects.PrivilegesEffect;
+import it.polimi.ingsw.GC_28.model.Game;
+import it.polimi.ingsw.GC_28.model.GameModel;
+import it.polimi.ingsw.GC_28.model.Player;
+import it.polimi.ingsw.GC_28.model.PlayerColor;
 import it.polimi.ingsw.GC_28.spaces.PrivilegesSpace;
 
 public class PrivilegesSpaceTest {
@@ -22,6 +31,14 @@ public class PrivilegesSpaceTest {
 	HashMap<Character, Resource> options;
 	private Resource bonus;
 	EnumMap<ResourceType, Integer> resource;
+	
+	private FamilyMember familyMember;
+	private Player player;
+	private	List<Player> players = new ArrayList<>();
+	
+	private GameBoard gameBoard;
+	private Game game; 
+	private GameModel gameModel;
 	
 	@Before
 	public void privilegesSpace(){
@@ -36,6 +53,14 @@ public class PrivilegesSpaceTest {
 		options.put('c', bonus);
 		cp.setOptions(options);
 		
+		
+		player = new Player("ciao", PlayerColor.GREEN);
+		familyMember = new FamilyMember(player , false, DiceColor.BLACK);
+		players.add(player);
+		gameBoard = new GameBoard();
+		gameModel = new GameModel(gameBoard, players);
+		game = new Game(gameModel); 
+		
 		ps.setBonus(pe);
 	}
 	
@@ -46,7 +71,7 @@ public class PrivilegesSpaceTest {
 
 /*	@Test
 	public void testApplyBonus() {
-		fail("Not yet implemented");
+		ps.applyBonus(game, familyMember);
 	}
 */
 	@Test

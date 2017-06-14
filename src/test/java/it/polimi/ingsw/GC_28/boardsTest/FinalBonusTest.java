@@ -26,10 +26,13 @@ public class FinalBonusTest {
 	private Resource bonus, rft;
 	EnumMap<ResourceType, Integer> resource, resource1;
 
+	private List<Resource> finalMilitaryTrack2 = new ArrayList<>();
+	private List<Resource> faithPointTrack = new ArrayList<>();
+	
 	@Before
 	public void finalBonus(){
+		FinalBonus.setFinalBonus(fb);
 		fb = FinalBonus.instance();
-		fb2 = FinalBonus.instance();
 		finalTerritoriesBonus = new ArrayList<>();
 		finalCharactersBonus = new ArrayList<>();
 		resourceForTerritories = new ArrayList<>();
@@ -49,16 +52,16 @@ public class FinalBonusTest {
 		rft = Resource.of(resource1);
 		resourceForTerritories.add(rft);
 		fb.setResourceForTerritories(resourceForTerritories);
+		
+		finalMilitaryTrack2.add(bonus);
+		fb.setFinalMilitaryTrack(finalMilitaryTrack2);
+		
+		faithPointTrack.add(bonus);
+		fb.setFaithPointTrack(faithPointTrack);
 	}
 	
 	@AfterClass
 	public static void tearDownAfterClass() throws Exception {
-	}
-
-	@Test
-	public void testSetFinalBonus(){
-		this.fb2.setFinalBonus(fb);
-		assertEquals(this.fb, this.fb2);
 	}
 	
 	@Test
@@ -87,5 +90,14 @@ public class FinalBonusTest {
 				this.fb.getResourceForTerritories().toArray());
 		//fail("Not yet implemented");
 	}
-
+	
+	@Test
+	public void testGetFinalMilitaryTrack(){
+		assertEquals(this.finalMilitaryTrack2, this.fb.getFinalMilitaryTrack());
+	}
+	
+	@Test
+	public void testGetFaithPointTrack(){
+		assertEquals(this.faithPointTrack, this.fb.getFaithPointTrack());
+	}
 }

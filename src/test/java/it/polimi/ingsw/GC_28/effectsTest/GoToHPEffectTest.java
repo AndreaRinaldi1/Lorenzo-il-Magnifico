@@ -103,10 +103,10 @@ public class GoToHPEffectTest {
 		gt.setActionValue(actionValue);
 		gt.setHarvest(this.harvest);
 		gt.setProduction(this.production);
-		//gt.apply(this.fm, this.g);
-		fail("Not yet implemented");
+		gt.apply(this.fm, this.g);
+		//fail("Not yet implemented");
 
-		//assertTrue(g.goToSpace(gt));
+		assertTrue(g.goToSpace(gt));
 	}
 */
 	@Test
