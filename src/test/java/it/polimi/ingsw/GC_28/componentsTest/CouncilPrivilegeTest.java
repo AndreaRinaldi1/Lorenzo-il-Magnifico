@@ -16,13 +16,14 @@ import it.polimi.ingsw.GC_28.components.*;
 
 public class CouncilPrivilegeTest {
 	private HashMap<Character, Resource> options;
-	private CouncilPrivilege cp = CouncilPrivilege.instance();
+	private CouncilPrivilege cp;
 	private Resource resourceBonus;
 	EnumMap<ResourceType, Integer> resource;
-	private CouncilPrivilege cp1;
 	
 	@Before
 	public void councilPrivilege(){
+		CouncilPrivilege.setCouncilPrivilege(cp);
+		cp = CouncilPrivilege.instance();
 		resource = new EnumMap<>(ResourceType.class);
 		resource.put(ResourceType.COIN, 5);
 		resourceBonus = Resource.of(resource);
@@ -52,10 +53,4 @@ public class CouncilPrivilegeTest {
 		//assertEquals(this.options, this.cp.getOptions());
 		//assertEquals(true, this.instance.getOptions().equals(options));
 	}
-
-	@Test 
-	public void testSetCouncilPrivilege() {
-		assertEquals(this.cp, this.cp1  =  CouncilPrivilege.setCouncilPrivilege(cp));
-	}
-	
 }
