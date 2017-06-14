@@ -2,11 +2,14 @@ package it.polimi.ingsw.GC_28.model;
 
 
 import java.io.IOException;
+import java.nio.BufferOverflowException;
 import java.util.ArrayList;
 import java.util.EnumMap;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Timer;
+import java.util.TimerTask;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import de.vandermeer.asciitable.AsciiTable;
@@ -28,6 +31,7 @@ import it.polimi.ingsw.GC_28.effects.DiscountEffect;
 import it.polimi.ingsw.GC_28.effects.EffectType;
 import it.polimi.ingsw.GC_28.effects.GoToHPEffect;
 import it.polimi.ingsw.GC_28.effects.OtherEffect;
+import it.polimi.ingsw.GC_28.effects.PopeEffect;
 import it.polimi.ingsw.GC_28.effects.ModifyDiceEffect;
 import it.polimi.ingsw.GC_28.effects.ServantEffect;
 import it.polimi.ingsw.GC_28.effects.TakeCardEffect;
@@ -39,7 +43,7 @@ import it.polimi.ingsw.GC_28.spaces.Space;
 
 public class Game extends Observable<Action> implements Runnable, Observer<Message>{
 	private GameModel gameModel;
-	
+	Timer timer;
 	//Scanner currentPlayer.getIn() = new Scanner(System.in);
 	private Player currentPlayer;
 	boolean modifiedWithServants = false;
@@ -50,6 +54,7 @@ public class Game extends Observable<Action> implements Runnable, Observer<Messa
 	private Map<Player, ClientHandler> handlers = new HashMap<>();
 	private List<Player> skipped = new ArrayList<>();
 	private boolean result;
+	private List<Player> suspended = new ArrayList<>();
 	//private List<Player> players;
 	//private GameBoard gameBoard;
 	EnumMap<ResourceType, Integer> decrement = new EnumMap<>(ResourceType.class);
@@ -86,14 +91,93 @@ public class Game extends Observable<Action> implements Runnable, Observer<Messa
 						}else{
 							currentPlayer = gameModel.getPlayers().get((currentTurn+1));
 						}
+						/*
+						 * TIMER CHE "FUNZIONA" SOLO SU PRIMA DOMANDA (FINO ALLA FINE DI QUESTO COMMENTO)
+						boolean x = false;
+						long time = System.currentTimeMillis() + 16000;
+						Thread t = new Thread(){
+							public void run(){
+								System.out.println(2);
+								try {
+									play();
+								} catch (IOException e) {
+									Logger.getAnonymousLogger().log(Level.SEVERE,"Cannot play that move in method run()" + e);
+								}
+								catch(IndexOutOfBoundsException ee){
+									
+									System.out.println("dentro exception");
+									for(Player p : suspended){
+										System.out.println(p.getName());
+									}
+								}
+								System.out.println(3);
+							}
+						};
+						t.start();
+						System.out.println(4);
+						while(t.isAlive()){
+							if(System.currentTimeMillis() > time){
+								
+								x = true;
+								break;
+							}
+						}
+						if(x){
+							t.interrupt();
+							
+							handlers.get(currentPlayer).getOut().println("sospeso");
+							handlers.get(currentPlayer).getOut().flush();
+							System.out.println("sono passati 15 sec");
+							suspended.add(currentPlayer);
+							handlers.get(currentPlayer).getOut().println("you have been suspended. Type 'reconnect' to play again");
+							handlers.get(currentPlayer).getOut().flush();
+
+							new Thread(new Listener(suspended,currentPlayer, handlers.get(currentPlayer))).start();
+							System.out.println("dentro if(x)");
+							for(Player p : suspended){
+								System.out.println(p.getName());
+							}
+						}
+						
+						if(currentTurn == (gameModel.getPlayers().size()-1)){
+							currentPlayer = gameModel.getPlayers().get(0);
+						}else{
+							currentPlayer = gameModel.getPlayers().get((currentTurn+1));
+						}*/
+					
+						/*
+						t.start();
+						try {
+							t.join(15000);
+						} catch (InterruptedException e) {
+							System.out.println("sono passati 15 sec");
+							suspended.add(currentPlayer);
+							for(Player p : suspended){
+								System.out.println(p.getName());
+							}
+							handlers.get(currentPlayer).getOut().println("you have been suspended");
+						}
+						finally{
+							System.out.println(5);
+
+							if(currentTurn == (gameModel.getPlayers().size()-1)){
+								currentPlayer = gameModel.getPlayers().get(0);
+							}else{
+								currentPlayer = gameModel.getPlayers().get((currentTurn+1));
+							}
+						}
+							*/	
+						
 					} 	
 				}
 				checkSkippedPlayers();
-				bs.setUpBoard();
+				if(!(currentEra == 3 && currentPeriod == 2)){//if it's the third Era and the second period it's evaluate as false;
+					bs.setUpBoard();
+					currentPlayer = gameModel.getPlayers().get(0);
+				}
 			}
 			giveExcommunication();
 		}
-
 		applyFinalBonus();
 		applyFinalMalus();
 		sortBy(gameModel.getPlayers(), ResourceType.MILITARYPOINT);
@@ -184,12 +268,11 @@ public class Game extends Observable<Action> implements Runnable, Observer<Messa
 	public void applyFinalMalus(){
 		ExcommunicationTile t;
 		for(Player p : gameModel.getPlayers()){
-			t = p.getExcommunicationTile().get(currentEra-1);
+			t = p.getExcommunicationTile().get(currentEra-2);
 			if(t != null){
 				t.getEffect().apply(p, this);
 			}
 		}
-		
 	}
 
 	public void checkDiceReduction(){  //se i giocatori tra le scomuniche hanno reducedice applico effetto
@@ -200,7 +283,6 @@ public class Game extends Observable<Action> implements Runnable, Observer<Messa
 				}
 			}
 		}
-		//System.out.println("6");
 	}
 	
 	public void checkSkippedPlayers(){ // se i giocatori hanno saltato il primo turno ora possono rifare il turno che gli spetta alla fine
@@ -218,9 +300,7 @@ public class Game extends Observable<Action> implements Runnable, Observer<Messa
 	
 	public void skipPlayers(){
 		for(Player p : gameModel.getPlayers()){
-			//System.out.println("1");
 			for(ExcommunicationTile t : p.getExcommunicationTile()){
-				//System.out.println("2");
 				if(t.getEffect() instanceof OtherEffect){
 					OtherEffect otherEffect = (OtherEffect) t.getEffect();
 					if(otherEffect.getType().equals(EffectType.SKIPROUNDEFFECT)){
@@ -228,7 +308,6 @@ public class Game extends Observable<Action> implements Runnable, Observer<Messa
 					}
 				}
 			}
-			//System.out.println("3");
 		}
 		
 	}
@@ -239,17 +318,21 @@ public class Game extends Observable<Action> implements Runnable, Observer<Messa
 			handlers.get(p).getOut().println(p.getBoard().display());
 			handlers.get(p).getOut().println(p.displayExcommunication());
 			handlers.get(p).getOut().println(p.displayLeader());
+			//handlers.get(p).getOut().println(p.getBoard().getBonusTile().getHarvestEffect().getResourceHarvestBonus().getResourceBonus().toString());
+			//handlers.get(p).getOut().println(p.getBoard().getBonusTile().getProductionEffect().getResourceBonus().getResourceBonus().toString());
 			for(int i = 0; i < 4; i++){
 				handlers.get(p).getOut().println(p.getFamilyMembers()[i].toString());
 			}
 			handlers.get(p).getOut().flush();
-		}
+			}
 	}
 
-	public void play() throws IOException{
+
+	public void play() throws IOException, IndexOutOfBoundsException{
 		display();
-		
-		
+		if(suspended.contains(currentPlayer)){
+			return;
+		}
 		if(skipped.contains(currentPlayer) && currentRound == 1){ //se è tra i giocatori in skipped allora salta turno
 			handlers.get(currentPlayer).getOut().println("Skipped first turn due to excommunication");
 			return;
@@ -257,7 +340,9 @@ public class Game extends Observable<Action> implements Runnable, Observer<Messa
 		do{
 			handlers.get(currentPlayer).getOut().println("Which move do you want to undertake? [takeCard / goToSpace / skip/ askcost/askLeaderCost/specialAction]");
 			handlers.get(currentPlayer).getOut().flush();	
+			
 			String line = handlers.get(currentPlayer).getIn().nextLine();
+			
 			if(line.equalsIgnoreCase("takeCard")){
 				if(askCard(null)){
 					break;
@@ -277,6 +362,9 @@ public class Game extends Observable<Action> implements Runnable, Observer<Messa
 			else if(line.equalsIgnoreCase("askcost")){
 				askCost();
 			}
+			/*else if(line.equals("disconnect")){
+				return;
+			}*/
 			else if(line.equalsIgnoreCase("specialaction")){
 				specialAction();
 			}
@@ -298,8 +386,9 @@ public class Game extends Observable<Action> implements Runnable, Observer<Messa
 		}
 		
 	}
-	
 
+
+	
 
 	public Map<Player, ClientHandler> getHandlers() {
 		return handlers;
@@ -338,13 +427,17 @@ public class Game extends Observable<Action> implements Runnable, Observer<Messa
 	public Resource checkResourceExcommunication(Resource amount){
 		for(ExcommunicationTile t : currentPlayer.getExcommunicationTile()){ //guardo tra le scomuniche del currentPlayer
 			if(t.getEffect() instanceof DiscountEffect){ //se trovo un discounteffect
+				System.out.println("checkEx 1");
 				DiscountEffect eff = (DiscountEffect) t.getEffect();
 				boolean disc = false;
 				boolean altDisc = false;
 				
 				for(ResourceType resType : eff.getDiscount().getResource().keySet()){ //guardo tra i resourceType del discounteff
+					System.out.println("checkEx 2");
 					if(!(eff.getDiscount().getResource().get(resType).equals(0))){ //se ne trovo uno diverso da 0
+						System.out.println("checkEx 3");
 						if(!amount.getResource().get(resType).equals(0)){ // e se io l'ho preso quel tipo di risorsa
+							System.out.println("checkEx 4");
 							disc = true; //allora setto un bool
 							break;
 						}
@@ -487,9 +580,9 @@ public class Game extends Observable<Action> implements Runnable, Observer<Messa
 		spaceAction.setThroughEffect(throughEffect);
 		
 		this.notifyObserver(spaceAction);
-		if(modifiedWithServants){
+		/*if(modifiedWithServants){
 			familyMember.modifyValue((-1)*(incrementThroughServants));
-		}
+		}*/
 		
 		return result;
 		
@@ -533,9 +626,9 @@ public class Game extends Observable<Action> implements Runnable, Observer<Messa
 		
 		this.notifyObserver(takeCardAction);
 		System.out.println(5);
-		if(modifiedWithServants){
+		/*if(modifiedWithServants){
 			familyMember.modifyValue((-1)*(incrementThroughServants));
-		}
+		}*/
 		
 		return result;
 	}
@@ -753,13 +846,11 @@ public class Game extends Observable<Action> implements Runnable, Observer<Messa
 					handlers.get(p).getOut().flush();
 					p.getExcommunicationTile().get(currentEra -1).setEffect(gameModel.getGameBoard().getExcommunications()[currentEra-1].getEffect());
 					//p.getExcommunicationTile().add(currentEra-1, gameBoard.getExcommunications()[currentEra-1]);
-					return;
 				}else{
 					handlers.get(p).getOut().println("Do you want to pay to avoid Excommunication?[y/n]");
 					handlers.get(p).getOut().flush();
 					if(handlers.get(p).getIn().nextLine().equalsIgnoreCase("n")){
 						p.getExcommunicationTile().add(currentEra-1, gameModel.getGameBoard().getExcommunications()[currentEra-1]);
-						return;
 					}else{
 						handlers.get(p).getOut().println("You paid to avoid Excommunication, your faith points have been reset to 0");
 						handlers.get(p).getOut().flush();
@@ -768,11 +859,10 @@ public class Game extends Observable<Action> implements Runnable, Observer<Messa
 						p.addResource(bonusForFaithPoint);
 						p.getBoard().getResources().getResource().put(ResourceType.FAITHPOINT, 0);
 						for(LeaderCard lc : p.getLeaderCards()){
-							if(lc.getName().equalsIgnoreCase("Sisto IV") && lc.getPlayed() && lc.getActive()){//FIXME
+							if(CheckForPopeEffect(lc)){//FIXME
 								lc.getEffect().apply(p, this);
 							}
 						}
-						return;
 					}
 				}
 			}
@@ -783,7 +873,7 @@ public class Game extends Observable<Action> implements Runnable, Observer<Messa
 		handlers.get(currentPlayer).getOut().flush();
 		String procede;
 		do{
-			handlers.get(currentPlayer).getOut().println("Which special action do you want to undertake?[discard/play/active]");
+			handlers.get(currentPlayer).getOut().println("Which special action do you want to undertake?[discard/play/activate]");
 			handlers.get(currentPlayer).getOut().flush();
 			String line = handlers.get(currentPlayer).getIn().nextLine();
 			if(line.equalsIgnoreCase("discard")){
@@ -793,7 +883,10 @@ public class Game extends Observable<Action> implements Runnable, Observer<Messa
 				for(LeaderCard l :currentPlayer.getLeaderCards()){
 					if(l.getName().equalsIgnoreCase(card)){
 						currentPlayer.getLeaderCards().remove(l);
-						askPrivilege(1, false); 
+						ArrayList<java.lang.Character> choices = askPrivilege(1, false);
+						for(int i = 0; i < choices.size(); i++){//TODO test me 
+							currentPlayer.addResource(checkResourceExcommunication(CouncilPrivilege.instance().getOptions().get(choices.get(i))));
+						}
 						break;
 					}
 				}	
@@ -804,8 +897,12 @@ public class Game extends Observable<Action> implements Runnable, Observer<Messa
 				for(LeaderCard l : currentPlayer.getLeaderCards()){
 					if(l.getName().equalsIgnoreCase(card)){
 						Resource cardResourceCost = l.getResourceCost();
-						Map<CardType,Integer> cardCost = l.getCardCost(); 
-						if(enoughResources(cardResourceCost) && enoughCard(cardCost)){
+						Map<CardType,Integer> cardCost = l.getCardCost();
+						if(checkForLucreziaBorgiaCost(l)){
+							l.setPlayed(true);
+							break;
+						}
+						else if(enoughResources(cardResourceCost) && enoughCard(cardCost)){
 							l.setPlayed(true);
 							break;
 						}
@@ -845,6 +942,13 @@ public class Game extends Observable<Action> implements Runnable, Observer<Messa
 			handlers.get(currentPlayer).getOut().flush();
 			procede = handlers.get(currentPlayer).getIn().nextLine();
 		}while(!procede.equalsIgnoreCase("n"));
+	}
+	
+	private boolean CheckForPopeEffect(LeaderCard lc){
+			if(lc.getEffect().getClass().equals(PopeEffect.class) && lc.getPlayed() && lc.getActive()){
+				return true;
+			}
+		return false;
 	}
 	
 	boolean enoughResources(Resource resourceCost){
@@ -887,13 +991,31 @@ public class Game extends Observable<Action> implements Runnable, Observer<Messa
 		}
 		return true;
 	}
+	
+	private boolean checkForLucreziaBorgiaCost(LeaderCard lc){
+		if(lc.getName().equalsIgnoreCase("Lucrezia Borgia")){
+			if(currentPlayer.getBoard().getTerritories().size() == 6){
+				return true;
+			}else if(currentPlayer.getBoard().getBuildings().size() == 6){
+				return true;
+			}else if(currentPlayer.getBoard().getCharacters().size() == 6){
+				return true;
+			}else if(currentPlayer.getBoard().getVentures().size() == 6){
+				return true;
+			}else{
+				handlers.get(currentPlayer).getOut().println("You haven't enough card to play thi leader");
+				handlers.get(currentPlayer).getOut().flush();
+				return false;
+			}
+		}
+		return false;
+	}
 
 	@Override
 	public void update(Message m) {
-		System.out.println(4);
 		handlers.get(currentPlayer).getOut().println(m.getMessage());
 		result = m.isResult();
-		if(m.isResult()){	
+		if(!(m.isResult())){	
 			if(modifiedWithServants){
 				currentPlayer.addResource(res);
 			}

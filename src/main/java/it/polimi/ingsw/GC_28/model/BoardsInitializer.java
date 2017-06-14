@@ -17,6 +17,7 @@ import java.util.ArrayList;
 import java.util.EnumMap;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Random;
 import java.util.concurrent.ThreadLocalRandom;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -40,6 +41,11 @@ import it.polimi.ingsw.GC_28.components.DiceColor;
 import it.polimi.ingsw.GC_28.components.FamilyMember;
 import it.polimi.ingsw.GC_28.components.Resource;
 import it.polimi.ingsw.GC_28.components.ResourceType;
+import it.polimi.ingsw.GC_28.effects.DiscountEffect;
+import it.polimi.ingsw.GC_28.effects.GoToHPEffect;
+import it.polimi.ingsw.GC_28.effects.IncrementCardEffect;
+import it.polimi.ingsw.GC_28.effects.IncrementHPEffect;
+import it.polimi.ingsw.GC_28.effects.OtherEffect;
 import it.polimi.ingsw.GC_28.model.Player;
 import it.polimi.ingsw.GC_28.spaces.EverySpace;
 
@@ -272,7 +278,6 @@ public class BoardsInitializer {
 	}
 	
 	private void initExcommunication()throws IOException{
-		System.out.println(1);
 		ExcommunicationReader exReader = new ExcommunicationReader();
 		List<ExcommunicationTile> ex = new ArrayList<>();
 		ex = exReader.startRead();
@@ -283,9 +288,27 @@ public class BoardsInitializer {
 					tmp.add(e);
 				}
 			}
-			int randomInt = ThreadLocalRandom.current().nextInt(0, tmp.size());
+			Random rand = new Random();
+			int randomInt = rand.nextInt(tmp.size()+1);
 			gameBoard.getExcommunications()[i] = tmp.get(randomInt);
 			System.out.println(gameBoard.getExcommunications()[i].getEffect());
+			if(gameBoard.getExcommunications()[i].getEffect().getClass().equals(OtherEffect.class)){
+				OtherEffect e = (OtherEffect)gameBoard.getExcommunications()[i].getEffect();
+				System.out.println(e.getType());
+			}
+			if(gameBoard.getExcommunications()[i].getEffect().getClass().equals(DiscountEffect.class)){
+				DiscountEffect e = (DiscountEffect)gameBoard.getExcommunications()[i].getEffect();
+				System.out.println(e.getDiscount().toString());
+			}
+			if(gameBoard.getExcommunications()[i].getEffect().getClass().equals(IncrementCardEffect.class)){
+				IncrementCardEffect e = (IncrementCardEffect)gameBoard.getExcommunications()[i].getEffect();
+				System.out.println(e.getCardType());
+			}
+			if(gameBoard.getExcommunications()[i].getEffect().getClass().equals(IncrementHPEffect.class)){
+				IncrementHPEffect e = (IncrementHPEffect)gameBoard.getExcommunications()[i].getEffect();
+				System.out.println(e.isHarvest());
+			}
+			
 		}
 		
 	}

@@ -157,12 +157,12 @@ public class ExcommunicationWriter {
 		}
 	}
 	
-	private int enterReduceValue(){
+	int enterReduceValue(){
 		System.out.println("Enter the reduce value");
 		return scanner.nextInt();
 	}
 	
-	private List<DiceColor> enterDiceColor(){
+	List<DiceColor> enterDiceColor(){
 		List<DiceColor> list = new ArrayList<>();
 		while(true){
 			System.out.println("enter the dice color. Type end to finish");

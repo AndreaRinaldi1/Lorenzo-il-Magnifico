@@ -35,10 +35,6 @@ public class DiscountEffectTest {
 	private FamilyMember fm;
 	private Game g;
 	private Player p;
-	private GameModel gameModel;
-	private GameBoard gameBoard; 
-	private List<Player> players = new ArrayList<>();
-
 	
 	@Before
 	public void discountEffect(){
@@ -57,15 +53,19 @@ public class DiscountEffectTest {
 		}
 		Resource res = Resource.of(w);
 		PlayerBoard pb = new PlayerBoard(null, res);
-
-		players.add(p);
-		gameBoard = new GameBoard();
-		gameModel = new GameModel(gameBoard, players);
-		g = new Game(gameModel);
+		
 		p = new Player("bob", PlayerColor.YELLOW);
 		p.setBoard(pb);
 		fm = new FamilyMember(p, false, DiceColor.WHITE);
+		
+		List<Player> players = new ArrayList<>();
+		players.add(p);
+		GameBoard gb = new GameBoard();
+		GameModel gm = new GameModel(gb,players);
+		
+		g = new Game(gm);
 	
+		g.setCurrentPlayer(p);
 	}
 	
 	@AfterClass
@@ -80,6 +80,7 @@ public class DiscountEffectTest {
 		de.apply(fm, g);
 		boolean x = discount.equals(fm.getPlayer().getBoard().getResources());
 		assertTrue(x);
+//		assertEquals(this.fm.getPlayer().getBoard().get, de);
 	}
 
 	@Test

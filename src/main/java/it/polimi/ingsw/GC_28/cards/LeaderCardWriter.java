@@ -18,6 +18,7 @@ import it.polimi.ingsw.GC_28.components.ResourceType;
 import it.polimi.ingsw.GC_28.effects.Effect;
 import it.polimi.ingsw.GC_28.effects.EffectType;
 import it.polimi.ingsw.GC_28.effects.GoToHPEffect;
+import it.polimi.ingsw.GC_28.effects.ModifyDiceEffect;
 import it.polimi.ingsw.GC_28.effects.OtherEffect;
 import it.polimi.ingsw.GC_28.effects.PopeEffect;
 import it.polimi.ingsw.GC_28.effects.PrivilegesEffect;
@@ -30,6 +31,7 @@ public class LeaderCardWriter {
 	private Scanner scan = new Scanner(System.in);
 	private CardWriter1 cardWriter = new CardWriter1();
 	private List<LeaderCard> l = new ArrayList<>();
+	private ExcommunicationWriter excommunicationWriter = new ExcommunicationWriter();
 	
 	public static void main(String[] args) {
 		LeaderCardWriter writer = new LeaderCardWriter();
@@ -118,6 +120,7 @@ public class LeaderCardWriter {
 			System.out.println("Type 'sf' for SetFamilyMemberValueEffect");
 			System.out.println("Type 'pope' for PopeEffect");
 			System.out.println("Type 'db' for DoubleResourceEffect");
+			System.out.println("Type 'rd' for ModifyDiceValueEffect");
 			scan.hasNextLine();
 			String line = scan.nextLine();
 			if(line.equalsIgnoreCase("r")){
@@ -194,6 +197,11 @@ public class LeaderCardWriter {
 				OtherEffect oe = new OtherEffect();
 				oe.setType(EffectType.DOUBLERESOURCEEFFECT);
 				return oe;
+			}else if(line.equalsIgnoreCase("rd")){
+				ModifyDiceEffect rd = new ModifyDiceEffect();
+				rd.setReduce(excommunicationWriter.enterReduceValue());
+				rd.setDiceColor(excommunicationWriter.enterDiceColor());
+				return rd;
 			}
 		}while(true);
 	}	

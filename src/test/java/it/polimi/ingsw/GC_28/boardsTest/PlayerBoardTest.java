@@ -61,7 +61,7 @@ public class PlayerBoardTest {
 	public static void tearDownAfterClass() throws Exception {
 	}
 	
-	@Test
+	/*@Test
 	public void testDisplay(){
 		StringBuilder ret = new StringBuilder();
 		String retLine = "------------------------\n";
@@ -129,7 +129,7 @@ public class PlayerBoardTest {
 		ret.append("\n" + retLine);
 		
 		assertEquals(ret.toString(), this.pb.display());
-	}
+	}*/
 	
 	@Test
 	public void testGetTerritories() {

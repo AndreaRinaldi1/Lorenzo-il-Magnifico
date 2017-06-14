@@ -436,5 +436,20 @@
       "copied": false,
       "type": "COPYEFFECT"
     }
+  },
+  {
+    "name": "Lucrezia Borgia",
+    "played": false,
+    "active": false,
+    "permanent": true,
+    "effect": {
+      "type": "MODIFYDICEEFFECT",
+      "diceColor": [
+        "ORANGE",
+        "BLACK",
+        "WHITE"
+      ],
+      "reduce": 2
+    }
   }
 ]

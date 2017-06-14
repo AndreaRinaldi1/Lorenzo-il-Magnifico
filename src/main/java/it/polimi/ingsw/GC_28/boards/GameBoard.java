@@ -47,12 +47,12 @@ public class GameBoard {
 		
 		AsciiTable at = new AsciiTable();
 		at.addRule();
-		at.addRow("TERRITORY","BUILDING", "CHARACTER", "VENTURE");
+		at.addRow("TERRITORY","CHARACTER","BUILDING", "VENTURE");
 		for(int i = 3; i >= 0; i--){
 			at.addRule();
 			at.addRow(towers.get(CardType.TERRITORY).getCells()[i].getCard()  != null ? towers.get(CardType.TERRITORY).getCells()[i].getCard().getName() :  "***",
-					  towers.get(CardType.BUILDING).getCells()[i].getCard() != null ? towers.get(CardType.BUILDING).getCells()[i].getCard().getName() :  "***",
 					  towers.get(CardType.CHARACTER).getCells()[i].getCard() != null ? towers.get(CardType.CHARACTER).getCells()[i].getCard().getName() : "***",
+					  towers.get(CardType.BUILDING).getCells()[i].getCard() != null ? towers.get(CardType.BUILDING).getCells()[i].getCard().getName() :  "***",
 					  towers.get(CardType.VENTURE).getCells()[i].getCard() != null ? towers.get(CardType.VENTURE).getCells()[i].getCard().getName() :  "***" );
 		}
 		at.addRule();

@@ -16,6 +16,9 @@ import it.polimi.ingsw.GC_28.boards.PlayerBoard;
 import it.polimi.ingsw.GC_28.cards.Building;
 import it.polimi.ingsw.GC_28.cards.CardType;
 import it.polimi.ingsw.GC_28.cards.ExcommunicationTile;
+import it.polimi.ingsw.GC_28.cards.Territory;
+import it.polimi.ingsw.GC_28.cards.Venture;
+import it.polimi.ingsw.GC_28.cards.Character;
 import it.polimi.ingsw.GC_28.components.DiceColor;
 import it.polimi.ingsw.GC_28.components.FamilyMember;
 import it.polimi.ingsw.GC_28.components.Resource;
@@ -48,9 +51,10 @@ public class MultiplierEffectTest {
 	
 	private BonusTile bt;
 	
-	
+	private Territory t;
 	private Building b;
-	
+	private Character c;
+	private Venture v;
 	
 	@Before
 	public void multiplierEffect(){
@@ -83,7 +87,9 @@ public class MultiplierEffectTest {
 		resourceBonus = Resource.of(resource1);
 		
 		b = new Building("casa", 2, 1);
-		
+		t = new Territory("test1", 1, 1);
+		c = new Character("characterCard", 3, 1);
+		v = new Venture("ventureCard", 4, 2);
 		
 		//fai il game
 		players.add(player);
@@ -144,6 +150,44 @@ public class MultiplierEffectTest {
 		me.setResourceBonus(resourceBonus);
 		//me.setResourceCost(resourceCost);
 		pb.addCard(b);
+		
+		me.apply(player, g);
+		boolean x = resourceBonus.equals(player.getBoard().getResources());
+		assertTrue(x);
+	}
+	@Test
+	public void testApply5(){
+		cardType = CardType.TERRITORY;
+		me.setCardType(cardType);
+		me.setResourceBonus(resourceBonus);
+		//me.setResourceCost(resourceCost);
+		pb.addCard(t);
+		
+		me.apply(player, g);
+		boolean x = resourceBonus.equals(player.getBoard().getResources());
+		assertTrue(x);
+	}
+	
+	@Test
+	public void testApply6(){
+		cardType = CardType.CHARACTER;
+		me.setCardType(cardType);
+		me.setResourceBonus(resourceBonus);
+		//me.setResourceCost(resourceCost);
+		pb.addCard(c);
+		
+		me.apply(player, g);
+		boolean x = resourceBonus.equals(player.getBoard().getResources());
+		assertTrue(x);
+	}
+	
+	@Test
+	public void testApply7(){
+		cardType = CardType.VENTURE;
+		me.setCardType(cardType);
+		me.setResourceBonus(resourceBonus);
+		//me.setResourceCost(resourceCost);
+		pb.addCard(v);
 		
 		me.apply(player, g);
 		boolean x = resourceBonus.equals(player.getBoard().getResources());

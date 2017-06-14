@@ -73,6 +73,7 @@ public class MultiplierEffect extends Effect{
 				break;
 			case CHARACTER:
 				player.addResource(game.checkResourceExcommunication(multiplyResource(player.getBoard().getCharacters().size())));
+				break;
 			case VENTURE:
 				player.addResource(game.checkResourceExcommunication(multiplyResource(player.getBoard().getVentures().size())));
 				break;
