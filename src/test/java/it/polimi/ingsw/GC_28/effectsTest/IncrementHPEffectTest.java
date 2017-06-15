@@ -12,17 +12,17 @@ import org.junit.Test;
 import it.polimi.ingsw.GC_28.boards.GameBoard;
 import it.polimi.ingsw.GC_28.components.DiceColor;
 import it.polimi.ingsw.GC_28.components.FamilyMember;
-import it.polimi.ingsw.GC_28.effects.IncrementHarvestEffect;
+import it.polimi.ingsw.GC_28.effects.EffectType;
+import it.polimi.ingsw.GC_28.effects.IncrementHPEffect;
 import it.polimi.ingsw.GC_28.model.Game;
 import it.polimi.ingsw.GC_28.model.GameModel;
 import it.polimi.ingsw.GC_28.model.Player;
 import it.polimi.ingsw.GC_28.model.PlayerColor;
 
 public class IncrementHPEffectTest {
-	private IncrementHarvestEffect incHP;
+	private IncrementHPEffect incH;
 	private int increment = 3;
-	private boolean production;
-	private boolean harvest;
+
 	
 	private	Game g;
 	private FamilyMember fm;
@@ -36,7 +36,8 @@ public class IncrementHPEffectTest {
 	
 	@Before
 	public void incrementHPEffect(){
-		incHP = new IncrementHarvestEffect();
+		incH = new IncrementHPEffect();
+		incH.setType(EffectType.INCREMENTHARVESTEFFECT);
 		player = new Player("gino", PlayerColor.GREEN);
 		player2 = new Player("Mariangiongianela", PlayerColor.BLUE);
 		players.add(player);
@@ -56,11 +57,8 @@ public class IncrementHPEffectTest {
 
 	@Test
 	public void testApply() {
-		production = true;
-		incHP.setHarvest(harvest);
-		incHP.setProduction(production);
-		incHP.setIncrement(increment);
-		incHP.apply(fm, g);
+		incH.setIncrement(increment);
+		incH.apply(fm, g);
 		fm2.modifyValue(increment);
 		boolean x = fm2.getValue().equals(fm.getValue());
 		assertTrue(x);
@@ -68,20 +66,9 @@ public class IncrementHPEffectTest {
 
 	@Test
 	public void testGetIncrement() {
-		incHP.setIncrement(increment);
-		assertEquals(this.increment, this.incHP.getIncrement());
+		incH.setIncrement(increment);
+		assertEquals(this.increment, this.incH.getIncrement());
 	}
 
-	@Test
-	public void testIsProduction() {
-		incHP.setProduction(production);
-		assertEquals(this.production, this.incHP.isProduction());
-	}
-
-	@Test
-	public void testIsHarvest() {
-		incHP.setHarvest(harvest);
-		assertEquals(this.harvest, this.incHP.isHarvest());
-	}
 
 }

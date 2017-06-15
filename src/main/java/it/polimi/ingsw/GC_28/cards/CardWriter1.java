@@ -20,6 +20,7 @@ import it.polimi.ingsw.GC_28.components.CouncilPrivilege;
 import it.polimi.ingsw.GC_28.components.Resource;
 import it.polimi.ingsw.GC_28.components.ResourceType;
 import it.polimi.ingsw.GC_28.effects.*;
+import it.polimi.ingsw.GC_28.spaces.ProdHarvType;
 
 public class CardWriter1 {
 	Scanner scanner = new Scanner(System.in);
@@ -158,12 +159,14 @@ public class CardWriter1 {
 			System.out.println("Harvest or Production:");
 			String choice = scanner.nextLine();
 			if(choice.toLowerCase().equals("harvest")){
-				IncrementHarvestEffect harvEffect = new IncrementHarvestEffect();
+				IncrementHPEffect harvEffect = new IncrementHPEffect();
+				harvEffect.setType(EffectType.INCREMENTHARVESTEFFECT);
 				System.out.println("Enter increment:");
 				harvEffect.setIncrement(scanner.nextInt());
 				character.setPermanentEffect(harvEffect);
 			}else{
-				IncrementProductionEffect prodEffect = new IncrementProductionEffect();
+				IncrementHPEffect prodEffect = new IncrementHPEffect();
+				prodEffect.setType(EffectType.INCREMENTPRODUCTIONEFFECT);
 				System.out.println("Enter increment:");
 				prodEffect.setIncrement(scanner.nextInt());
 				character.setPermanentEffect(prodEffect);
@@ -434,12 +437,11 @@ protected void enterResourceBonus(EnumMap<ResourceType, Integer> bonus){
 						GoToHPEffect harvOrProdAct = new GoToHPEffect();
 						System.out.println("Is it an harvest or a production action? ");
 						if(scanner.nextLine().equals("harvest")){
-							harvOrProdAct.setHarvest(true);
-							harvOrProdAct.setProduction(false);
+							harvOrProdAct.setSpecificType(ProdHarvType.HARVEST);
 						}
 						else{
-							harvOrProdAct.setProduction(true);
-							harvOrProdAct.setHarvest(false);
+							harvOrProdAct.setSpecificType(ProdHarvType.PRODUCTION);
+
 						}
 						System.out.println("Enter action value: ");
 						while(!scanner.hasNextInt()){

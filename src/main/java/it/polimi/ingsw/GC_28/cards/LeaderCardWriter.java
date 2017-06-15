@@ -24,6 +24,7 @@ import it.polimi.ingsw.GC_28.effects.PopeEffect;
 import it.polimi.ingsw.GC_28.effects.PrivilegesEffect;
 import it.polimi.ingsw.GC_28.effects.ResourceEffect;
 import it.polimi.ingsw.GC_28.effects.SetFamilyMemberValueEffect;
+import it.polimi.ingsw.GC_28.spaces.ProdHarvType;
 
 public class LeaderCardWriter {
 	
@@ -138,12 +139,10 @@ public class LeaderCardWriter {
 				GoToHPEffect harvOrProdAct = new GoToHPEffect();
 				System.out.println("Is it an harvest or a production action? ");
 				if(scan.nextLine().equals("harvest")){
-					harvOrProdAct.setHarvest(true);
-					harvOrProdAct.setProduction(false);
+					harvOrProdAct.setSpecificType(ProdHarvType.HARVEST);
 				}
 				else{
-					harvOrProdAct.setProduction(true);
-					harvOrProdAct.setHarvest(false);
+					harvOrProdAct.setSpecificType(ProdHarvType.PRODUCTION);
 				}
 				System.out.println("Enter action value: ");
 				while(!scan.hasNextInt()){

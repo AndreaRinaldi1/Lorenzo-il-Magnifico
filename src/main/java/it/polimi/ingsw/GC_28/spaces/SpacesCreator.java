@@ -33,7 +33,7 @@ public class SpacesCreator {
 	private void startCreating(){
 		Gson obj = new GsonBuilder().setPrettyPrinting().create();
 		try{
-			FileWriter file = new FileWriter("spaces.json", true);
+			FileWriter file = new FileWriter("spaces2.json", true);
 			String proceed;
 			
 			do{
@@ -67,11 +67,13 @@ public class SpacesCreator {
 					String pht = enterProdHarvType();
 					
 					if(pht.equals("harvest")){
-						HarvestSpace hSpace = new HarvestSpace(true, 1);
+						ProdHarvSpace hSpace = new ProdHarvSpace(true, 1);
+						hSpace.setType(ProdHarvType.HARVEST);
 						everySpace.setHarvest(hSpace);	
 						}
 					else{
-						ProductionSpace pSpace = new ProductionSpace(true, 1);
+						ProdHarvSpace pSpace = new ProdHarvSpace(true, 1);
+						pSpace.setType(ProdHarvType.PRODUCTION);
 						everySpace.setProduction(pSpace);	
 					}
 					break;

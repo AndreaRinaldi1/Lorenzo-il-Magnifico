@@ -22,7 +22,6 @@ import java.util.concurrent.ThreadLocalRandom;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import javax.management.timer.Timer;
 
 import it.polimi.ingsw.GC_28.boards.BonusTile;
 import it.polimi.ingsw.GC_28.boards.Cell;
@@ -42,9 +41,7 @@ import it.polimi.ingsw.GC_28.components.FamilyMember;
 import it.polimi.ingsw.GC_28.components.Resource;
 import it.polimi.ingsw.GC_28.components.ResourceType;
 import it.polimi.ingsw.GC_28.effects.DiscountEffect;
-import it.polimi.ingsw.GC_28.effects.GoToHPEffect;
 import it.polimi.ingsw.GC_28.effects.IncrementCardEffect;
-import it.polimi.ingsw.GC_28.effects.IncrementHarvestEffect;
 import it.polimi.ingsw.GC_28.effects.OtherEffect;
 import it.polimi.ingsw.GC_28.model.Player;
 import it.polimi.ingsw.GC_28.spaces.EverySpace;
@@ -61,7 +58,6 @@ public class BoardsInitializer {
 	private BonusTile bonusTile = new BonusTile();
 	private Dice[] dices = new Dice[3];
 	
-	private Timer timer = new Timer();
 	private CouncilPrivilege councilPrivilege;
 	private FinalBonus finalBonus;
 	private List<Player> players = new ArrayList<>();
@@ -289,7 +285,7 @@ public class BoardsInitializer {
 				}
 			}
 			Random rand = new Random();
-			int randomInt = rand.nextInt(tmp.size()+1);
+			int randomInt = rand.nextInt(tmp.size());
 			gameBoard.getExcommunications()[i] = tmp.get(randomInt);
 			System.out.println(gameBoard.getExcommunications()[i].getEffect());
 			if(gameBoard.getExcommunications()[i].getEffect().getClass().equals(OtherEffect.class)){

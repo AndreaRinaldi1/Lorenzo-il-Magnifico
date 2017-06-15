@@ -39,6 +39,7 @@ import it.polimi.ingsw.GC_28.server.ClientHandler;
 import it.polimi.ingsw.GC_28.server.Message;
 import it.polimi.ingsw.GC_28.server.Observable;
 import it.polimi.ingsw.GC_28.server.Observer;
+import it.polimi.ingsw.GC_28.spaces.ProdHarvType;
 import it.polimi.ingsw.GC_28.spaces.Space;
 
 public class Game extends Observable<Action> implements Runnable, Observer<Message>{
@@ -555,7 +556,7 @@ public class Game extends Observable<Action> implements Runnable, Observer<Messa
 		if(!(throughEffect == null)){
 			familyMember = new FamilyMember(currentPlayer, false, null); //familyMember fittizio
 			familyMember.setValue(throughEffect.getActionValue());
-			if(throughEffect.isHarvest()){
+			if(throughEffect.getSpecificType() == ProdHarvType.HARVEST){
 				chosenSpace = gameModel.getGameBoard().getHarvestSpace();
 			}
 			else{

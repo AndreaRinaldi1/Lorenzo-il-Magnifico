@@ -32,7 +32,8 @@ import it.polimi.ingsw.GC_28.model.Player;
 import it.polimi.ingsw.GC_28.model.PlayerColor;
 import it.polimi.ingsw.GC_28.server.ClientHandler;
 import it.polimi.ingsw.GC_28.server.Server;
-import it.polimi.ingsw.GC_28.spaces.HarvestSpace;
+import it.polimi.ingsw.GC_28.spaces.ProdHarvSpace;
+import it.polimi.ingsw.GC_28.spaces.ProdHarvType;
 
 public class GoToHPEffectTest {
 	private GoToHPEffect gt;
@@ -44,7 +45,7 @@ public class GoToHPEffectTest {
 	private Player player;
 	private Game g;
 	private GameBoard gb;
-	private HarvestSpace productionSpace2;
+	private ProdHarvSpace productionSpace2;
 	private Resource res;
 	EnumMap<ResourceType, Integer> w;
 	private GameModel gameModel;
@@ -58,6 +59,7 @@ public class GoToHPEffectTest {
 	public void goToHPEffect() throws IOException{
 		//creazione effetto
 		gt = new GoToHPEffect();
+	
 		//fatti player e family member 
 		player = new Player("Gino", PlayerColor.BLUE);
 		fm = new FamilyMember(player, false, DiceColor.BLACK);
@@ -90,7 +92,7 @@ public class GoToHPEffectTest {
 		g.setHandlers(handlers);
 		g.setCurrentPlayer(player);
 		gb = new GameBoard();
-		productionSpace2 = new HarvestSpace(true, 1);
+		productionSpace2 = new ProdHarvSpace(true, 1);
 	}
 	
 	@AfterClass
@@ -116,15 +118,13 @@ public class GoToHPEffectTest {
 	}
 
 	@Test
-	public void testIsProduction() {
-		gt.setProduction(production);
-		assertEquals(false, this.gt.isProduction());
+	public void testGetSpecificType() {
+		gt.setSpecificType(ProdHarvType.PRODUCTION);
+		assertEquals(ProdHarvType.PRODUCTION, this.gt.getSpecificType());
+		gt.setSpecificType(ProdHarvType.HARVEST);
+		assertEquals(ProdHarvType.HARVEST, this.gt.getSpecificType());
 	}
 
-	@Test
-	public void testIsHarvest() {
-		gt.setHarvest(true);
-		assertEquals(true, this.gt.isHarvest());
-	}
 
+	
 }

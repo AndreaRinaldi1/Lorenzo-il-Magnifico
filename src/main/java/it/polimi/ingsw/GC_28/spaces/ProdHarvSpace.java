@@ -1,17 +1,15 @@
 package it.polimi.ingsw.GC_28.spaces;
-import it.polimi.ingsw.GC_28.boards.*;
-import it.polimi.ingsw.GC_28.cards.Building;
-import it.polimi.ingsw.GC_28.cards.Character;
+
 import it.polimi.ingsw.GC_28.cards.Territory;
 import it.polimi.ingsw.GC_28.components.FamilyMember;
 import it.polimi.ingsw.GC_28.model.Game;
 
-
-public class HarvestSpace extends Space{
+public class ProdHarvSpace extends Space{
 	private FamilyMember firstPlayer;
 	private boolean secondarySpace;
-
-	public HarvestSpace(boolean free, int actionValue) {
+	private ProdHarvType type;
+	
+	public ProdHarvSpace(boolean free, int actionValue) {
 		super(free, actionValue);
 	}
 	
@@ -31,6 +29,14 @@ public class HarvestSpace extends Space{
 		this.firstPlayer = null;
 	}
 	
+	public ProdHarvType getType() {
+		return type;
+	}
+
+	public void setType(ProdHarvType type) {
+		this.type = type;
+	}
+
 	@Override
 	public void addPlayer(FamilyMember player){
 		if(this.isFree() == true){
@@ -54,4 +60,3 @@ public class HarvestSpace extends Space{
 	}
 		
 }
-

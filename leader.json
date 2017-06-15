@@ -12,9 +12,8 @@
     "permanent": false,
     "effect": {
       "actionValue": 1,
-      "production": false,
-      "harvest": true,
-      "type": "GOTOHP"
+      "type": "GOTOHP",
+      "specificType": "HARVEST"
     }
   },
   {
@@ -149,9 +148,8 @@
     "permanent": false,
     "effect": {
       "actionValue": 0,
-      "production": true,
-      "harvest": false,
-      "type": "GOTOHP"
+      "type": "GOTOHP",
+      "specificType": "PRODUCTION"
     }
   },
   {

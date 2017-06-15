@@ -19,8 +19,8 @@ import it.polimi.ingsw.GC_28.effects.DiscountEffect;
 import it.polimi.ingsw.GC_28.effects.EffectType;
 import it.polimi.ingsw.GC_28.effects.FinalReduceEffect;
 import it.polimi.ingsw.GC_28.effects.IncrementCardEffect;
-import it.polimi.ingsw.GC_28.effects.IncrementHarvestEffect;
-import it.polimi.ingsw.GC_28.effects.IncrementProductionEffect;
+import it.polimi.ingsw.GC_28.effects.IncrementHPEffect;
+
 import it.polimi.ingsw.GC_28.effects.MultiplierEffect;
 import it.polimi.ingsw.GC_28.effects.NoFinalBonusEffect;
 import it.polimi.ingsw.GC_28.effects.OtherEffect;
@@ -46,7 +46,7 @@ public class ExcommunicationWriter {
 	public void startWrite() {
 		Gson gson = new GsonBuilder().setPrettyPrinting().create();
 		try{
-			FileWriter file = new FileWriter("excommunication.json",true);
+			FileWriter file = new FileWriter("excommunication2.json",true);
 			String procede = new String();
 			do{
 				ExcommunicationTile ex = new ExcommunicationTile();
@@ -76,12 +76,14 @@ public class ExcommunicationWriter {
 					System.out.println("Harvest or Production:");
 					String choice = scanner.nextLine();
 					if(choice.toLowerCase().equals("harvest")){
-						IncrementHarvestEffect harvEffect = new IncrementHarvestEffect();
+						IncrementHPEffect harvEffect = new IncrementHPEffect();
+						harvEffect.setType(EffectType.INCREMENTHARVESTEFFECT);
 						System.out.println("Enter increment:");
 						harvEffect.setIncrement(scanner.nextInt());
 						ex.setEffect(harvEffect);
 					}else{
-						IncrementProductionEffect prodEffect = new IncrementProductionEffect();
+						IncrementHPEffect prodEffect = new IncrementHPEffect();
+						prodEffect.setType(EffectType.INCREMENTPRODUCTIONEFFECT);
 						System.out.println("Enter increment:");
 						prodEffect.setIncrement(scanner.nextInt());
 						ex.setEffect(prodEffect);
