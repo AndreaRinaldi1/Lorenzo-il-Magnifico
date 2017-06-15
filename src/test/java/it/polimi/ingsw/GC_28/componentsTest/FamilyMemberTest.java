@@ -19,6 +19,7 @@ public class FamilyMemberTest {
 	private FamilyMember fm;
 	private FamilyMember fm2;
 	private Dice dice1 ;
+	private Dice[] dices = new Dice[1]; 
 
 	@Before
 	public void familyMember(){
@@ -27,7 +28,6 @@ public class FamilyMemberTest {
 		player2 = new Player("bella", PlayerColor.RED);
 		fm2 = new FamilyMember(player2, true, DiceColor.NEUTRAL);
 		dice1 = new Dice(DiceColor.BLACK);
-
 		
 		fm2.modifyValue(3);
 
@@ -56,6 +56,16 @@ public class FamilyMemberTest {
 		//fail("Not yet implemented");
 	}
 
+	//Test with family Member setValue(Dice[] dices)
+	@Test
+	public void testGetValue1(){
+		int i = 0;
+		dice1.rollDice();
+		dices[0] = dice1;
+		fm.setValue(dices);
+		boolean x = (this.dice1.getValue()==this.fm.getValue());
+		assertTrue(x);
+	}
 	@Test
 	public void testIsUsed() {
 		assertEquals(false, fm.isUsed());

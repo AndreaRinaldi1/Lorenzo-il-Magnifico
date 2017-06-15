@@ -14,7 +14,9 @@ import it.polimi.ingsw.GC_28.components.*;
 
 public class ResourceTest {
 	private Resource prova;
-	private EnumMap<ResourceType, Integer> resource, resource1, resource2;
+	private EnumMap<ResourceType, Integer> resource;
+	private EnumMap<ResourceType, Integer> resource1;
+	private EnumMap<ResourceType, Integer> resource2;
 	private Resource bonus;
 	private Resource bonus1; 
 	private Resource bonus2;
@@ -53,6 +55,12 @@ public class ResourceTest {
 		//fail("Not yet implemented");
 	}
 
+	//test modify Resource with null in input
+	public void testModifyResourceNull(){
+		this.bonus1.modifyResource(null, true);
+		assertEquals(true, this.bonus1.equals(this.bonus1));
+	}
+	
 	@Test
 	public void testModifyResource() {
 		assertEquals(true, bonus1.equals(bonus2));

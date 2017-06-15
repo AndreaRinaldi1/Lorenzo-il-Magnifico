@@ -37,7 +37,7 @@ public class ExcommunicationReader {
 	
 	public List<ExcommunicationTile> startRead()throws IOException{
 		List<ExcommunicationTile> excomm = new ArrayList<>();
-		
+
 		Type requestListTypeToken = new TypeToken<ArrayList<ExcommunicationTile>>() {}.getType();
 		
 		final RuntimeTypeAdapterFactory<Effect> typeFactory = RuntimeTypeAdapterFactory

@@ -46,8 +46,7 @@ public class CardReaderTest {
 	@Before
 	public void cardReader() throws FileNotFoundException{
 		cr = new CardReader();		
-		d.equals(cr.startRead());
-		
+		d = this.cr.startRead();
 	}
 	
 	@AfterClass
@@ -57,20 +56,40 @@ public class CardReaderTest {
 	@Test
 	public void testStartRead() throws FileNotFoundException {
 		for (int i = 0; i<d.getVentures().size(); i++){ 
-			assertEquals(this.d.getVentures().get(i), this.cr.startRead().getVentures().get(i));
-			//fail("Not yet implemented");
+			for(int j = 0; j<cr.startRead().getVentures().size(); j++){
+				if(this.d.getVentures().get(i).getIDNumber() == this.cr.startRead().getVentures().get(j).getIDNumber()){
+					assertEquals(this.d.getVentures().get(i).getIDNumber(),
+							this.cr.startRead().getVentures().get(j).getIDNumber());
+					//fail("Not yet implemented");
+				}
+			}
 		}
 		for (int i = 0; i<d.getBuildings().size(); i++){ 
-			assertEquals(this.d.getBuildings().get(i), this.cr.startRead().getBuildings().get(i));
-			//fail("Not yet implemented");
+			for(int j = 0; j<cr.startRead().getBuildings().size(); j++){
+				if(this.d.getBuildings().get(i).getIDNumber() == this.cr.startRead().getBuildings().get(j).getIDNumber()){
+					assertEquals(this.d.getBuildings().get(i).getIDNumber(),
+							this.cr.startRead().getBuildings().get(j).getIDNumber());
+					//fail("Not yet implemented");
+				}
+			}
 		}
 		for (int i = 0; i<d.getCharacters().size(); i++){ 
-			assertEquals(this.d.getCharacters().get(i), this.cr.startRead().getCharacters().get(i));
-			//fail("Not yet implemented");
+			for(int j = 0; j<cr.startRead().getCharacters().size(); j++){
+				if(this.d.getCharacters().get(i).getIDNumber() == this.cr.startRead().getCharacters().get(j).getIDNumber()){
+					assertEquals(this.d.getCharacters().get(i).getIDNumber(),
+							this.cr.startRead().getCharacters().get(j).getIDNumber());
+					//fail("Not yet implemented");
+				}
+			}
 		}
 		for (int i = 0; i<d.getTerritories().size(); i++){ 
-			assertEquals(this.d.getTerritories().get(i), this.cr.startRead().getTerritories().get(i));
-			//fail("Not yet implemented");
+			for(int j = 0; j<cr.startRead().getTerritories().size(); j++){
+				if(this.d.getTerritories().get(i).getIDNumber() == this.cr.startRead().getTerritories().get(j).getIDNumber()){
+					assertEquals(this.d.getTerritories().get(i).getIDNumber(),
+							this.cr.startRead().getTerritories().get(j).getIDNumber());
+					//fail("Not yet implemented");
+				}
+			}
 		}
 	}
 

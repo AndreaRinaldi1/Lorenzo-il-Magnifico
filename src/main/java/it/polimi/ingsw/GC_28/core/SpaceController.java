@@ -11,7 +11,6 @@ import it.polimi.ingsw.GC_28.server.Message;
 import it.polimi.ingsw.GC_28.spaces.MarketSpace;
 import it.polimi.ingsw.GC_28.spaces.PrivilegesSpace;
 import it.polimi.ingsw.GC_28.spaces.ProdHarvSpace;
-
 import it.polimi.ingsw.GC_28.spaces.Space;
 
 public class SpaceController {

@@ -60,6 +60,7 @@ public class FinalBonus {
 			instance = f;
 		}
 	}
+	
 
 	public void setFinalTerritoriesBonus(List<Resource> finalTerritoriesBonus) {
 		this.finalTerritoriesBonus = finalTerritoriesBonus;

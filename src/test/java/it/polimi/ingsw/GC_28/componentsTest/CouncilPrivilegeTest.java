@@ -16,23 +16,14 @@ import it.polimi.ingsw.GC_28.components.*;
 
 public class CouncilPrivilegeTest {
 	private HashMap<Character, Resource> options;
-	private CouncilPrivilege cp = CouncilPrivilege.instance();
+	private CouncilPrivilege cp;
 	private Resource resourceBonus;
 	EnumMap<ResourceType, Integer> resource;
-	private CouncilPrivilege cp2;
 	
 	@Before
 	public void councilPrivilege(){
-		/*Gson gson = new GsonBuilder().create();
-		try{
-			JsonReader reader =new JsonReader(new FileReader("priv.json"));
-			cp = gson.fromJson(reader, CouncilPrivilege.class);
-			CouncilPrivilege.setCouncilPrivilege(cp);
-			reader.close();
-		}catch(IOException e){
-			Logger.getAnonymousLogger().log(Level.SEVERE, "file not found" + e);
-		}*/
-		
+		CouncilPrivilege.setCouncilPrivilege(cp);
+		cp = CouncilPrivilege.instance();
 		resource = new EnumMap<>(ResourceType.class);
 		resource.put(ResourceType.COIN, 5);
 		resourceBonus = Resource.of(resource);
@@ -62,12 +53,4 @@ public class CouncilPrivilegeTest {
 		//assertEquals(this.options, this.cp.getOptions());
 		//assertEquals(true, this.instance.getOptions().equals(options));
 	}
-
-	@Test 
-	public void testSetCouncilPrivilege() {
-		cp2 = CouncilPrivilege.instance();
-		cp2.setCouncilPrivilege(cp);
-		assertEquals(this.cp, this.cp2);
-	}
-	
 }

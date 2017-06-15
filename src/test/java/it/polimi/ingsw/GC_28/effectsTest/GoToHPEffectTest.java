@@ -99,17 +99,18 @@ public class GoToHPEffectTest {
 	public static void tearDownAfterClass() throws Exception {
 	}
 
-	/*@Test
+/*	@Test
 	public void testApply() {
 		harvest = true;
 		gt.setActionValue(actionValue);
 		gt.setHarvest(this.harvest);
 		gt.setProduction(this.production);
 		gt.apply(this.fm, this.g);
+		//fail("Not yet implemented");
 
 		assertTrue(g.goToSpace(gt));
-	}*/
-
+	}
+*/
 	@Test
 	public void testGetActionValue() {
 		gt.setActionValue(actionValue);
