@@ -3,7 +3,8 @@ package it.polimi.ingsw.GC_28.server;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
-
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.io.PrintStream;
 import java.lang.reflect.Type;
 import java.net.ServerSocket;
@@ -33,6 +34,7 @@ import com.google.gson.reflect.TypeToken;
 import com.google.gson.stream.JsonReader;
 
 import it.polimi.ingsw.GC_28.boards.BonusTile;
+import it.polimi.ingsw.GC_28.components.CouncilPrivilege;
 import it.polimi.ingsw.GC_28.effects.HarvestEffect;
 import it.polimi.ingsw.GC_28.effects.ProductionEffect;
 import it.polimi.ingsw.GC_28.model.BoardSetup;
@@ -45,8 +47,9 @@ import it.polimi.ingsw.GC_28.model.PlayerColor;
 public class Server {
 	private int port;
 	private ServerSocket server;
-	private PrintStream p;
-	private Scanner scan;
+	//private PrintStream p;
+	private ObjectOutputStream o;
+	private ObjectInputStream scan;
 	List<PlayerColor> usedColors = new ArrayList<>();
 	boolean noStop = false;
 	ExecutorService executor;
@@ -66,10 +69,44 @@ public class Server {
 		}catch(IOException e){
 			Logger.getAnonymousLogger().log(Level.SEVERE,"Cannot start the server" + e); 
 			
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 	}
 	
-	private void startServer()throws IOException{
+	private void startServer() throws Exception{
+		executor = Executors.newCachedThreadPool();
+		server = new ServerSocket(port);
+		
+		System.out.println("Server ready");
+		while(!noStop){
+			bonusList = initBonusTile();
+			handlers = new HashMap<>();
+			while(handlers.size() < 1){
+				Socket socket = server.accept();
+				o = new ObjectOutputStream(socket.getOutputStream());
+				scan = new ObjectInputStream(socket.getInputStream());
+				o.writeUTF("Enter your name:");
+				o.flush();
+				String name = scan.readUTF();
+				PlayerColor color = enterColor();
+				o.writeUTF("end");
+				o.flush();
+				Player player = new Player(name, color);
+				//o.writeObject(player);
+				//o.flush();
+				ClientHandler ch = new ClientHandler(o,scan);
+				handlers.put(player, ch);
+			}
+			//System.out.println("faccio partire il gioco");
+			startGame(handlers);
+		}
+		
+		
+	}
+	
+	/*private void startServer()throws Exception{
 		Timer timer = new Timer();
 
 		executor = Executors.newCachedThreadPool();
@@ -83,13 +120,19 @@ public class Server {
 			System.out.println("Server ready");
 			while(handlers.size() < 1){
 				Socket socket = server.accept();
-				p = new PrintStream(socket.getOutputStream());
-				scan = new Scanner(socket.getInputStream());
-				p.println("Enter your name:");
-				p.flush();
-				String name = scan.nextLine();
+				//p = new PrintStream(socket.getOutputStream());
+				scan = new ObjectInputStream(socket.getInputStream());
+				o = new ObjectOutputStream(socket.getOutputStream());
+				o.writeObject("Enter your name:");
+				o.flush();
+				String name = (String)scan.readObject();
 				PlayerColor color = enterColor();
+				o.writeObject("end");
+				o.flush();
 				Player player = new Player(name, color);
+				o = new ObjectOutputStream(socket.getOutputStream());
+				o.writeObject(player);
+				o.flush();
 				ClientHandler ch = new ClientHandler(socket);
 				if(started){
 					started = false;
@@ -106,14 +149,14 @@ public class Server {
 						}
 					}, 15000);
 				}
-			}
+			}*/
 
 			/*
 			 * QUESTE DUE RIGHE ERANO DA ANDREA
 			timer.cancel();
 			startGame(handlers);	*/
 
-			
+		/*	
 			startGame(handlers);
 			
 			/*game.setHandlers(handlers);
@@ -126,36 +169,51 @@ public class Server {
 			//game.getGameBoard().display();
 			//game.setCurrentPlayer(gameModel.getPlayers().get(0));
 			//game.getCurrentPlayer().getBoard().display();
-			executor.submit(game);*/
+			executor.submit(game);
 		}
-	}
+	}*/
 
 	
-	public void startGame(Map<Player, ClientHandler> handlers){
+	public void startGame(Map<Player, ClientHandler> handlers) throws IOException{
 		usedColors.clear();
 		BoardsInitializer bi = new BoardsInitializer();	
 		List<Player> players = new ArrayList<>(handlers.keySet());
 		
 		try{
 			Game game = bi.initializeBoard(players);
-
+			System.out.println("initboad fatto");
 			game.setHandlers(handlers);
+			System.
+			out.println("set handlers fatto");
 			BoardSetup bs = new BoardSetup(game);
+			System.out.println("setup board");
 			bs.firstSetUpCards();
+			System.out.println("setup card");
 			
-
+			for(Player p : handlers.keySet()){
+				handlers.get(p).getOut().writeObject(p);
+				handlers.get(p).getOut().flush();
+				handlers.get(p).getOut().reset();
+				handlers.get(p).getOut().writeObject(CouncilPrivilege.instance());
+				handlers.get(p).getOut().flush();
+				handlers.get(p).getOut().reset();
+			}
+			
 			List<Player> reversePlayer = new ArrayList<>();
 			for(Player p : players){
 				reversePlayer.add(p);
+				
 			}
+			System.out.println("created reversePlayer");
 			Collections.reverse(reversePlayer);
+			System.out.println("reverted players");
 			for(Player p : reversePlayer){
 				enterBonusTile(bonusList, handlers, p);
 			}
-			
-			
+			System.out.println("bonusTile fatto");
 			game.registerObserver(new Controller());
 			game.getGameModel().registerObserver(game);
+
 			//game.getGameBoard().display();
 			//game.setCurrentPlayer(gameModel.getPlayers().get(0));
 			//game.getCurrentPlayer().getBoard().display();
@@ -164,14 +222,14 @@ public class Server {
 			
 		}catch(FileNotFoundException e){
 			for(Player p : players){
-				handlers.get(p).getOut().println("The server didn't start the game due to an FileNotFoundException,\n"
+				handlers.get(p).getOut().writeUTF("The server didn't start the game due to an FileNotFoundException,\n"
 						+ " we're trying to fix the problem asap. Thanks for your patience!");
 				handlers.get(p).getOut().flush();
 			}
 			Logger.getAnonymousLogger().log(Level.SEVERE,"Cannot start the server" + e);
 		}catch(IOException e){
 			for(Player p : players){
-				handlers.get(p).getOut().println("The server didn't start the game due to an IOException,\n"
+				handlers.get(p).getOut().writeUTF("The server didn't start the game due to an IOException,\n"
 						+ " we're trying to fix the problem asap. Thanks for your patience!");
 				handlers.get(p).getOut().flush();
 			}
@@ -183,12 +241,12 @@ public class Server {
 		noStop = true;
 	}
 	
-	private PlayerColor enterColor(){
+	private PlayerColor enterColor() throws IOException {
 		boolean found = false;
 		do{
-			p.println("Enter the color you prefer: [red / blue / green / yellow] ");
-			p.flush();
-			String playerColor = scan.nextLine().toUpperCase();
+			o.writeUTF("Enter the color you prefer: [red / blue / green / yellow] ");
+			o.flush();
+			String playerColor = scan.readUTF().toUpperCase();
 			for(PlayerColor color : PlayerColor.values()){
 				if(playerColor.equals(color.name())){
 					if(!usedColors.contains(color)){
@@ -196,32 +254,32 @@ public class Server {
 						return color;
 					}
 					else{
-						p.println("This color has already been choosed");
+						o.writeUTF("This color has already been choosed");
 						found = true;
 						break;
 					}
 				}
 			}
 			if(!found){
-				p.println("Not valid input!");
+				o.writeUTF("Not valid input!");
 			}
 		}while(true);
 	}
 	
-	private void enterBonusTile(List<BonusTile> bonusList,Map<Player,ClientHandler> handlers, Player p){
+	private void enterBonusTile(List<BonusTile> bonusList,Map<Player,ClientHandler> handlers, Player p) throws IOException{
 		boolean found = false;
 		do{
 			int i = 1;
 			for(BonusTile bt : bonusList){
-				handlers.get(p).getOut().println(i + "\n");
-				handlers.get(p).getOut().println("bonusTile n°: "+ i+ "\n");
-				handlers.get(p).getOut().println(bt.toString());
+				handlers.get(p).getOut().writeUTF(i + "\n");
+				handlers.get(p).getOut().writeUTF("bonusTile n°: "+ i+ "\n");
+				handlers.get(p).getOut().writeUTF(bt.toString());
 				i++;
 			}
-			handlers.get(p).getOut().println("Choose from above your personal bonusTile: [input number from 1 to " + bonusList.size()+ "]");
+			handlers.get(p).getOut().writeUTF("Choose from above your personal bonusTile: [input number from 1 to " + bonusList.size()+ "]");
 			handlers.get(p).getOut().flush();
-			Integer bonusTile = handlers.get(p).getIn().nextInt();
-			handlers.get(p).getIn().nextLine();
+			Integer bonusTile = handlers.get(p).getIn().readInt();
+			//handlers.get(p).getIn().nextLine();
 			if(0 < bonusTile && bonusTile <= bonusList.size()){
 				BonusTile bt = bonusList.get(bonusTile-1);
 				System.out.println(bt.toString());
@@ -229,9 +287,11 @@ public class Server {
 				bonusList.remove(bt);
 				found = true;
 			}else{
-				handlers.get(p).getOut().println("Not valid input!");
+				handlers.get(p).getOut().writeUTF("Not valid input!");
 			}
 		}while(!found);
+		//handlers.get(p).getOut().writeUTF("Type start for play!!");
+		//handlers.get(p).getOut().flush();
 	}
 	
 	private List<BonusTile> initBonusTile() throws FileNotFoundException{

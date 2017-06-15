@@ -27,25 +27,31 @@ public class SpaceController {
 	
 	
 	public boolean check(FamilyMember familyMember, Space space, GoToHPEffect throughEffect){
-		
+		System.out.println("in check");
 		if(space instanceof MarketSpace || space instanceof PrivilegesSpace){ //se ha scelto di andare al mercato
+			System.out.println("check 1");
 			if(!checkForNoMarket(familyMember, space)){
+				System.out.println("check 2");
 				gameModel.notifyObserver(new Message("Due to excommunication, you can't go in this space", false));
+				System.out.println("check 3");
 				return false;
 			}
 		}
 		
 		if(throughEffect == null){
+			System.out.println("check 4");
 			if(!checkFree(familyMember, space)){
+				System.out.println("check 5");
 				gameModel.notifyObserver(new Message("This space is already occupied", false));
 				return false;
 			}
+			System.out.println("check 6");
 			if(!checkActionValue(familyMember, space)){
 				gameModel.notifyObserver(new Message("Your action value is not high enough to go in this space", false));
 				return false;
 			}
 		}
-		
+		System.out.println("check 7");
 		
 		return true;
 	}

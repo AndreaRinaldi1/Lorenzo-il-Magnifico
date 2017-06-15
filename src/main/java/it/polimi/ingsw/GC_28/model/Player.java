@@ -1,6 +1,7 @@
 package it.polimi.ingsw.GC_28.model;
 
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -15,7 +16,13 @@ import it.polimi.ingsw.GC_28.components.ResourceType;
 
 
 
-public class Player {
+public class Player implements Serializable{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	
+	
 	private String name;
 	private PlayerColor color;
 	private PlayerBoard board;
@@ -59,7 +66,9 @@ public class Player {
 
 	
 	public void addResource(Resource amount){
+		System.out.println("add enter");
 		this.getBoard().getResources().modifyResource(amount, true);
+		System.out.println("add out");
 	}
 	
 	
@@ -148,5 +157,6 @@ public class Player {
 		}
 		return s.toString();
 	}
+	
 	
 }

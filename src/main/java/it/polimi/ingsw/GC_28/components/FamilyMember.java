@@ -1,9 +1,15 @@
 package it.polimi.ingsw.GC_28.components;
 
 
+import java.io.Serializable;
+
 import it.polimi.ingsw.GC_28.model.Player;
 
-public class FamilyMember {
+public class FamilyMember  implements Serializable{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private Player player;
 	private int value;
 	private boolean used;

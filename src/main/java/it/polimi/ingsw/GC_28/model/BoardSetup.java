@@ -45,7 +45,9 @@ public class BoardSetup {
 	
 	public void setUpBoard(){
 		//gameModel.setPlayers(getNextPlayerOrder());
+		System.out.println("set up board 1");
 		getNextPlayerOrder();
+		System.out.println("setup board 2");
 		freeFamilyMember();
 		freeSpace();
 		if(gameModel.getPlayers().size() > 2){
@@ -158,6 +160,7 @@ public class BoardSetup {
 	private void getNextPlayerOrder(){
 		List<FamilyMember> inCouncil = gameBoard.getCouncilPalace().getPlayerOrder();
 		List<Player> nextOrder = new ArrayList<>();
+		System.out.println("gnpo 1");
 		if(!(inCouncil.isEmpty())){
 			for(FamilyMember fm : inCouncil){
 				if(!(nextOrder.contains(fm.getPlayer()))){
@@ -170,13 +173,15 @@ public class BoardSetup {
 				nextOrder.add(p);
 			}
 		}
+		System.out.println(gameModel.getPlayers().get(0));
+		System.out.println(inCouncil.get(0).getPlayer());
 		for(int i = 0; i < nextOrder.size(); i++){
 			gameModel.getPlayers().set(i, nextOrder.get(i));
 		}
+		System.out.println("gnpo exit");
 	}
 	
 	public void freeSpace(){
-		System.out.println(2);
 		if(!(gameBoard.getCoinSpace().isFree())){
 			gameBoard.getCoinSpace().getPlayer().remove(0);
 			gameBoard.getCoinSpace().setFree(true);

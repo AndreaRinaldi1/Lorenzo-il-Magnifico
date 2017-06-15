@@ -1,5 +1,7 @@
 package it.polimi.ingsw.GC_28.core;
 
+import java.io.IOException;
+
 import it.polimi.ingsw.GC_28.boards.Cell;
 import it.polimi.ingsw.GC_28.boards.GameBoard;
 import it.polimi.ingsw.GC_28.cards.Building;
@@ -16,19 +18,19 @@ import it.polimi.ingsw.GC_28.model.GameModel;
 import it.polimi.ingsw.GC_28.server.Message;
 
 public class TakeCardAction extends Action{
-	private Game game;
-	private GameBoard gameBoard;
+	
 	private TakeCardController takeCardController;
 	private FamilyMember familyMember;
 	private String name;
 	private TakeCardEffect throughEffect;
 	private GameModel gameModel;
+	private Game game;
 	
-	public TakeCardAction(Game game, GameModel gameModel){
-		this.game = game;
+	public TakeCardAction(){
+		/*this.game = game;
 		this.gameBoard = gameModel.getGameBoard();
 		this.gameModel = gameModel;
-		takeCardController = new TakeCardController(gameModel);
+		takeCardController = new TakeCardController(gameModel)*/;
 	}
 
 	public void setFamilyMember(FamilyMember familyMember) {
@@ -46,20 +48,35 @@ public class TakeCardAction extends Action{
 	}
 	
 	public boolean isApplicable(){
-		return takeCardController.check(game, name, familyMember, throughEffect);
+		this.gameModel = super.gameModel;
+		this.game = super.game;
+		takeCardController = new TakeCardController(super.gameModel);
+		try {
+			return takeCardController.check(game, name, familyMember, throughEffect);
+		} catch (ClassNotFoundException | IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return false;
+		}
 	}
 	
 	public void apply(){
 		System.out.println("apply");
 		takeCardController.reduce3Coins(familyMember, false, null);
 		System.out.println("step 1");
-		takeCardController.lookForNoCellBonus(game, familyMember, false, null, name);
-		System.out.println("step 2");
-		takeCardController.lookForTakeCardDiscount(familyMember, false, null, game, throughEffect);
-		System.out.println("step 3");
-		takeCardController.lookForIncrementCardDiscount(familyMember, false, null, game);
+		try {
+			takeCardController.lookForNoCellBonus(game, familyMember, false, null, name);
+			System.out.println("step 2");
+			takeCardController.lookForTakeCardDiscount(familyMember, false, null, game, throughEffect);
+			System.out.println("step 3");
+			takeCardController.lookForIncrementCardDiscount(familyMember, false, null, game);
+		} catch (ClassNotFoundException | IOException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		
 		System.out.println("step 4");
-		Cell cell = gameBoard.getTowers().get(takeCardController.cardType).findCard(name);
+		Cell cell = gameModel.getGameBoard().getTowers().get(takeCardController.cardType).findCard(name);
 		System.out.println("step 5");
 		Resource cardCost = cell.getCard().getCost();
 		System.out.println("step 6");
@@ -68,6 +85,9 @@ public class TakeCardAction extends Action{
 		familyMember.getPlayer().reduceResources(cardCost);
 		System.out.println("step 8");
 		familyMember.setUsed(true);
+		
+		game.getCurrentPlayer().setBoard(familyMember.getPlayer().getBoard());
+		game.getCurrentPlayer().setFamilyMembers(familyMember.getPlayer().getFamilyMembers());
 		
 		if(throughEffect == null){
 			cell.setFamilyMember(familyMember);
@@ -107,6 +127,7 @@ public class TakeCardAction extends Action{
 		cell.setCard(null);
 		cell.setFree(false);
 		System.out.println("step 10");
+		
 		gameModel.notifyObserver(new Message("Action completed successfully!", true));
 
 	}

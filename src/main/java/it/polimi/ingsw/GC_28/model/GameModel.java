@@ -34,6 +34,8 @@ public class GameModel extends Observable<Message> {
 		this.players = players;
 	}*/
 	
-	
+	public GameModel setGameModel(){
+		return this;
+	}
 
 }

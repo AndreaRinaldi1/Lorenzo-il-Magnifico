@@ -2,9 +2,15 @@ package it.polimi.ingsw.GC_28.components;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.io.Serializable;
 import java.lang.Character;
 
-public class CouncilPrivilege {
+public class CouncilPrivilege implements Serializable {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	
 	private Map<Character, Resource> options = new HashMap<>();
 	private static CouncilPrivilege instance;
 	

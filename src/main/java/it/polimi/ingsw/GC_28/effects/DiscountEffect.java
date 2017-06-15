@@ -1,5 +1,7 @@
 package it.polimi.ingsw.GC_28.effects;
 
+import java.io.IOException;
+
 import it.polimi.ingsw.GC_28.boards.GameBoard;
 import it.polimi.ingsw.GC_28.cards.*;
 import it.polimi.ingsw.GC_28.components.FamilyMember;
@@ -64,7 +66,12 @@ public class DiscountEffect extends Effect{
 	public void apply(Player player, Game game){
 		System.out.println("apply di DiscountEffect");
 		if(alternativeDiscountPresence == true){
-			player.addResource(game.askAlternative(discount, alternativeDiscount, "discount")); 
+			try {
+				player.addResource(game.askAlternative(discount, alternativeDiscount, "discount"));
+			} catch (ClassNotFoundException | IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} 
 		}
 		else{
 			player.addResource(discount);

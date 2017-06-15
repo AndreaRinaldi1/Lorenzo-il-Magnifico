@@ -1,5 +1,6 @@
 package it.polimi.ingsw.GC_28.core;
 
+import java.io.IOException;
 import java.util.EnumMap;
 
 import it.polimi.ingsw.GC_28.boards.Cell;
@@ -35,7 +36,7 @@ public class TakeCardController {
 		this.gameBoard = gameModel.getGameBoard();
 	}
 	
-	public boolean check(Game game, String name, FamilyMember familyMember, TakeCardEffect throughEffect){
+	public boolean check(Game game, String name, FamilyMember familyMember, TakeCardEffect throughEffect) throws ClassNotFoundException, IOException{
 		/*if(throughEffect.equals(null)){ //non ho effetto 
 			cardType = null;
 		}
@@ -48,9 +49,7 @@ public class TakeCardController {
 			}
 		}*/
 		if(!(checkCardExistance(name, throughEffect))){
-			System.out.println(2);
 			gameModel.notifyObserver(new Message("this card doesn't exist", false));
-			System.out.println(3);
 			return false;
 		}
 		System.out.println("carte esiste");
@@ -67,6 +66,8 @@ public class TakeCardController {
 			}
 		}
 		System.out.println("io non presente");
+		System.out.println(familyMember.toString());
+		System.out.println(name);
 		if(!(checkResource(game, name,  familyMember, throughEffect))){
 			return false;
 		}
@@ -167,8 +168,10 @@ public class TakeCardController {
 	 * @param familyMember
 	 * @param cardType
 	 * @return true if the player has enough resources to take the card
+	 * @throws IOException 
+	 * @throws ClassNotFoundException 
 	 */
-	private boolean checkResource(Game game, String cardName, FamilyMember familyMember, TakeCardEffect throughEffect){
+	private boolean checkResource(Game game, String cardName, FamilyMember familyMember, TakeCardEffect throughEffect) throws ClassNotFoundException, IOException{
 		System.out.println("checkResource 1");
 		if(cardType.equals(CardType.TERRITORY)){
 			System.out.println("checkResource 2");
@@ -232,17 +235,15 @@ public class TakeCardController {
 			if(venture.getAlternativeCostPresence() && costNotZeros){//ho due alternative di costo
 				if(venture.getMinimumRequiredMilitaryPoints() <= familyMember.getPlayer().getBoard().getResources().getResource().get(ResourceType.MILITARYPOINT)){
 					//qui se avesse un numero adeguato di military points tale da chiedere quale alternativa vuole
-					System.out.println("1");
 					tmp.modifyResource(game.askAlternative(venture.getCost(), venture.getAlternativeCost(), "cost"), false);
+					//FIXME
 				}
 				else{
-					System.out.println("2");
 
 					tmp.modifyResource(venture.getCost(), false); //se non ha suff. military points gli sottraggo cost
 				}
 			}
 			else if(!venture.getAlternativeCostPresence()){ //ho cost ma non l'alternativa coi pti militari
-				System.out.println("3");
 				tmp.modifyResource(venture.getCost(), false); 
 			}
 			else{//ho il costo (alternativa) coi punti militari ma non il costo normale (tutti 0)
@@ -309,7 +310,7 @@ public class TakeCardController {
 
 	}
 	
-	protected void lookForNoCellBonus(Game game, FamilyMember familyMember, boolean check, Resource tmp, String cardName){
+	protected void lookForNoCellBonus(Game game, FamilyMember familyMember, boolean check, Resource tmp, String cardName) throws ClassNotFoundException, IOException{
 		boolean noCellBonus = false;
 		System.out.println("nocell 1");
 		for(Character character : familyMember.getPlayer().getBoard().getCharacters()){
@@ -340,11 +341,12 @@ public class TakeCardController {
 	}
 	
 	
-	protected void lookForTakeCardDiscount(FamilyMember familyMember, boolean check, Resource tmp, Game game, TakeCardEffect throughEffect){
+	protected void lookForTakeCardDiscount(FamilyMember familyMember, boolean check, Resource tmp, Game game, TakeCardEffect throughEffect) throws ClassNotFoundException, IOException{
 		if(!(throughEffect == null)){
 			if(throughEffect.isDiscountPresence()){ //discount di takecardeffect
 				if(throughEffect.getDiscount().getAlternativeDiscountPresence()){
 					if(check){
+						//FIXME
 						throughEffect.getDiscount().setChosenAlternativeDiscount(game.askAlternative(throughEffect.getDiscount().getDiscount(), throughEffect.getDiscount().getAlternativeDiscount(), "discount"));
 						tmp.modifyResource(throughEffect.getDiscount().getChosenAlternativeDiscount(), true);
 					}
@@ -364,7 +366,7 @@ public class TakeCardController {
 		}
 	}
 	
-	protected void lookForIncrementCardDiscount(FamilyMember familyMember, boolean check, Resource tmp, Game game){
+	protected void lookForIncrementCardDiscount(FamilyMember familyMember, boolean check, Resource tmp, Game game) throws ClassNotFoundException, IOException{
 		for(Character character : familyMember.getPlayer().getBoard().getCharacters()){
 			if(character.getPermanentEffect() instanceof IncrementCardEffect){
 				IncrementCardEffect eff = (IncrementCardEffect) character.getPermanentEffect();
@@ -372,6 +374,7 @@ public class TakeCardController {
 					if(eff.isDiscountPresence()){ //discount di incrementCardEffect
 						if(eff.getDiscount().getAlternativeDiscountPresence()){ 
 							if(check){
+								//FIXME
 								eff.getDiscount().setChosenAlternativeDiscount(game.askAlternative(eff.getDiscount().getDiscount(), eff.getDiscount().getAlternativeDiscount(), "discount"));
 								tmp.modifyResource(eff.getDiscount().getChosenAlternativeDiscount(), true);
 							}

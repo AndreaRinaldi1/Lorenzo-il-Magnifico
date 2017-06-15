@@ -1,5 +1,6 @@
 package it.polimi.ingsw.GC_28.effects;
 
+import java.io.IOException;
 import java.util.EnumMap;
 import java.util.Map;
 
@@ -31,7 +32,14 @@ public class ResourceEffect extends Effect{
 	@Override
 	public void apply(FamilyMember familyMember, Game game) {//FIXME
 		System.out.println("apply di ResourceEffect");
-		familyMember.getPlayer().addResource(game.checkResourceExcommunication(resourceBonus));
+		try {
+			System.out.println(familyMember.getPlayer().getName());
+			familyMember.getPlayer().addResource(game.checkResourceExcommunication(resourceBonus));
+			System.out.println("exit");
+		} catch (ClassNotFoundException | IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		//check for Santa Rita LeaderCard
 		/*for(LeaderCard lc : familyMember.getPlayer().getLeaderCards()){
 			if(lc.getName().equalsIgnoreCase("Santa Rita") && lc.getPlayed() && lc.getActive()){
@@ -53,6 +61,11 @@ public class ResourceEffect extends Effect{
 	@Override
 	public void apply(Player player, Game game) {//FIXME
 		System.out.println("Effetto Leader");
-		player.addResource(game.checkResourceExcommunication(resourceBonus));
+		try {
+			player.addResource(game.checkResourceExcommunication(resourceBonus));
+		} catch (ClassNotFoundException | IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 }

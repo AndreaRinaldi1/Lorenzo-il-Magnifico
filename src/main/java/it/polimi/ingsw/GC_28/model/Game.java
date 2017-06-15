@@ -76,23 +76,62 @@ public class Game extends Observable<Action> implements Runnable, Observer<Messa
 		System.out.println(1);
 		BoardSetup bs = new BoardSetup(this);
 		for(currentEra = 1; currentEra <= 3; currentEra++){
-			skipPlayers();
+			//skipPlayers();
 			for(currentPeriod = 1; currentPeriod <= 2; currentPeriod++){
 				checkDiceReduction();				
 				for(currentRound = 1; currentRound <= 4; currentRound++){					
 					for(currentTurn = 0; currentTurn < gameModel.getPlayers().size(); currentTurn++){
 						try {
+							display();
+						} catch (IOException e1) {
+							// TODO Auto-generated catch block
+							e1.printStackTrace();
+						}
+						while(true){
+							try {
+								System.out.println("currentEra"+currentEra);
+								handlers.get(currentPlayer).getOut().writeUTF("It's your turn");
+								handlers.get(currentPlayer).getOut().writeUTF("which action do you want to undertake? [takecard/gotospace/skip]");
+								handlers.get(currentPlayer).getOut().flush();
+								handlers.get(currentPlayer).getOut().reset();
+								String s = handlers.get(currentPlayer).getIn().readUTF();
+								handlers.get(currentPlayer).getOut().writeUTF(s);
+								handlers.get(currentPlayer).getOut().flush();
+								handlers.get(currentPlayer).getOut().reset();
+								Object obj = handlers.get(currentPlayer).getIn().readObject();
+								if(obj == null){
+									break;
+								}
+								Action action = (Action) obj;
+								action.setGame(this);
+								action.setGameModel(gameModel);
+								this.notifyObserver(action);
+								if(result){
+									System.out.println("invio player");
+									handlers.get(currentPlayer).getOut().writeUTF("player");
+									handlers.get(currentPlayer).getOut().flush();
+									handlers.get(currentPlayer).getOut().reset();
+									handlers.get(currentPlayer).getOut().writeObject(currentPlayer);
+									handlers.get(currentPlayer).getOut().flush();
+									break;
+								}
+							} catch (ClassNotFoundException | IOException e) {
+								// TODO Auto-generated catch block
+								e.printStackTrace();
+							}
+						}
+						/*try {
 							play();
 						} catch (IOException e) {
 							Logger.getAnonymousLogger().log(Level.SEVERE,"Cannot play that move in method run()" + e);
-						}
+						}*/
 						if(currentTurn == (gameModel.getPlayers().size()-1)){
 							currentPlayer = gameModel.getPlayers().get(0);
 						}else{
 							currentPlayer = gameModel.getPlayers().get((currentTurn+1));
 						}
-						/*
-						 * TIMER CHE "FUNZIONA" SOLO SU PRIMA DOMANDA (FINO ALLA FINE DI QUESTO COMMENTO)
+						
+						/* * TIMER CHE "FUNZIONA" SOLO SU PRIMA DOMANDA (FINO ALLA FINE DI QUESTO COMMENTO)
 						boolean x = false;
 						long time = System.currentTimeMillis() + 16000;
 						Thread t = new Thread(){
@@ -170,25 +209,53 @@ public class Game extends Observable<Action> implements Runnable, Observer<Messa
 						
 					} 	
 				}
-				checkSkippedPlayers();
-				if(!(currentEra == 3 && currentPeriod == 2)){//if it's the third Era and the second period it's evaluate as false;
+				//if(!(currentEra == 3 && currentPeriod == 2)){//if it's the third Era and the second period it's evaluate as false;
 					bs.setUpBoard();
+					for(Player p: handlers.keySet()){
+							try {
+								handlers.get(p).getOut().reset();
+								handlers.get(p).getOut().writeUTF("player");
+								handlers.get(p).getOut().flush();
+								handlers.get(p).getOut().writeObject(p);
+								handlers.get(p).getOut().flush();
+							} catch (IOException e) {
+								// TODO Auto-generated catch block
+								e.printStackTrace();
+							}
+							
+					}
 					currentPlayer = gameModel.getPlayers().get(0);
-				}
+				//}
+				//checkSkippedPlayers();
+				
 			}
-			giveExcommunication();
+			
+			//giveExcommunication();
 		}
 		applyFinalBonus();
 		applyFinalMalus();
 		sortBy(gameModel.getPlayers(), ResourceType.MILITARYPOINT);
 		assignBonusForMilitary();
 		sortBy(gameModel.getPlayers(), ResourceType.VICTORYPOINT);
-		declareWinner();
+		try {
+			declareWinner();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
 	}
 	
-	public void declareWinner(){
-		handlers.get(gameModel.getPlayers().get(0)).getOut().println("YOU WIN!!!");
+	public void setCurrentPlayer(Player player){
+		this.currentPlayer = player;
+	}
+	
+	public GameModel getGameModel() {
+		return gameModel;
+	}
+	
+	public void declareWinner() throws IOException{
+		handlers.get(gameModel.getPlayers().get(0)).getOut().writeUTF("YOU WIN!!!");
 		handlers.get(gameModel.getPlayers().get(0)).getOut().flush();
 		displayFinalChart();
 	}
@@ -208,10 +275,10 @@ public class Game extends Observable<Action> implements Runnable, Observer<Messa
 		return ret.toString();
 	}
 	
-	public void displayFinalChart(){
+	public void displayFinalChart() throws IOException{
 		String chart = getChartTable();
 		for(Player p : gameModel.getPlayers()){
-			handlers.get(p).getOut().println(chart);
+			handlers.get(p).getOut().writeUTF(chart);
 			handlers.get(p).getOut().flush();
 		}
 	}
@@ -285,7 +352,150 @@ public class Game extends Observable<Action> implements Runnable, Observer<Messa
 		}
 	}
 	
-	public void checkSkippedPlayers(){ // se i giocatori hanno saltato il primo turno ora possono rifare il turno che gli spetta alla fine
+	public int getCurrentPeriod() {
+		return currentPeriod;
+	}
+	
+	public Player getCurrentPlayer(){
+		return currentPlayer;
+	}
+	
+	
+	public void setPeriod(int period) {
+		this.currentPeriod = period;
+	}
+	
+
+	public int getCurrentEra() {
+		return currentEra;
+	}
+
+	public void setCurrentEra(int currentEra) {
+		this.currentEra = currentEra;
+	}
+	
+	public Resource checkResourceExcommunication(Resource amount) throws ClassNotFoundException, IOException{
+		for(ExcommunicationTile t : currentPlayer.getExcommunicationTile()){ //guardo tra le scomuniche del currentPlayer
+			if(t.getEffect() instanceof DiscountEffect){ //se trovo un discounteffect
+				System.out.println("checkEx 1");
+				DiscountEffect eff = (DiscountEffect) t.getEffect();
+				boolean disc = false;
+				boolean altDisc = false;
+				
+				for(ResourceType resType : eff.getDiscount().getResource().keySet()){ //guardo tra i resourceType del discounteff
+					System.out.println("checkEx 2");
+					if(!(eff.getDiscount().getResource().get(resType).equals(0))){ //se ne trovo uno diverso da 0
+						System.out.println("checkEx 3");
+						if(!amount.getResource().get(resType).equals(0)){ // e se io l'ho preso quel tipo di risorsa
+							System.out.println("checkEx 4");
+							disc = true; //allora setto un bool
+							break;
+						}
+					}
+				}
+				
+				if(eff.getAlternativeDiscountPresence()){ //se ho due alternative
+					for(ResourceType resType : eff.getAlternativeDiscount().getResource().keySet()){ 
+						if(!(eff.getAlternativeDiscount().getResource().get(resType).equals(0))){
+							if(!amount.getResource().get(resType).equals(0)){
+								altDisc = true; // se ho preso anche la risorsa diversa da zero dell'alternativediscount setto un bool
+								break;
+							}
+						}
+					}
+				}
+					
+				if(disc && altDisc){ // se ho preso entrambi chiedo quale togliere
+					//TODO fix this
+					eff.setChosenAlternativeDiscount(askAlternative(eff.getDiscount(), eff.getAlternativeDiscount(), "malus")); 
+				}
+				else if(disc){ //altrimenti tolgo disc..
+					eff.setChosenAlternativeDiscount(eff.getDiscount());
+				}
+				else if(altDisc){ //o alternative disc
+					eff.setChosenAlternativeDiscount(eff.getAlternativeDiscount());
+				}
+				else{ //se non ho preso niente di quei tipi non tolgo niente
+					eff.setChosenAlternativeDiscount(null);
+				}
+				
+				amount.modifyResource(eff.getChosenAlternativeDiscount(), true);
+				return amount;
+			}			
+		}
+		return amount;
+	}
+	
+	public void display() throws IOException{
+		for(Player p: gameModel.getPlayers()){
+			handlers.get(p).getOut().reset();
+			handlers.get(p).getOut().writeUTF(gameModel.getGameBoard().display());
+			handlers.get(p).getOut().writeUTF(p.getBoard().display());
+			handlers.get(p).getOut().writeUTF(p.displayExcommunication());
+			handlers.get(p).getOut().writeUTF(p.displayLeader());
+			//handlers.get(p).getOut().println(p.getBoard().getBonusTile().getHarvestEffect().getResourceHarvestBonus().getResourceBonus().toString());
+			//handlers.get(p).getOut().println(p.getBoard().getBonusTile().getProductionEffect().getResourceBonus().getResourceBonus().toString());
+			for(int i = 0; i < 4; i++){
+				handlers.get(p).getOut().writeUTF(p.getFamilyMembers()[i].toString());
+			}
+			handlers.get(p).getOut().flush();
+			}
+	}
+	
+	public Map<Player, ClientHandler> getHandlers() {
+		return handlers;
+	}
+	
+	public Resource askAlternative(Resource discount1, Resource discount2, String type) throws IOException, ClassNotFoundException{
+		handlers.get(currentPlayer).getOut().writeUTF("askAlternative");
+		handlers.get(currentPlayer).getOut().flush();
+		handlers.get(currentPlayer).getOut().writeObject(discount1);
+		handlers.get(currentPlayer).getOut().flush();
+		handlers.get(currentPlayer).getOut().reset();
+		handlers.get(currentPlayer).getOut().writeObject(discount2);
+		handlers.get(currentPlayer).getOut().flush();
+		handlers.get(currentPlayer).getOut().reset();
+
+		Resource alternative = (Resource)handlers.get(currentPlayer).getIn().readObject();
+		return alternative;
+	}
+	
+	public Character askPrivilege() throws IOException{
+		handlers.get(currentPlayer).getOut().writeUTF("askPrivilege");
+		handlers.get(currentPlayer).getOut().flush();
+		Character c = (Character)handlers.get(currentPlayer).getIn().readChar();
+		return c;
+	} 
+	
+	public ArrayList<Character> askPrivilege(int numberOfCouncilPrivileges, boolean different) throws IOException, ClassNotFoundException{
+		handlers.get(currentPlayer).getOut().writeUTF("askPrivilege");
+		handlers.get(currentPlayer).getOut().flush();
+		handlers.get(currentPlayer).getOut().writeInt(numberOfCouncilPrivileges);
+		handlers.get(currentPlayer).getOut().flush();
+		handlers.get(currentPlayer).getOut().writeBoolean(different);
+		handlers.get(currentPlayer).getOut().flush();
+		
+		//FIXME
+		Object obj = handlers.get(currentPlayer).getIn().readObject();
+		System.out.println(obj.toString());
+		
+		ArrayList<?> recive = (ArrayList<?>) obj;
+		ArrayList<Character> choices = new ArrayList<>();
+		for(int i = 0; i < recive.size(); i++){
+			if(recive.get(i) instanceof Character){
+				Character choice = (Character)recive.get(i);
+				choices.add(choice);
+			}
+		}
+		
+		
+		return choices;
+	}
+
+
+	
+	
+	/*public void checkSkippedPlayers(){ // se i giocatori hanno saltato il primo turno ora possono rifare il turno che gli spetta alla fine
 		for(Player p : skipped){
 			currentPlayer = p;
 			try{
@@ -328,7 +538,7 @@ public class Game extends Observable<Action> implements Runnable, Observer<Messa
 	}
 
 
-	public void play() throws IOException, IndexOutOfBoundsException{
+	/*public void play() throws IOException, IndexOutOfBoundsException{
 		display();
 		if(suspended.contains(currentPlayer)){
 			return;
@@ -364,7 +574,7 @@ public class Game extends Observable<Action> implements Runnable, Observer<Messa
 			}
 			/*else if(line.equals("disconnect")){
 				return;
-			}*/
+			}
 			else if(line.equalsIgnoreCase("specialaction")){
 				specialAction();
 			}
@@ -395,85 +605,11 @@ public class Game extends Observable<Action> implements Runnable, Observer<Messa
 	}
 
 
-	public int getCurrentPeriod() {
-		return currentPeriod;
-	}
 	
-	public Player getCurrentPlayer(){
-		return currentPlayer;
-	}
 	
-	public void setCurrentPlayer(Player player){
-		this.currentPlayer = player;
-	}
-	
-	public void setPeriod(int period) {
-		this.currentPeriod = period;
-	}
 	
 
-	public int getCurrentEra() {
-		return currentEra;
-	}
-
-	public void setCurrentEra(int currentEra) {
-		this.currentEra = currentEra;
-	}
 	
-	public GameModel getGameModel() {
-		return gameModel;
-	}
-
-	public Resource checkResourceExcommunication(Resource amount){
-		for(ExcommunicationTile t : currentPlayer.getExcommunicationTile()){ //guardo tra le scomuniche del currentPlayer
-			if(t.getEffect() instanceof DiscountEffect){ //se trovo un discounteffect
-				System.out.println("checkEx 1");
-				DiscountEffect eff = (DiscountEffect) t.getEffect();
-				boolean disc = false;
-				boolean altDisc = false;
-				
-				for(ResourceType resType : eff.getDiscount().getResource().keySet()){ //guardo tra i resourceType del discounteff
-					System.out.println("checkEx 2");
-					if(!(eff.getDiscount().getResource().get(resType).equals(0))){ //se ne trovo uno diverso da 0
-						System.out.println("checkEx 3");
-						if(!amount.getResource().get(resType).equals(0)){ // e se io l'ho preso quel tipo di risorsa
-							System.out.println("checkEx 4");
-							disc = true; //allora setto un bool
-							break;
-						}
-					}
-				}
-				
-				if(eff.getAlternativeDiscountPresence()){ //se ho due alternative
-					for(ResourceType resType : eff.getAlternativeDiscount().getResource().keySet()){ 
-						if(!(eff.getAlternativeDiscount().getResource().get(resType).equals(0))){
-							if(!amount.getResource().get(resType).equals(0)){
-								altDisc = true; // se ho preso anche la risorsa diversa da zero dell'alternativediscount setto un bool
-								break;
-							}
-						}
-					}
-				}
-					
-				if(disc && altDisc){ // se ho preso entrambi chiedo quale togliere
-					eff.setChosenAlternativeDiscount(askAlternative(eff.getDiscount(), eff.getAlternativeDiscount(), "malus")); 
-				}
-				else if(disc){ //altrimenti tolgo disc..
-					eff.setChosenAlternativeDiscount(eff.getDiscount());
-				}
-				else if(altDisc){ //o alternative disc
-					eff.setChosenAlternativeDiscount(eff.getAlternativeDiscount());
-				}
-				else{ //se non ho preso niente di quei tipi non tolgo niente
-					eff.setChosenAlternativeDiscount(null);
-				}
-				
-				amount.modifyResource(eff.getChosenAlternativeDiscount(), true);
-				return amount;
-			}			
-		}
-		return amount;
-	}
 	
 	
 	public ArrayList<Character> askPrivilege(int numberOfCouncilPrivileges, boolean different){
@@ -584,7 +720,7 @@ public class Game extends Observable<Action> implements Runnable, Observer<Messa
 			familyMember.modifyValue((-1)*(incrementThroughServants));
 		}*/
 		
-		return result;
+	/*	return result;
 		
 		
 	}
@@ -625,12 +761,11 @@ public class Game extends Observable<Action> implements Runnable, Observer<Messa
 		takeCardAction.setThroughEffect(throughEffect);
 		
 		this.notifyObserver(takeCardAction);
-		System.out.println(5);
 		/*if(modifiedWithServants){
 			familyMember.modifyValue((-1)*(incrementThroughServants));
 		}*/
 		
-		return result;
+	/*	return result;
 	}
 	
 	
@@ -816,9 +951,9 @@ public class Game extends Observable<Action> implements Runnable, Observer<Messa
 			}
 			
 		}
-	}
+	}*/
 	
-	void askCost(){
+	/*void askCost(){
 		String name = askCardName();
 		Cell c;
 		for(CardType ct : CardType.values()){
@@ -828,15 +963,15 @@ public class Game extends Observable<Action> implements Runnable, Observer<Messa
 				return;
 			}
 		}	
-	}
+	}*/
 	
-	private void askLeaderCost(){
+	/*private void askLeaderCost(){
 		handlers.get(currentPlayer).getOut().println(currentPlayer.displayLeaderCost());
 		handlers.get(currentPlayer).getOut().flush();
 		return;
-	}
+	}*/
 	
-	private void giveExcommunication(){
+	/*private void giveExcommunication(){
 		for(Player p : gameModel.getPlayers()){
 				handlers.get(p).getOut().println(p.displayExcommunication());
 				handlers.get(p).getOut().flush();
@@ -1009,11 +1144,16 @@ public class Game extends Observable<Action> implements Runnable, Observer<Messa
 			}
 		}
 		return false;
-	}
+	}*/
 
 	@Override
 	public void update(Message m) {
-		handlers.get(currentPlayer).getOut().println(m.getMessage());
+		try {
+			handlers.get(currentPlayer).getOut().writeUTF(m.getMessage());
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		result = m.isResult();
 		if(!(m.isResult())){	
 			if(modifiedWithServants){

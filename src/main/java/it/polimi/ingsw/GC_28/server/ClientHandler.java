@@ -1,6 +1,8 @@
 package it.polimi.ingsw.GC_28.server;
 
 import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.io.PrintWriter;
 import java.net.Socket;
 import java.util.ArrayList;
@@ -15,26 +17,27 @@ public class ClientHandler{
 	private Socket socket;
 	private ArrayList<Socket> socketList;
 	
-	Scanner in;
-	PrintWriter out;
+	ObjectInputStream in;
+	ObjectOutputStream out;
 	
-	public ClientHandler(Socket socket){
-		this.socket = socket;
+	public ClientHandler(ObjectOutputStream out, ObjectInputStream in){
+		this.in = in;
+		this.out = out;
 		
-		try {
-			in = new Scanner(socket.getInputStream());
-			out = new PrintWriter(socket.getOutputStream());
+		/*try {
+			in = new ObjectInputStream(socket.getInputStream());//new Scanner(socket.getInputStream());
+			out = new ObjectOutputStream(socket.getOutputStream());
 		} catch (IOException e) {
 			Logger.getAnonymousLogger().log(Level.WARNING,"Cannot instantiate the scanner or the printWriter in the clientHandler" + e);
-		}
+		}*/
 		
 	}
 
-	public Scanner getIn() {
+	public ObjectInputStream getIn() {
 		return in;
 	}
 
-	public PrintWriter getOut() {
+	public ObjectOutputStream getOut() {
 		return out;
 	}
 	

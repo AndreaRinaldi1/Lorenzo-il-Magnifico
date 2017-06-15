@@ -1,10 +1,14 @@
 package it.polimi.ingsw.GC_28.effects;
 
+import java.io.IOException;
+
 import it.polimi.ingsw.GC_28.boards.GameBoard;
 import it.polimi.ingsw.GC_28.boards.PlayerBoard;
 import it.polimi.ingsw.GC_28.cards.CardType;
 import it.polimi.ingsw.GC_28.components.FamilyMember;
+import it.polimi.ingsw.GC_28.core.Action;
 import it.polimi.ingsw.GC_28.model.Game;
+import it.polimi.ingsw.GC_28.model.Player;
 
 public class TakeCardEffect extends Effect{
 	private int actionValue;
@@ -55,14 +59,37 @@ public class TakeCardEffect extends Effect{
 		//game.askCard(this);
 		boolean ok = false;
 		do{
-			ok = game.askCard(this);
-			if(!ok){
-				game.getHandlers().get(familyMember.getPlayer()).getOut().println("Are you unable to take any card and you want to skip? [y/n]");
-				game.getHandlers().get(familyMember.getPlayer()).getOut().flush();
-				if (game.getHandlers().get(familyMember.getPlayer()).getIn().nextLine().equals("y")){
+			Player p = game.getCurrentPlayer();
+			try {
+				//game.getHandlers().get(familyMember.getPlayer()).getOut().reset();
+				System.out.println("entro nel try");
+				game.getHandlers().get(p).getOut().writeUTF("takeCard");
+				game.getHandlers().get(p).getOut().flush();
+				System.out.println("inviato takecard");
+				game.getHandlers().get(p).getOut().writeObject(this);
+				game.getHandlers().get(p).getOut().flush();
+				System.out.println("inviato oggetto");
+				//game.getHandlers().get(p).getIn().readUTF();
+				Object obj = game.getHandlers().get(p).getIn().readObject();
+				System.out.println("ricevuto oggetto");
+				if(obj == null){
 					return;
 				}
+				Action action = (Action)obj;
+				action.setGame(game);
+				action.setGameModel(game.getGameModel());
+				if(action.isApplicable()){
+					action.apply();
+					ok = true;
+				}
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (ClassNotFoundException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
 			}
+			
 		}while(!ok);
 	}
 }

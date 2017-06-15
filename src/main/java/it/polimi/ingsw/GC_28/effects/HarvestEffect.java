@@ -52,10 +52,15 @@ public class HarvestEffect extends Effect{
 			}
 			else{
 				resourceHarvestBonus.apply(familyMember, game);
+				System.out.println("quasi");
 			}
 		}
 		else{
 			System.out.println("You don't have the necessary action value to activate this effect");
 		}
+		System.out.println("prpva");
+		//game.getCurrentPlayer().setBoard(familyMember.getPlayer().getBoard());
+		//game.getCurrentPlayer().setFamilyMembers(familyMember.getPlayer().getFamilyMembers());
+		
 	}
 }

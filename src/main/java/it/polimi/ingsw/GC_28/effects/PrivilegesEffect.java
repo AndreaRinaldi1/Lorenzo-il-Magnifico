@@ -1,5 +1,6 @@
 package it.polimi.ingsw.GC_28.effects;
 
+import java.io.IOException;
 import java.util.ArrayList;
 
 import it.polimi.ingsw.GC_28.boards.GameBoard;
@@ -36,18 +37,37 @@ public class PrivilegesEffect extends Effect{
 	@Override
 	public void apply(FamilyMember familyMember, Game game) {
 		System.out.println("apply di PrivilegesEffect");
-		ArrayList<Character> choices = game.askPrivilege(numberOfCouncilPrivileges, different);
-		for(int i = 0; i < choices.size(); i++){
-			familyMember.getPlayer().addResource(game.checkResourceExcommunication(CouncilPrivilege.instance().getOptions().get(choices.get(i))));
+		ArrayList<Character> choices;
+		try {
+			choices = game.askPrivilege(numberOfCouncilPrivileges, different);
+			for(int i = 0; i < choices.size(); i++){
+				familyMember.getPlayer().addResource(game.checkResourceExcommunication(CouncilPrivilege.instance().getOptions().get(choices.get(i))));
+			}
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
+		
 	}
 	
 	@Override
 	public void apply(Player player, Game game) {
 		System.out.println("Ludovico Gonzaga Effect");
-		ArrayList<Character> choices = game.askPrivilege(numberOfCouncilPrivileges, different);
-		for(int i = 0; i<choices.size(); i++ ){
-			player.addResource(game.checkResourceExcommunication(CouncilPrivilege.instance().getOptions().get(choices.get(i))));
+		ArrayList<Character> choices;
+		try {
+			choices = game.askPrivilege(numberOfCouncilPrivileges, different);
+			for(int i = 0; i<choices.size(); i++ ){
+				player.addResource(game.checkResourceExcommunication(CouncilPrivilege.instance().getOptions().get(choices.get(i))));
+			}
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 	}
 }
