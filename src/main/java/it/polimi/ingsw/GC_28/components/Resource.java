@@ -1,10 +1,15 @@
 package it.polimi.ingsw.GC_28.components;
 
+import java.io.Serializable;
 import java.util.EnumMap;
 import java.util.Map;
 import java.util.Set;
 
-public class Resource {
+public class Resource implements Serializable{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	//attributes and methods parameters in class Resource need Map and not EnumMap (fromJson's fault)
 	
 	private Map<ResourceType, Integer> resource; 

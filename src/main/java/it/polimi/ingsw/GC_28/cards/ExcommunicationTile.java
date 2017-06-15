@@ -1,8 +1,14 @@
 package it.polimi.ingsw.GC_28.cards;
 
+import java.io.Serializable;
+
 import it.polimi.ingsw.GC_28.effects.Effect;
 
-public class ExcommunicationTile {
+public class ExcommunicationTile implements Serializable{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private int era;
 	private Effect effect;
 	

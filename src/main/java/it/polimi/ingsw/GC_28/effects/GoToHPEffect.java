@@ -1,7 +1,10 @@
 package it.polimi.ingsw.GC_28.effects;
 
+import java.io.IOException;
+
 import it.polimi.ingsw.GC_28.boards.GameBoard;
 import it.polimi.ingsw.GC_28.boards.PlayerBoard;
+import it.polimi.ingsw.GC_28.client.ClientWriter;
 import it.polimi.ingsw.GC_28.components.FamilyMember;
 import it.polimi.ingsw.GC_28.components.ResourceType;
 import it.polimi.ingsw.GC_28.model.Game;
@@ -42,15 +45,25 @@ public class GoToHPEffect extends Effect{
 	}
 	
 	@Override
-	public void apply(FamilyMember familyMember, Game game){
+	public void apply(FamilyMember familyMember, ClientWriter writer){
 		System.out.println("apply di GoToHPEffect");
-		game.goToSpace(this);
+		try {
+			writer.goToSpace(this);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 	
 	@Override
-	public void apply(Player player, Game game) {
+	public void apply(Player player, ClientWriter writer) {
 		System.out.println("Leader Effect");
-		game.goToSpace(this);
+		try {
+			writer.goToSpace(this);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 	
 	

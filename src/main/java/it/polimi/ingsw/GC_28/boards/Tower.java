@@ -1,8 +1,14 @@
 package it.polimi.ingsw.GC_28.boards;
 
+import java.io.Serializable;
+
 import it.polimi.ingsw.GC_28.model.PlayerColor;
 
-public class Tower {
+public class Tower implements Serializable{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private static final int MAX_SIZE = 4;
 	private Cell[] cells = new Cell[MAX_SIZE];
 	private boolean atLeastOne;

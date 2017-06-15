@@ -1,4 +1,5 @@
 package it.polimi.ingsw.GC_28.spaces;
+import it.polimi.ingsw.GC_28.client.ClientWriter;
 import it.polimi.ingsw.GC_28.components.*;
 
 import it.polimi.ingsw.GC_28.effects.PrivilegesEffect;
@@ -21,7 +22,7 @@ public class PrivilegesSpace extends Space{
 		this.bonus = bonus;
 	}
 
-	public void applyBonus(Game game, FamilyMember familyMember) {
-		bonus.apply(familyMember, game);
+	public void applyBonus(ClientWriter writer, FamilyMember familyMember) {
+		bonus.apply(familyMember, writer);
 	}	
 }

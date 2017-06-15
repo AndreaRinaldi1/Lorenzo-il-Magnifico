@@ -1,5 +1,6 @@
 package it.polimi.ingsw.GC_28.spaces;
 import it.polimi.ingsw.GC_28.cards.*;
+import it.polimi.ingsw.GC_28.client.ClientWriter;
 import it.polimi.ingsw.GC_28.components.FamilyMember;
 import it.polimi.ingsw.GC_28.components.Resource;
 import it.polimi.ingsw.GC_28.effects.ResourceEffect;
@@ -22,7 +23,7 @@ public class MarketSpace extends Space{
 	}
 
 	@Override
-	public void applyBonus(Game game, FamilyMember familyMember){
-		bonus.apply(familyMember, game);
+	public void applyBonus(ClientWriter writer, FamilyMember familyMember){
+		bonus.apply(familyMember, writer);
 	}
 }

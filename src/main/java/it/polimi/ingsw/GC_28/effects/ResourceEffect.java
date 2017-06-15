@@ -5,6 +5,7 @@ import java.util.Map;
 
 import it.polimi.ingsw.GC_28.boards.*;
 import it.polimi.ingsw.GC_28.cards.LeaderCard;
+import it.polimi.ingsw.GC_28.client.ClientWriter;
 import it.polimi.ingsw.GC_28.components.FamilyMember;
 
 import it.polimi.ingsw.GC_28.components.Resource;
@@ -29,9 +30,9 @@ public class ResourceEffect extends Effect{
 	}
 
 	@Override
-	public void apply(FamilyMember familyMember, Game game) {//FIXME
+	public void apply(FamilyMember familyMember, ClientWriter writer) {//FIXME
 		System.out.println("apply di ResourceEffect");
-		familyMember.getPlayer().addResource(game.checkResourceExcommunication(resourceBonus));
+		familyMember.getPlayer().addResource(writer.checkResourceExcommunication(resourceBonus,familyMember.getPlayer()));
 		//check for Santa Rita LeaderCard
 		/*for(LeaderCard lc : familyMember.getPlayer().getLeaderCards()){
 			if(lc.getName().equalsIgnoreCase("Santa Rita") && lc.getPlayed() && lc.getActive()){
@@ -51,8 +52,8 @@ public class ResourceEffect extends Effect{
 		}*/
 	}
 	@Override
-	public void apply(Player player, Game game) {//FIXME
+	public void apply(Player player, ClientWriter writer) {//FIXME
 		System.out.println("Effetto Leader");
-		player.addResource(game.checkResourceExcommunication(resourceBonus));
+		player.addResource(writer.checkResourceExcommunication(resourceBonus,player));
 	}
 }

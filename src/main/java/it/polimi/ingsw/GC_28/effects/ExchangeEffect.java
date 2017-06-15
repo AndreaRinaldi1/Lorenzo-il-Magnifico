@@ -1,7 +1,10 @@
 package it.polimi.ingsw.GC_28.effects;
+import java.util.Scanner;
+
 import it.polimi.ingsw.GC_28.boards.GameBoard;
 import it.polimi.ingsw.GC_28.boards.PlayerBoard;
 import it.polimi.ingsw.GC_28.cards.*;
+import it.polimi.ingsw.GC_28.client.ClientWriter;
 import it.polimi.ingsw.GC_28.components.CouncilPrivilege;
 import it.polimi.ingsw.GC_28.components.FamilyMember;
 import it.polimi.ingsw.GC_28.components.Resource;
@@ -85,32 +88,67 @@ public class ExchangeEffect extends Effect{
 
 
 	@Override
-	public void apply(FamilyMember familyMember, Game game){
+	public void apply(FamilyMember familyMember, ClientWriter writer){
 		System.out.println("apply di ExchangeEffect");
 		if(!this.alternative){
 			if(this.privilegeBonus != null){
 				familyMember.getPlayer().reduceResources(privilegeCost);
 				System.out.println(familyMember.getPlayer().getBoard().getResources().toString());
-				privilegeBonus.apply(familyMember, game);
+				privilegeBonus.apply(familyMember, writer);
 			}
 			else{
 				familyMember.getPlayer().reduceResources(firstCost);
 				System.out.println(familyMember.getPlayer().getBoard().getResources().toString());
-				familyMember.getPlayer().addResource(game.checkResourceExcommunication(firstBonus));
+				familyMember.getPlayer().addResource(writer.checkResourceExcommunication(firstBonus,familyMember.getPlayer()));
 
 			}
 		}
 		else{
-			if(game.askAlternativeExchange(firstCost, firstBonus, secondCost, secondBonus) == 1){
+			if(askAlternativeExchange(firstCost, firstBonus, secondCost, secondBonus) == 1){
 				familyMember.getPlayer().reduceResources(firstCost);
 				System.out.println(familyMember.getPlayer().getBoard().getResources().toString());
-				familyMember.getPlayer().addResource(game.checkResourceExcommunication(firstBonus));
+				familyMember.getPlayer().addResource(writer.checkResourceExcommunication(firstBonus,familyMember.getPlayer()));
 
 			}
 			else{
 				familyMember.getPlayer().reduceResources(secondCost);
 				System.out.println(familyMember.getPlayer().getBoard().getResources().toString());
-				familyMember.getPlayer().addResource(game.checkResourceExcommunication(secondBonus));
+				familyMember.getPlayer().addResource(writer.checkResourceExcommunication(secondBonus,familyMember.getPlayer()));
+			}
+		}
+	}
+	
+	public int askAlternativeExchange(Resource firstCost, Resource firstBonus, Resource secondCost, Resource secondBonus){
+		System.out.println("Which of the following exchanges do you want to apply? [1/2]");
+		System.out.println("First Possibility Cost");
+		System.out.println(firstCost.toString());
+		System.out.println("First Possibility Bonus");
+		System.out.println(firstBonus.toString());
+		System.out.println("Second Possibility Cost");
+		System.out.println(secondCost.toString());
+		System.out.println("Second Possibility Bonus");
+		System.out.println(secondBonus.toString());
+		int choice;
+		Scanner scan = new Scanner(System.in);
+		while(true){
+			if(scan.hasNextInt()){
+				choice = scan.nextInt();
+				scan.nextLine();
+				if(choice == 1 || choice == 2){
+					scan.close();
+					return choice;
+				}
+				else{
+					System.out.println("Not valid input!");
+					System.out.println("Which of the two discounts do you want to apply? [1/2]");
+					scan.nextLine();
+					continue;
+				}
+			}
+			else{
+				scan.nextLine();
+				System.out.println("Not valid input!");
+				System.out.println("Which of the two discounts do you want to apply? [1/2]");
 			}
 		}
 	}

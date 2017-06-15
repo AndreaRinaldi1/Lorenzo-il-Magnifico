@@ -22,6 +22,10 @@ public class GameModel extends Observable<Message> {
 		return gameBoard;
 	}
 	
+	public void setGameBoard(GameBoard gameBoard){
+		this.gameBoard = gameBoard;
+	}
+	
 	/*public void setGameBoard(GameBoard gameBoard) {
 		this.gameBoard = gameBoard;
 	}*/

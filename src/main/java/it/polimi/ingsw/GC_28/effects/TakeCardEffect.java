@@ -1,8 +1,12 @@
 package it.polimi.ingsw.GC_28.effects;
 
+import java.io.IOException;
+import java.util.Scanner;
+
 import it.polimi.ingsw.GC_28.boards.GameBoard;
 import it.polimi.ingsw.GC_28.boards.PlayerBoard;
 import it.polimi.ingsw.GC_28.cards.CardType;
+import it.polimi.ingsw.GC_28.client.ClientWriter;
 import it.polimi.ingsw.GC_28.components.FamilyMember;
 import it.polimi.ingsw.GC_28.model.Game;
 
@@ -50,18 +54,25 @@ public class TakeCardEffect extends Effect{
 	}
 
 	@Override
-	public void apply(FamilyMember familyMember, Game game) {
+	public void apply(FamilyMember familyMember, ClientWriter writer) {
 		System.out.println("apply di TakeCardEffect");
 		//game.askCard(this);
 		boolean ok = false;
 		do{
-			ok = game.askCard(this);
+			try {
+				ok = writer.askCard(this);
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 			if(!ok){
-				game.getHandlers().get(familyMember.getPlayer()).getOut().println("Are you unable to take any card and you want to skip? [y/n]");
-				game.getHandlers().get(familyMember.getPlayer()).getOut().flush();
-				if (game.getHandlers().get(familyMember.getPlayer()).getIn().nextLine().equals("y")){
+				System.out.println("Are you unable to take any card and you want to skip? [y/n]");
+				Scanner scan = new Scanner(System.in);
+				if (scan.hasNextLine() && ("y").equalsIgnoreCase(scan.nextLine())){
+					scan.close();
 					return;
 				}
+				scan.close();
 			}
 		}while(!ok);
 	}

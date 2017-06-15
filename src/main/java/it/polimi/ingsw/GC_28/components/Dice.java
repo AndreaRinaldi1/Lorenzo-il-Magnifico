@@ -1,8 +1,13 @@
 package it.polimi.ingsw.GC_28.components;
 
+import java.io.Serializable;
 import java.util.concurrent.ThreadLocalRandom;
 
-public class Dice {
+public class Dice implements Serializable {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private DiceColor color;
 	private int value;
 	

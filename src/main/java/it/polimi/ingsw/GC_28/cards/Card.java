@@ -1,10 +1,15 @@
 package it.polimi.ingsw.GC_28.cards;
 
 import java.awt.Color;
+import java.io.Serializable;
 
 import it.polimi.ingsw.GC_28.components.Resource;
 
-public class Card {
+public class Card implements Serializable {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private String name;
 	private int idNumber;
 	private int era;

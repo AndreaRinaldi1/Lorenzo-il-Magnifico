@@ -1,5 +1,6 @@
 package it.polimi.ingsw.GC_28.core;
 
+import it.polimi.ingsw.GC_28.boards.GameBoard;
 import it.polimi.ingsw.GC_28.cards.Character;
 import it.polimi.ingsw.GC_28.cards.ExcommunicationTile;
 import it.polimi.ingsw.GC_28.cards.LeaderCard;
@@ -17,31 +18,33 @@ import it.polimi.ingsw.GC_28.spaces.ProductionAndHarvestSpace;
 import it.polimi.ingsw.GC_28.spaces.Space;
 
 public class SpaceController {
-	private GameModel gameModel;
+	//private GameModel gameModel;
 	ProductionAndHarvestSpace prodHarv;
-
 	
-	public SpaceController(GameModel gameModel){
-		this.gameModel = gameModel;
+	
+	public SpaceController(){
+		//this.gameModel = gameModel;
 	}
 	
 	
 	public boolean check(FamilyMember familyMember, Space space, GoToHPEffect throughEffect){
-		
 		if(space instanceof MarketSpace || space instanceof PrivilegesSpace){ //se ha scelto di andare al mercato
 			if(!checkForNoMarket(familyMember, space)){
-				gameModel.notifyObserver(new Message("Due to excommunication, you can't go in this space", false));
+				//gameModel.notifyObserver(new Message("Due to excommunication, you can't go in this space", false));
+				System.out.println("Due to excommunication, you can't go in this space");
 				return false;
 			}
 		}
 		
 		if(throughEffect == null){
 			if(!checkFree(familyMember, space)){
-				gameModel.notifyObserver(new Message("This space is already occupied", false));
+				//gameModel.notifyObserver(new Message("This space is already occupied", false));
+				System.out.println("This space is already occupied");
 				return false;
 			}
 			if(!checkActionValue(familyMember, space)){
-				gameModel.notifyObserver(new Message("Your action value is not high enough to go in this space", false));
+				//gameModel.notifyObserver(new Message("Your action value is not high enough to go in this space", false));
+				System.out.println("Your action value is not high enough to go in this space");
 				return false;
 			}
 		}

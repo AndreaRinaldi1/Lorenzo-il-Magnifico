@@ -1,9 +1,15 @@
 package it.polimi.ingsw.GC_28.boards;
 
+import java.io.Serializable;
+
 import it.polimi.ingsw.GC_28.effects.HarvestEffect;
 import it.polimi.ingsw.GC_28.effects.ProductionEffect;
 
-public class BonusTile {
+public class BonusTile implements Serializable {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private ProductionEffect productionEffect;
 	private HarvestEffect harvestEffect;
 	

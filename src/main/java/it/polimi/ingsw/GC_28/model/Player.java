@@ -1,6 +1,7 @@
 package it.polimi.ingsw.GC_28.model;
 
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -15,7 +16,12 @@ import it.polimi.ingsw.GC_28.components.ResourceType;
 
 
 
-public class Player {
+public class Player implements Serializable{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	
 	private String name;
 	private PlayerColor color;
 	private PlayerBoard board;

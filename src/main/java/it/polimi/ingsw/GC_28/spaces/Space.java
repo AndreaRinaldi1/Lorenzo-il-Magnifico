@@ -1,13 +1,18 @@
 package it.polimi.ingsw.GC_28.spaces;
 
 import java.io.IOException;
+import java.io.Serializable;
 import java.util.ArrayList;
 
-
+import it.polimi.ingsw.GC_28.client.ClientWriter;
 import it.polimi.ingsw.GC_28.components.FamilyMember;
 import it.polimi.ingsw.GC_28.model.Game;
 
-public abstract class Space {
+public abstract class Space implements Serializable {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private boolean free;
 	private ArrayList<FamilyMember> players = new ArrayList<FamilyMember>();
 	private int actionValue;
@@ -47,5 +52,5 @@ public abstract class Space {
 	} 
 	
 	
-	public void applyBonus(Game game, FamilyMember familyMember){}
+	public void applyBonus(ClientWriter writer, FamilyMember familyMember){}
 }

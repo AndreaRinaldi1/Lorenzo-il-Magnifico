@@ -289,7 +289,7 @@ public class BoardsInitializer {
 				}
 			}
 			Random rand = new Random();
-			int randomInt = rand.nextInt(tmp.size()+1);
+			int randomInt = rand.nextInt(tmp.size());
 			gameBoard.getExcommunications()[i] = tmp.get(randomInt);
 			System.out.println(gameBoard.getExcommunications()[i].getEffect());
 			if(gameBoard.getExcommunications()[i].getEffect().getClass().equals(OtherEffect.class)){

@@ -4,6 +4,7 @@ import java.util.EnumMap;
 
 import it.polimi.ingsw.GC_28.boards.GameBoard;
 import it.polimi.ingsw.GC_28.cards.*;
+import it.polimi.ingsw.GC_28.client.ClientWriter;
 import it.polimi.ingsw.GC_28.components.FamilyMember;
 import it.polimi.ingsw.GC_28.components.Resource;
 import it.polimi.ingsw.GC_28.components.ResourceType;
@@ -56,26 +57,26 @@ public class MultiplierEffect extends Effect{
 	}
 	
 	@Override
-	public void apply(FamilyMember familyMember, Game game){
-		apply(familyMember.getPlayer(), game);
+	public void apply(FamilyMember familyMember, ClientWriter writer){
+		apply(familyMember.getPlayer(), writer);
 	}
 	
 	@Override
-	public void apply(Player player, Game game) {
+	public void apply(Player player,ClientWriter writer) {
 		System.out.println("apply di MultiplierEffect");
 		if(resourceCost == null){
 			switch(cardType){
 			case TERRITORY:
-				player.addResource(game.checkResourceExcommunication(multiplyResource(player.getBoard().getTerritories().size())));
+				player.addResource(writer.checkResourceExcommunication(multiplyResource(player.getBoard().getTerritories().size()),player));
 				break;
 			case BUILDING:
-				player.addResource(game.checkResourceExcommunication(multiplyResource(player.getBoard().getBuildings().size())));
+				player.addResource(writer.checkResourceExcommunication(multiplyResource(player.getBoard().getBuildings().size()),player));
 				break;
 			case CHARACTER:
-				player.addResource(game.checkResourceExcommunication(multiplyResource(player.getBoard().getCharacters().size())));
+				player.addResource(writer.checkResourceExcommunication(multiplyResource(player.getBoard().getCharacters().size()),player));
 				break;
 			case VENTURE:
-				player.addResource(game.checkResourceExcommunication(multiplyResource(player.getBoard().getVentures().size())));
+				player.addResource(writer.checkResourceExcommunication(multiplyResource(player.getBoard().getVentures().size()),player));
 				break;
 			}
 		}
@@ -86,7 +87,7 @@ public class MultiplierEffect extends Effect{
 					times += player.getBoard().getResources().getResource().get(resType) / resourceCost.getResource().get(resType);
 				}
 			}
-			player.addResource(game.checkResourceExcommunication(multiplyResource(times)));
+			player.addResource(writer.checkResourceExcommunication(multiplyResource(times),player));
 		}
 		
 	}

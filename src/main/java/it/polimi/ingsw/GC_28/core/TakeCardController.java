@@ -1,6 +1,8 @@
 package it.polimi.ingsw.GC_28.core;
 
+import java.io.IOException;
 import java.util.EnumMap;
+import java.util.Scanner;
 
 import it.polimi.ingsw.GC_28.boards.Cell;
 import it.polimi.ingsw.GC_28.boards.FinalBonus;
@@ -10,6 +12,7 @@ import it.polimi.ingsw.GC_28.cards.CardType;
 import it.polimi.ingsw.GC_28.components.FamilyMember;
 import it.polimi.ingsw.GC_28.components.Resource;
 import it.polimi.ingsw.GC_28.components.ResourceType;
+import it.polimi.ingsw.GC_28.effects.DiscountEffect;
 import it.polimi.ingsw.GC_28.effects.EffectType;
 import it.polimi.ingsw.GC_28.effects.IncrementCardEffect;
 import it.polimi.ingsw.GC_28.effects.OtherEffect;
@@ -22,20 +25,22 @@ import it.polimi.ingsw.GC_28.cards.Character;
 import it.polimi.ingsw.GC_28.cards.ExcommunicationTile;
 import it.polimi.ingsw.GC_28.cards.LeaderCard;
 import it.polimi.ingsw.GC_28.cards.Venture;
+import it.polimi.ingsw.GC_28.client.ClientWriter;
 
 public class TakeCardController {
-	private GameModel gameModel;
+	
 	private GameBoard gameBoard;
 	protected CardType cardType;
 	//private Cell cell;
 	private final int MAX_SIZE = 6;
+	private ClientWriter writer;
 	
-	public TakeCardController(GameModel gameModel){
-		this.gameModel = gameModel;
-		this.gameBoard = gameModel.getGameBoard();
+	public TakeCardController(GameBoard gameBoard, ClientWriter writer){
+		this.writer = writer;
+		this.gameBoard = gameBoard;
 	}
 	
-	public boolean check(Game game, String name, FamilyMember familyMember, TakeCardEffect throughEffect){
+	public boolean check( String name, FamilyMember familyMember, TakeCardEffect throughEffect){
 		/*if(throughEffect.equals(null)){ //non ho effetto 
 			cardType = null;
 		}
@@ -49,29 +54,29 @@ public class TakeCardController {
 		}*/
 		if(!(checkCardExistance(name, throughEffect))){
 			System.out.println(2);
-			gameModel.notifyObserver(new Message("this card doesn't exist", false));
+			//gameModel.notifyObserver(new Message("this card doesn't exist", false));
 			System.out.println(3);
 			return false;
 		}
 		System.out.println("carte esiste");
 		if(checkMoreThanSix(familyMember)){
-			gameModel.notifyObserver(new Message("You already have six cards of the type " + cardType.name().toLowerCase() , false));
+			//gameModel.notifyObserver(new Message("You already have six cards of the type " + cardType.name().toLowerCase() , false));
 			return false;
 		}
 		
 		System.out.println("non ne ho 6");
 		if(throughEffect == null){
 			if(checkThisPlayerPresent(familyMember)){
-				gameModel.notifyObserver(new Message("You already are in this tower" , false));
+				//gameModel.notifyObserver(new Message("You already are in this tower" , false));
 				return false;
 			}
 		}
 		System.out.println("io non presente");
-		if(!(checkResource(game, name,  familyMember, throughEffect))){
+		if(!(checkResource(name,  familyMember, throughEffect))){
 			return false;
 		}
 		System.out.println("ho le risorse");
-		if(!(checkActionValue(game, name, familyMember))){
+		if(!(checkActionValue(name, familyMember))){
 			return false;
 		}
 		System.out.println("ho action value");
@@ -168,7 +173,7 @@ public class TakeCardController {
 	 * @param cardType
 	 * @return true if the player has enough resources to take the card
 	 */
-	private boolean checkResource(Game game, String cardName, FamilyMember familyMember, TakeCardEffect throughEffect){
+	private boolean checkResource(String cardName, FamilyMember familyMember, TakeCardEffect throughEffect){
 		System.out.println("checkResource 1");
 		if(cardType.equals(CardType.TERRITORY)){
 			System.out.println("checkResource 2");
@@ -190,7 +195,7 @@ public class TakeCardController {
 							System.out.println("checkResource 4");
 							System.out.println(FinalBonus.instance().getResourceForTerritories().get(size).getResource().toString());
 							if(familyMember.getPlayer().getBoard().getResources().getResource().get(resType) < FinalBonus.instance().getResourceForTerritories().get(size+1).getResource().get(resType)){
-								gameModel.notifyObserver(new Message("You don'have the requested resources to take another " + cardType.name().toLowerCase() , false));
+								//gameModel.notifyObserver(new Message("You don'have the requested resources to take another " + cardType.name().toLowerCase() , false));
 								return false;
 							}
 						}
@@ -211,15 +216,15 @@ public class TakeCardController {
 		}
 		
 		if(tmp.getResource().get(ResourceType.COIN) < 0){
-			gameModel.notifyObserver(new Message("You don't have the three coins to enter this tower, since there's already another player", false));
+			//gameModel.notifyObserver(new Message("You don't have the three coins to enter this tower, since there's already another player", false));
 			return false;
 		}
 		
-		lookForNoCellBonus(game, familyMember, true, tmp, cardName);
+		lookForNoCellBonus( familyMember, true, tmp, cardName);
 		
-		lookForTakeCardDiscount(familyMember, true, tmp, game, throughEffect);
+		lookForTakeCardDiscount(familyMember, true, tmp, throughEffect);
 		
-		lookForIncrementCardDiscount(familyMember, true, tmp, game);
+		lookForIncrementCardDiscount(familyMember, true, tmp);
 		
 		if(cardType.equals(CardType.VENTURE)){
 			Venture venture = (Venture) gameBoard.getTowers().get(cardType).findCard(cardName).getCard();
@@ -232,8 +237,8 @@ public class TakeCardController {
 			if(venture.getAlternativeCostPresence() && costNotZeros){//ho due alternative di costo
 				if(venture.getMinimumRequiredMilitaryPoints() <= familyMember.getPlayer().getBoard().getResources().getResource().get(ResourceType.MILITARYPOINT)){
 					//qui se avesse un numero adeguato di military points tale da chiedere quale alternativa vuole
-					System.out.println("1");
-					tmp.modifyResource(game.askAlternative(venture.getCost(), venture.getAlternativeCost(), "cost"), false);
+					//FIXME
+					tmp.modifyResource(writer.askAlternative(venture.getCost(), venture.getAlternativeCost(), "cost"), false);
 				}
 				else{
 					System.out.println("2");
@@ -251,7 +256,7 @@ public class TakeCardController {
 					tmp.modifyResource(venture.getAlternativeCost(), false);
 				}
 				else{
-					gameModel.notifyObserver(new Message("You don't have the necessary military points to pay for this card" , false));
+					//gameModel.notifyObserver(new Message("You don't have the necessary military points to pay for this card" , false));
 					return false; //se non ha suff. military points non può prendere la carta
 				}
 			}
@@ -262,7 +267,7 @@ public class TakeCardController {
 		
 		for(ResourceType resType : tmp.getResource().keySet()){
 			if(tmp.getResource().get(resType) < 0){
-				gameModel.notifyObserver(new Message("You don't have the necessary resources to pay for this card" , false));
+				//gameModel.notifyObserver(new Message("You don't have the necessary resources to pay for this card" , false));
 				return false;
 			}
 		}
@@ -309,7 +314,7 @@ public class TakeCardController {
 
 	}
 	
-	protected void lookForNoCellBonus(Game game, FamilyMember familyMember, boolean check, Resource tmp, String cardName){
+	protected void lookForNoCellBonus(FamilyMember familyMember, boolean check, Resource tmp, String cardName){
 		boolean noCellBonus = false;
 		System.out.println("nocell 1");
 		for(Character character : familyMember.getPlayer().getBoard().getCharacters()){
@@ -333,19 +338,21 @@ public class TakeCardController {
 			}
 			else{
 				System.out.println("noCell 8");
-				familyMember.getPlayer().addResource(game.checkResourceExcommunication(bonus));
+				//FIXME
+				familyMember.getPlayer().addResource(writer.checkResourceExcommunication(bonus,familyMember.getPlayer()));
 			}
 		}
 		System.out.println("noCell 9");
 	}
 	
 	
-	protected void lookForTakeCardDiscount(FamilyMember familyMember, boolean check, Resource tmp, Game game, TakeCardEffect throughEffect){
+	protected void lookForTakeCardDiscount(FamilyMember familyMember, boolean check, Resource tmp, TakeCardEffect throughEffect){
 		if(!(throughEffect == null)){
 			if(throughEffect.isDiscountPresence()){ //discount di takecardeffect
 				if(throughEffect.getDiscount().getAlternativeDiscountPresence()){
 					if(check){
-						throughEffect.getDiscount().setChosenAlternativeDiscount(game.askAlternative(throughEffect.getDiscount().getDiscount(), throughEffect.getDiscount().getAlternativeDiscount(), "discount"));
+						//FIXME
+						throughEffect.getDiscount().setChosenAlternativeDiscount(writer.askAlternative(throughEffect.getDiscount().getDiscount(), throughEffect.getDiscount().getAlternativeDiscount(), "discount"));
 						tmp.modifyResource(throughEffect.getDiscount().getChosenAlternativeDiscount(), true);
 					}
 					else{
@@ -364,7 +371,7 @@ public class TakeCardController {
 		}
 	}
 	
-	protected void lookForIncrementCardDiscount(FamilyMember familyMember, boolean check, Resource tmp, Game game){
+	protected void lookForIncrementCardDiscount(FamilyMember familyMember, boolean check, Resource tmp){
 		for(Character character : familyMember.getPlayer().getBoard().getCharacters()){
 			if(character.getPermanentEffect() instanceof IncrementCardEffect){
 				IncrementCardEffect eff = (IncrementCardEffect) character.getPermanentEffect();
@@ -372,7 +379,8 @@ public class TakeCardController {
 					if(eff.isDiscountPresence()){ //discount di incrementCardEffect
 						if(eff.getDiscount().getAlternativeDiscountPresence()){ 
 							if(check){
-								eff.getDiscount().setChosenAlternativeDiscount(game.askAlternative(eff.getDiscount().getDiscount(), eff.getDiscount().getAlternativeDiscount(), "discount"));
+								//FIXME
+								eff.getDiscount().setChosenAlternativeDiscount(writer.askAlternative(eff.getDiscount().getDiscount(), eff.getDiscount().getAlternativeDiscount(), "discount"));
 								tmp.modifyResource(eff.getDiscount().getChosenAlternativeDiscount(), true);
 							}
 							else{
@@ -400,7 +408,7 @@ public class TakeCardController {
 	 * @param familyMember
 	 * @return true if the familyMember has actionvalue >= required cell action value
 	 */
-	private boolean checkActionValue(Game game, String cardName, FamilyMember familyMember){
+	private boolean checkActionValue(String cardName, FamilyMember familyMember){
 		IncrementCardEffect eff;
 		int tmp = familyMember.getValue();
 		for(Character character : familyMember.getPlayer().getBoard().getCharacters()){
@@ -426,7 +434,7 @@ public class TakeCardController {
 		if(tmp >= gameBoard.getTowers().get(cardType).findCard(cardName).getActionValue()){
 			return true;
 		}
-		gameModel.notifyObserver(new Message("Your action value is not high enough to take this card", false));
+		//gameModel.notifyObserver(new Message("Your action value is not high enough to take this card", false));
 		return false;
 	}
 	
@@ -444,4 +452,8 @@ public class TakeCardController {
 			}
 		}
 	}
+	
+	
+	
+	
 }

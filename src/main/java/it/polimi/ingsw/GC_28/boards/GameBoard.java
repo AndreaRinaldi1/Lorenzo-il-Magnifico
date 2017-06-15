@@ -1,5 +1,6 @@
 package it.polimi.ingsw.GC_28.boards;
 
+import java.io.Serializable;
 import java.util.EnumMap;
 import java.util.Map;
 
@@ -15,7 +16,11 @@ import it.polimi.ingsw.GC_28.spaces.ProductionAndHarvestSpace;
 import it.polimi.ingsw.GC_28.spaces.PrivilegesSpace;
 
 
-public class GameBoard {
+public class GameBoard implements Serializable {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	//private static final int N_DICE = 3;
 	private static final int N_EXCOMMUNICATIONTILE = 3;
 	private Map<CardType, Tower> towers = new EnumMap<>(CardType.class);

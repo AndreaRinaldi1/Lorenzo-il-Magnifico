@@ -2,6 +2,7 @@ package it.polimi.ingsw.GC_28.effects;
 
 import it.polimi.ingsw.GC_28.boards.GameBoard;
 import it.polimi.ingsw.GC_28.cards.*;
+import it.polimi.ingsw.GC_28.client.ClientWriter;
 import it.polimi.ingsw.GC_28.components.FamilyMember;
 import it.polimi.ingsw.GC_28.components.Resource;
 import it.polimi.ingsw.GC_28.model.Game;
@@ -56,15 +57,15 @@ public class DiscountEffect extends Effect{
 	}
 
 	@Override
-	public void apply(FamilyMember familyMember, Game game){
-		apply(familyMember.getPlayer(), game);
+	public void apply(FamilyMember familyMember, ClientWriter writer){
+		apply(familyMember.getPlayer(), writer);
 	}
 
 	@Override
-	public void apply(Player player, Game game){
+	public void apply(Player player, ClientWriter writer){
 		System.out.println("apply di DiscountEffect");
 		if(alternativeDiscountPresence == true){
-			player.addResource(game.askAlternative(discount, alternativeDiscount, "discount")); 
+			player.addResource(writer.askAlternative(discount, alternativeDiscount, "discount")); 
 		}
 		else{
 			player.addResource(discount);

@@ -1,13 +1,18 @@
 package it.polimi.ingsw.GC_28.cards;
 
+import java.io.Serializable;
 import java.util.EnumMap;
 import java.util.Map;
 
 import it.polimi.ingsw.GC_28.components.Resource;
 import it.polimi.ingsw.GC_28.effects.Effect;
 
-public class LeaderCard {
+public class LeaderCard implements Serializable{
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private String name;
 	private Resource resourceCost;
 	private Map<CardType,Integer> cardCost;

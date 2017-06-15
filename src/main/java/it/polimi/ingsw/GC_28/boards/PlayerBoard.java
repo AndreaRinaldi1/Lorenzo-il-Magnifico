@@ -1,5 +1,6 @@
 package it.polimi.ingsw.GC_28.boards;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -13,7 +14,11 @@ import it.polimi.ingsw.GC_28.components.Resource;
 import it.polimi.ingsw.GC_28.components.ResourceType;
 
 
-public class PlayerBoard {
+public class PlayerBoard  implements Serializable{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private List<Territory> territories = new ArrayList<>();
 	private List<Building> buildings = new ArrayList<>();
 	private List<Character> characters = new ArrayList<>();

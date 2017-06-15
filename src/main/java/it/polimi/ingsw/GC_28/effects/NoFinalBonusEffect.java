@@ -4,6 +4,7 @@ import it.polimi.ingsw.GC_28.boards.FinalBonus;
 import it.polimi.ingsw.GC_28.boards.PlayerBoard;
 import it.polimi.ingsw.GC_28.cards.CardType;
 import it.polimi.ingsw.GC_28.cards.Venture;
+import it.polimi.ingsw.GC_28.client.ClientWriter;
 import it.polimi.ingsw.GC_28.model.Game;
 import it.polimi.ingsw.GC_28.model.Player;
 
@@ -20,7 +21,7 @@ public class NoFinalBonusEffect extends Effect {
 	}
 
 	@Override
-	public void apply(Player player, Game game) {
+	public void apply(Player player, ClientWriter writer) {
 		System.out.println("Apply di NoFinalBonusEffect");
 		FinalBonus finalBonus = FinalBonus.instance();
 		PlayerBoard pb = player.getBoard();

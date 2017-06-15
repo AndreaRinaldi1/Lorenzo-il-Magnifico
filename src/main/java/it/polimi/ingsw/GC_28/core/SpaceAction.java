@@ -1,5 +1,6 @@
 package it.polimi.ingsw.GC_28.core;
 
+import it.polimi.ingsw.GC_28.boards.GameBoard;
 import it.polimi.ingsw.GC_28.cards.Character;
 import it.polimi.ingsw.GC_28.cards.ExcommunicationTile;
 import it.polimi.ingsw.GC_28.components.FamilyMember;
@@ -10,6 +11,7 @@ import it.polimi.ingsw.GC_28.model.GameModel;
 import it.polimi.ingsw.GC_28.server.Message;
 import it.polimi.ingsw.GC_28.spaces.ProductionAndHarvestSpace;
 import it.polimi.ingsw.GC_28.spaces.Space;
+import it.polimi.ingsw.GC_28.spaces.SpaceType;
 
 public class SpaceAction extends Action{
 	private Game game;
@@ -18,15 +20,19 @@ public class SpaceAction extends Action{
 	private Space space;
 	private GoToHPEffect throughEffect;
 	private GameModel gameModel;
+	private GameBoard gameBoard;
+	private SpaceType spaceName;
 	
-	public SpaceAction(Game game, GameModel gameModel){
-		this.gameModel = gameModel;
-		this.game = game;
-		spaceController = new SpaceController(gameModel);
+	public SpaceAction(GameBoard gameBoard){
+		//this.gameModel = gameModel;
+		//this.game = game;
+		this.gameBoard = gameBoard;
+		spaceController = new SpaceController();
 
 	}
 
 	public boolean isApplicable(){
+		space = chosenSpace(spaceName);
 		return spaceController.check(familyMember, space, throughEffect);
 	}
 	
@@ -37,10 +43,37 @@ public class SpaceAction extends Action{
 	public void setSpace(Space space) {
 		this.space = space;
 	}
+	
+	public void setSpaceName(SpaceType spaceName) {
+		this.spaceName = spaceName;
+	}
 
 	public void setThroughEffect(GoToHPEffect throughEffect) {
 		this.throughEffect = throughEffect;
 	}
+	
+	public Space chosenSpace(SpaceType spaceName){
+		System.out.println(spaceName);
+		switch(spaceName){
+		case COINSPACE:
+			return gameBoard.getCoinSpace();
+		case COUNCILPALACE:
+			return gameBoard.getCouncilPalace();
+		case HARVESTSPACE:
+			return gameBoard.getHarvestSpace();
+		case MIXEDSPACE:
+			return gameBoard.getMixedSpace();
+		case PRIVILEGESSPACE:
+			return gameBoard.getPrivilegesSpace();
+		case PRODUCTIONSPACE:
+			return gameBoard.getProductionSpace();
+		case SERVANTSPACE:
+			return gameBoard.getServantSpace();
+		default:
+			return null;
+		}
+	}
+
 
 	public void apply(){
 		ProductionAndHarvestSpace prodHarv;
@@ -77,9 +110,9 @@ public class SpaceAction extends Action{
 			}
 			space.addPlayer(familyMember);	
 		}
-		space.applyBonus(game, familyMember);
+		space.applyBonus(super.getWriter(), familyMember);
 		familyMember.setUsed(true);
-		gameModel.notifyObserver(new Message("Action completed successfully!", true));
+		//gameModel.notifyObserver(new Message("Action completed successfully!", true));
 
 	}
 }

@@ -1,5 +1,6 @@
 package it.polimi.ingsw.GC_28.effects;
 
+import it.polimi.ingsw.GC_28.client.ClientWriter;
 import it.polimi.ingsw.GC_28.components.FamilyMember;
 import it.polimi.ingsw.GC_28.components.ResourceType;
 import it.polimi.ingsw.GC_28.model.Game;
@@ -27,7 +28,7 @@ public class ServantEffect  extends Effect{
 	}
 
 	@Override
-	public void apply(Player player, Game game){
+	public void apply(Player player, ClientWriter writer){
 
 	}
 	

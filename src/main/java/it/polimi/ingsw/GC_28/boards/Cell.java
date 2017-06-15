@@ -1,11 +1,17 @@
 package it.polimi.ingsw.GC_28.boards;
 
+import java.io.Serializable;
+
 import it.polimi.ingsw.GC_28.cards.*;
 import it.polimi.ingsw.GC_28.components.FamilyMember;
 import it.polimi.ingsw.GC_28.components.Resource;
 
 
-public class Cell {
+public class Cell  implements Serializable{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private boolean free;
 	private FamilyMember player;
 	private Card card;

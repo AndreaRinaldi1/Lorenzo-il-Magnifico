@@ -7,6 +7,7 @@ import it.polimi.ingsw.GC_28.cards.Character;
 import it.polimi.ingsw.GC_28.cards.Card;
 import it.polimi.ingsw.GC_28.cards.Territory;
 import it.polimi.ingsw.GC_28.cards.Venture;
+import it.polimi.ingsw.GC_28.client.ClientWriter;
 import it.polimi.ingsw.GC_28.components.FamilyMember;
 import it.polimi.ingsw.GC_28.components.Resource;
 import it.polimi.ingsw.GC_28.effects.Effect;
@@ -23,12 +24,12 @@ public class TakeCardAction extends Action{
 	private String name;
 	private TakeCardEffect throughEffect;
 	private GameModel gameModel;
+	private ClientWriter writer;
 	
-	public TakeCardAction(Game game, GameModel gameModel){
-		this.game = game;
-		this.gameBoard = gameModel.getGameBoard();
-		this.gameModel = gameModel;
-		takeCardController = new TakeCardController(gameModel);
+	public TakeCardAction(GameBoard gameBoard, ClientWriter writer){
+		this.gameBoard = gameBoard;
+		this.writer = writer;
+		takeCardController = new TakeCardController(gameBoard,writer);
 	}
 
 	public void setFamilyMember(FamilyMember familyMember) {
@@ -46,18 +47,18 @@ public class TakeCardAction extends Action{
 	}
 	
 	public boolean isApplicable(){
-		return takeCardController.check(game, name, familyMember, throughEffect);
+		return takeCardController.check(name, familyMember, throughEffect);
 	}
 	
 	public void apply(){
 		System.out.println("apply");
 		takeCardController.reduce3Coins(familyMember, false, null);
 		System.out.println("step 1");
-		takeCardController.lookForNoCellBonus(game, familyMember, false, null, name);
+		takeCardController.lookForNoCellBonus(familyMember, false, null, name);//there was game as parameter
 		System.out.println("step 2");
-		takeCardController.lookForTakeCardDiscount(familyMember, false, null, game, throughEffect);
+		takeCardController.lookForTakeCardDiscount(familyMember, false, null, throughEffect);//there was game as parameter
 		System.out.println("step 3");
-		takeCardController.lookForIncrementCardDiscount(familyMember, false, null, game);
+		takeCardController.lookForIncrementCardDiscount(familyMember, false, null);//there was game as parameter
 		System.out.println("step 4");
 		Cell cell = gameBoard.getTowers().get(takeCardController.cardType).findCard(name);
 		System.out.println("step 5");
@@ -77,21 +78,21 @@ public class TakeCardAction extends Action{
 			Territory territory = (Territory) card;
 			familyMember.getPlayer().getBoard().addCard(territory);
 			for(Effect e : territory.getImmediateEffect()){
-				e.apply(familyMember, game);
+				e.apply(familyMember, writer);
 			}
 			System.out.println("territory step");
 		}
 		else if(card instanceof Building){ 
 			Building building = (Building) card;
 			familyMember.getPlayer().getBoard().addCard(building);
-			building.getImmediateEffect().apply(familyMember, game);
+			building.getImmediateEffect().apply(familyMember, writer);
 			System.out.println("building step");
 		}
 		else if(card instanceof Character){ 
 			Character character = (Character) card;
 			familyMember.getPlayer().getBoard().addCard(character);
 			for(Effect e : character.getImmediateEffect()){
-				e.apply(familyMember, game);
+				e.apply(familyMember, writer);
 			}
 			System.out.println("character step");
 		}
@@ -99,7 +100,7 @@ public class TakeCardAction extends Action{
 			Venture venture = (Venture) card;
 			familyMember.getPlayer().getBoard().addCard(venture);
 			for(Effect e : venture.getImmediateEffect()){
-				e.apply(familyMember, game);
+				e.apply(familyMember, writer);
 			}
 			System.out.println("venture step");
 		}
@@ -107,7 +108,7 @@ public class TakeCardAction extends Action{
 		cell.setCard(null);
 		cell.setFree(false);
 		System.out.println("step 10");
-		gameModel.notifyObserver(new Message("Action completed successfully!", true));
+		//gameModel.notifyObserver(new Message("Action completed successfully!", true));
 
 	}
 	

@@ -7,10 +7,15 @@ import java.net.Socket;
 import java.net.SocketException;
 import java.net.UnknownHostException;
 import java.util.*;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ThreadFactory;
+
+import it.polimi.ingsw.GC_28.model.Player;
 
 public class Client{
 	private String ip;
 	private int port;
+	Player player;
 	
 	public Client(String ip, int port){
 		//this.ip = ip;
@@ -36,9 +41,12 @@ public class Client{
 		//Scanner socketIn = new Scanner(socket.getInputStream());
 		//PrintWriter socketOut = new PrintWriter(socket.getOutputStream());
 		//Scanner stdin = new Scanner(System.in);
-
-		new Thread(new ClientListener(socket)).start();
-		new Thread(new ClientWriter(socket)).start();
+		ThreadFactory thread = Executors.defaultThreadFactory();
+		ClientWriter Writer = new ClientWriter(socket,player);
+		ClientListener Listener = new ClientListener(socket, player,Writer);
+		thread.newThread(Writer).start();
+		thread.newThread(Listener).start();
+		
 		
 
 		

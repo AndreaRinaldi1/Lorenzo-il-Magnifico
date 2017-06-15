@@ -1,5 +1,6 @@
 package it.polimi.ingsw.GC_28.spaces;
 
+import it.polimi.ingsw.GC_28.client.ClientWriter;
 import it.polimi.ingsw.GC_28.components.FamilyMember;
 import it.polimi.ingsw.GC_28.effects.PrivilegesEffect;
 import it.polimi.ingsw.GC_28.effects.ResourceEffect;
@@ -8,6 +9,10 @@ import it.polimi.ingsw.GC_28.model.Game;
 import java.util.List;
 
 public class CouncilPalace extends Space{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private ResourceEffect bonus1;
 	private PrivilegesEffect bonus2;
 	private static CouncilPalace instance;
@@ -52,9 +57,9 @@ public class CouncilPalace extends Space{
 	
 	
 	@Override
-	public void applyBonus(Game game, FamilyMember familyMember){
-		bonus1.apply(familyMember, game);
-		bonus2.apply(familyMember, game);
+	public void applyBonus(ClientWriter writer, FamilyMember familyMember){
+		bonus1.apply(familyMember, writer);
+		bonus2.apply(familyMember, writer);
 	}
 	
 }

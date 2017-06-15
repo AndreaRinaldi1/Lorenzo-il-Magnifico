@@ -1,7 +1,7 @@
 package it.polimi.ingsw.GC_28.effects;
 
 import it.polimi.ingsw.GC_28.boards.GameBoard;
-
+import it.polimi.ingsw.GC_28.client.ClientWriter;
 import it.polimi.ingsw.GC_28.components.FamilyMember;
 
 import it.polimi.ingsw.GC_28.components.Resource;
@@ -64,20 +64,20 @@ public class ProductionEffect extends Effect{
 	
 
 	@Override
-	public void apply(FamilyMember familyMember, Game game) {
+	public void apply(FamilyMember familyMember, ClientWriter writer) {
 		System.out.println("apply di ProductionEffect");
 		if(familyMember.getValue() >= productionValue){
 			if(resourceBonus != null){
-				resourceBonus.apply(familyMember, game);
+				resourceBonus.apply(familyMember, writer);
 			}
 			if(privilegeEffect != null){
-				privilegeEffect.apply(familyMember, game);
+				privilegeEffect.apply(familyMember, writer);
 			}
 			if(multiplierEffect != null){
-				multiplierEffect.apply(familyMember, game);
+				multiplierEffect.apply(familyMember, writer);
 			}
 			if(exchangeBonus != null){
-				exchangeBonus.apply(familyMember, game);
+				exchangeBonus.apply(familyMember, writer);
 			}
 		}
 		else{

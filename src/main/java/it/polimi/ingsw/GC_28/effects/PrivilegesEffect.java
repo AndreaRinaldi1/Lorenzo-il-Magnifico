@@ -1,13 +1,20 @@
 package it.polimi.ingsw.GC_28.effects;
 
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Scanner;
 
 import it.polimi.ingsw.GC_28.boards.GameBoard;
+import it.polimi.ingsw.GC_28.client.ClientWriter;
 import it.polimi.ingsw.GC_28.components.*;
 import it.polimi.ingsw.GC_28.model.Game;
 import it.polimi.ingsw.GC_28.model.Player;
 
 public class PrivilegesEffect extends Effect{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private int numberOfCouncilPrivileges;
 	private boolean different;
 
@@ -34,20 +41,24 @@ public class PrivilegesEffect extends Effect{
 	}
 	
 	@Override
-	public void apply(FamilyMember familyMember, Game game) {
+	public void apply(FamilyMember familyMember, ClientWriter writer) {
 		System.out.println("apply di PrivilegesEffect");
-		ArrayList<Character> choices = game.askPrivilege(numberOfCouncilPrivileges, different);
+		ArrayList<Character> choices = writer.askPrivilege(numberOfCouncilPrivileges, different);
 		for(int i = 0; i < choices.size(); i++){
-			familyMember.getPlayer().addResource(game.checkResourceExcommunication(CouncilPrivilege.instance().getOptions().get(choices.get(i))));
+			familyMember.getPlayer().addResource(writer.checkResourceExcommunication(writer.getCouncilPrivilege().getOptions().get(choices.get(i)),familyMember.getPlayer()));
 		}
 	}
 	
 	@Override
-	public void apply(Player player, Game game) {
+	public void apply(Player player, ClientWriter writer) {
 		System.out.println("Ludovico Gonzaga Effect");
-		ArrayList<Character> choices = game.askPrivilege(numberOfCouncilPrivileges, different);
+		ArrayList<Character> choices = writer.askPrivilege(numberOfCouncilPrivileges, different);
 		for(int i = 0; i<choices.size(); i++ ){
-			player.addResource(game.checkResourceExcommunication(CouncilPrivilege.instance().getOptions().get(choices.get(i))));
+			player.addResource(writer.checkResourceExcommunication(CouncilPrivilege.instance().getOptions().get(choices.get(i)),player));
 		}
 	}
+	
+	
+	
+	
 }

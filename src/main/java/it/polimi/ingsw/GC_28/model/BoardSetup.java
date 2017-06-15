@@ -1,6 +1,7 @@
 package it.polimi.ingsw.GC_28.model;
 
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
@@ -45,16 +46,24 @@ public class BoardSetup {
 	
 	public void setUpBoard(){
 		//gameModel.setPlayers(getNextPlayerOrder());
+		System.out.println("setup 1");
+		gameBoard = gameModel.getGameBoard();
+		System.out.println("setup 2");
 		getNextPlayerOrder();
+		System.out.println("setup 3");
+		setDicesValue(gameBoard.getDices());
 		freeFamilyMember();
+		System.out.println("setup 4");
 		freeSpace();
+		System.out.println("setup 5");
 		if(gameModel.getPlayers().size() > 2){
 			freeSpaceMoreThanTwoPlayer();
 		}
 		prepareTowers();
-		setDicesValue(gameBoard.getDices());
-		setFamilyMember();
+		System.out.println("setup 6");
+		//setFamilyMember();
 		deActiveLeaderCard();
+		System.out.println("setup 7 exit");
 	}
 	
 	private static void prepareDeck()throws FileNotFoundException{
@@ -156,27 +165,31 @@ public class BoardSetup {
 	}
 	
 	private void getNextPlayerOrder(){
+		System.out.println("next 1");
 		List<FamilyMember> inCouncil = gameBoard.getCouncilPalace().getPlayerOrder();
 		List<Player> nextOrder = new ArrayList<>();
+		System.out.println("next 2");
 		if(!(inCouncil.isEmpty())){
+			System.out.println("next 3");
 			for(FamilyMember fm : inCouncil){
 				if(!(nextOrder.contains(fm.getPlayer()))){
 					nextOrder.add(fm.getPlayer());
 				}
 			}
 		}
+		System.out.println("next 4");
 		for(Player p : gameModel.getPlayers()){
 			if(!(nextOrder.contains(p))){
 				nextOrder.add(p);
 			}
 		}
+		System.out.println("next 5");
 		for(int i = 0; i < nextOrder.size(); i++){
 			gameModel.getPlayers().set(i, nextOrder.get(i));
 		}
 	}
 	
 	public void freeSpace(){
-		System.out.println(2);
 		if(!(gameBoard.getCoinSpace().isFree())){
 			gameBoard.getCoinSpace().getPlayer().remove(0);
 			gameBoard.getCoinSpace().setFree(true);
@@ -223,11 +236,20 @@ public class BoardSetup {
 		}
 	}
 		
-	private void freeFamilyMember(){
+	private void freeFamilyMember() {
 		for(Player p : gameModel.getPlayers()){
-			for(int i = 0; i < p.getFamilyMembers().length; i++){
-				p.getFamilyMembers()[i].setUsed(false);
+			try {
+				game.getHandlers().get(p).getOut().writeUTF("freeFamilyMembers");
+				game.getHandlers().get(p).getOut().flush();
+				game.getHandlers().get(p).getOut().writeObject(gameBoard.getDices());
+				game.getHandlers().get(p).getOut().flush();
+				System.out.println("fatto");
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
 			}
+			
+			//game.getHandlers().get(p).getOut().reset();
 		}
 	}
 	

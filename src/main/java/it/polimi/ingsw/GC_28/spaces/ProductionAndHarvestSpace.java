@@ -3,6 +3,7 @@ import it.polimi.ingsw.GC_28.boards.*;
 import it.polimi.ingsw.GC_28.cards.Building;
 import it.polimi.ingsw.GC_28.cards.Character;
 import it.polimi.ingsw.GC_28.cards.Territory;
+import it.polimi.ingsw.GC_28.client.ClientWriter;
 import it.polimi.ingsw.GC_28.components.FamilyMember;
 import it.polimi.ingsw.GC_28.model.Game;
 
@@ -55,19 +56,19 @@ public class ProductionAndHarvestSpace extends Space{
 	}	
 	
 	@Override
-	public void applyBonus(Game game, FamilyMember familyMember){
+	public void applyBonus(ClientWriter writer, FamilyMember familyMember){
 		System.out.println(3);
 		if(harvest){
 			for(Territory territory : familyMember.getPlayer().getBoard().getTerritories()){
-				territory.getPermanentEffect().apply(familyMember, game);
+				territory.getPermanentEffect().apply(familyMember, writer);
 			}
-			familyMember.getPlayer().getBoard().getBonusTile().getHarvestEffect().apply(familyMember, game);
+			familyMember.getPlayer().getBoard().getBonusTile().getHarvestEffect().apply(familyMember, writer);
 		}
 		else{
 			for(Building building : familyMember.getPlayer().getBoard().getBuildings()){
-				building.getPermanentEffect().apply(familyMember, game);
+				building.getPermanentEffect().apply(familyMember, writer);
 			}
-			familyMember.getPlayer().getBoard().getBonusTile().getProductionEffect().apply(familyMember, game);
+			familyMember.getPlayer().getBoard().getBonusTile().getProductionEffect().apply(familyMember, writer);
 		}
 	}
 	
