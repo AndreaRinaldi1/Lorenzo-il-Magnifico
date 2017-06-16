@@ -85,8 +85,7 @@ public class Game extends Observable<Action> implements Runnable, Observer<Messa
 						try {
 							display();
 						} catch (IOException e1) {
-							// TODO Auto-generated catch block
-							e1.printStackTrace();
+							Logger.getAnonymousLogger().log(Level.SEVERE, e1.getMessage());
 						}
 						while(true){
 							try {
