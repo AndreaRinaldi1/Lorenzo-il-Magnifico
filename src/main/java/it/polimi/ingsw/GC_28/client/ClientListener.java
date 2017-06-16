@@ -7,6 +7,8 @@ import java.io.PrintWriter;
 import java.net.Socket;
 import java.util.*;
 import java.util.concurrent.Future;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import it.polimi.ingsw.GC_28.boards.GameBoard;
 import it.polimi.ingsw.GC_28.components.CouncilPrivilege;
@@ -64,7 +66,7 @@ public class ClientListener implements Runnable{
 				System.out.println(writer.lock.isLocked());*/
 			} catch (ClassNotFoundException e) {
 				// TODO Auto-generated catch block
-				e.printStackTrace();
+				Logger.getAnonymousLogger().log(Level.SEVERE, "cannot setup player, gameboard and councilprivilege"+e);
 			}
 			do{
 				socketLine = socketIn.readUTF();
@@ -132,30 +134,29 @@ public class ClientListener implements Runnable{
 			}while(!socketLine.equals("close"));
 		}
 		catch(IOException e){
-			System.out.println(e.getMessage());
+			Logger.getAnonymousLogger().log(Level.SEVERE,e.getMessage());
 		}
 		catch(NoSuchElementException e){
-			System.out.println("Client chiuso -listener-");
+			Logger.getAnonymousLogger().log(Level.SEVERE,"Client chiuso -listener-");
 		} catch (ClassNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			Logger.getAnonymousLogger().log(Level.SEVERE, "cannot find class of recived object" + e);
 		}finally{
 			try {
 				if(socketIn != null){
 					socketIn.close();
 				}
 			} catch (IOException e) {
-				System.err.println(e.getMessage());
+				Logger.getAnonymousLogger().log(Level.SEVERE, e.getMessage());
 			}
 		}
 	}
 	
-	private void setFamilyMember(){
+	/*private void setFamilyMember(){
 		FamilyMember[] f = writer.player.getFamilyMembers();
 		for(FamilyMember fm : f){
 			fm.setValue(writer.gameBoard.getDices());
 			fm.setUsed(false);
 		}
 		f[3].setValue(0);
-	}
+	}*/
 }

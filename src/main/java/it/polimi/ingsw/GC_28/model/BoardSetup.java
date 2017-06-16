@@ -246,13 +246,13 @@ public class BoardSetup {
 				game.getHandlers().get(p).getOut().flush();
 				game.getHandlers().get(p).getOut().writeObject(gameBoard.getDices());
 				game.getHandlers().get(p).getOut().flush();
+				game.getHandlers().get(p).getOut().reset();
 				System.out.println("fatto");
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				Logger.getAnonymousLogger().log(Level.SEVERE, e.getMessage());
 			}
 			
-			//game.getHandlers().get(p).getOut().reset();
+			
 		}
 	}
 	

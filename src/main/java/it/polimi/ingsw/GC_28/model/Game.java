@@ -125,8 +125,7 @@ public class Game extends Observable<Action> implements Runnable, Observer<Messa
 								handlers.get(currentPlayer).getOut().flush();
 								handlers.get(currentPlayer).getOut().reset();*/
 							} catch (ClassNotFoundException | IOException e) {
-								// TODO Auto-generated catch block
-								e.printStackTrace();
+								Logger.getAnonymousLogger().log(Level.SEVERE, e.getMessage());
 							}
 						}
 						/*try {
@@ -234,8 +233,7 @@ public class Game extends Observable<Action> implements Runnable, Observer<Messa
 		try {
 			declareWinner();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			Logger.getAnonymousLogger().log(Level.SEVERE, e.getMessage());
 		}
 		
 	}
@@ -486,8 +484,7 @@ public class Game extends Observable<Action> implements Runnable, Observer<Messa
 				handlers.get(p).getOut().reset();
 			
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				Logger.getAnonymousLogger().log(Level.SEVERE, e.getMessage());
 			}
 		}
 	}
@@ -1324,8 +1321,7 @@ public class Game extends Observable<Action> implements Runnable, Observer<Messa
 			handlers.get(currentPlayer).getOut().flush();
 			handlers.get(currentPlayer).getOut().reset();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			Logger.getAnonymousLogger().log(Level.SEVERE, e.getMessage());
 		}
 		
 		result = m.isResult();

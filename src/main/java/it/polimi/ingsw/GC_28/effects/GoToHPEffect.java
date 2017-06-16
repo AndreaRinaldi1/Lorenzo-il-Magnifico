@@ -1,6 +1,8 @@
 package it.polimi.ingsw.GC_28.effects;
 
 import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import it.polimi.ingsw.GC_28.boards.GameBoard;
 import it.polimi.ingsw.GC_28.boards.PlayerBoard;
@@ -50,8 +52,7 @@ public class GoToHPEffect extends Effect{
 		try {
 			writer.goToSpace(this);
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			Logger.getAnonymousLogger().log(Level.SEVERE, e.getMessage());
 		}
 	}
 	
@@ -61,8 +62,7 @@ public class GoToHPEffect extends Effect{
 		try {
 			writer.goToSpace(this);
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			Logger.getAnonymousLogger().log(Level.SEVERE, e.getMessage());
 		}
 	}
 	

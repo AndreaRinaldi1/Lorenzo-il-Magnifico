@@ -55,15 +55,11 @@ public class Server {
 		try{
 			server.startServer();
 		}catch(IOException e){
-			Logger.getAnonymousLogger().log(Level.SEVERE,"Cannot start the server" + e); 
-			
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			Logger.getAnonymousLogger().log(Level.SEVERE,"Cannot start the server" + e); 	
 		}
 	}
 	
-	private void startServer() throws Exception{
+	private void startServer() throws IOException{
 		executor = Executors.newCachedThreadPool();
 		server = new ServerSocket(port);
 		
@@ -79,11 +75,7 @@ public class Server {
 				o.flush();
 				String name = scan.readUTF();
 				PlayerColor color = enterColor();
-				//o.writeUTF("end");
-				//o.flush();
 				Player player = new Player(name, color);
-				//o.writeObject(player);
-				//o.flush();
 				ClientHandler ch = new ClientHandler(o,scan);
 				handlers.put(player, ch);
 			}
