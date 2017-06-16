@@ -61,7 +61,14 @@ public class TakeCardAction extends Action{
 		System.out.println("step 4");
 		Cell cell = gameBoard.getTowers().get(takeCardController.cardType).findCard(name);
 		System.out.println("step 5");
-		Resource cardCost = cell.getCard().getCost();
+		Resource cardCost;
+		if(cell.getCard() instanceof Venture){
+			Venture venture = (Venture) cell.getCard();
+			cardCost= venture.getChosenCost();
+		}
+		else{
+			cardCost = cell.getCard().getCost();
+		}
 		System.out.println("step 6");
 		takeCardController.lookForPicoDellaMirandola(familyMember, cardCost, game);//modify card cost if pico is present FIXME
 		System.out.println("step 7");

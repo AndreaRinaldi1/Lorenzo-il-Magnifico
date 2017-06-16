@@ -35,6 +35,7 @@ public class PlayerBoard {
 	
 	public String display(){
 		StringBuilder ret = new StringBuilder();
+		ret.append("\n" + retLine +"\n");
 		ret.append("PLAYER BOARD\n");
 		
 		AsciiTable territoryTab = new AsciiTable();
@@ -84,21 +85,16 @@ public class PlayerBoard {
 		ret.append("Resources: \n");
 		AsciiTable res = new AsciiTable();
 		res.addRule();
-		res.addRow(ResourceType.COIN, ResourceType.WOOD, ResourceType.STONE, ResourceType.SERVANT, ResourceType.MILITARYPOINT, ResourceType.VICTORYPOINT, ResourceType.FAITHPOINT );
+		res.addRow(ResourceType.COIN, ResourceType.WOOD, ResourceType.STONE, ResourceType.SERVANT);
 		res.addRule();
 		res.addRow(resources.getResource().get(ResourceType.COIN), 
 				resources.getResource().get(ResourceType.WOOD), 
 				resources.getResource().get(ResourceType.STONE), 
-				resources.getResource().get(ResourceType.SERVANT), 
-				resources.getResource().get(ResourceType.MILITARYPOINT), 
-				resources.getResource().get(ResourceType.VICTORYPOINT), 
-				resources.getResource().get(ResourceType.FAITHPOINT));
+				resources.getResource().get(ResourceType.SERVANT));
 		res.addRule();
 		ret.append(res.render() + "\n");
 		//ret.append(resources.toString()); 
 		ret.append("\n" + retLine);
-		
-		
 		
 		return ret.toString();
 		

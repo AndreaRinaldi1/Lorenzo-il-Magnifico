@@ -74,9 +74,10 @@ public class Server {
 
 		executor = Executors.newCachedThreadPool();
 		server = new ServerSocket(port);
+		bonusList = initBonusTile(); 
 		//server.setReuseAddress(true);
 		while(!noStop){
-			bonusList = initBonusTile(); 
+			
 			handlers = new HashMap<>();
 			started = false;
 			
@@ -102,19 +103,36 @@ public class Server {
 						@Override
 						public void run() {
 							System.out.println("passati 15 sec");
-							startGame(handlers);
+							if(!started){
+								Map<Player, ClientHandler> handlers2 = new HashMap<>();
+								for(Player p : handlers.keySet()){
+									handlers2.put(p, handlers.get(p));
+								}
+								new Thread(){
+									public void run(){
+										startGame(handlers);
+									}
+								}.start();
+							}
 						}
 					}, 15000);
 				}
 			}
 
+			Map<Player, ClientHandler> handlers2 = new HashMap<>();
+			for(Player p : handlers.keySet()){
+				handlers2.put(p, handlers.get(p));
+			}
 			/*
 			 * QUESTE DUE RIGHE ERANO DA ANDREA
 			timer.cancel();
 			startGame(handlers);	*/
-
-			
-			startGame(handlers);
+			timer.cancel();
+			new Thread(){
+				public void run(){
+					startGame(handlers2);
+				}
+			}.start();
 			
 			/*game.setHandlers(handlers);
 			BoardSetup bs = new BoardSetup(game);
@@ -132,11 +150,15 @@ public class Server {
 
 	
 	public void startGame(Map<Player, ClientHandler> handlers){
+		started = true;
 		usedColors.clear();
 		BoardsInitializer bi = new BoardsInitializer();	
 		List<Player> players = new ArrayList<>(handlers.keySet());
-		
+		List<BonusTile> tileInstance = new ArrayList<BonusTile>();
 		try{
+			for(int i = 0; i < bonusList.size(); i++){
+				tileInstance.add(bonusList.get(i));
+			}
 			Game game = bi.initializeBoard(players);
 
 			game.setHandlers(handlers);
@@ -150,7 +172,7 @@ public class Server {
 			}
 			Collections.reverse(reversePlayer);
 			for(Player p : reversePlayer){
-				enterBonusTile(bonusList, handlers, p);
+				enterBonusTile(tileInstance, handlers, p);
 			}
 			
 			
@@ -159,7 +181,7 @@ public class Server {
 			//game.getGameBoard().display();
 			//game.setCurrentPlayer(gameModel.getPlayers().get(0));
 			//game.getCurrentPlayer().getBoard().display();
-			started = true;
+			
 			executor.submit(game);
 			
 		}catch(FileNotFoundException e){
@@ -213,7 +235,6 @@ public class Server {
 		do{
 			int i = 1;
 			for(BonusTile bt : bonusList){
-				handlers.get(p).getOut().println(i + "\n");
 				handlers.get(p).getOut().println("bonusTile n°: "+ i+ "\n");
 				handlers.get(p).getOut().println(bt.toString());
 				i++;

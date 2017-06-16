@@ -53,7 +53,7 @@ public class CardReaderTest {
 	public static void tearDownAfterClass() throws Exception {
 	}
 
-	@Test
+	/*@Test
 	public void testStartRead() throws FileNotFoundException {
 		for (int i = 0; i<d.getVentures().size(); i++){ 
 			for(int j = 0; j<cr.startRead().getVentures().size(); j++){
@@ -91,6 +91,6 @@ public class CardReaderTest {
 				}
 			}
 		}
-	}
+	}*/
 
 }

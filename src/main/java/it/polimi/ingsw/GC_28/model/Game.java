@@ -92,7 +92,7 @@ public class Game extends Observable<Action> implements Runnable, Observer<Messa
 						}
 						
 						// TIMER CHE "FUNZIONA" SOLO SU PRIMA DOMANDA 
-						boolean x = false;
+						/*boolean x = false;
 						long time = System.currentTimeMillis() + 16000;
 						Thread t = new Thread(){
 							public void run(){
@@ -142,7 +142,7 @@ public class Game extends Observable<Action> implements Runnable, Observer<Messa
 							currentPlayer = gameModel.getPlayers().get(0);
 						}else{
 							currentPlayer = gameModel.getPlayers().get((currentTurn+1));
-						}
+						}*/
 					
 						/*
 						t.start();
@@ -311,19 +311,35 @@ public class Game extends Observable<Action> implements Runnable, Observer<Messa
 		
 	}
 	
-	public void display(){
+	private void display(){
 		for(Player p: gameModel.getPlayers()){
-			handlers.get(p).getOut().println(gameModel.getGameBoard().display());
+			String gb = gameModel.getGameBoard().display();
+			String tracks = displayTracks();
+			handlers.get(p).getOut().println(gb);
+			handlers.get(p).getOut().println(tracks);
 			handlers.get(p).getOut().println(p.getBoard().display());
-			handlers.get(p).getOut().println(p.displayExcommunication());
-			handlers.get(p).getOut().println(p.displayLeader());
-			//handlers.get(p).getOut().println(p.getBoard().getBonusTile().getHarvestEffect().getResourceHarvestBonus().getResourceBonus().toString());
-			//handlers.get(p).getOut().println(p.getBoard().getBonusTile().getProductionEffect().getResourceBonus().getResourceBonus().toString());
-			for(int i = 0; i < 4; i++){
-				handlers.get(p).getOut().println(p.getFamilyMembers()[i].toString());
-			}
+			handlers.get(p).getOut().println(p.displayFamilyMember());
 			handlers.get(p).getOut().flush();
-			}
+		}
+	}
+	
+	private String displayTracks(){
+		AsciiTable tracks = new AsciiTable();
+		StringBuilder church = new StringBuilder();
+		StringBuilder military = new StringBuilder();
+		StringBuilder victory = new StringBuilder();
+		for(Player p : gameModel.getPlayers()){
+			church.append("{" + p.getColor() + ": " + p.getBoard().getResources().getResource().get(ResourceType.FAITHPOINT) + "} ");
+			military.append("{" + p.getColor() + ": " + p.getBoard().getResources().getResource().get(ResourceType.MILITARYPOINT) + "} ");
+			victory.append("{" + p.getColor() + ": " + p.getBoard().getResources().getResource().get(ResourceType.VICTORYPOINT) + "} ");
+		}
+		tracks.addRule();
+		tracks.addRow(ResourceType.FAITHPOINT, ResourceType.MILITARYPOINT, ResourceType.VICTORYPOINT);
+		tracks.addRule();
+		tracks.addRow(church.toString(), military.toString(), victory.toString());
+		tracks.addRule();
+		String ret = tracks.render();
+		return ret;
 	}
 
 
@@ -337,7 +353,7 @@ public class Game extends Observable<Action> implements Runnable, Observer<Messa
 			return;
 		}
 		do{
-			handlers.get(currentPlayer).getOut().println("Which move do you want to undertake? [takeCard / goToSpace / skip/ askcost/askLeaderCost/specialAction]");
+			handlers.get(currentPlayer).getOut().println("Which move do you want to undertake? [takeCard / goToSpace / skip / askcost / askLeaderCost / specialAction / showMyExcomm / showMyLeaders]");
 			handlers.get(currentPlayer).getOut().flush();	
 			
 			String line = handlers.get(currentPlayer).getIn().nextLine();
@@ -370,6 +386,12 @@ public class Game extends Observable<Action> implements Runnable, Observer<Messa
 			else if(("askLeaderCost").equalsIgnoreCase(line)){
 				askLeaderCost();
 			}
+			else if(line.equalsIgnoreCase("showMyExcomm")){
+				showExcomm();
+			}
+			else if(line.equalsIgnoreCase("showMyLeaders")){
+				showLeaders();
+			}
 			else{
 				handlers.get(currentPlayer).getOut().println("Not valid input!");
 				handlers.get(currentPlayer).getOut().flush();
@@ -386,7 +408,14 @@ public class Game extends Observable<Action> implements Runnable, Observer<Messa
 		
 	}
 
+	private void showExcomm(){
+		handlers.get(currentPlayer).getOut().println(currentPlayer.displayExcommunication());
+	}
+	
+	private void showLeaders(){
+		handlers.get(currentPlayer).getOut().println(currentPlayer.displayLeader());
 
+	}
 	
 
 	public Map<Player, ClientHandler> getHandlers() {

@@ -226,30 +226,32 @@ public class TakeCardController {
 		if(cardType.equals(CardType.VENTURE)){
 			Venture venture = (Venture) gameBoard.getTowers().get(cardType).findCard(cardName).getCard();
 			boolean costNotZeros = false;
+			Resource chosenCost;
 			for(ResourceType rt : venture.getCost().getResource().keySet()){
 				if(venture.getCost().getResource().get(rt) != 0){
 					costNotZeros = true;
+					break;
 				}
 			}
 			if(venture.getAlternativeCostPresence() && costNotZeros){//ho due alternative di costo
 				if(venture.getMinimumRequiredMilitaryPoints() <= familyMember.getPlayer().getBoard().getResources().getResource().get(ResourceType.MILITARYPOINT)){
 					//qui se avesse un numero adeguato di military points tale da chiedere quale alternativa vuole
-					System.out.println("1");
-					tmp.modifyResource(game.askAlternative(venture.getCost(), venture.getAlternativeCost(), "cost"), false);
+					chosenCost = game.askAlternative(venture.getCost(), venture.getAlternativeCost(), "cost");
+					tmp.modifyResource(chosenCost, false);
 				}
 				else{
-					System.out.println("2");
-
+					chosenCost = venture.getCost();
 					tmp.modifyResource(venture.getCost(), false); //se non ha suff. military points gli sottraggo cost
 				}
 			}
-			else if(!venture.getAlternativeCostPresence()){ //ho cost ma non l'alternativa coi pti militari
-				System.out.println("3");
+			else if(!venture.getAlternativeCostPresence()){//ho cost ma non l'alternativa coi pti militari
+				chosenCost = venture.getCost();
 				tmp.modifyResource(venture.getCost(), false); 
 			}
 			else{//ho il costo (alternativa) coi punti militari ma non il costo normale (tutti 0)
 				if(venture.getMinimumRequiredMilitaryPoints() <= familyMember.getPlayer().getBoard().getResources().getResource().get(ResourceType.MILITARYPOINT)){
 					//qui se avesse un numero adeguato di military points 
+					chosenCost = venture.getAlternativeCost();
 					tmp.modifyResource(venture.getAlternativeCost(), false);
 				}
 				else{
@@ -257,6 +259,7 @@ public class TakeCardController {
 					return false; //se non ha suff. military points non può prendere la carta
 				}
 			}
+			venture.setChosenCost(chosenCost);
 		}
 		else{
 			tmp.modifyResource(gameBoard.getTowers().get(cardType).findCard(cardName).getCard().getCost(), false);	
