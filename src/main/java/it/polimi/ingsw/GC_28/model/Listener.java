@@ -21,16 +21,16 @@ public class Listener implements Runnable{
 	public void run(){
 		System.out.println("dentro thread listener per player: "  + player.getName());
 		while(true){
-			if(handler.getIn().nextLine().equalsIgnoreCase("reconnect")){
-				handler.getOut().println("connected");
-				handler.getOut().flush();
-				suspended.remove(player);
-				System.out.println("dentro thread listener, i player in suspended dopo reconnect di: " + player.getName());
-				for(Player p : suspended){
-					System.out.println(p.getName());
-				}
+			//if(handler.getIn().nextLine().equalsIgnoreCase("reconnect")){
+				//handler.getOut().println("connected");
+				//handler.getOut().flush();
+				//suspended.remove(player);
+				//System.out.println("dentro thread listener, i player in suspended dopo reconnect di: " + player.getName());
+				//for(Player p : suspended){
+					//System.out.println(p.getName());
+				//}
 				break;
-			}
+			//}
 		}
 	}
 

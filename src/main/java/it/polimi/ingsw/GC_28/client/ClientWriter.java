@@ -5,12 +5,17 @@ import java.io.PrintWriter;
 import java.net.Socket;
 import java.util.ArrayList;
 import java.util.EnumMap;
+import java.util.Map;
 import java.util.NoSuchElementException;
 import java.util.Scanner;
 import java.util.concurrent.locks.ReentrantLock;
 
+import it.polimi.ingsw.GC_28.boards.Cell;
+import it.polimi.ingsw.GC_28.boards.FinalBonus;
 import it.polimi.ingsw.GC_28.boards.GameBoard;
+import it.polimi.ingsw.GC_28.cards.CardType;
 import it.polimi.ingsw.GC_28.cards.ExcommunicationTile;
+import it.polimi.ingsw.GC_28.cards.LeaderCard;
 import it.polimi.ingsw.GC_28.components.CouncilPrivilege;
 import it.polimi.ingsw.GC_28.components.DiceColor;
 import it.polimi.ingsw.GC_28.components.FamilyMember;
@@ -21,6 +26,7 @@ import it.polimi.ingsw.GC_28.core.SpaceAction;
 import it.polimi.ingsw.GC_28.core.TakeCardAction;
 import it.polimi.ingsw.GC_28.effects.DiscountEffect;
 import it.polimi.ingsw.GC_28.effects.GoToHPEffect;
+import it.polimi.ingsw.GC_28.effects.PopeEffect;
 import it.polimi.ingsw.GC_28.effects.ServantEffect;
 import it.polimi.ingsw.GC_28.effects.TakeCardEffect;
 import it.polimi.ingsw.GC_28.model.Player;
@@ -84,30 +90,18 @@ public class ClientWriter extends Observable<Action> implements Runnable, Observ
 				//Scanner scan = new Scanner(line);
 				//System.out.println(player.toString());
 				if(line.equalsIgnoreCase("takeCard")){
-					askCard(null);
-					socketOut.writeObject(gameBoard);
-					socketOut.flush();
-					socketOut.reset();
-					/*socketOut.writeObject(player);
-					socketOut.flush();
-					socketOut.reset();*/
-					/*System.out.println("wait for lock");
-					lock.lock();
-					System.out.println("unlock");
-					lock.unlock();*/
+					if(askCard(null)){
+						socketOut.writeObject(gameBoard);
+						socketOut.flush();
+						socketOut.reset();
+					}
 				}
 				else if(line.equalsIgnoreCase("goToSpace")){
-					goToSpace(null);
-					socketOut.writeObject(gameBoard);
-					socketOut.flush();
-					socketOut.reset();
-					/*socketOut.writeObject(player);
-					socketOut.flush();
-					socketOut.reset();*/
-					/*System.out.println("wait for lock");
-					lock.lock();
-					System.out.println("unlock");
-					lock.unlock();*/
+					if(goToSpace(null)){
+						socketOut.writeObject(gameBoard);
+						socketOut.flush();
+						socketOut.reset();
+					}
 				}
 				else if(line.equalsIgnoreCase("skip")){
 					socketOut.writeObject(null);
@@ -115,10 +109,13 @@ public class ClientWriter extends Observable<Action> implements Runnable, Observ
 					socketOut.reset();
 					//return;
 				}
-				else if(line.equalsIgnoreCase("privileges")){
+				else if(line.equalsIgnoreCase("askcost()")){
+					askCost();
+				}
+				/*else if(line.equalsIgnoreCase("privileges")){
 					System.out.println("passato");
 				}
-				/*else if(line.equals("disconnect")){
+				else if(line.equals("disconnect")){
 					return;
 				}*/
 				/*else if(line.equalsIgnoreCase("specialaction")){
@@ -319,7 +316,7 @@ public class ClientWriter extends Observable<Action> implements Runnable, Observ
 		}while(true);
 	}
 	
-	public void goToSpace(GoToHPEffect throughEffect) throws IOException{
+	public boolean goToSpace(GoToHPEffect throughEffect) throws IOException{
 		/*socketOut.writeUTF("lock");
 		socketOut.flush();
 		socketOut.reset();*/
@@ -356,7 +353,9 @@ public class ClientWriter extends Observable<Action> implements Runnable, Observ
 		//System.out.println(familyMember.toString());
 		if(spaceAction.isApplicable()){
 			spaceAction.apply();
+			return true;
 		}
+		return false;
 	}
 	
 	public SpaceType askWhichSpace(){
@@ -525,6 +524,171 @@ public class ClientWriter extends Observable<Action> implements Runnable, Observ
 			}			
 		}
 		return amount;
+	}
+	
+	protected void giveExcommunication(int currentEra){
+				int faith = player.getBoard().getResources().getResource().get(ResourceType.FAITHPOINT);
+				if(faith < (2+ currentEra)){
+					System.out.println("You recive an Excommunication, because you cannot pay to avoid it");
+					player.getExcommunicationTile().get(currentEra -1).setEffect(gameBoard.getExcommunications()[currentEra-1].getEffect());
+					//p.getExcommunicationTile().add(currentEra-1, gameBoard.getExcommunications()[currentEra-1]);
+				}else{
+					System.out.println("Do you want to pay to avoid Excommunication?[y/n]");
+					if(stdin.nextLine().equalsIgnoreCase("n")){
+						player.getExcommunicationTile().add(currentEra-1, gameBoard.getExcommunications()[currentEra-1]);
+					}else{
+						System.out.println("You paid to avoid Excommunication, your faith points have been reset to 0");
+						int numberOfFaithPoint = player.getBoard().getResources().getResource().get(ResourceType.FAITHPOINT);
+						Resource bonusForFaithPoint = FinalBonus.instance().getFaithPointTrack().get(numberOfFaithPoint-1);
+						player.addResource(bonusForFaithPoint);
+						player.getBoard().getResources().getResource().put(ResourceType.FAITHPOINT, 0);
+						for(LeaderCard lc : player.getLeaderCards()){
+							if(CheckForPopeEffect(lc)){//FIXME
+								lc.getEffect().apply(player, this);
+							}
+						}
+					}
+				}
+			
+	}
+	
+	public boolean CheckForPopeEffect(LeaderCard lc){
+		if(lc.getEffect().getClass().equals(PopeEffect.class) && lc.getPlayed() && lc.getActive()){
+			return true;
+		}
+		return false;
+	}
+	
+	void askCost(){
+		String name = askCardName();
+		Cell c;
+		for(CardType ct : CardType.values()){
+			if((c = gameBoard.getTowers().get(ct).findCard(name)) != null){
+				System.out.println(c.getCard().getCost().toString());
+				return;
+			}
+		}	
+	}
+	
+	void specialAction(){//FIXME
+		System.out.println(player.displayLeader());
+		String procede;
+		do{
+			System.out.println("Which special action do you want to undertake?[discard/play/activate]");
+			String line = stdin.nextLine();
+			if(line.equalsIgnoreCase("discard")){
+				System.out.println("Which Leader do you want to discard?");
+				String card = stdin.nextLine();
+				for(LeaderCard l : player.getLeaderCards()){
+					if(l.getName().equalsIgnoreCase(card)){
+						player.getLeaderCards().remove(l);
+						ArrayList<java.lang.Character> choices = askPrivilege(1, false);
+						for(int i = 0; i < choices.size(); i++){//TODO test me 
+							player.addResource(checkResourceExcommunication(councilPrivilege.getOptions().get(choices.get(i)),player));
+						}
+						break;
+					}
+				}	
+			}else if(line.equalsIgnoreCase("play")){
+				System.out.println("Which Leader do you want to play?");
+				String card = stdin.nextLine();
+				for(LeaderCard l : player.getLeaderCards()){
+					if(l.getName().equalsIgnoreCase(card)){
+						Resource cardResourceCost = l.getResourceCost();
+						Map<CardType,Integer> cardCost = l.getCardCost();
+						if(checkForLucreziaBorgiaCost(l)){
+							l.setPlayed(true);
+							break;
+						}
+						else if(enoughResources(cardResourceCost) && enoughCard(cardCost)){
+							l.setPlayed(true);
+							break;
+						}
+					}
+				}
+			}else if(line.equalsIgnoreCase("activate")){
+				System.out.println("Which Leader do you want to active?");
+				String card = stdin.nextLine();
+				for(LeaderCard l : player.getLeaderCards()){
+					if(l.getName().equalsIgnoreCase(card)){
+						if(l.getPlayed()){
+							if(!(l.getActive())){
+								l.setActive(true);
+								if(!(l.getName().equalsIgnoreCase("Sisto IV")) && !(l.getName().equalsIgnoreCase("Santa Rita"))){
+									l.getEffect().apply(player, this);//FIXME change all the possible apply(familyMember,game) to apply(player,game) if possible
+									break;
+									}
+							}else{
+								System.out.println("You can't activate this card because you already played it in this turn");
+								break;
+							}
+						}else{
+							System.out.println("You can't activate this card because you've not played it yet");
+							break;
+						}
+					}
+				}
+			}
+			else{
+				System.out.println("Not valid input!");
+			}
+			System.out.println("Do you want to do another special action?[y/n]");
+			procede = stdin.nextLine();
+		}while(!procede.equalsIgnoreCase("n"));
+	}
+	
+	boolean enoughResources(Resource resourceCost){
+		if(resourceCost == null){
+			return true;
+		}
+		for(ResourceType rt: resourceCost.getResource().keySet()){
+			if(player.getBoard().getResources().getResource().get(rt) < resourceCost.getResource().get(rt)){
+				System.out.println("You haven't enough resources to play this Leader");
+				return false;
+			}
+		}
+		return true;
+	}
+	
+	boolean enoughCard(Map<CardType,Integer> cardCost){
+		if(cardCost == null){
+			return true;
+		}
+		if(player.getBoard().getTerritories().size() < cardCost.get(CardType.TERRITORY).intValue()){
+			System.out.println("You haven't enough Territories cards  to play this Leader");
+			return false;
+		}
+		if(player.getBoard().getBuildings().size() < cardCost.get(CardType.BUILDING).intValue()){
+			System.out.println("You haven't enough Building cards  to play this Leader");
+			return false;
+		}
+		if(player.getBoard().getCharacters().size() < cardCost.get(CardType.CHARACTER).intValue()){
+			System.out.println("You haven't enough Characters cards  to play this Leader");
+			return false;
+		}
+		if(player.getBoard().getVentures().size() < cardCost.get(CardType.VENTURE).intValue()){
+			System.out.println("You haven't enough Ventures cards  to play this Leader");
+			return false;
+		}
+		return true;
+	}
+	
+	private boolean checkForLucreziaBorgiaCost(LeaderCard lc){
+		if(lc.getName().equalsIgnoreCase("Lucrezia Borgia")){
+			if(player.getBoard().getTerritories().size() == 6){
+				return true;
+			}else if(player.getBoard().getBuildings().size() == 6){
+				return true;
+			}else if(player.getBoard().getCharacters().size() == 6){
+				return true;
+			}else if(player.getBoard().getVentures().size() == 6){
+				return true;
+			}else{
+				System.out.println("You haven't enough card to play thi leader");
+				return false;
+			}
+		}
+		return false;
 	}
 	
 	

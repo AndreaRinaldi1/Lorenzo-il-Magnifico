@@ -173,7 +173,10 @@ public class BoardSetup {
 			System.out.println("next 3");
 			for(FamilyMember fm : inCouncil){
 				if(!(nextOrder.contains(fm.getPlayer()))){
-					nextOrder.add(fm.getPlayer());
+					for(Player p : gameModel.getPlayers()){
+						if(fm.getPlayer().getColor() == p.getColor())
+							nextOrder.add(p);
+					}
 				}
 			}
 		}

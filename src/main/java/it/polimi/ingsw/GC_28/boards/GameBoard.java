@@ -78,13 +78,13 @@ public class GameBoard implements Serializable {
 		String cp = councilTable.render() + "\n";
 		ret.append(cp);
 		
-		AsciiTable church = new AsciiTable();
+		/*AsciiTable church = new AsciiTable();
 		church.addRule();
 		church.addRow("Church", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15");
 		church.addRule();
 		ret.append(church.render() + "\n");			//ho bisogno delle carte scomunica
 		
-		
+		*/
 		AsciiTable spaces = new AsciiTable();
 		spaces.addRule();
 		spaces.addRow("Coin Space", "Servant Space", "Mixed Space", "Privileges Space");

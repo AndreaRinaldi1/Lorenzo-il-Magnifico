@@ -86,6 +86,8 @@ public class ClientListener implements Runnable{
 					writer.setGameBoard(gameBoard);
 					System.out.println(writer.gameBoard.display());
 					System.out.println(writer.player.getBoard().display());
+					System.out.println(writer.player.displayExcommunication());
+					System.out.println(writer.player.displayLeader());
 					//System.out.println(writer.player.displayFamilyMembers());
 					for(int i = 0; i < 4; i++){
 						System.out.println(writer.player.getFamilyMembers()[i].toString());
@@ -104,6 +106,10 @@ public class ClientListener implements Runnable{
 							writer.player.getFamilyMembers()[i].setValue(0);
 					}
 					//setFamilyMember();
+				}
+				else if(socketLine.equalsIgnoreCase("excommunication")){
+					int currentEra = socketIn.readInt();
+					writer.giveExcommunication(currentEra);
 				}
 				else{
 					/*if(socketLine.equalsIgnoreCase("it's your turn") && !first){

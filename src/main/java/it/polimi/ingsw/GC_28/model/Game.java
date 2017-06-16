@@ -224,7 +224,7 @@ public class Game extends Observable<Action> implements Runnable, Observer<Messa
 				
 			}
 			
-			//giveExcommunication();
+			giveExcommunication();
 		}
 		applyFinalBonus();
 		applyFinalMalus();
@@ -476,6 +476,21 @@ public class Game extends Observable<Action> implements Runnable, Observer<Messa
 	}
 
 
+	private void giveExcommunication(){
+		for(Player p : gameModel.getPlayers()){
+			try {
+				handlers.get(p).getOut().writeUTF("excommunication");
+				handlers.get(p).getOut().flush();
+				handlers.get(p).getOut().writeInt(currentEra);
+				handlers.get(p).getOut().flush();
+				handlers.get(p).getOut().reset();
+			
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+	}
 
 	
 	/*public void declareWinner() throws IOException{

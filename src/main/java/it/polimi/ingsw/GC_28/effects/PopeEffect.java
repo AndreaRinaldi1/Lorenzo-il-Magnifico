@@ -1,5 +1,6 @@
 package it.polimi.ingsw.GC_28.effects;
 
+import it.polimi.ingsw.GC_28.cards.LeaderCard;
 import it.polimi.ingsw.GC_28.client.ClientWriter;
 import it.polimi.ingsw.GC_28.components.Resource;
 import it.polimi.ingsw.GC_28.model.Game;
@@ -17,6 +18,8 @@ public class PopeEffect extends Effect{
 	public void setBonus(Resource bonus) {
 		this.bonus = bonus;
 	}
+	
+	
 	
 	@Override
 	public void apply(Player player, ClientWriter writer) {
