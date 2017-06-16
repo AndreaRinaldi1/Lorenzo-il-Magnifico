@@ -293,7 +293,7 @@ public class ClientWriter extends Observable<Action> implements Runnable, Observ
 		stdin = new Scanner(System.in);
 		boolean x = true;
 		do{
-			System.out.println(player.getFamilyMembers()[0].toString());
+			//System.out.println(player.getFamilyMembers()[0].toString());
 			System.out.println("Enter which familyMember you would like to use: [ Orange / Black / White / Neutral ]");
 			String choice = stdin.nextLine();
 			for(DiceColor color : DiceColor.values()){

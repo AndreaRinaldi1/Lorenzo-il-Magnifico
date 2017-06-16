@@ -38,17 +38,13 @@ public class Client{
 	public void startClient() throws IOException{
 		Socket socket = new Socket(getLocalAddress(), port);
 		System.out.println("Connection Estabilished!");
-		//Scanner socketIn = new Scanner(socket.getInputStream());
-		//PrintWriter socketOut = new PrintWriter(socket.getOutputStream());
-		//Scanner stdin = new Scanner(System.in);
+		
+		
 		ThreadFactory thread = Executors.defaultThreadFactory();
 		ClientWriter Writer = new ClientWriter(socket,player);
 		ClientListener Listener = new ClientListener(socket, player,Writer);
 		thread.newThread(Writer).start();
 		thread.newThread(Listener).start();
-		
-		
-
 		
 	}
 	
