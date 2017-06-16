@@ -42,5 +42,9 @@ public class ClientHandler{
 	}
 	
 	
-	
+/*
+ * 	public ClientHandler(ObjectOutputStream out, ObjectInputStream in){
+		this.in = in;
+		this.out = out;
+ */
 }

@@ -2,6 +2,7 @@ package it.polimi.ingsw.GC_28.spacesTest;
 
 import static org.junit.Assert.*;
 
+import java.net.Socket;
 import java.util.ArrayList;
 import java.util.EnumMap;
 import java.util.List;
@@ -13,6 +14,7 @@ import org.junit.Test;
 import it.polimi.ingsw.GC_28.boards.BonusTile;
 import it.polimi.ingsw.GC_28.boards.GameBoard;
 import it.polimi.ingsw.GC_28.boards.PlayerBoard;
+import it.polimi.ingsw.GC_28.client.ClientWriter;
 import it.polimi.ingsw.GC_28.components.DiceColor;
 import it.polimi.ingsw.GC_28.components.FamilyMember;
 import it.polimi.ingsw.GC_28.components.Resource;
@@ -36,7 +38,7 @@ public class MarketSpaceTest {
 	private boolean neutral;
 	private PlayerBoard pb;
 	private BonusTile bonusTile;
-	
+	private ClientWriter writer;
 	
 	@Before
 	public void marketSpace(){
@@ -61,14 +63,17 @@ public class MarketSpaceTest {
 		p.setBoard(pb);
 		fm = new FamilyMember(p, false, DiceColor.WHITE);
 		
-		List<Player> players = new ArrayList<>();
-		players.add(p);
-		GameBoard gb = new GameBoard();
-		GameModel gm = new GameModel(gb,players);
+		//List<Player> players = new ArrayList<>();
+		//players.add(p);
+		//GameBoard gb = new GameBoard();
+		//GameModel gm = new GameModel(gb,players);
 		
-		g = new Game(gm);
-	
-		g.setCurrentPlayer(p);
+		//g = new Game(gm);
+		
+		//g.setCurrentPlayer(p);
+		Socket socket = new Socket();
+		writer = new ClientWriter(socket, p);
+		
 	}
 	
 	@AfterClass
@@ -77,7 +82,7 @@ public class MarketSpaceTest {
 
 	@Test
 	public void testApplyBonus() {
-		ms.applyBonus(g, fm);
+		ms.applyBonus(writer, fm);
 
 		boolean x = r.equals(fm.getPlayer().getBoard().getResources());
 		assertTrue(x);

@@ -10,6 +10,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import it.polimi.ingsw.GC_28.boards.GameBoard;
+import it.polimi.ingsw.GC_28.client.ClientWriter;
 import it.polimi.ingsw.GC_28.components.DiceColor;
 import it.polimi.ingsw.GC_28.components.FamilyMember;
 import it.polimi.ingsw.GC_28.effects.IncrementHPEffect;
@@ -33,6 +34,7 @@ public class IncrementHPEffectTest {
 	private GameModel gameModel;
 	private GameBoard gameBoard; 
 	private List<Player> players = new ArrayList<>();
+	private ClientWriter w;
 	
 	@Before
 	public void incrementHPEffect(){
@@ -60,7 +62,7 @@ public class IncrementHPEffectTest {
 		incHP.setHarvest(harvest);
 		incHP.setProduction(production);
 		incHP.setIncrement(increment);
-		incHP.apply(fm, g);
+		incHP.apply(fm, w);
 		fm2.modifyValue(increment);
 		boolean x = fm2.getValue().equals(fm.getValue());
 		assertTrue(x);

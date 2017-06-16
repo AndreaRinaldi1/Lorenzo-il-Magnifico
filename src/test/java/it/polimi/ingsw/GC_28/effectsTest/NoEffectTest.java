@@ -16,6 +16,7 @@ import org.junit.Test;
 import it.polimi.ingsw.GC_28.boards.BonusTile;
 import it.polimi.ingsw.GC_28.boards.GameBoard;
 import it.polimi.ingsw.GC_28.boards.PlayerBoard;
+import it.polimi.ingsw.GC_28.client.ClientWriter;
 import it.polimi.ingsw.GC_28.components.DiceColor;
 import it.polimi.ingsw.GC_28.components.FamilyMember;
 import it.polimi.ingsw.GC_28.components.Resource;
@@ -37,6 +38,7 @@ public class NoEffectTest {
 	private GameBoard gb;
 	private GameModel gameModel;
 	private List<Player> players = new ArrayList<>();
+	private ClientWriter writer;
 	
 	@Before
 	public void noEffect(){
@@ -64,7 +66,7 @@ public class NoEffectTest {
 
 	@Test
 	public void testApply() {
-		ne.apply(fm, g);
+		ne.apply(fm, writer);
 
 		boolean x = res.equals(fm.getPlayer().getBoard().getResources());
 		assertTrue(x);

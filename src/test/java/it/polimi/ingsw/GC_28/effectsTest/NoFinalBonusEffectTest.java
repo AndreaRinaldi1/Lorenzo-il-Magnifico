@@ -19,6 +19,7 @@ import it.polimi.ingsw.GC_28.cards.CardType;
 import it.polimi.ingsw.GC_28.cards.Character;
 import it.polimi.ingsw.GC_28.cards.Territory;
 import it.polimi.ingsw.GC_28.cards.Venture;
+import it.polimi.ingsw.GC_28.client.ClientWriter;
 import it.polimi.ingsw.GC_28.components.DiceColor;
 import it.polimi.ingsw.GC_28.components.FamilyMember;
 import it.polimi.ingsw.GC_28.components.Resource;
@@ -41,6 +42,7 @@ public class NoFinalBonusEffectTest {
 	private	Game g;
 	private FamilyMember fm;
 	private Player player;
+	private ClientWriter w;
 	
 	private GameBoard gb;
 	private PlayerBoard pb;
@@ -115,7 +117,7 @@ public class NoFinalBonusEffectTest {
 		System.out.println(fm.getPlayer().getBoard().getVentures());
 		System.out.println(fm.getPlayer().getBoard().getResources());
 		
-		nfbe.apply(player, g);
+		nfbe.apply(player, w);
 		
 		
 

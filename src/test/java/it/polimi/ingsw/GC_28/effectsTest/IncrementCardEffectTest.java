@@ -11,6 +11,7 @@ import org.junit.Test;
 
 import it.polimi.ingsw.GC_28.boards.GameBoard;
 import it.polimi.ingsw.GC_28.cards.CardType;
+import it.polimi.ingsw.GC_28.client.ClientWriter;
 import it.polimi.ingsw.GC_28.components.DiceColor;
 import it.polimi.ingsw.GC_28.components.FamilyMember;
 import it.polimi.ingsw.GC_28.effects.*;
@@ -33,6 +34,8 @@ public class IncrementCardEffectTest {
 	private GameModel gameModel;
 	private GameBoard gameBoard; 
 	private List<Player> players = new ArrayList<>();
+	private ClientWriter w;
+	
 	
 	@Before
 	public void incrementCardEffect(){
@@ -61,7 +64,7 @@ public class IncrementCardEffectTest {
 		ic.setDiscountPresence(discountPresence);
 		ic.setCardType(CardType.BUILDING);
 		ic.setDiscount(discount);
-		ic.apply(this.fm, this.g);
+		ic.apply(this.fm, this.w);
 		fm2.modifyValue(increment);
 		boolean x = fm2.getValue().equals(fm.getValue());
 		assertTrue(x);

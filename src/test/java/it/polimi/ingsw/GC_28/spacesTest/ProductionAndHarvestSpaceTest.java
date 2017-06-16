@@ -2,6 +2,7 @@ package it.polimi.ingsw.GC_28.spacesTest;
 
 import static org.junit.Assert.*;
 
+import java.net.Socket;
 import java.util.ArrayList;
 import java.util.EnumMap;
 import java.util.List;
@@ -16,6 +17,7 @@ import it.polimi.ingsw.GC_28.boards.GameBoard;
 import it.polimi.ingsw.GC_28.boards.PlayerBoard;
 import it.polimi.ingsw.GC_28.cards.Building;
 import it.polimi.ingsw.GC_28.cards.Territory;
+import it.polimi.ingsw.GC_28.client.ClientWriter;
 import it.polimi.ingsw.GC_28.components.DiceColor;
 import it.polimi.ingsw.GC_28.components.FamilyMember;
 import it.polimi.ingsw.GC_28.components.Resource;
@@ -44,6 +46,8 @@ public class ProductionAndHarvestSpaceTest {
 	private BonusTile bt;
 	EnumMap<ResourceType, Integer> resource;
 	private Resource resources;
+	
+	private ClientWriter w;
 	
 	private Building b;
 	
@@ -94,6 +98,9 @@ public class ProductionAndHarvestSpaceTest {
 	
 		g.setCurrentPlayer(p);
 		
+		Socket socket = new Socket();
+		w = new ClientWriter(socket, p);
+		
 		
 	}
 	
@@ -105,7 +112,7 @@ public class ProductionAndHarvestSpaceTest {
 	public void testApplyBonus() {
 		System.out.println(fm.getPlayer().getBoard().getResources().toString());
 		pb.addCard(b);
-		phs.applyBonus(g, fm);
+		phs.applyBonus(w, fm);
 
 		EnumMap<ResourceType, Integer> map = new EnumMap<>(ResourceType.class);
 		map.put(ResourceType.COIN, 9);

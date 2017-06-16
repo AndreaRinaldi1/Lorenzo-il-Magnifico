@@ -5,6 +5,8 @@ import static org.junit.Assert.*;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.net.Socket;
 import java.util.ArrayList;
 import java.util.EnumMap;
@@ -51,6 +53,8 @@ public class GoToHPEffectTest {
 	private List<Player> players = new ArrayList<>();
 	
 	private Socket socket = new Socket();
+	private ObjectOutputStream out;
+	private ObjectInputStream in;
 	private ClientHandler clientHandler;
 	private Map<Player, ClientHandler> handlers = new HashMap<>();
 	
@@ -81,7 +85,7 @@ public class GoToHPEffectTest {
 	    when(socket.getOutputStream()).thenReturn(byteArrayOutputStream);
 	    
 
-		clientHandler = new ClientHandler(socket);
+		clientHandler = new ClientHandler(out,in);
 		handlers.put(player, clientHandler);
 		players.add(player);
 		gb = new GameBoard();

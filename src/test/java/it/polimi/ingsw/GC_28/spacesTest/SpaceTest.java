@@ -10,6 +10,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import it.polimi.ingsw.GC_28.boards.GameBoard;
+import it.polimi.ingsw.GC_28.client.ClientWriter;
 import it.polimi.ingsw.GC_28.components.DiceColor;
 import it.polimi.ingsw.GC_28.components.FamilyMember;
 import it.polimi.ingsw.GC_28.model.Game;
@@ -29,10 +30,16 @@ public class SpaceTest {
 	private Player p;
 	
 	private Game g;
+	private ClientWriter w;
 	
 	@Before
 	public void space(){
-		s = new Space(){};
+		s = new Space(){
+
+			/**
+			 * 
+			 */
+			private static final long serialVersionUID = 1L;};
 		p = new Player("Rob", PlayerColor.YELLOW);
 		fm = new FamilyMember(p, neutral, DiceColor.ORANGE);
 		
@@ -49,7 +56,7 @@ public class SpaceTest {
 		s.addPlayer(fm);
 
 		s.setActionValue(actionValue);
-		s.applyBonus(g, fm);
+		s.applyBonus(w, fm);
 	}
 	
 	@AfterClass

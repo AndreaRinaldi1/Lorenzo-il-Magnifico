@@ -2,6 +2,7 @@ package it.polimi.ingsw.GC_28.effectsTest;
 
 import static org.junit.Assert.*;
 
+import java.net.Socket;
 import java.util.ArrayList;
 import java.util.EnumMap;
 import java.util.List;
@@ -18,6 +19,7 @@ import it.polimi.ingsw.GC_28.cards.CardType;
 import it.polimi.ingsw.GC_28.cards.ExcommunicationTile;
 import it.polimi.ingsw.GC_28.cards.Territory;
 import it.polimi.ingsw.GC_28.cards.Venture;
+import it.polimi.ingsw.GC_28.client.ClientWriter;
 import it.polimi.ingsw.GC_28.cards.Character;
 import it.polimi.ingsw.GC_28.components.DiceColor;
 import it.polimi.ingsw.GC_28.components.FamilyMember;
@@ -42,6 +44,7 @@ public class MultiplierEffectTest {
 	private FamilyMember fm2;
 	private Player player;
 	private Player player2;
+	private ClientWriter writer;
 	
 	private GameBoard gb;
 	private PlayerBoard pb;
@@ -107,7 +110,8 @@ public class MultiplierEffectTest {
 		gb = new GameBoard();
 		g.setCurrentPlayer(player);
 		
-		
+		Socket socket = new Socket();
+		writer = new ClientWriter(socket, player);
 	
 		
 	}
@@ -125,7 +129,7 @@ public class MultiplierEffectTest {
 		me.setResourceBonus(resourceBonus);
 		me.setResourceCost(resourceCost);
 	
-		me.apply(fm, g);
+		me.apply(fm, writer);
 		resourceBonus.modifyResource(resourceCost, true);
 		
 		boolean x = resourceBonus.equals(fm.getPlayer().getBoard().getResources());
@@ -138,7 +142,7 @@ public class MultiplierEffectTest {
 		me.setCardType(cardType);
 		pb.addCard(b);
 		me.setResourceBonus(resourceBonus);
-		me.apply(fm, g);
+		me.apply(fm, writer);
 		boolean x = resourceBonus.equals(fm.getPlayer().getBoard().getResources());
 		assertTrue(x);
 	}
@@ -151,7 +155,7 @@ public class MultiplierEffectTest {
 		//me.setResourceCost(resourceCost);
 		pb.addCard(b);
 		
-		me.apply(player, g);
+		me.apply(player, writer);
 		boolean x = resourceBonus.equals(player.getBoard().getResources());
 		assertTrue(x);
 	}
@@ -163,7 +167,7 @@ public class MultiplierEffectTest {
 		//me.setResourceCost(resourceCost);
 		pb.addCard(t);
 		
-		me.apply(player, g);
+		me.apply(player, writer);
 		boolean x = resourceBonus.equals(player.getBoard().getResources());
 		assertTrue(x);
 	}
@@ -176,7 +180,7 @@ public class MultiplierEffectTest {
 		//me.setResourceCost(resourceCost);
 		pb.addCard(c);
 		
-		me.apply(player, g);
+		me.apply(player, writer);
 		boolean x = resourceBonus.equals(player.getBoard().getResources());
 		assertTrue(x);
 	}
@@ -189,7 +193,7 @@ public class MultiplierEffectTest {
 		//me.setResourceCost(resourceCost);
 		pb.addCard(v);
 		
-		me.apply(player, g);
+		me.apply(player, writer);
 		boolean x = resourceBonus.equals(player.getBoard().getResources());
 		assertTrue(x);
 	}
@@ -201,7 +205,7 @@ public class MultiplierEffectTest {
 		me.setResourceCost(resourceCost);
 		me.setResourceBonus(resourceBonus);
 
-		me.apply(player, g);
+		me.apply(player, writer);
 		resourceBonus.modifyResource(resourceCost, true);
 		boolean x = resourceBonus.equals(player.getBoard().getResources());
 		assertTrue(x);

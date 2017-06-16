@@ -12,6 +12,7 @@ import org.junit.Test;
 
 import it.polimi.ingsw.GC_28.boards.GameBoard;
 import it.polimi.ingsw.GC_28.boards.PlayerBoard;
+import it.polimi.ingsw.GC_28.client.ClientWriter;
 import it.polimi.ingsw.GC_28.components.DiceColor;
 import it.polimi.ingsw.GC_28.components.FamilyMember;
 import it.polimi.ingsw.GC_28.components.Resource;
@@ -35,6 +36,7 @@ public class DiscountEffectTest {
 	private FamilyMember fm;
 	private Game g;
 	private Player p;
+	private ClientWriter w;
 	
 	@Before
 	public void discountEffect(){
@@ -77,7 +79,7 @@ public class DiscountEffectTest {
 		discount = Resource.of(resource);
 		de.setDiscount(discount);
 		de.setAlternativeDiscountPresence(false);
-		de.apply(fm, g);
+		de.apply(fm, w);
 		boolean x = discount.equals(fm.getPlayer().getBoard().getResources());
 		assertTrue(x);
 //		assertEquals(this.fm.getPlayer().getBoard().get, de);

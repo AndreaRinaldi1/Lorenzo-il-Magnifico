@@ -2,6 +2,7 @@ package it.polimi.ingsw.GC_28.effectsTest;
 
 import static org.junit.Assert.*;
 
+import java.net.Socket;
 import java.util.ArrayList;
 import java.util.EnumMap;
 import java.util.HashMap;
@@ -13,6 +14,7 @@ import org.junit.Test;
 
 import it.polimi.ingsw.GC_28.boards.GameBoard;
 import it.polimi.ingsw.GC_28.boards.PlayerBoard;
+import it.polimi.ingsw.GC_28.client.ClientWriter;
 import it.polimi.ingsw.GC_28.components.CouncilPrivilege;
 import it.polimi.ingsw.GC_28.components.DiceColor;
 import it.polimi.ingsw.GC_28.components.FamilyMember;
@@ -51,6 +53,7 @@ public class ExchangeEffectTest {
 	private FamilyMember fm;
 	private Game g;
 	private Player p;
+	private ClientWriter writer;
 	
 	@Before
 	public void exchangeEffect(){
@@ -84,6 +87,9 @@ public class ExchangeEffectTest {
 		g = new Game(gm);
 	
 		g.setCurrentPlayer(p);
+		
+		Socket socket = new Socket();
+		writer = new ClientWriter(socket, p);
 	}
 	
 	@AfterClass
@@ -98,7 +104,7 @@ public class ExchangeEffectTest {
 		resource2.put(ResourceType.SERVANT, 1);
 		firstBonus = Resource.of(resource2);
 		exchange.setFirstBonus(firstBonus);
-		exchange.apply(fm, g);
+		exchange.apply(fm, writer);
 		Resource res = Resource.of(w);
 		res.modifyResource(firstCost, false);
 		res.modifyResource(firstBonus, true);

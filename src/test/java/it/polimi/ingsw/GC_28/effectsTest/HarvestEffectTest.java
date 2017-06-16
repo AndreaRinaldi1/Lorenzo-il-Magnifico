@@ -12,6 +12,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import it.polimi.ingsw.GC_28.boards.GameBoard;
+import it.polimi.ingsw.GC_28.client.ClientWriter;
 import it.polimi.ingsw.GC_28.components.CouncilPrivilege;
 import it.polimi.ingsw.GC_28.components.DiceColor;
 import it.polimi.ingsw.GC_28.components.FamilyMember;
@@ -41,6 +42,7 @@ public class HarvestEffectTest {
 	private GameModel gameModel;
 	private GameBoard gb;
 	private List<Player> players = new ArrayList<>();
+	private ClientWriter w;
 	
 	@Before
 	public void harvestEffect(){
@@ -76,7 +78,7 @@ public class HarvestEffectTest {
 	@Test
 	public void testApply() {
 	
-		he.apply(familyMember, game);
+		he.apply(familyMember, w);
 	
 	}
 

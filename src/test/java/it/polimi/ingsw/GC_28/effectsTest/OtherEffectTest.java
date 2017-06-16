@@ -10,6 +10,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import it.polimi.ingsw.GC_28.boards.GameBoard;
+import it.polimi.ingsw.GC_28.client.ClientWriter;
 import it.polimi.ingsw.GC_28.components.DiceColor;
 import it.polimi.ingsw.GC_28.components.FamilyMember;
 import it.polimi.ingsw.GC_28.effects.*;
@@ -28,6 +29,8 @@ public class OtherEffectTest {
 	private GameModel gameModel = new GameModel(new GameBoard(),l );
 	private FamilyMember fm = new FamilyMember(p, false, DiceColor.ORANGE);
 	private Game g = new Game(gameModel);
+	private ClientWriter w;
+	
 	@Before
 	public void otherEffectTest(){
 		other = new OtherEffect();
@@ -40,12 +43,12 @@ public class OtherEffectTest {
 	@Test
 	public void testApply() {
 		//fail("Not yet implemented");
-		this.other.apply(p, g);
+		this.other.apply(p, w);
 	}
 	
 	@Test
 	public void testApply2(){
-		this.other.apply(fm, g);
+		this.other.apply(fm, w);
 	}
 	
 	@Test
