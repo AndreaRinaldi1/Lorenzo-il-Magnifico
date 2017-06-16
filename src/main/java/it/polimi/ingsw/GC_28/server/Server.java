@@ -95,7 +95,7 @@ public class Server {
 			started = false;
 			
 			System.out.println("Server ready");
-			while(handlers.size() < 4){
+			while(handlers.size() < 2){
 				Socket socket = server.accept();
 				o = new ObjectOutputStream(socket.getOutputStream());
 				scan = new ObjectInputStream(socket.getInputStream());

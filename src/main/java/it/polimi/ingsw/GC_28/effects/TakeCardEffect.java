@@ -59,6 +59,8 @@ public class TakeCardEffect extends Effect{
 	public void apply(FamilyMember familyMember, ClientWriter writer) {
 		System.out.println("apply di TakeCardEffect");
 		//game.askCard(this);
+		@SuppressWarnings("resource")
+		Scanner scan = new Scanner(System.in);
 		boolean ok = false;
 		do{
 			try {
@@ -68,12 +70,9 @@ public class TakeCardEffect extends Effect{
 			}
 			if(!ok){
 				System.out.println("Are you unable to take any card and you want to skip? [y/n]");
-				Scanner scan = new Scanner(System.in);
 				if (scan.hasNextLine() && ("y").equalsIgnoreCase(scan.nextLine())){
-					scan.close();
 					return;
 				}
-				scan.close();
 			}
 		}while(!ok);
 	}
