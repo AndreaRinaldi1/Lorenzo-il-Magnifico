@@ -60,6 +60,7 @@ public class Server {
 		}
 	}
 	
+
 	/*private void startServer2() throws IOException{
 		executor = Executors.newCachedThreadPool();
 		server = new ServerSocket(port);
@@ -84,7 +85,7 @@ public class Server {
 		}
 	}*/
 	
-	private void startServer()throws IOException{
+	private void startServer()throws IOException{	
 		Timer timer = new Timer();
 		executor = Executors.newCachedThreadPool();
 		server = new ServerSocket(port);
@@ -134,6 +135,7 @@ public class Server {
 			startGame(handlers);
 		}
 	}
+	
 
 	
 	public void startGame(Map<Player, ClientHandler> handlers) throws IOException{
@@ -210,6 +212,7 @@ public class Server {
 	}
 	
 	private PlayerColor enterColor() throws IOException {
+
 		boolean found = false;
 		do{
 			o.writeUTF("Enter the color you prefer: [red / blue / green / yellow] ");
@@ -268,6 +271,140 @@ public class Server {
 		JsonReader reader = new JsonReader(new FileReader("bonusTile2.json"));
 		List<BonusTile> bonusList = gson.fromJson(reader, bonusTileListType);
 		return bonusList;
+	
+	
+	
+	
+
+		}
+	}
+
+
+
+/*class AcceptPlayer implements Runnable{
+	private ServerSocket server;
+	private Map<Player,ClientHandler> handlers;
+	private PrintStream p;
+	private Scanner scan;
+	//List<PlayerColor> usedColors = new ArrayList<>();
+	private Socket s;
+	
+	public AcceptPlayer(ServerSocket server, Map<Player,ClientHandler> handlers, Socket s){
+		this.server = server;
+		this.handlers = handlers;
+		this.s = s;
+	}
+	@Override
+	public void run(){
+		/*while(handlers.size() < 4){
+			try{
+			Socket socket = server.accept();
+			p = new PrintStream(socket.getOutputStream());
+			scan = new Scanner(socket.getInputStream());
+			p.println("Enter your name:");
+			p.flush();
+			String name = scan.nextLine();
+			PlayerColor color = enterColor();
+			Player player = new Player(name, color);
+			ClientHandler ch = new ClientHandler(socket);
+			handlers.put(player, ch);
+			}catch(IOException e){
+				e.printStackTrace();
+			}
+		}
+		usedColors.clear();
+		
+	}
+
+	@Override
+	public void run() {
+		// TODO Auto-generated method stub
+		System.out.println("handlers size :"+handlers.size());
+		while(handlers.size() < 4){
+		Socket socket;
+		try{
+		if(handlers.size() == 1){
+			socket = s;
+		}
+		else{
+			socket = server.accept();
+		}
+		p = new PrintStream(socket.getOutputStream());
+		scan = new Scanner(socket.getInputStream());
+		p.println("Enter your name:");
+		p.flush();
+		String name = scan.nextLine();
+		PlayerColor color = enterColor();
+		Player player = new Player(name, color);
+		ClientHandler ch = new ClientHandler(socket);
+		handlers.put(player, ch);
+		}catch(IOException e){
+			e.printStackTrace();
+		}
+	}
+	usedColors.clear();
 	}
 	
-}
+	private PlayerColor enterColor(){
+		boolean found = false;
+		do{
+			p.println("Enter the color you prefer: [red / blue / green / yellow] ");
+			p.flush();
+			String playerColor = scan.nextLine().toUpperCase();
+			for(PlayerColor color : PlayerColor.values()){
+				if(playerColor.equals(color.name())){
+					if(!usedColors.contains(color)){
+						usedColors.add(color);
+						return color;
+					}
+					else{
+						p.println("This color has already been choosed");
+						found = true;
+						break;
+					}
+				}
+			}
+			if(!found){
+				p.println("Not valid input!");
+			}
+		}while(true);
+	}
+	
+}*/
+
+/*while(handlers.size() < 4){
+Socket socket = server.accept();
+p = new PrintStream(socket.getOutputStream());
+scan = new Scanner(socket.getInputStream());
+p.println("Enter your name:");
+p.flush();
+String name = scan.nextLine();
+PlayerColor color = enterColor();
+Player player = new Player(name, color);
+ClientHandler ch = new ClientHandler(socket);
+handlers.put(player, ch);
+}*/
+
+
+/*Socket socket = server.accept();
+p = new PrintStream(socket.getOutputStream());
+scan = new Scanner(socket.getInputStream());
+p.println("Enter your name:");
+p.flush();
+String name = scan.nextLine();
+PlayerColor color = enterColor();
+Player player = new Player(name, color);
+ClientHandler ch = new ClientHandler(socket);
+handlers.put(player, ch);
+System.out.println("qua");
+Socket socket2 = server.accept();
+System.out.println(socket);
+System.out.println(socket2);
+System.out.println("ot");*/
+
+
+
+
+
+
+

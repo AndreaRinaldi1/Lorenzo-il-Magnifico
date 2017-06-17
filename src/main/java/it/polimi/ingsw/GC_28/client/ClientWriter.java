@@ -10,6 +10,7 @@ import java.util.NoSuchElementException;
 import java.util.Scanner;
 import java.util.concurrent.locks.ReentrantLock;
 
+
 import it.polimi.ingsw.GC_28.boards.Cell;
 import it.polimi.ingsw.GC_28.boards.FinalBonus;
 import it.polimi.ingsw.GC_28.boards.GameBoard;
@@ -50,11 +51,16 @@ public class ClientWriter extends Observable<Action> implements Runnable, Observ
 	ObjectOutputStream socketOut;
 	//ReentrantLock lock = new ReentrantLock();
 	Boolean result;
+	
+
+
+	 
 	public ClientWriter(Socket socket,Player player){
 		this.socket = socket;
 		this.player = player;
 	}
 	
+
 	@Override
 	public void run(){
 		Scanner stdin = null;
@@ -150,6 +156,7 @@ public class ClientWriter extends Observable<Action> implements Runnable, Observ
 		}
 	}
 	
+
 	/*public void setLock(){
 		this.lock.lock();
 	}
@@ -708,4 +715,5 @@ public class ClientWriter extends Observable<Action> implements Runnable, Observ
 		
 	}
 	
+
 }
