@@ -42,6 +42,9 @@ import it.polimi.ingsw.GC_28.components.Resource;
 import it.polimi.ingsw.GC_28.components.ResourceType;
 import it.polimi.ingsw.GC_28.effects.DiscountEffect;
 import it.polimi.ingsw.GC_28.effects.IncrementCardEffect;
+import it.polimi.ingsw.GC_28.effects.IncrementHPEffect;
+import it.polimi.ingsw.GC_28.effects.MultiplierEffect;
+import it.polimi.ingsw.GC_28.effects.NoFinalBonusEffect;
 import it.polimi.ingsw.GC_28.effects.OtherEffect;
 import it.polimi.ingsw.GC_28.model.Player;
 import it.polimi.ingsw.GC_28.spaces.EverySpace;
@@ -300,7 +303,18 @@ public class BoardsInitializer {
 				IncrementCardEffect e = (IncrementCardEffect)gameBoard.getExcommunications()[i].getEffect();
 				System.out.println(e.getCardType());
 			}
-			
+			if(gameBoard.getExcommunications()[i].getEffect().getClass().equals(IncrementHPEffect.class)){
+				IncrementHPEffect e = (IncrementHPEffect)gameBoard.getExcommunications()[i].getEffect();
+				System.out.println(e.getType());
+			}
+			if(gameBoard.getExcommunications()[i].getEffect().getClass().equals(MultiplierEffect.class)){
+				MultiplierEffect e = (MultiplierEffect)gameBoard.getExcommunications()[i].getEffect();
+				System.out.println(e.getResourceCost());
+			}
+			if(gameBoard.getExcommunications()[i].getEffect().getClass().equals(NoFinalBonusEffect.class)){
+				NoFinalBonusEffect e = (NoFinalBonusEffect)gameBoard.getExcommunications()[i].getEffect();
+				System.out.println(e.getCardType());
+			}
 		}
 		
 	}

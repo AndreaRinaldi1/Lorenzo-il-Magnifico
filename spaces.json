@@ -3,7 +3,13 @@
     "bonus": {
       "resourceBonus": {
         "resource": {
-          "COIN": 5
+            "COIN": 5,
+            "WOOD": 0,
+            "STONE": 0,
+            "SERVANT": 0,
+            "MILITARYPOINT": 0,
+            "VICTORYPOINT": 0,
+            "FAITHPOINT": 0
         }
       },
       "type": "RESOURCEEFFECT"
@@ -16,7 +22,13 @@
     "bonus": {
       "resourceBonus": {
         "resource": {
-          "SERVANT": 5
+            "COIN": 0,
+            "WOOD": 0,
+            "STONE": 0,
+            "SERVANT": 5,
+            "MILITARYPOINT": 0,
+            "VICTORYPOINT": 0,
+            "FAITHPOINT": 0
         }
       },
       "type": "RESOURCEEFFECT"
@@ -29,8 +41,13 @@
     "bonus": {
       "resourceBonus": {
         "resource": {
-          "COIN": 2,
-          "MILITARYPOINT": 3
+            "COIN": 2,
+            "WOOD": 0,
+            "STONE": 0,
+            "SERVANT": 0,
+            "MILITARYPOINT": 3,
+            "VICTORYPOINT": 0,
+            "FAITHPOINT": 0
         }
       },
       "type": "RESOURCEEFFECT"

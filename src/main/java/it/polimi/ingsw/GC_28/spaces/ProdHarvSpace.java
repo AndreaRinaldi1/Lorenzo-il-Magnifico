@@ -1,5 +1,6 @@
 package it.polimi.ingsw.GC_28.spaces;
 
+import it.polimi.ingsw.GC_28.cards.Building;
 import it.polimi.ingsw.GC_28.cards.Territory;
 import it.polimi.ingsw.GC_28.components.FamilyMember;
 import it.polimi.ingsw.GC_28.model.Game;
@@ -53,10 +54,18 @@ public class ProdHarvSpace extends Space{
 	
 	@Override
 	public void applyBonus(Game game, FamilyMember familyMember){
+		if(type == ProdHarvType.HARVEST){
 			for(Territory territory : familyMember.getPlayer().getBoard().getTerritories()){
 				territory.getPermanentEffect().apply(familyMember, game);
 			}
 			familyMember.getPlayer().getBoard().getBonusTile().getHarvestEffect().apply(familyMember, game);
+		}
+		else if(type == ProdHarvType.PRODUCTION){
+			for(Building building : familyMember.getPlayer().getBoard().getBuildings()){
+				building.getPermanentEffect().apply(familyMember, game);
+			}
+			familyMember.getPlayer().getBoard().getBonusTile().getProductionEffect().apply(familyMember, game);
+		}
 	}
 		
 }

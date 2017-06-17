@@ -9,7 +9,7 @@ import it.polimi.ingsw.GC_28.model.Game;
 
 public class ProductionEffect extends Effect{
 	private int productionValue;
-	private ResourceEffect resourceBonus;
+	private ResourceEffect resourceProductionBonus;
 	private ExchangeEffect exchangeBonus;
 	private MultiplierEffect multiplierEffect;
 	private PrivilegesEffect privilegeEffect;
@@ -47,11 +47,11 @@ public class ProductionEffect extends Effect{
 
 
 	public ResourceEffect getResourceBonus() {
-		return resourceBonus;
+		return resourceProductionBonus;
 	}
 
 	public void setResourceBonus(ResourceEffect resourceBonus) {
-		this.resourceBonus = resourceBonus;
+		this.resourceProductionBonus = resourceBonus;
 	}
 
 	public ExchangeEffect getExchangeBonus() {
@@ -67,8 +67,8 @@ public class ProductionEffect extends Effect{
 	public void apply(FamilyMember familyMember, Game game) {
 		System.out.println("apply di ProductionEffect");
 		if(familyMember.getValue() >= productionValue){
-			if(resourceBonus != null){
-				resourceBonus.apply(familyMember, game);
+			if(resourceProductionBonus != null){
+				resourceProductionBonus.apply(familyMember, game);
 			}
 			if(privilegeEffect != null){
 				privilegeEffect.apply(familyMember, game);
