@@ -13,6 +13,7 @@ import org.junit.Test;
 import it.polimi.ingsw.GC_28.boards.BonusTile;
 import it.polimi.ingsw.GC_28.boards.GameBoard;
 import it.polimi.ingsw.GC_28.boards.PlayerBoard;
+import it.polimi.ingsw.GC_28.cards.Building;
 import it.polimi.ingsw.GC_28.cards.Character;
 import it.polimi.ingsw.GC_28.cards.ExcommunicationTile;
 import it.polimi.ingsw.GC_28.cards.LeaderCard;
@@ -27,6 +28,7 @@ import it.polimi.ingsw.GC_28.effects.GoToHPEffect;
 import it.polimi.ingsw.GC_28.effects.HarvestEffect;
 import it.polimi.ingsw.GC_28.effects.IncrementHPEffect;
 import it.polimi.ingsw.GC_28.effects.OtherEffect;
+import it.polimi.ingsw.GC_28.effects.ProductionEffect;
 import it.polimi.ingsw.GC_28.effects.ResourceEffect;
 import it.polimi.ingsw.GC_28.model.Game;
 import it.polimi.ingsw.GC_28.model.GameModel;
@@ -264,18 +266,24 @@ public class SpaceActionTest {
 		familyMember.setValue(6);
 		incrementHPEffect.setIncrement(actionValue);
 		incrementHPEffect.setType(EffectType.INCREMENTPRODUCTIONEFFECT);
-		characterCard.setPermanentEffect(incrementHPEffect );
-		familyMember.getPlayer().getBoard().getCharacters().add(characterCard );
+		Building buildingCard = new Building("ciao", 2, 1);
+		ProductionEffect productionEffect = new ProductionEffect();
+		productionEffect.setResourceBonus(effect);
+		buildingCard.setPermanentEffect(productionEffect);
+		familyMember.getPlayer().getBoard().getBuildings().add(buildingCard);
 			
 		familyMember.getPlayer().getExcommunicationTile().add(excommProduction);
 			
+		bonusTile.setProductionEffect(productionEffect);
+		playerBoard.setBonusTile(bonusTile);
+		
 		spaceActionTest.setFamilyMember(familyMember);
 		prodHarvSpace.setType(ProdHarvType.PRODUCTION);
 		prodHarvSpace.setFree(false);
 		prodHarvSpace.setSecondarySpace(true);
 		spaceActionTest.setSpace(prodHarvSpace);
 		spaceActionTest.apply();
-		boolean x = this.familyMember.getValue()==6;
+		boolean x = this.familyMember.getValue()==3;
 		assertTrue(x);
 	}
 
