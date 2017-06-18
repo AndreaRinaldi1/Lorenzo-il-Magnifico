@@ -11,15 +11,16 @@ import java.util.Scanner;
 
 public class ClientWriter implements Runnable{
 	Socket socket;
-	
+	PrintWriter socketOut;
+	 
 	public ClientWriter(Socket socket){
 		this.socket = socket;
 	}
-	/*
+	
 	public void setIn(String s) {
 		InputStream stream = new ByteArrayInputStream(s.getBytes());
 		Scanner ciao = new Scanner(new BufferedReader(new InputStreamReader(stream)));
-	}*/
+		}
 	@Override
 	public void run(){
 		Scanner stdin = null;
@@ -51,5 +52,10 @@ public class ClientWriter implements Runnable{
 			}
 
 		}
+	}
+	
+	public void testMethod(String s){
+		
+		
 	}
 }

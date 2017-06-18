@@ -1,9 +1,18 @@
 package it.polimi.ingsw.GC_28.boards;
 import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
+import java.util.ArrayList;
 import java.util.EnumMap;
+import java.util.Enumeration;
 import java.util.HashMap;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.stream.JsonReader;
 
 import it.polimi.ingsw.GC_28.cards.CardReader;
 import it.polimi.ingsw.GC_28.cards.Deck;
@@ -12,12 +21,13 @@ import it.polimi.ingsw.GC_28.cards.Character;
 
 import it.polimi.ingsw.GC_28.components.*;
 import it.polimi.ingsw.GC_28.model.Game;
+import it.polimi.ingsw.GC_28.model.GameModel;
 import it.polimi.ingsw.GC_28.model.Player;
 import it.polimi.ingsw.GC_28.model.PlayerColor;
 
 
 public class Prova {
-	public static void main(String[] args) {
+	public static void main(String[] args)  {
 		
 		
 		/*EnumMap<ResourceType, Integer> p = new EnumMap<ResourceType, Integer>(ResourceType.class);
@@ -163,7 +173,64 @@ public class Prova {
 			}
 		}
 		
-		*/
+		
+		Player p1 = new Player("jhonny",PlayerColor.RED);
+		Player p2 = new Player("karl", PlayerColor.BLUE);
+		Player p3 = new Player("fd", PlayerColor.GREEN);
+
+		EnumMap<ResourceType, Integer> en1 = new EnumMap<>(ResourceType.class);
+		en1.put(ResourceType.MILITARYPOINT, 3);
+		en1.put(ResourceType.VICTORYPOINT,0);
+		Resource r1 = Resource.of(en1);
+		PlayerBoard pb1 = new PlayerBoard(null, r1);
+		p1.setBoard(pb1);
+		EnumMap<ResourceType, Integer> en2 = new EnumMap<>(ResourceType.class);
+		en2.put(ResourceType.MILITARYPOINT, 4);
+		en2.put(ResourceType.VICTORYPOINT,0);
+		Resource r2 = Resource.of(en2);
+		PlayerBoard pb2 = new PlayerBoard(null, r2);
+		p2.setBoard(pb2);
+		EnumMap<ResourceType, Integer> en3 = new EnumMap<>(ResourceType.class);
+		en3.put(ResourceType.MILITARYPOINT, 3);
+		en3.put(ResourceType.VICTORYPOINT,0);
+		Resource r3 = Resource.of(en3);
+		PlayerBoard pb3 = new PlayerBoard(null, r3);
+		p3.setBoard(pb3);
+		List<Player> players = new ArrayList<>();
+		players.add(p1);
+		players.add(p2);
+		players.add(p3);
+		Gson gson = new GsonBuilder().create();
+		//try {
+			JsonReader readerFinalBonus;
+			try {
+				readerFinalBonus = new JsonReader(new FileReader("finalBonus.json"));
+				//Type hashMapType = new TypeToken<HashMap<String,ArrayList<Resource>>>() {}.getType();
+				FinalBonus finalBonus = gson.fromJson(readerFinalBonus, FinalBonus.class);
+				FinalBonus.setFinalBonus(finalBonus);
+				readerFinalBonus.close();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+		/*} catch (IOException e) {
+			Logger.getAnonymousLogger().log(Level.SEVERE, "file not found" + e);
+		}
+			
+		GameBoard gb = new GameBoard();
+		GameModel gameModel = new GameModel(gb, players);
+		Game g = new Game(gameModel);
+		System.out.println("p1 " +p1.getBoard().getResources().getResource().get(ResourceType.MILITARYPOINT));
+		System.out.println("p2" +p2.getBoard().getResources().getResource().get(ResourceType.MILITARYPOINT));
+		System.out.println("p3" +p3.getBoard().getResources().getResource().get(ResourceType.MILITARYPOINT));
+		g.sortBy(gameModel.getPlayers(), ResourceType.MILITARYPOINT);
+
+		g.assignBonusForMilitary();
+		System.out.println("p1 " +p1.getBoard().getResources().getResource().get(ResourceType.VICTORYPOINT));
+		System.out.println("p2" +p2.getBoard().getResources().getResource().get(ResourceType.VICTORYPOINT));
+		System.out.println("p3" +p3.getBoard().getResources().getResource().get(ResourceType.VICTORYPOINT));
+*/
 	}
 
 

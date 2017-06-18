@@ -1,0 +1,42 @@
+{
+  "territories": [
+    {
+      "immediateEffect": [
+        {
+          "type": "NOEFFECT"
+        }
+      ],
+      "permanentEffect": {
+        "harvestValue": 5,
+        "resourceHarvestBonus": {
+          "resourceBonus": {
+            "resource": {
+              "COIN": 0,
+              "WOOD": 0,
+              "STONE": 1,
+              "SERVANT": 0,
+              "MILITARYPOINT": 2,
+              "VICTORYPOINT": 0,
+              "FAITHPOINT": 0
+            }
+          },
+          "type": "RESOURCEEFFECT"
+        },
+        "type": "HARVESTEFFECT"
+      },
+      "name": "rocca",
+      "idNumber": 7,
+      "era": 1,
+      "color": {
+        "value": -16711936,
+        "falpha": 0.0
+      },
+      "cost": {
+        "resource": {}
+      }
+    }
+  ],
+  "buildings": [],
+  "characters": [],
+  "ventures": []
+}

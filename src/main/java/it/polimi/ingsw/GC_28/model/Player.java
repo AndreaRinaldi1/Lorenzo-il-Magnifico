@@ -99,13 +99,19 @@ public class Player {
 		return e;
 	}
 	
-	public String displayFamilyMembers(){
+	public String displayFamilyMember(){
 		StringBuilder s = new StringBuilder();
 		s.append("Family Members:\n");
-		for(FamilyMember f : familyMembers){
-			s.append("Color: " + f.getDiceColor().name() + "  ");
-			s.append("Value: " + f.getValue() + "\n");
-		}
+		AsciiTable fm = new AsciiTable();
+		fm.addRule();
+		fm.addRow(familyMembers[0].getDiceColor(), familyMembers[1].getDiceColor(), familyMembers[2].getDiceColor(), familyMembers[3].getDiceColor());
+		fm.addRule();
+		fm.addRow(familyMembers[0].isUsed() ? "used" : familyMembers[0].getValue(), 
+				familyMembers[1].isUsed() ? "used" : familyMembers[1].getValue(),
+				familyMembers[2].isUsed() ? "used" : familyMembers[2].getValue(),
+				familyMembers[3].isUsed() ? "used" : familyMembers[3].getValue());
+		fm.addRule();
+		s.append(fm.render());
 		return s.toString();
 	}
 	

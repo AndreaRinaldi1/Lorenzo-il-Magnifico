@@ -2123,14 +2123,16 @@
       "permanentEffect": {
         "productionValue": 1,
         "resourceProductionBonus": {
-          "resource": {
-            "COIN": 0,
-            "WOOD": 0,
-            "STONE": 0,
-            "SERVANT": 0,
-            "MILITARYPOINT": 0,
-            "VICTORYPOINT": 3,
-            "FAITHPOINT": 0
+            "resourceBonus":{
+              "resource": {
+                "COIN": 0,
+                "WOOD": 0,
+                "STONE": 0,
+                "SERVANT": 0,
+                "MILITARYPOINT": 0,
+                "VICTORYPOINT": 3,
+                "FAITHPOINT": 0
+              }
           }
         },
         "type": "PRODUCTIONEFFECT"
@@ -2443,14 +2445,16 @@
       "permanentEffect": {
         "productionValue": 2,
         "resourceProductionBonus": {
-          "resource": {
-            "COIN": 0,
-            "WOOD": 0,
-            "STONE": 0,
-            "SERVANT": 0,
-            "MILITARYPOINT": 0,
-            "VICTORYPOINT": 1,
-            "FAITHPOINT": 0
+            "resourceBonus":{
+              "resource": {
+                "COIN": 0,
+                "WOOD": 0,
+                "STONE": 0,
+                "SERVANT": 0,
+                "MILITARYPOINT": 0,
+                "VICTORYPOINT": 1,
+                "FAITHPOINT": 0
+              }
           }
         },
         "type": "PRODUCTIONEFFECT"
