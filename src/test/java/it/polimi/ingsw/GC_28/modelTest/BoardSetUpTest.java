@@ -11,6 +11,10 @@ import org.junit.Before;
 import org.junit.Test;
 
 import it.polimi.ingsw.GC_28.boards.GameBoard;
+import it.polimi.ingsw.GC_28.cards.Building;
+import it.polimi.ingsw.GC_28.cards.Character;
+import it.polimi.ingsw.GC_28.cards.Territory;
+import it.polimi.ingsw.GC_28.cards.Venture;
 import it.polimi.ingsw.GC_28.model.BoardSetup;
 import it.polimi.ingsw.GC_28.model.BoardsInitializer;
 import it.polimi.ingsw.GC_28.model.Game;
@@ -55,7 +59,7 @@ public class BoardSetUpTest {
 	
 	@Test
 	public void testFirstSetUpCard(){
-		
+		g.getGameModel().getGameBoard().display();
 		try {
 			bs.firstSetUpCards();
 		} catch (FileNotFoundException e) {
@@ -86,6 +90,9 @@ public class BoardSetUpTest {
 		g.getGameModel().getGameBoard().getProductionSpace().setFree(false);
 		g.getGameModel().getGameBoard().getPrivilegesSpace().addPlayer(p3.getFamilyMembers()[1]);
 		g.getGameModel().getGameBoard().getPrivilegesSpace().setFree(false);
+		g.getGameModel().getGameBoard().getCouncilPalace().addPlayer(p4.getFamilyMembers()[0]);
+		g.getGameModel().getPlayers().get(0).getLeaderCards().get(0).setPermanent(true);
+		g.getGameModel().getPlayers().get(0).getLeaderCards().get(0).setActive(true);
 		
 		bs.setUpBoard();
 		
@@ -94,10 +101,34 @@ public class BoardSetUpTest {
 	@Test
 	public void playerBoardDisplayTest(){
 		g.getGameModel().getPlayers().get(0).getBoard().display();
+		Building b = new Building("building", 1, 1);
+		Character c = new Character("char", 2, 1);
+		Territory t = new Territory("terr", 3, 1);
+		Venture v = new Venture("venti", 4, 1);
+		p1.getBoard().addCard(b);
+		p1.getBoard().addCard(c);
+		p1.getBoard().addCard(t);
+		p1.getBoard().addCard(v);
+		g.getGameModel().getPlayers().get(0).getBoard().display();
 	}
 	
 	@Test
 	public void gameBoardDisplayTest(){
+		g.getGameModel().getGameBoard().display();
+		
+		g.getGameModel().getGameBoard().getCoinSpace().addPlayer(p1.getFamilyMembers()[0]);
+		g.getGameModel().getGameBoard().getCoinSpace().setFree(false);
+		g.getGameModel().getGameBoard().getServantSpace().addPlayer(p2.getFamilyMembers()[0]);
+		g.getGameModel().getGameBoard().getServantSpace().setFree(false);
+		g.getGameModel().getGameBoard().getMixedSpace().addPlayer(p3.getFamilyMembers()[0]);
+		g.getGameModel().getGameBoard().getMixedSpace().setFree(false);
+		g.getGameModel().getGameBoard().getHarvestSpace().addPlayer(p1.getFamilyMembers()[1]);
+		g.getGameModel().getGameBoard().getHarvestSpace().setFree(false);
+		g.getGameModel().getGameBoard().getProductionSpace().addPlayer(p2.getFamilyMembers()[1]);
+		g.getGameModel().getGameBoard().getProductionSpace().setFree(false);
+		g.getGameModel().getGameBoard().getPrivilegesSpace().addPlayer(p3.getFamilyMembers()[1]);
+		g.getGameModel().getGameBoard().getPrivilegesSpace().setFree(false);
+		
 		g.getGameModel().getGameBoard().display();
 	}
 }
