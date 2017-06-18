@@ -153,6 +153,7 @@ public class GameBoardTest {
 		StringBuilder ret = new StringBuilder();
 		ret.append("GAME BOARD\n");
 		
+		
 		AsciiTable at = new AsciiTable();
 		at.addRule();
 		at.addRow("TERRITORY","BUILDING", "CHARACTER", "VENTURE");
