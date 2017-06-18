@@ -69,7 +69,7 @@ public class Server {
 		}
 	}
 	
-	private void startServer()throws IOException{
+	public void startServer()throws IOException{
 		Timer timer = new Timer();
 
 		executor = Executors.newCachedThreadPool();
@@ -147,6 +147,7 @@ public class Server {
 			executor.submit(game);*/
 		}
 	}
+	
 
 	
 	public void startGame(Map<Player, ClientHandler> handlers){
@@ -205,7 +206,7 @@ public class Server {
 		noStop = true;
 	}
 	
-	private PlayerColor enterColor(){
+	public PlayerColor enterColor(){
 		boolean found = false;
 		do{
 			p.println("Enter the color you prefer: [red / blue / green / yellow] ");
@@ -264,6 +265,8 @@ public class Server {
 	}
 	
 }
+
+
 
 /*class AcceptPlayer implements Runnable{
 	private ServerSocket server;

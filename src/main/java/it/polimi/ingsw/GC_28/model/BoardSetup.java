@@ -152,7 +152,7 @@ public class BoardSetup {
 	
 	
 	
-	public void prepareTowers(){
+	private void prepareTowers(){
 		setUpTerritoriesTower();
 		setUpBuildingsTower();
 		setUpCharacterTower();
@@ -179,7 +179,7 @@ public class BoardSetup {
 		}
 	}
 	
-	public void freeSpace(){
+	private void freeSpace(){
 		if(!(gameBoard.getCoinSpace().isFree())){
 			gameBoard.getCoinSpace().getPlayer().remove(0);
 			gameBoard.getCoinSpace().setFree(true);

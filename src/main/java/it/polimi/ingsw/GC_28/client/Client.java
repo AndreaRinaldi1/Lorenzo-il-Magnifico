@@ -59,7 +59,7 @@ public class Client{
 		    return addr;
 		  }
 		  // plan B - enumerate the network interfaces
-		  Enumeration ifaces = NetworkInterface.getNetworkInterfaces();
+		 /* Enumeration ifaces = NetworkInterface.getNetworkInterfaces();
 		  while( ifaces.hasMoreElements() )
 		  {
 		    NetworkInterface netIf = (NetworkInterface)ifaces.nextElement();
@@ -74,14 +74,14 @@ public class Client{
 		    }
 		  }
 		  // nothing so far - last resort
-		  return null;
+		  return null;*/
 		}
 		catch ( UnknownHostException uhE ){
 			// deal with this
 		}
-		catch ( SocketException sockE ){
+		/*catch ( SocketException sockE ){
 	    // can deal?
-		}
+		}*/
 	      
 	    return null;
 	}
