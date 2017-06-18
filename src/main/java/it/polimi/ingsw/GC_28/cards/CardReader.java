@@ -60,7 +60,7 @@ public class CardReader{
         Gson gson = new GsonBuilder().registerTypeAdapterFactory(typeFactory).create();
 
         try{
-        	JsonReader reader = new JsonReader(new FileReader("cards.json"));     	
+        	JsonReader reader = new JsonReader(new FileReader("cards2.json"));     	
         	deck = gson.fromJson(reader, requestListTypeToken);
 	        reader.close();
     	}

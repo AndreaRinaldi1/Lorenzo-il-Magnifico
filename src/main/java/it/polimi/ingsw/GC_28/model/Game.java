@@ -92,7 +92,7 @@ public class Game extends Observable<Action> implements Runnable, Observer<Messa
 						}
 						
 						// TIMER CHE "FUNZIONA" SOLO SU PRIMA DOMANDA 
-						boolean x = false;
+						/*boolean x = false;
 						long time = System.currentTimeMillis() + 16000;
 						Thread t = new Thread(){
 							public void run(){
@@ -142,7 +142,7 @@ public class Game extends Observable<Action> implements Runnable, Observer<Messa
 							currentPlayer = gameModel.getPlayers().get(0);
 						}else{
 							currentPlayer = gameModel.getPlayers().get((currentTurn+1));
-						}
+						}*/
 					
 						/*
 						t.start();
@@ -218,16 +218,17 @@ public class Game extends Observable<Action> implements Runnable, Observer<Messa
 	public void assignBonusForMilitary(){
 		FinalBonus finalBonus = FinalBonus.instance();
 		int i = 0;
-		while(i < gameModel.getPlayers().size() - 1){
-			gameModel.getPlayers().get(i).addResource(finalBonus.getFinalMilitaryTrack().get(i));
-			int j = i + 1;
-			while(j < gameModel.getPlayers().size() && (gameModel.getPlayers().get(i).getBoard().getResources().getResource().get(ResourceType.MILITARYPOINT) ==
-						gameModel.getPlayers().get(j).getBoard().getResources().getResource().get(ResourceType.MILITARYPOINT))){
-				gameModel.getPlayers().get(j).addResource(finalBonus.getFinalMilitaryTrack().get(i));
+		int j = 0;
+		while(j < gameModel.getPlayers().size() && i < finalBonus.getFinalMilitaryTrack().size()){
+			Resource x = finalBonus.getFinalMilitaryTrack().get(i);
+			gameModel.getPlayers().get(j).addResource(x);
+			while((j < gameModel.getPlayers().size()-1) && (gameModel.getPlayers().get(j).getBoard().getResources().getResource().get(ResourceType.MILITARYPOINT) ==
+						gameModel.getPlayers().get(j+1).getBoard().getResources().getResource().get(ResourceType.MILITARYPOINT))){
+				gameModel.getPlayers().get(j+1).addResource(finalBonus.getFinalMilitaryTrack().get(i));
 				j++;
 			}
-			i = j;
-
+			i++;
+			j++;
 		}
 	}
 	
@@ -311,19 +312,35 @@ public class Game extends Observable<Action> implements Runnable, Observer<Messa
 		
 	}
 	
-	public void display(){
+	private void display(){
 		for(Player p: gameModel.getPlayers()){
-			handlers.get(p).getOut().println(gameModel.getGameBoard().display());
+			String gb = gameModel.getGameBoard().display();
+			String tracks = displayTracks();
+			handlers.get(p).getOut().println(gb);
+			handlers.get(p).getOut().println(tracks);
 			handlers.get(p).getOut().println(p.getBoard().display());
-			handlers.get(p).getOut().println(p.displayExcommunication());
-			handlers.get(p).getOut().println(p.displayLeader());
-			//handlers.get(p).getOut().println(p.getBoard().getBonusTile().getHarvestEffect().getResourceHarvestBonus().getResourceBonus().toString());
-			//handlers.get(p).getOut().println(p.getBoard().getBonusTile().getProductionEffect().getResourceBonus().getResourceBonus().toString());
-			for(int i = 0; i < 4; i++){
-				handlers.get(p).getOut().println(p.getFamilyMembers()[i].toString());
-			}
+			handlers.get(p).getOut().println(p.displayFamilyMember());
 			handlers.get(p).getOut().flush();
-			}
+		}
+	}
+	
+	private String displayTracks(){
+		AsciiTable tracks = new AsciiTable();
+		StringBuilder church = new StringBuilder();
+		StringBuilder military = new StringBuilder();
+		StringBuilder victory = new StringBuilder();
+		for(Player p : gameModel.getPlayers()){
+			church.append("{" + p.getColor() + ": " + p.getBoard().getResources().getResource().get(ResourceType.FAITHPOINT) + "} ");
+			military.append("{" + p.getColor() + ": " + p.getBoard().getResources().getResource().get(ResourceType.MILITARYPOINT) + "} ");
+			victory.append("{" + p.getColor() + ": " + p.getBoard().getResources().getResource().get(ResourceType.VICTORYPOINT) + "} ");
+		}
+		tracks.addRule();
+		tracks.addRow(ResourceType.FAITHPOINT, ResourceType.MILITARYPOINT, ResourceType.VICTORYPOINT);
+		tracks.addRule();
+		tracks.addRow(church.toString(), military.toString(), victory.toString());
+		tracks.addRule();
+		String ret = tracks.render();
+		return ret;
 	}
 
 
@@ -337,7 +354,7 @@ public class Game extends Observable<Action> implements Runnable, Observer<Messa
 			return;
 		}
 		do{
-			handlers.get(currentPlayer).getOut().println("Which move do you want to undertake? [takeCard / goToSpace / skip/ askcost/askLeaderCost/specialAction]");
+			handlers.get(currentPlayer).getOut().println("Which move do you want to undertake? [takeCard / goToSpace / skip / askcost / askLeaderCost / specialAction / showMyExcomm / showMyLeaders]");
 			handlers.get(currentPlayer).getOut().flush();	
 			
 			String line = handlers.get(currentPlayer).getIn().nextLine();
@@ -370,6 +387,12 @@ public class Game extends Observable<Action> implements Runnable, Observer<Messa
 			else if(("askLeaderCost").equalsIgnoreCase(line)){
 				askLeaderCost();
 			}
+			else if(line.equalsIgnoreCase("showMyExcomm")){
+				showExcomm();
+			}
+			else if(line.equalsIgnoreCase("showMyLeaders")){
+				showLeaders();
+			}
 			else{
 				handlers.get(currentPlayer).getOut().println("Not valid input!");
 				handlers.get(currentPlayer).getOut().flush();
@@ -386,7 +409,14 @@ public class Game extends Observable<Action> implements Runnable, Observer<Messa
 		
 	}
 
+	private void showExcomm(){
+		handlers.get(currentPlayer).getOut().println(currentPlayer.displayExcommunication());
+	}
+	
+	private void showLeaders(){
+		handlers.get(currentPlayer).getOut().println(currentPlayer.displayLeader());
 
+	}
 	
 
 	public Map<Player, ClientHandler> getHandlers() {
@@ -424,6 +454,14 @@ public class Game extends Observable<Action> implements Runnable, Observer<Messa
 	}
 
 	public Resource checkResourceExcommunication(Resource amount){
+		if(amount == null){
+			return amount;
+		}
+		EnumMap<ResourceType,Integer> resCopy = new EnumMap<>(ResourceType.class);
+		for(ResourceType rt : amount.getResource().keySet()){
+			resCopy.put(rt, amount.getResource().get(rt));
+		}
+		Resource amountCopy = Resource.of(resCopy);
 		for(ExcommunicationTile t : currentPlayer.getExcommunicationTile()){ //guardo tra le scomuniche del currentPlayer
 			if(t.getEffect() instanceof DiscountEffect){ //se trovo un discounteffect
 				System.out.println("checkEx 1");
@@ -435,6 +473,7 @@ public class Game extends Observable<Action> implements Runnable, Observer<Messa
 					System.out.println("checkEx 2");
 					if(!(eff.getDiscount().getResource().get(resType).equals(0))){ //se ne trovo uno diverso da 0
 						System.out.println("checkEx 3");
+						System.out.println(amount.toString());
 						if(!amount.getResource().get(resType).equals(0)){ // e se io l'ho preso quel tipo di risorsa
 							System.out.println("checkEx 4");
 							disc = true; //allora setto un bool
@@ -442,11 +481,14 @@ public class Game extends Observable<Action> implements Runnable, Observer<Messa
 						}
 					}
 				}
-				
+				System.out.println("check 5");
 				if(eff.getAlternativeDiscountPresence()){ //se ho due alternative
+					System.out.println("check 6");
 					for(ResourceType resType : eff.getAlternativeDiscount().getResource().keySet()){ 
 						if(!(eff.getAlternativeDiscount().getResource().get(resType).equals(0))){
+							System.out.println("check 7");
 							if(!amount.getResource().get(resType).equals(0)){
+								System.out.println("check 8");
 								altDisc = true; // se ho preso anche la risorsa diversa da zero dell'alternativediscount setto un bool
 								break;
 							}
@@ -454,24 +496,39 @@ public class Game extends Observable<Action> implements Runnable, Observer<Messa
 					}
 				}
 					
+				System.out.println("check 9");
+				System.out.println("disc " + disc);
+				System.out.println("altDisc "+ altDisc);
 				if(disc && altDisc){ // se ho preso entrambi chiedo quale togliere
+					System.out.println("check 10");
 					eff.setChosenAlternativeDiscount(askAlternative(eff.getDiscount(), eff.getAlternativeDiscount(), "malus")); 
 				}
 				else if(disc){ //altrimenti tolgo disc..
+					System.out.println("check 11");
 					eff.setChosenAlternativeDiscount(eff.getDiscount());
 				}
 				else if(altDisc){ //o alternative disc
+					System.out.println("check 11");
 					eff.setChosenAlternativeDiscount(eff.getAlternativeDiscount());
 				}
 				else{ //se non ho preso niente di quei tipi non tolgo niente
-					eff.setChosenAlternativeDiscount(null);
+					System.out.println("check 12");
+					EnumMap<ResourceType, Integer> w = new EnumMap<ResourceType, Integer>(ResourceType.class);
+					for(ResourceType resType : ResourceType.values()){
+						w.put(resType, 0);
+					}
+					Resource res = Resource.of(w);
+					System.out.println("check 13");
+					eff.setChosenAlternativeDiscount(res);
 				}
-				
-				amount.modifyResource(eff.getChosenAlternativeDiscount(), true);
-				return amount;
+				System.out.println("check 14");
+				System.out.println(amount.toString());
+				amountCopy.modifyResource(eff.getChosenAlternativeDiscount(), true);
+				System.out.println(amount.toString());
+				return amountCopy;
 			}			
 		}
-		return amount;
+		return amountCopy;
 	}
 	
 	
@@ -589,6 +646,7 @@ public class Game extends Observable<Action> implements Runnable, Observer<Messa
 	public boolean askPermission(){
 		while(true){
 			handlers.get(currentPlayer).getOut().println("Do you want to apply this effect? [y/n]");
+			handlers.get(currentPlayer).getOut().flush();
 			String line = handlers.get(currentPlayer).getIn().nextLine();
 			if(line.equals("y")){
 				return true;
@@ -597,6 +655,7 @@ public class Game extends Observable<Action> implements Runnable, Observer<Messa
 				return false;
 			}
 			handlers.get(currentPlayer).getOut().println("Not valid input!");
+			handlers.get(currentPlayer).getOut().flush();
 		}
 	}
 	

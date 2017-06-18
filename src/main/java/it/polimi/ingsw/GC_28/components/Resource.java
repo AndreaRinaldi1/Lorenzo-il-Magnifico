@@ -49,9 +49,10 @@ public class Resource{
 	public String toString(){
 		Set<ResourceType> keySet = resource.keySet();
 		StringBuilder s = new StringBuilder();
-		
 		for(ResourceType resType : keySet){
-			s.append(resType.name() + ": " + resource.get(resType) +"\n");
+			if(resource.get(resType) != 0){
+				s.append(resType.name() + ": " + resource.get(resType) +"\n");
+			}
 		}
 		return s.toString();
 	}

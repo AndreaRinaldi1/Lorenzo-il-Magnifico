@@ -13,13 +13,24 @@ public class Venture extends Card{
 	private boolean alternativeCostPresence;
 	private Resource alternativeCost;
 	private int minimumRequiredMilitaryPoints;
-	
+	private Resource chosenCost;
 
 
 	public Venture(String name, int idNumber, int era) {
 		super(name, idNumber, era);
 		this.setColor(Color.pink);
 	}
+	
+
+	public Resource getChosenCost() {
+		return chosenCost;
+	}
+
+
+	public void setChosenCost(Resource chosenCost) {
+		this.chosenCost = chosenCost;
+	}
+
 
 	public List<Effect> getImmediateEffect() {
 		return immediateEffect;

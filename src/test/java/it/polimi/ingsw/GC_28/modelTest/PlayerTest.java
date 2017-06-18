@@ -131,16 +131,6 @@ public class PlayerTest {
 		assertEquals(e, this.p.displayExcommunication());
 	}
 	
-	@Test
-	public void testDisplayFAmilyMember(){
-		StringBuilder s = new StringBuilder();
-		s.append("Family Members:\n");
-		for(FamilyMember f : familyMembers){
-			s.append("Color: " + f.getDiceColor().name() + "  ");
-			s.append("Value: " + f.getValue() + "\n");
-		}
-		assertEquals(s.toString(), this.p.displayFamilyMembers());
-	}
 	
 	@Test
 	public void testDisplayLeader(){
