@@ -9,6 +9,7 @@ import java.io.PrintStream;
 import java.lang.reflect.Type;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.rmi.RemoteException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -28,6 +29,7 @@ import com.google.gson.stream.JsonReader;
 
 import it.polimi.ingsw.GC_28.boards.BonusTile;
 import it.polimi.ingsw.GC_28.client.Client;
+import it.polimi.ingsw.GC_28.client.SocketClient;
 import it.polimi.ingsw.GC_28.model.BoardSetup;
 import it.polimi.ingsw.GC_28.model.BoardsInitializer;
 import it.polimi.ingsw.GC_28.model.Game;
@@ -36,6 +38,7 @@ import it.polimi.ingsw.GC_28.model.PlayerColor;
 import it.polimi.ingsw.GC_28.server.ClientHandler;
 import it.polimi.ingsw.GC_28.server.Controller;
 import it.polimi.ingsw.GC_28.server.Server;
+import it.polimi.ingsw.GC_28.server.SocketClientHandler;
 
 public class GameTest {
 	
@@ -62,7 +65,7 @@ public class GameTest {
 					PlayerColor color = enterColor();
 					System.out.println(color);
 					Player player = new Player(name, color);
-					ClientHandler ch = new ClientHandler(socket);
+					ClientHandler ch = new SocketClientHandler(socket);
 					handlers.put(player, ch);
 					
 					bonusList = initBonusTile();
@@ -127,19 +130,17 @@ public class GameTest {
 				}while(true);
 			}
 			
-			private void enterBonusTile(List<BonusTile> bonusList,Map<Player,ClientHandler> handlers, Player p){
+			private void enterBonusTile(List<BonusTile> bonusList,Map<Player,ClientHandler> handlers, Player p) throws RemoteException{
 				boolean found = false;
 				do{
 					int i = 1;
 					for(BonusTile bt : bonusList){
-						handlers.get(p).getOut().println("bonusTile n°: "+ i+ "\n");
-						handlers.get(p).getOut().println(bt.toString());
+						handlers.get(p).send("bonusTile n°: "+ i+ "\n");
+						handlers.get(p).send(bt.toString());
 						i++;
 					}
-					handlers.get(p).getOut().println("Choose from above your personal bonusTile: [input number from 1 to " + bonusList.size()+ "]");
-					handlers.get(p).getOut().flush();
-					Integer bonusTile = handlers.get(p).getIn().nextInt();
-					handlers.get(p).getIn().nextLine();
+					handlers.get(p).send("Choose from above your personal bonusTile: [input number from 1 to " + bonusList.size()+ "]");
+					Integer bonusTile = Integer.parseInt(handlers.get(p).receive());
 					if(0 < bonusTile && bonusTile <= bonusList.size()){
 						BonusTile bt = bonusList.get(bonusTile-1);
 						System.out.println(bt.toString());
@@ -147,7 +148,7 @@ public class GameTest {
 						bonusList.remove(bt);
 						found = true;
 					}else{
-						handlers.get(p).getOut().println("Not valid input!");
+						handlers.get(p).send("Not valid input!");
 					}
 				}while(!found);
 			}
@@ -167,7 +168,7 @@ public class GameTest {
 			public void run() {
 				System.out.println("prova");
 				try {
-					sock = new Socket(Client.getLocalAddress(), 1339);
+					sock = new Socket(SocketClient.getLocalAddress(), 1339);
 					System.out.println("connected");
 				} catch (IOException e) {
 					// TODO Auto-generated catch block
@@ -255,7 +256,7 @@ public class GameTest {
 					PlayerColor color = enterColor();
 					System.out.println(color);
 					Player player = new Player(name, color);
-					ClientHandler ch = new ClientHandler(socket);
+					ClientHandler ch = new SocketClientHandler(socket);
 					handlers.put(player, ch);
 					
 					bonusList = initBonusTile();
@@ -320,19 +321,17 @@ public class GameTest {
 				}while(true);
 			}
 			
-			private void enterBonusTile(List<BonusTile> bonusList,Map<Player,ClientHandler> handlers, Player p){
+			private void enterBonusTile(List<BonusTile> bonusList,Map<Player,ClientHandler> handlers, Player p) throws RemoteException{
 				boolean found = false;
 				do{
 					int i = 1;
 					for(BonusTile bt : bonusList){
-						handlers.get(p).getOut().println("bonusTile n°: "+ i+ "\n");
-						handlers.get(p).getOut().println(bt.toString());
+						handlers.get(p).send("bonusTile n°: "+ i+ "\n");
+						handlers.get(p).send(bt.toString());
 						i++;
 					}
-					handlers.get(p).getOut().println("Choose from above your personal bonusTile: [input number from 1 to " + bonusList.size()+ "]");
-					handlers.get(p).getOut().flush();
-					Integer bonusTile = handlers.get(p).getIn().nextInt();
-					handlers.get(p).getIn().nextLine();
+					handlers.get(p).send("Choose from above your personal bonusTile: [input number from 1 to " + bonusList.size()+ "]");
+					Integer bonusTile = Integer.parseInt(handlers.get(p).receive());
 					if(0 < bonusTile && bonusTile <= bonusList.size()){
 						BonusTile bt = bonusList.get(bonusTile-1);
 						System.out.println(bt.toString());
@@ -340,7 +339,7 @@ public class GameTest {
 						bonusList.remove(bt);
 						found = true;
 					}else{
-						handlers.get(p).getOut().println("Not valid input!");
+						handlers.get(p).send("Not valid input!");
 					}
 				}while(!found);
 			}
@@ -360,7 +359,7 @@ public class GameTest {
 			public void run() {
 				System.out.println("prova");
 				try {
-					sock = new Socket(Client.getLocalAddress(), 1340);
+					sock = new Socket(SocketClient.getLocalAddress(), 1340);
 					System.out.println("connected");
 				} catch (IOException e) {
 					// TODO Auto-generated catch block
@@ -448,7 +447,7 @@ public class GameTest {
 					PlayerColor color = enterColor();
 					System.out.println(color);
 					Player player = new Player(name, color);
-					ClientHandler ch = new ClientHandler(socket);
+					ClientHandler ch = new SocketClientHandler(socket);
 					handlers.put(player, ch);
 					
 					bonusList = initBonusTile();
@@ -513,19 +512,17 @@ public class GameTest {
 				}while(true);
 			}
 			
-			private void enterBonusTile(List<BonusTile> bonusList,Map<Player,ClientHandler> handlers, Player p){
+			private void enterBonusTile(List<BonusTile> bonusList,Map<Player,ClientHandler> handlers, Player p) throws RemoteException{
 				boolean found = false;
 				do{
 					int i = 1;
 					for(BonusTile bt : bonusList){
-						handlers.get(p).getOut().println("bonusTile n°: "+ i+ "\n");
-						handlers.get(p).getOut().println(bt.toString());
+						handlers.get(p).send("bonusTile n°: "+ i+ "\n");
+						handlers.get(p).send(bt.toString());
 						i++;
 					}
-					handlers.get(p).getOut().println("Choose from above your personal bonusTile: [input number from 1 to " + bonusList.size()+ "]");
-					handlers.get(p).getOut().flush();
-					Integer bonusTile = handlers.get(p).getIn().nextInt();
-					handlers.get(p).getIn().nextLine();
+					handlers.get(p).send("Choose from above your personal bonusTile: [input number from 1 to " + bonusList.size()+ "]");
+					Integer bonusTile = Integer.parseInt(handlers.get(p).receive());
 					if(0 < bonusTile && bonusTile <= bonusList.size()){
 						BonusTile bt = bonusList.get(bonusTile-1);
 						System.out.println(bt.toString());
@@ -533,7 +530,7 @@ public class GameTest {
 						bonusList.remove(bt);
 						found = true;
 					}else{
-						handlers.get(p).getOut().println("Not valid input!");
+						handlers.get(p).send("Not valid input!");
 					}
 				}while(!found);
 			}
@@ -553,7 +550,7 @@ public class GameTest {
 			public void run() {
 				System.out.println("prova");
 				try {
-					sock = new Socket(Client.getLocalAddress(), 1341);
+					sock = new Socket(SocketClient.getLocalAddress(), 1341);
 					System.out.println("connected");
 				} catch (IOException e) {
 					// TODO Auto-generated catch block
@@ -641,7 +638,7 @@ public class GameTest {
 					PlayerColor color = enterColor();
 					System.out.println(color);
 					Player player = new Player(name, color);
-					ClientHandler ch = new ClientHandler(socket);
+					ClientHandler ch = new SocketClientHandler(socket);
 					handlers.put(player, ch);
 					
 					bonusList = initBonusTile();
@@ -706,19 +703,17 @@ public class GameTest {
 				}while(true);
 			}
 			
-			private void enterBonusTile(List<BonusTile> bonusList,Map<Player,ClientHandler> handlers, Player p){
+			private void enterBonusTile(List<BonusTile> bonusList,Map<Player,ClientHandler> handlers, Player p) throws RemoteException{
 				boolean found = false;
 				do{
 					int i = 1;
 					for(BonusTile bt : bonusList){
-						handlers.get(p).getOut().println("bonusTile n°: "+ i+ "\n");
-						handlers.get(p).getOut().println(bt.toString());
+						handlers.get(p).send("bonusTile n°: "+ i+ "\n");
+						handlers.get(p).send(bt.toString());
 						i++;
 					}
-					handlers.get(p).getOut().println("Choose from above your personal bonusTile: [input number from 1 to " + bonusList.size()+ "]");
-					handlers.get(p).getOut().flush();
-					Integer bonusTile = handlers.get(p).getIn().nextInt();
-					handlers.get(p).getIn().nextLine();
+					handlers.get(p).send("Choose from above your personal bonusTile: [input number from 1 to " + bonusList.size()+ "]");
+					Integer bonusTile = Integer.parseInt(handlers.get(p).receive());
 					if(0 < bonusTile && bonusTile <= bonusList.size()){
 						BonusTile bt = bonusList.get(bonusTile-1);
 						System.out.println(bt.toString());
@@ -726,7 +721,7 @@ public class GameTest {
 						bonusList.remove(bt);
 						found = true;
 					}else{
-						handlers.get(p).getOut().println("Not valid input!");
+						handlers.get(p).send("Not valid input!");
 					}
 				}while(!found);
 			}
@@ -746,7 +741,7 @@ public class GameTest {
 			public void run() {
 				System.out.println("prova");
 				try {
-					sock = new Socket(Client.getLocalAddress(), 1342);
+					sock = new Socket(SocketClient.getLocalAddress(), 1342);
 					System.out.println("connected");
 				} catch (IOException e) {
 					// TODO Auto-generated catch block
@@ -834,7 +829,7 @@ public class GameTest {
 					PlayerColor color = enterColor();
 					System.out.println(color);
 					Player player = new Player(name, color);
-					ClientHandler ch = new ClientHandler(socket);
+					ClientHandler ch = new SocketClientHandler(socket);
 					handlers.put(player, ch);
 					
 					bonusList = initBonusTile();
@@ -900,19 +895,17 @@ public class GameTest {
 				}while(true);
 			}
 			
-			private void enterBonusTile(List<BonusTile> bonusList,Map<Player,ClientHandler> handlers, Player p){
+			private void enterBonusTile(List<BonusTile> bonusList,Map<Player,ClientHandler> handlers, Player p) throws RemoteException{
 				boolean found = false;
 				do{
 					int i = 1;
 					for(BonusTile bt : bonusList){
-						handlers.get(p).getOut().println("bonusTile n°: "+ i+ "\n");
-						handlers.get(p).getOut().println(bt.toString());
+						handlers.get(p).send("bonusTile n°: "+ i+ "\n");
+						handlers.get(p).send(bt.toString());
 						i++;
 					}
-					handlers.get(p).getOut().println("Choose from above your personal bonusTile: [input number from 1 to " + bonusList.size()+ "]");
-					handlers.get(p).getOut().flush();
-					Integer bonusTile = handlers.get(p).getIn().nextInt();
-					handlers.get(p).getIn().nextLine();
+					handlers.get(p).send("Choose from above your personal bonusTile: [input number from 1 to " + bonusList.size()+ "]");
+					Integer bonusTile = Integer.parseInt(handlers.get(p).receive());
 					if(0 < bonusTile && bonusTile <= bonusList.size()){
 						BonusTile bt = bonusList.get(bonusTile-1);
 						System.out.println(bt.toString());
@@ -920,7 +913,7 @@ public class GameTest {
 						bonusList.remove(bt);
 						found = true;
 					}else{
-						handlers.get(p).getOut().println("Not valid input!");
+						handlers.get(p).send("Not valid input!");
 					}
 				}while(!found);
 			}
@@ -940,7 +933,7 @@ public class GameTest {
 			public void run() {
 				System.out.println("prova");
 				try {
-					sock = new Socket(Client.getLocalAddress(), 1343);
+					sock = new Socket(SocketClient.getLocalAddress(), 1343);
 					System.out.println("connected");
 				} catch (IOException e) {
 					// TODO Auto-generated catch block

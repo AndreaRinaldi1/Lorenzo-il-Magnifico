@@ -56,7 +56,7 @@ public class Server extends UnicastRemoteObject implements ServerInt{
 	boolean noStop = false;
 	boolean started = false;
 	
-	protected Server() throws RemoteException {
+	public Server() throws RemoteException {
 		super();
 	}
 	

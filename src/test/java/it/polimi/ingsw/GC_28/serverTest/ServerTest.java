@@ -9,6 +9,7 @@ import java.io.PrintStream;
 import java.net.InetAddress;
 import java.net.Socket;
 import java.net.UnknownHostException;
+import java.rmi.RemoteException;
 import java.util.concurrent.ScheduledThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 
@@ -21,9 +22,16 @@ import it.polimi.ingsw.GC_28.server.Server;
 
 public class ServerTest {
 	
-	private Server server;
+	private Server server; 
 	
-	
+	public void initServer(){
+		try {
+			server = new Server();
+		} catch (RemoteException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
 	
 	public static InetAddress getLocalAddress(){
 		InetAddress addr = null;    
@@ -57,6 +65,7 @@ public class ServerTest {
 			@Override
 			public void run() {
 				try {
+					initServer();
 					server.startServer();
 				} catch (IOException e) {
 					// TODO Auto-generated catch block
@@ -72,7 +81,7 @@ public class ServerTest {
 			public void run() {
 				System.out.println("prova");
 				try {
-					sock = new Socket(getLocalAddress(), 1338);
+					sock = new Socket(getLocalAddress(), 1337);
 					System.out.println("connected");
 				} catch (IOException e) {
 					// TODO Auto-generated catch block
@@ -111,7 +120,7 @@ public class ServerTest {
 			public void run() {
 				System.out.println("prova");
 				try {
-					sock = new Socket(getLocalAddress(), 1338);
+					sock = new Socket(getLocalAddress(), 1337);
 					System.out.println("connected");
 				} catch (IOException e) {
 					// TODO Auto-generated catch block
@@ -147,11 +156,11 @@ public class ServerTest {
 			}
 		};
 		s.execute(st);
-		s.schedule(a, 100, TimeUnit.MILLISECONDS);
+		s.schedule(a, 2, TimeUnit.SECONDS);
 		System.out.println("partito");
-		s.schedule(b, 200, TimeUnit.MILLISECONDS);
+		s.schedule(b, 4, TimeUnit.SECONDS);
 		try {
-			s.awaitTermination(1, TimeUnit.SECONDS);
+			s.awaitTermination(16, TimeUnit.SECONDS);
 		} catch (InterruptedException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
