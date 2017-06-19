@@ -1,5 +1,7 @@
 package it.polimi.ingsw.GC_28.clientTest;
 
+import java.rmi.AlreadyBoundException;
+import java.rmi.RemoteException;
 import java.util.Arrays;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -47,26 +49,31 @@ public class clientTest {
 		
 	}
 	
-	@Test
+	/*@Test
 	public void testClient(){
 		//server.main(null);
-		client.main(null);	
+		Client.main(null);	
 		//client.startClient();
-	}
+	}*/
 	
 	@Test
 	public void testClient2(){
 		ThreadFactory tf = Executors.defaultThreadFactory();
 		Runnable a = new Runnable() {
 			public void run() {
-				client.main(null);
+				Client.main(null);
 			}
 		};
 		Runnable s = new Runnable() {
 			
 			@Override
 			public void run() {
-				server.main(null);
+				try {
+					Server.main(null);
+				} catch (RemoteException | AlreadyBoundException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 			}
 		};
 		Thread t = tf.newThread(a);

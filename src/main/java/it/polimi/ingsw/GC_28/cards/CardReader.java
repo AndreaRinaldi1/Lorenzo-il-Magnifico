@@ -29,6 +29,8 @@ import java.lang.reflect.Type;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import javax.swing.SingleSelectionModel;
+
 public class CardReader{
 
     public static void main(String[] args) throws FileNotFoundException{
@@ -60,8 +62,9 @@ public class CardReader{
         Gson gson = new GsonBuilder().registerTypeAdapterFactory(typeFactory).create();
 
         try{
-        	JsonReader reader = new JsonReader(new FileReader("cards2.json"));     	
+        	JsonReader reader = new JsonReader(new FileReader("cards2.json"));   
         	deck = gson.fromJson(reader, requestListTypeToken);
+        
 	        reader.close();
     	}
     	catch(IOException e){

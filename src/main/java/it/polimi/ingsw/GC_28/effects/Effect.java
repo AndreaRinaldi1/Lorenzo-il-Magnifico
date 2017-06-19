@@ -1,6 +1,8 @@
 package it.polimi.ingsw.GC_28.effects;
 
 
+import java.rmi.RemoteException;
+
 import it.polimi.ingsw.GC_28.boards.GameBoard;
 import it.polimi.ingsw.GC_28.cards.CardType;
 import it.polimi.ingsw.GC_28.components.FamilyMember;

@@ -57,9 +57,8 @@ public class TakeCardEffect extends Effect{
 		do{
 			ok = game.askCard(this);
 			if(!ok){
-				game.getHandlers().get(familyMember.getPlayer()).getOut().println("Are you unable to take any card and you want to skip? [y/n]");
-				game.getHandlers().get(familyMember.getPlayer()).getOut().flush();
-				if (game.getHandlers().get(familyMember.getPlayer()).getIn().nextLine().equals("y")){
+				game.getHandlers().get(familyMember.getPlayer()).send("Are you unable to take any card and you want to skip? [y/n]");
+				if (game.getHandlers().get(familyMember.getPlayer()).receive().equals("y")){
 					return;
 				}
 			}
