@@ -3,6 +3,8 @@ package it.polimi.ingsw.GC_28.client;
 
 import java.io.*;
 import java.util.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 
 public interface Client{
@@ -24,7 +26,7 @@ public interface Client{
 			}
 		}
 		catch(IOException e){
-			System.err.println(e.getMessage());			
+			Logger.getAnonymousLogger().log(Level.SEVERE,"Cannot start the client" + e);
 		}
 	}
 	

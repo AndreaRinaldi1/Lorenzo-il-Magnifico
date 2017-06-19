@@ -8,6 +8,8 @@ import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.Scanner;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import it.polimi.ingsw.GC_28.server.ServerInt;
 
@@ -17,7 +19,7 @@ public class RMIClient extends UnicastRemoteObject implements Client, RMIClientI
 	protected RMIClient() throws RemoteException {
 	}
 
-	Scanner input = new Scanner(System.in);
+	transient Scanner input = new Scanner(System.in);
 	@Override
 	public void send(String message) {
 		System.out.println(message);
@@ -35,10 +37,10 @@ public class RMIClient extends UnicastRemoteObject implements Client, RMIClientI
             ServerInt server = (ServerInt) reg.lookup("rmiServer");
 			server.join(this);
 		} catch (RemoteException e) {
-			e.printStackTrace();
+			Logger.getAnonymousLogger().log(Level.SEVERE,"Cannor start RMIClient" + e);
 		} catch (NotBoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			Logger.getAnonymousLogger().log(Level.SEVERE,"Cannot find the registry name to bind to" + e);
+
 		}	
 	}
 

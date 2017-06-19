@@ -49,12 +49,12 @@ public class clientTest {
 		
 	}
 	
-	@Test
+	/*@Test
 	public void testClient(){
 		//server.main(null);
 		Client.main(null);	
 		//client.startClient();
-	}
+	}*/
 	
 	@Test
 	public void testClient2(){

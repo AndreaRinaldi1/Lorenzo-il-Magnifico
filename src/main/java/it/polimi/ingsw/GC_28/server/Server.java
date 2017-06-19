@@ -46,15 +46,16 @@ public class Server extends UnicastRemoteObject implements ServerInt{
 	private final int MIN_SIZE = 2;
 	private final int MAX_SIZE = 3;
 	private final int PORT = 1337;
-	private ServerSocket serverSocket;
-	List<PlayerColor> usedColors = new ArrayList<>();
+	transient private ServerSocket serverSocket;
+	transient List<PlayerColor> usedColors = new ArrayList<>();
+	transient ExecutorService executor;
+	transient Map<Player, ClientHandler> handlers = new HashMap<>();
+	transient List<BonusTile> bonusList;
+	transient Timer timer = new Timer();
+	
 	boolean noStop = false;
-	ExecutorService executor;
 	boolean started = false;
-	Map<Player, ClientHandler> handlers = new HashMap<>();
-	List<BonusTile> bonusList;
-	Timer timer = new Timer();
-
+	
 	protected Server() throws RemoteException {
 		super();
 	}

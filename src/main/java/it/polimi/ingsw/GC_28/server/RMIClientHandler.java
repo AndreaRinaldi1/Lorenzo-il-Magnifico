@@ -2,6 +2,8 @@ package it.polimi.ingsw.GC_28.server;
 
 import java.rmi.RemoteException;
 import java.rmi.server.RemoteObject;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import it.polimi.ingsw.GC_28.client.RMIClientInt;
 
@@ -17,7 +19,8 @@ public class RMIClientHandler implements ClientHandler {
 			user.send(message);
 		}
 		catch(RemoteException e){
-			System.out.println("remote exc");
+			Logger.getAnonymousLogger().log(Level.SEVERE,"Cannot send a message" + e);
+
 		}
 	}
 	
@@ -28,7 +31,7 @@ public class RMIClientHandler implements ClientHandler {
 			answer = user.receive();
 		}
 		catch(RemoteException e){
-			System.out.println("remote exc");
+			Logger.getAnonymousLogger().log(Level.SEVERE,"Cannot receive a message" + e);
 		}
 		return answer;
 	}
