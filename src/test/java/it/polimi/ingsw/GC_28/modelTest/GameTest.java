@@ -28,6 +28,8 @@ import com.google.gson.reflect.TypeToken;
 import com.google.gson.stream.JsonReader;
 
 import it.polimi.ingsw.GC_28.boards.BonusTile;
+import it.polimi.ingsw.GC_28.cards.LeaderCard;
+import it.polimi.ingsw.GC_28.cards.LeaderCardReader;
 import it.polimi.ingsw.GC_28.client.Client;
 import it.polimi.ingsw.GC_28.client.SocketClient;
 import it.polimi.ingsw.GC_28.model.BoardSetup;
@@ -663,6 +665,11 @@ public class GameTest {
 						for(Player p : reversePlayer){
 							enterBonusTile(tileInstance, handlers, p);
 						}
+						LeaderCardReader reader = new LeaderCardReader();
+						ArrayList<LeaderCard> ld = (ArrayList<LeaderCard>) reader.start();
+						game.getGameModel().getPlayers().get(0).getLeaderCards().add(0, ld.get(ld.size()-4));
+						game.getGameModel().getPlayers().get(0).getLeaderCards().get(0).setPlayed(true);
+						game.getGameModel().getPlayers().get(0).getLeaderCards().get(0).setActive(false);
 						
 						game.getGameModel().getGameBoard().getPrivilegesSpace().setFree(true);
 						game.registerObserver(new Controller());
@@ -854,8 +861,13 @@ public class GameTest {
 						for(Player p : reversePlayer){
 							enterBonusTile(tileInstance, handlers, p);
 						}
+						LeaderCardReader reader = new LeaderCardReader();
+						ArrayList<LeaderCard> ld = (ArrayList<LeaderCard>) reader.start();
+						game.getGameModel().getPlayers().get(0).getLeaderCards().add(0, ld.get(ld.size()-4));
+						game.getGameModel().getPlayers().get(0).getLeaderCards().get(0).setActive(true);
+						game.getGameModel().getPlayers().get(0).getLeaderCards().get(0).setPlayed(true);
+						System.out.println(ld.get(ld.size()-4));
 						
-						game.getGameModel().getGameBoard().getPrivilegesSpace().setFree(true);
 						game.getGameModel().getPlayers().get(0).getFamilyMembers()[1].setUsed(true);
 						game.registerObserver(new Controller());
 						game.getGameModel().registerObserver(game);

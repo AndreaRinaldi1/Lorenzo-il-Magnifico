@@ -156,11 +156,11 @@ public class ServerTest {
 			}
 		};
 		s.execute(st);
-		s.schedule(a, 2, TimeUnit.SECONDS);
+		s.schedule(a, 1, TimeUnit.SECONDS);
 		System.out.println("partito");
-		s.schedule(b, 4, TimeUnit.SECONDS);
+		s.schedule(b, 2, TimeUnit.SECONDS);
 		try {
-			s.awaitTermination(16, TimeUnit.SECONDS);
+			s.awaitTermination(17, TimeUnit.SECONDS);
 		} catch (InterruptedException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
