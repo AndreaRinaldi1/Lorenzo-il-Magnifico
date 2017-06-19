@@ -52,23 +52,6 @@ public class TakeCardEffectTest {
 	private PlayerBoard pb;
 	private List<Player> players = new ArrayList<>();
 	
-	private class TestClientHandler extends ClientHandler{
-		public TestClientHandler(Socket socket){
-			super(socket);
-		}
-		
-		
-		public void setOut(String s){
-			OutputStream streamOut = new ByteArrayOutputStream(s.getBytes().length);
-			PrintWriter ciao = new PrintWriter(streamOut);
-		}
-		
-		public void setIn(String s) {
-		    InputStream streamIn = new ByteArrayInputStream(s.getBytes());
-		    Scanner ciao = new Scanner(new BufferedReader(new InputStreamReader(streamIn)));
-		 }
-	}
-	
 	private class TestGame extends Game{
 		public TestGame(GameModel gameModel) {
 			super(gameModel);

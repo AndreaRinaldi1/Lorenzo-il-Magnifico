@@ -24,60 +24,10 @@ import it.polimi.ingsw.GC_28.model.Player;
 import it.polimi.ingsw.GC_28.model.PlayerColor;
 
 public class CopyEffectTest {
-
-	private CopyEffect copyEffect;
-	
-	private Resource bonus;
-	EnumMap<ResourceType, Integer> resource;
-	
-	private Player player;
-	private FamilyMember familyMember;
-	private GameModel gameModel;
-	private GameBoard gb;
-	private PlayerBoard pb;
-	private List<Player> players = new ArrayList<>();
-	private TestGame testGame;
-	
-	private class TestGame extends Game{
-		public TestGame(GameModel gameModel) {
-			super(gameModel);
-		}
-		
-		@Override
-		public Resource checkResourceExcommunication(Resource amount){
-			resource = new EnumMap<>(ResourceType.class);
-			resource.put(ResourceType.COIN, 3);
-			bonus = Resource.of(resource);
-			return bonus;
-		}
-		
-		@Override
-		public ArrayList<Character> askPrivilege(int numberOfCouncilPrivileges, boolean different){
-			ArrayList<Character> tmp = new ArrayList<>();
-			tmp.add('c');
-			return tmp;
-		}
-	}
 	
 	@Before
 	public void copyEffect(){
-		copyEffect = new CopyEffect();
 		
-		resource = new EnumMap<>(ResourceType.class);
-		resource.put(ResourceType.COIN, 3);
-		bonus = Resource.of(resource);
-		
-		player = new Player("aiuto", PlayerColor.BLUE);
-		familyMember = new FamilyMember(player, false, DiceColor.BLACK);
-		gb = new GameBoard();
-		pb = new PlayerBoard(null, bonus);
-		player.setBoard(pb);
-		FamilyMember[] familyMembers = new FamilyMember[1];
-		familyMembers[0] = familyMember;
-		player.setFamilyMembers(familyMembers);
-		players.add(player);
-		gameModel = new GameModel(gb, players);
-		testGame = new TestGame(gameModel);
 	}
 	
 	@AfterClass
