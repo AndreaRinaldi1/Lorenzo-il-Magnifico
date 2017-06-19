@@ -2,28 +2,26 @@
 package it.polimi.ingsw.GC_28.client;
 
 import java.io.*;
-import java.net.InetAddress;
-import java.net.NetworkInterface;
-import java.net.Socket;
-import java.net.SocketException;
-import java.net.UnknownHostException;
 import java.util.*;
 
-public class Client{
-	private String ip;
-	private int port;
+
+public interface Client{
 	
-	public Client(String ip, int port){
-		//this.ip = ip;
-		this.port = port;
-	}
+	static Scanner input = new Scanner(System.in);
+
 
 	public static void main(String[] args) {
-		String ip = " ";
-		int port = 1337;
-		Client client = new Client(ip , port);
 		try{
-			client.startClient();
+			String connection = askConnectionType();
+			if(connection.equalsIgnoreCase("RMI")){
+				 RMIClient client = new RMIClient();
+				 client.startClient();
+			}
+			else if(connection.equalsIgnoreCase("SOC")){
+				int port = 1337;
+				SocketClient client = new SocketClient(port);
+				client.startClient();
+			}
 		}
 		catch(IOException e){
 			System.err.println(e.getMessage());			
@@ -31,59 +29,20 @@ public class Client{
 	}
 	
 	
-	public void startClient() throws IOException{
-		Socket socket = new Socket(getLocalAddress(), port);
-		System.out.println("Connection Estabilished!");
-		//Scanner socketIn = new Scanner(socket.getInputStream());
-		//PrintWriter socketOut = new PrintWriter(socket.getOutputStream());
-		//Scanner stdin = new Scanner(System.in);
-
-		new Thread(new ClientListener(socket)).start();
-		new Thread(new ClientWriter(socket)).start();
-		
-
-		
+	public void startClient() throws IOException;
+	
+	public static String askConnectionType(){
+		String connection;
+		do{
+			System.out.println("Do you want to play using Socket or RMI? [SOC/RMI]");
+			connection = input.nextLine();
+			if(connection.equalsIgnoreCase("SOC") || connection.equalsIgnoreCase("RMI")){
+				return connection;				
+			}
+			System.out.println("Not valid input!");
+		}while(true);
 	}
 	
-	
-	
-	
-	 public static InetAddress getLocalAddress(){
-		InetAddress addr = null;    
-		try
-		{
-		  addr = InetAddress.getLocalHost();
-		  // OK - is this the loopback addr ?
-		  if ( ! addr.isLoopbackAddress() )
-		  {
-		    return addr;
-		  }
-		  // plan B - enumerate the network interfaces
-		  Enumeration ifaces = NetworkInterface.getNetworkInterfaces();
-		  while( ifaces.hasMoreElements() )
-		  {
-		    NetworkInterface netIf = (NetworkInterface)ifaces.nextElement();
-		    Enumeration addrs = netIf.getInetAddresses();
-		    while( addrs.hasMoreElements() )
-		    {
-		      addr = (InetAddress)addrs.nextElement();
-		      if ( ! addr.isLoopbackAddress() )
-		      {
-		        return addr;
-		      }
-		    }
-		  }
-		  // nothing so far - last resort
-		  return null;
-		}
-		catch ( UnknownHostException uhE ){
-			// deal with this
-		}
-		catch ( SocketException sockE ){
-	    // can deal?
-		}
-	      
-	    return null;
-	}
+
 		
 }

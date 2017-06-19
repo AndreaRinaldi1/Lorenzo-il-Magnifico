@@ -3,6 +3,7 @@ package it.polimi.ingsw.GC_28.model;
 
 import java.io.IOException;
 import java.nio.BufferOverflowException;
+import java.rmi.RemoteException;
 import java.util.ArrayList;
 import java.util.EnumMap;
 import java.util.HashMap;
@@ -70,7 +71,7 @@ public class Game extends Observable<Action> implements Runnable, Observer<Messa
 	
 	
 	@Override
-	public void run(){
+	public void run() {
 		setCurrentPlayer(gameModel.getPlayers().get(0));
 		System.out.println(1);
 		BoardSetup bs = new BoardSetup(this);
@@ -184,11 +185,11 @@ public class Game extends Observable<Action> implements Runnable, Observer<Messa
 		sortBy(gameModel.getPlayers(), ResourceType.VICTORYPOINT);
 		declareWinner();
 		
+		
 	}
 	
-	public void declareWinner(){
-		handlers.get(gameModel.getPlayers().get(0)).getOut().println("YOU WIN!!!");
-		handlers.get(gameModel.getPlayers().get(0)).getOut().flush();
+	public void declareWinner() {
+		handlers.get(gameModel.getPlayers().get(0)).send("YOU WIN!!!");
 		displayFinalChart();
 	}
 	
@@ -207,11 +208,10 @@ public class Game extends Observable<Action> implements Runnable, Observer<Messa
 		return ret.toString();
 	}
 	
-	public void displayFinalChart(){
+	public void displayFinalChart() {
 		String chart = getChartTable();
 		for(Player p : gameModel.getPlayers()){
-			handlers.get(p).getOut().println(chart);
-			handlers.get(p).getOut().flush();
+			handlers.get(p).send(chart);
 		}
 	}
 	
@@ -316,11 +316,10 @@ public class Game extends Observable<Action> implements Runnable, Observer<Messa
 		for(Player p: gameModel.getPlayers()){
 			String gb = gameModel.getGameBoard().display();
 			String tracks = displayTracks();
-			handlers.get(p).getOut().println(gb);
-			handlers.get(p).getOut().println(tracks);
-			handlers.get(p).getOut().println(p.getBoard().display());
-			handlers.get(p).getOut().println(p.displayFamilyMember());
-			handlers.get(p).getOut().flush();
+			handlers.get(p).send(gb);
+			handlers.get(p).send(tracks);
+			handlers.get(p).send(p.getBoard().display());
+			handlers.get(p).send(p.displayFamilyMember());
 		}
 	}
 	
@@ -350,14 +349,13 @@ public class Game extends Observable<Action> implements Runnable, Observer<Messa
 			return;
 		}
 		if(skipped.contains(currentPlayer) && currentRound == 1){ //se è tra i giocatori in skipped allora salta turno
-			handlers.get(currentPlayer).getOut().println("Skipped first turn due to excommunication");
+			handlers.get(currentPlayer).send("Skipped first turn due to excommunication");
 			return;
 		}
 		do{
-			handlers.get(currentPlayer).getOut().println("Which move do you want to undertake? [takeCard / goToSpace / skip / askcost / askLeaderCost / specialAction / showMyExcomm / showMyLeaders]");
-			handlers.get(currentPlayer).getOut().flush();	
+			handlers.get(currentPlayer).send("Which move do you want to undertake? [takeCard / goToSpace / skip / askcost / askLeaderCost / specialAction / showMyExcomm / showMyLeaders]");
 			
-			String line = handlers.get(currentPlayer).getIn().nextLine();
+			String line = handlers.get(currentPlayer).receive();
 			
 			if(line.equalsIgnoreCase("takeCard")){
 				if(askCard(null)){
@@ -394,13 +392,11 @@ public class Game extends Observable<Action> implements Runnable, Observer<Messa
 				showLeaders();
 			}
 			else{
-				handlers.get(currentPlayer).getOut().println("Not valid input!");
-				handlers.get(currentPlayer).getOut().flush();
+				handlers.get(currentPlayer).send("Not valid input!");
 			}
 		}while(true);
-		handlers.get(currentPlayer).getOut().println("Do you want to do a special action[y/n]");
-		handlers.get(currentPlayer).getOut().flush();	
-		String special = handlers.get(currentPlayer).getIn().nextLine();
+		handlers.get(currentPlayer).send("Do you want to do a special action[y/n]");
+		String special = handlers.get(currentPlayer).receive();
 		if(special.equalsIgnoreCase("y")){
 			specialAction();
 		}else{
@@ -410,11 +406,11 @@ public class Game extends Observable<Action> implements Runnable, Observer<Messa
 	}
 
 	private void showExcomm(){
-		handlers.get(currentPlayer).getOut().println(currentPlayer.displayExcommunication());
+		handlers.get(currentPlayer).send(currentPlayer.displayExcommunication());
 	}
 	
 	private void showLeaders(){
-		handlers.get(currentPlayer).getOut().println(currentPlayer.displayLeader());
+		handlers.get(currentPlayer).send(currentPlayer.displayLeader());
 
 	}
 	
@@ -533,18 +529,15 @@ public class Game extends Observable<Action> implements Runnable, Observer<Messa
 	
 	
 	public ArrayList<Character> askPrivilege(int numberOfCouncilPrivileges, boolean different){
-		handlers.get(currentPlayer).getOut().println("Which council privilege do you want?");
-		handlers.get(currentPlayer).getOut().flush();
+		handlers.get(currentPlayer).send("Which council privilege do you want?");
 		for(Character key : CouncilPrivilege.instance().getOptions().keySet()){
-			handlers.get(currentPlayer).getOut().println("Type " + key + " if you want:");
-			handlers.get(currentPlayer).getOut().println(CouncilPrivilege.instance().getOptions().get(key).toString());
-			handlers.get(currentPlayer).getOut().flush();
+			handlers.get(currentPlayer).send("Type " + key + " if you want:");
+			handlers.get(currentPlayer).send(CouncilPrivilege.instance().getOptions().get(key).toString());
 		}
 		ArrayList<Character> choices = new ArrayList<Character>();
 		int counter = 0;
 		while(counter < numberOfCouncilPrivileges){
-			handlers.get(currentPlayer).getOut().println("Choose your council privilege #" + (counter+1));
-			handlers.get(currentPlayer).getOut().flush();
+			handlers.get(currentPlayer).send("Choose your council privilege #" + (counter+1));
 			Character c = askPrivilege();
 			if(!(choices.contains(c))){
 				choices.add(c);
@@ -552,8 +545,7 @@ public class Game extends Observable<Action> implements Runnable, Observer<Messa
 			}
 			else{
 				if(different){
-					handlers.get(currentPlayer).getOut().println("Not valid choice"); 
-					handlers.get(currentPlayer).getOut().flush();
+					handlers.get(currentPlayer).send("Not valid choice"); 
 				}
 				else{
 					choices.add(c);
@@ -564,47 +556,38 @@ public class Game extends Observable<Action> implements Runnable, Observer<Messa
 		return choices;
 	}
 	
-	public Space askWhichSpace(){
+	public Space askWhichSpace() {
 		do{
-			handlers.get(currentPlayer).getOut().println("Enter which space you want to go into [coinSpace / servantSpace / mixedSpace / privilegesSpace / councilPalace / productionSpace / harvestSpace]");
-			handlers.get(currentPlayer).getOut().flush();
-			if(handlers.get(currentPlayer).getIn().hasNextInt()){
-				handlers.get(currentPlayer).getOut().println("Not valid input!");
-				handlers.get(currentPlayer).getOut().flush();
-				handlers.get(currentPlayer).getIn().nextLine();
+			handlers.get(currentPlayer).send("Enter which space you want to go into [coinSpace / servantSpace / mixedSpace / privilegesSpace / councilPalace / productionSpace / harvestSpace]");
+			String chosenSpace = handlers.get(currentPlayer).receive();
+			if(chosenSpace.equalsIgnoreCase("coinspace")){
+				return gameModel.getGameBoard().getCoinSpace();
+			}
+			if(chosenSpace.equalsIgnoreCase("servantspace")){
+				return gameModel.getGameBoard().getServantSpace();
+			}
+			if(chosenSpace.equalsIgnoreCase("mixedspace")){
+				return gameModel.getGameBoard().getMixedSpace();
+			}
+			if(chosenSpace.equalsIgnoreCase("privilegesspace")){
+				return gameModel.getGameBoard().getPrivilegesSpace();
+			}
+			if(chosenSpace.equalsIgnoreCase("councilpalace")){
+				return gameModel.getGameBoard().getCouncilPalace();
+			}
+			if(chosenSpace.equalsIgnoreCase("productionspace")){
+				return gameModel.getGameBoard().getProductionSpace();
+			}
+			if(chosenSpace.equalsIgnoreCase("harvestspace")){
+				return gameModel.getGameBoard().getHarvestSpace();
 			}
 			else{
-				String chosenSpace = handlers.get(currentPlayer).getIn().nextLine();
-				if(chosenSpace.equalsIgnoreCase("coinspace")){
-					return gameModel.getGameBoard().getCoinSpace();
-				}
-				if(chosenSpace.equalsIgnoreCase("servantspace")){
-					return gameModel.getGameBoard().getServantSpace();
-				}
-				if(chosenSpace.equalsIgnoreCase("mixedspace")){
-					return gameModel.getGameBoard().getMixedSpace();
-				}
-				if(chosenSpace.equalsIgnoreCase("privilegesspace")){
-					return gameModel.getGameBoard().getPrivilegesSpace();
-				}
-				if(chosenSpace.equalsIgnoreCase("councilpalace")){
-					return gameModel.getGameBoard().getCouncilPalace();
-				}
-				if(chosenSpace.equalsIgnoreCase("productionspace")){
-					return gameModel.getGameBoard().getProductionSpace();
-				}
-				if(chosenSpace.equalsIgnoreCase("harvestspace")){
-					return gameModel.getGameBoard().getHarvestSpace();
-				}
-				else{
-					handlers.get(currentPlayer).getOut().println("Not valid input!");
-					handlers.get(currentPlayer).getOut().flush();
-				}
+				handlers.get(currentPlayer).send("Not valid input!");
 			}
 		}while(true);
 	}
 	
-	public boolean goToSpace(GoToHPEffect throughEffect){
+	public boolean goToSpace(GoToHPEffect throughEffect) {
 		FamilyMember familyMember;
 		
 		SpaceAction spaceAction = new SpaceAction(this, gameModel);
@@ -646,34 +629,31 @@ public class Game extends Observable<Action> implements Runnable, Observer<Messa
 	}
 	
 	
-	public boolean askPermission(){
+	public boolean askPermission() {
 		while(true){
-			handlers.get(currentPlayer).getOut().println("Do you want to apply this effect? [y/n]");
-			handlers.get(currentPlayer).getOut().flush();
-			String line = handlers.get(currentPlayer).getIn().nextLine();
+			handlers.get(currentPlayer).send("Do you want to apply this effect? [y/n]");
+			String line = handlers.get(currentPlayer).receive();
 			if(line.equals("y")){
 				return true;
 			}
 			else if(line.equals("n")){
 				return false;
 			}
-			handlers.get(currentPlayer).getOut().println("Not valid input!");
-			handlers.get(currentPlayer).getOut().flush();
+			handlers.get(currentPlayer).send("Not valid input!");
 		}
 	}
 	
-	public boolean askCard(TakeCardEffect throughEffect){ //throughEffect = null se non è un askcard che viene da effetto ma da mossa normale
+	public boolean askCard(TakeCardEffect throughEffect) { //throughEffect = null se non è un askcard che viene da effetto ma da mossa normale
 		FamilyMember familyMember;							// if it's null the first condition will throw a null pointer exception(N)
 		TakeCardAction takeCardAction = new TakeCardAction(this, gameModel);
 		
 		if(!(throughEffect == null)){ //se viene da effetto gli dico cosa può prendere 
 			if(throughEffect.getCardType() == null){
-				handlers.get(currentPlayer).getOut().println("You can take another card of any type of value " + throughEffect.getActionValue());
+				handlers.get(currentPlayer).send("You can take another card of any type of value " + throughEffect.getActionValue());
 			}
 			else{
-				handlers.get(currentPlayer).getOut().println("You can take a card of type: " + throughEffect.getCardType().name() + " of value " + throughEffect.getActionValue());
+				handlers.get(currentPlayer).send("You can take a card of type: " + throughEffect.getCardType().name() + " of value " + throughEffect.getActionValue());
 			}
-			handlers.get(currentPlayer).getOut().flush();
 		}
 		
 		String name = askCardName();
@@ -708,27 +688,16 @@ public class Game extends Observable<Action> implements Runnable, Observer<Messa
 	
 	
 	public String askCardName(){
-		do{
-			handlers.get(currentPlayer).getOut().println("Enter the name of the card you would like to take: ");
-			handlers.get(currentPlayer).getOut().flush();
-			if(handlers.get(currentPlayer).getIn().hasNextInt()){
-				handlers.get(currentPlayer).getOut().println("Not valid input!");
-				handlers.get(currentPlayer).getOut().flush();
-				handlers.get(currentPlayer).getIn().nextLine();
-			}
-			else{
-				return handlers.get(currentPlayer).getIn().nextLine();
-			}
-		}while(true);
+		handlers.get(currentPlayer).send("Enter the name of the card you would like to take: ");
+		return handlers.get(currentPlayer).receive();
 		
 	}
 	
 	public FamilyMember askFamilyMember(){
 		boolean x = true;
 		do{
-			handlers.get(currentPlayer).getOut().println("Enter which familyMember you would like to use: [ Orange / Black / White / Neutral ]");
-			handlers.get(currentPlayer).getOut().flush();
-			String choice = handlers.get(currentPlayer).getIn().nextLine();
+			handlers.get(currentPlayer).send("Enter which familyMember you would like to use: [ Orange / Black / White / Neutral ]");
+			String choice = handlers.get(currentPlayer).receive();
 			for(DiceColor color : DiceColor.values()){
 				if(choice.toUpperCase().equals(color.name())){
 					for(FamilyMember familyMember : currentPlayer.getFamilyMembers()){
@@ -738,157 +707,119 @@ public class Game extends Observable<Action> implements Runnable, Observer<Messa
 							}
 						}
 					}
-					handlers.get(currentPlayer).getOut().println("The specified family member has already been used!");
-					handlers.get(currentPlayer).getOut().flush();
+					handlers.get(currentPlayer).send("The specified family member has already been used!");
 					x = false;
 					continue;
 				}
 			}
 			if(x){
-				handlers.get(currentPlayer).getOut().println("Not valid input!");
-				handlers.get(currentPlayer).getOut().flush();
+				handlers.get(currentPlayer).send("Not valid input!");
 			}
 		}while(true);
 	}
 	
 	public int askForServantsIncrement(){
 		while(true){
-			handlers.get(currentPlayer).getOut().println("Would you like to pay servants in order to increment the family member action value? [y/n]");
-			handlers.get(currentPlayer).getOut().flush();
-			if(handlers.get(currentPlayer).getIn().hasNextInt()){
-				handlers.get(currentPlayer).getOut().println("Not valid input!");
-				handlers.get(currentPlayer).getOut().flush();
-				handlers.get(currentPlayer).getIn().nextLine();
-				continue;
-			}
-			else if(handlers.get(currentPlayer).getIn().hasNextLine()){
-				String choice = handlers.get(currentPlayer).getIn().nextLine();
-				if(choice.equals("y")){
-					handlers.get(currentPlayer).getOut().println("How many servants would you like to pay?");
-					handlers.get(currentPlayer).getOut().flush();
-					if(handlers.get(currentPlayer).getIn().hasNextInt()){
-						int increment = handlers.get(currentPlayer).getIn().nextInt();
-						int numberOfServants = currentPlayer.getBoard().getResources().getResource().get(ResourceType.SERVANT);
-						if(increment <= numberOfServants){
-							currentPlayer.getBoard().getResources().getResource().put(ResourceType.SERVANT, (numberOfServants-increment));
-							modifiedWithServants = true;
-							handlers.get(currentPlayer).getIn().nextLine();
-							
-							for(ExcommunicationTile t : currentPlayer.getExcommunicationTile()){ //guardo se tra le scomuniche ha servanteffect
-								if(t.getEffect() instanceof ServantEffect){
-									ServantEffect eff = (ServantEffect) t.getEffect();
-									return increment * eff.getIncrement() / eff.getNumberOfServant(); // se sì allora applico l'effetto
-								}
-
-							}
-							
-							return increment;
-						}
-						else{
-							handlers.get(currentPlayer).getOut().println("You don't have so many servants!");
-							handlers.get(currentPlayer).getOut().flush();
-							handlers.get(currentPlayer).getIn().nextLine();
-						}
-					}
-					else{
-						handlers.get(currentPlayer).getOut().println("Not valid input!");
-						handlers.get(currentPlayer).getOut().flush();
-					}
+			handlers.get(currentPlayer).send("Would you like to pay servants in order to increment the family member action value? [y/n]");
+			String choice = handlers.get(currentPlayer).receive();
+			if(choice.equals("y")){
+				handlers.get(currentPlayer).send("How many servants would you like to pay?");
+				int increment;
+				try{
+					increment = Integer.parseInt(handlers.get(currentPlayer).receive());
+				}catch(NumberFormatException e){
+					handlers.get(currentPlayer).send("Not valid input!");
+					continue;
 				}
-				else if (choice.equals("n")){
-					modifiedWithServants = false;
-					return 0;
+				int numberOfServants = currentPlayer.getBoard().getResources().getResource().get(ResourceType.SERVANT);
+				if(increment <= numberOfServants){
+					currentPlayer.getBoard().getResources().getResource().put(ResourceType.SERVANT, (numberOfServants-increment));
+					modifiedWithServants = true;
+					
+					for(ExcommunicationTile t : currentPlayer.getExcommunicationTile()){ //guardo se tra le scomuniche ha servanteffect
+						if(t.getEffect() instanceof ServantEffect){
+							ServantEffect eff = (ServantEffect) t.getEffect();
+							return increment * eff.getIncrement() / eff.getNumberOfServant(); // se sì allora applico l'effetto
+						}
+
+					}
+							
+					return increment;
 				}
 				else{
-					handlers.get(currentPlayer).getOut().println("Not valid input!");
-					handlers.get(currentPlayer).getOut().flush();
+					handlers.get(currentPlayer).send("You don't have so many servants!");
 				}
+			}
+			else if (choice.equals("n")){
+				modifiedWithServants = false;
+				return 0;
+			}
+			else{
+				handlers.get(currentPlayer).send("Not valid input!");
 			}
 		}
 	}
 	
 	public Character askPrivilege(){
-		Character c = (Character) handlers.get(currentPlayer).getIn().nextLine().charAt(0);
+		Character c = (Character) handlers.get(currentPlayer).receive().charAt(0);
 		while(!(CouncilPrivilege.instance().getOptions().containsKey(c))){
-			handlers.get(currentPlayer).getOut().println("Not valid input!");
-			handlers.get(currentPlayer).getOut().println("Which council privilege do you want?");
-			handlers.get(currentPlayer).getOut().flush();
-			c = (Character) handlers.get(currentPlayer).getIn().nextLine().charAt(0);
+			handlers.get(currentPlayer).send("Not valid input!");
+			handlers.get(currentPlayer).send("Which council privilege do you want?");
+			c = (Character) handlers.get(currentPlayer).receive().charAt(0);
 		}
 		return c;
 	} 
 	
 
 	
-	public Resource askAlternative(Resource discount1, Resource discount2, String type){
-		handlers.get(currentPlayer).getOut().println("Which of the two following " + type + " do you want to apply? [1/2]");
-		handlers.get(currentPlayer).getOut().println(discount1.toString());
-		handlers.get(currentPlayer).getOut().println(discount2.toString());
-		handlers.get(currentPlayer).getOut().flush();
+	public Resource askAlternative(Resource discount1, Resource discount2, String type) {
+		handlers.get(currentPlayer).send("Which of the two following " + type + " do you want to apply? [1/2]");
+		handlers.get(currentPlayer).send(discount1.toString());
+		handlers.get(currentPlayer).send(discount2.toString());
 		int choice;
 		while(true){
-			if(handlers.get(currentPlayer).getIn().hasNextInt()){
-				choice = handlers.get(currentPlayer).getIn().nextInt();
+			try{
+				choice = Integer.parseInt(handlers.get(currentPlayer).receive());
 				if(choice == 1){
-					handlers.get(currentPlayer).getIn().nextLine();
 					return discount1;
 				}
 				else if(choice == 2){
-					handlers.get(currentPlayer).getIn().nextLine();
 					return discount2;
 				}
 				else{
-					handlers.get(currentPlayer).getOut().println("Not valid input!");
-					handlers.get(currentPlayer).getOut().println("Which of the two " + type + " do you want to apply? [1/2]");
-					handlers.get(currentPlayer).getOut().flush();
-					handlers.get(currentPlayer).getIn().nextLine();
-					continue;
+					handlers.get(currentPlayer).send("Not valid input!");
+					handlers.get(currentPlayer).send("Which of the two " + type + " do you want to apply? [1/2]");
 				}
-			}
-			else{
-				handlers.get(currentPlayer).getIn().nextLine();
-				handlers.get(currentPlayer).getOut().println("Not valid input!");
-				handlers.get(currentPlayer).getOut().println("Which of the two discounts do you want to apply? [1/2]");
-				handlers.get(currentPlayer).getOut().flush();
-			}
-			
-		}
-		
+			}catch(NumberFormatException e){
+				System.out.println("cannot convert from string to integer in askAlternative");
+			}	
+		}	
 	}
 	
 	public int askAlternativeExchange(Resource firstCost, Resource firstBonus, Resource secondCost, Resource secondBonus){
-		handlers.get(currentPlayer).getOut().println("Which of the following exchanges do you want to apply? [1/2]");
-		handlers.get(currentPlayer).getOut().println("First Possibility Cost");
-		handlers.get(currentPlayer).getOut().println(firstCost.toString());
-		handlers.get(currentPlayer).getOut().println("First Possibility Bonus");
-		handlers.get(currentPlayer).getOut().println(firstBonus.toString());
-		handlers.get(currentPlayer).getOut().println("Second Possibility Cost");
-		handlers.get(currentPlayer).getOut().println(secondCost.toString());
-		handlers.get(currentPlayer).getOut().println("Second Possibility Bonus");
-		handlers.get(currentPlayer).getOut().println(secondBonus.toString());
-		handlers.get(currentPlayer).getOut().flush();
+		handlers.get(currentPlayer).send("Which of the following exchanges do you want to apply? [1/2]");
+		handlers.get(currentPlayer).send("First Possibility Cost");
+		handlers.get(currentPlayer).send(firstCost.toString());
+		handlers.get(currentPlayer).send("First Possibility Bonus");
+		handlers.get(currentPlayer).send(firstBonus.toString());
+		handlers.get(currentPlayer).send("Second Possibility Cost");
+		handlers.get(currentPlayer).send(secondCost.toString());
+		handlers.get(currentPlayer).send("Second Possibility Bonus");
+		handlers.get(currentPlayer).send(secondBonus.toString());
 		int choice;
 		while(true){
-			if(handlers.get(currentPlayer).getIn().hasNextInt()){
-				choice = handlers.get(currentPlayer).getIn().nextInt();
+			try{
+				choice = Integer.parseInt(handlers.get(currentPlayer).receive());
 				if(choice == 1 || choice == 2){
 					return choice;
 				}
 				else{
-					handlers.get(currentPlayer).getOut().println("Not valid input!");
-					handlers.get(currentPlayer).getOut().println("Which of the two discounts do you want to apply? [1/2]");
-					handlers.get(currentPlayer).getOut().flush();
-					handlers.get(currentPlayer).getIn().nextLine();
-					continue;
+					handlers.get(currentPlayer).send("Not valid input!");
+					handlers.get(currentPlayer).send("Which of the two discounts do you want to apply? [1/2]");
 				}
+			}catch(NumberFormatException e){
+				System.out.println("cannot convert from string to integer in askAlternativeExchange");
 			}
-			else{
-				handlers.get(currentPlayer).getIn().nextLine();
-				handlers.get(currentPlayer).getOut().println("Not valid input!");
-				handlers.get(currentPlayer).getOut().println("Which of the two discounts do you want to apply? [1/2]");
-				handlers.get(currentPlayer).getOut().flush();
-			}
-			
 		}
 	}
 	
@@ -897,37 +828,31 @@ public class Game extends Observable<Action> implements Runnable, Observer<Messa
 		Cell c;
 		for(CardType ct : CardType.values()){
 			if((c = gameModel.getGameBoard().getTowers().get(ct).findCard(name)) != null){
-				handlers.get(currentPlayer).getOut().println(c.getCard().getCost().toString());
-				handlers.get(currentPlayer).getOut().flush();
+				handlers.get(currentPlayer).send(c.getCard().getCost().toString());
 				return;
 			}
 		}	
 	}
 	
 	private void askLeaderCost(){
-		handlers.get(currentPlayer).getOut().println(currentPlayer.displayLeaderCost());
-		handlers.get(currentPlayer).getOut().flush();
+		handlers.get(currentPlayer).send(currentPlayer.displayLeaderCost());
 		return;
 	}
 	
-	private void giveExcommunication(){
+	private void giveExcommunication() {
 		for(Player p : gameModel.getPlayers()){
-				handlers.get(p).getOut().println(p.displayExcommunication());
-				handlers.get(p).getOut().flush();
+				handlers.get(p).send(p.displayExcommunication());
 				int faith = p.getBoard().getResources().getResource().get(ResourceType.FAITHPOINT);
 				if(faith < (2+ currentEra)){
-					handlers.get(p).getOut().println("You recive an Excommunication, because you cannot pay to avoid it");
-					handlers.get(p).getOut().flush();
+					handlers.get(p).send("You recive an Excommunication, because you cannot pay to avoid it");
 					p.getExcommunicationTile().get(currentEra -1).setEffect(gameModel.getGameBoard().getExcommunications()[currentEra-1].getEffect());
 					//p.getExcommunicationTile().add(currentEra-1, gameBoard.getExcommunications()[currentEra-1]);
 				}else{
-					handlers.get(p).getOut().println("Do you want to pay to avoid Excommunication?[y/n]");
-					handlers.get(p).getOut().flush();
-					if(handlers.get(p).getIn().nextLine().equalsIgnoreCase("n")){
+					handlers.get(p).send("Do you want to pay to avoid Excommunication?[y/n]");
+					if(handlers.get(p).receive().equalsIgnoreCase("n")){
 						p.getExcommunicationTile().add(currentEra-1, gameModel.getGameBoard().getExcommunications()[currentEra-1]);
 					}else{
-						handlers.get(p).getOut().println("You paid to avoid Excommunication, your faith points have been reset to 0");
-						handlers.get(p).getOut().flush();
+						handlers.get(p).send("You paid to avoid Excommunication, your faith points have been reset to 0");
 						int numberOfFaithPoint = p.getBoard().getResources().getResource().get(ResourceType.FAITHPOINT);
 						Resource bonusForFaithPoint = FinalBonus.instance().getFaithPointTrack().get(numberOfFaithPoint-1);
 						p.addResource(bonusForFaithPoint);
@@ -942,18 +867,15 @@ public class Game extends Observable<Action> implements Runnable, Observer<Messa
 			}
 	}
 	
-	void specialAction(){//FIXME
-		handlers.get(currentPlayer).getOut().println(currentPlayer.displayLeader());
-		handlers.get(currentPlayer).getOut().flush();
-		String procede;
+	void specialAction() {//FIXME
+		handlers.get(currentPlayer).send(currentPlayer.displayLeader());
+		String proceed;
 		do{
-			handlers.get(currentPlayer).getOut().println("Which special action do you want to undertake?[discard/play/activate]");
-			handlers.get(currentPlayer).getOut().flush();
-			String line = handlers.get(currentPlayer).getIn().nextLine();
+			handlers.get(currentPlayer).send("Which special action do you want to undertake?[discard/play/activate]");
+			String line = handlers.get(currentPlayer).receive();
 			if(line.equalsIgnoreCase("discard")){
-				handlers.get(currentPlayer).getOut().println("Which Leader do you want to discard?");
-				handlers.get(currentPlayer).getOut().flush();
-				String card = handlers.get(currentPlayer).getIn().nextLine();
+				handlers.get(currentPlayer).send("Which Leader do you want to discard?");
+				String card = handlers.get(currentPlayer).receive();
 				for(LeaderCard l :currentPlayer.getLeaderCards()){
 					if(l.getName().equalsIgnoreCase(card)){
 						currentPlayer.getLeaderCards().remove(l);
@@ -965,9 +887,8 @@ public class Game extends Observable<Action> implements Runnable, Observer<Messa
 					}
 				}	
 			}else if(line.equalsIgnoreCase("play")){
-				handlers.get(currentPlayer).getOut().println("Which Leader do you want to play?");
-				handlers.get(currentPlayer).getOut().flush();
-				String card = handlers.get(currentPlayer).getIn().nextLine();
+				handlers.get(currentPlayer).send("Which Leader do you want to play?");
+				String card = handlers.get(currentPlayer).receive();
 				for(LeaderCard l : currentPlayer.getLeaderCards()){
 					if(l.getName().equalsIgnoreCase(card)){
 						Resource cardResourceCost = l.getResourceCost();
@@ -983,9 +904,8 @@ public class Game extends Observable<Action> implements Runnable, Observer<Messa
 					}
 				}
 			}else if(line.equalsIgnoreCase("activate")){
-				handlers.get(currentPlayer).getOut().println("Which Leader do you want to active?");
-				handlers.get(currentPlayer).getOut().flush();
-				String card = handlers.get(currentPlayer).getIn().nextLine();
+				handlers.get(currentPlayer).send("Which Leader do you want to active?");
+				String card = handlers.get(currentPlayer).receive();
 				for(LeaderCard l : currentPlayer.getLeaderCards()){
 					if(l.getName().equalsIgnoreCase(card)){
 						if(l.getPlayed()){
@@ -996,26 +916,22 @@ public class Game extends Observable<Action> implements Runnable, Observer<Messa
 									break;
 									}
 							}else{
-								handlers.get(currentPlayer).getOut().println("You can't activate this card because you already played it in this turn");
-								handlers.get(currentPlayer).getOut().flush();
+								handlers.get(currentPlayer).send("You can't activate this card because you already played it in this turn");
 								break;
 							}
 						}else{
-							handlers.get(currentPlayer).getOut().println("You can't activate this card because you've not played it yet");
-							handlers.get(currentPlayer).getOut().flush();
+							handlers.get(currentPlayer).send("You can't activate this card because you've not played it yet");
 							break;
 						}
 					}
 				}
 			}
 			else{
-				handlers.get(currentPlayer).getOut().println("Not valid input!");
-				handlers.get(currentPlayer).getOut().flush();
+				handlers.get(currentPlayer).send("Not valid input!");
 			}
-			handlers.get(currentPlayer).getOut().println("Do you want to do another special action?[y/n]");
-			handlers.get(currentPlayer).getOut().flush();
-			procede = handlers.get(currentPlayer).getIn().nextLine();
-		}while(!procede.equalsIgnoreCase("n"));
+			handlers.get(currentPlayer).send("Do you want to do another special action?[y/n]");
+			proceed = handlers.get(currentPlayer).receive();
+		}while(!proceed.equalsIgnoreCase("n"));
 	}
 	
 	private boolean CheckForPopeEffect(LeaderCard lc){
@@ -1031,42 +947,37 @@ public class Game extends Observable<Action> implements Runnable, Observer<Messa
 		}
 		for(ResourceType rt: resourceCost.getResource().keySet()){
 			if(currentPlayer.getBoard().getResources().getResource().get(rt) < resourceCost.getResource().get(rt)){
-				handlers.get(currentPlayer).getOut().println("You haven't enough resources to play this Leader");
-				handlers.get(currentPlayer).getOut().flush();
+				handlers.get(currentPlayer).send("You haven't enough resources to play this Leader");
 				return false;
 			}
 		}
 		return true;
 	}
 	
-	boolean enoughCard(Map<CardType,Integer> cardCost){
+	boolean enoughCard(Map<CardType,Integer> cardCost) {
 		if(cardCost == null){
 			return true;
 		}
 		if(currentPlayer.getBoard().getTerritories().size() < cardCost.get(CardType.TERRITORY).intValue()){
-			handlers.get(currentPlayer).getOut().println("You haven't enough Territories cards  to play this Leader");
-			handlers.get(currentPlayer).getOut().flush();
+			handlers.get(currentPlayer).send("You haven't enough Territories cards  to play this Leader");
 			return false;
 		}
 		if(currentPlayer.getBoard().getBuildings().size() < cardCost.get(CardType.BUILDING).intValue()){
-			handlers.get(currentPlayer).getOut().println("You haven't enough Building cards  to play this Leader");
-			handlers.get(currentPlayer).getOut().flush();
+			handlers.get(currentPlayer).send("You haven't enough Building cards  to play this Leader");
 			return false;
 		}
 		if(currentPlayer.getBoard().getCharacters().size() < cardCost.get(CardType.CHARACTER).intValue()){
-			handlers.get(currentPlayer).getOut().println("You haven't enough Characters cards  to play this Leader");
-			handlers.get(currentPlayer).getOut().flush();
+			handlers.get(currentPlayer).send("You haven't enough Characters cards  to play this Leader");
 			return false;
 		}
 		if(currentPlayer.getBoard().getVentures().size() < cardCost.get(CardType.VENTURE).intValue()){
-			handlers.get(currentPlayer).getOut().println("You haven't enough Ventures cards  to play this Leader");
-			handlers.get(currentPlayer).getOut().flush();
+			handlers.get(currentPlayer).send("You haven't enough Ventures cards  to play this Leader");
 			return false;
 		}
 		return true;
 	}
 	
-	private boolean checkForLucreziaBorgiaCost(LeaderCard lc){
+	private boolean checkForLucreziaBorgiaCost(LeaderCard lc) {
 		if(lc.getName().equalsIgnoreCase("Lucrezia Borgia")){
 			if(currentPlayer.getBoard().getTerritories().size() == 6){
 				return true;
@@ -1077,8 +988,7 @@ public class Game extends Observable<Action> implements Runnable, Observer<Messa
 			}else if(currentPlayer.getBoard().getVentures().size() == 6){
 				return true;
 			}else{
-				handlers.get(currentPlayer).getOut().println("You haven't enough card to play thi leader");
-				handlers.get(currentPlayer).getOut().flush();
+				handlers.get(currentPlayer).send("You haven't enough card to play thi leader");
 				return false;
 			}
 		}
@@ -1087,7 +997,7 @@ public class Game extends Observable<Action> implements Runnable, Observer<Messa
 
 	@Override
 	public void update(Message m) {
-		handlers.get(currentPlayer).getOut().println(m.getMessage());
+		handlers.get(currentPlayer).send(m.getMessage());
 		result = m.isResult();
 		if(!(m.isResult())){	
 			if(modifiedWithServants){

@@ -3,6 +3,7 @@ package it.polimi.ingsw.GC_28.model;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 import java.util.concurrent.ThreadLocalRandom;
 import java.util.logging.Logger;
 import java.util.logging.Level;
@@ -71,7 +72,7 @@ public class BoardSetup {
 		for(int i = 0; i < cell.length; i++){
 			boolean x = false;
 			while(!x){
-				int randomInt = ThreadLocalRandom.current().nextInt(0, deck.getTerritories().size());
+				int randomInt = new Random().nextInt(deck.getTerritories().size());
 				/*the condition check if the era of the randomly selected card is correct and
 				 *  if the card has already been drafted, otherwise the choice of the card is repeated*/
 				if(deck.getTerritories().get(randomInt).getEra() == game.getCurrentEra() && game.getCurrentPeriod() == 1

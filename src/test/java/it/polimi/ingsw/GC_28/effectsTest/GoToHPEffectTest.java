@@ -32,6 +32,7 @@ import it.polimi.ingsw.GC_28.model.Player;
 import it.polimi.ingsw.GC_28.model.PlayerColor;
 import it.polimi.ingsw.GC_28.server.ClientHandler;
 import it.polimi.ingsw.GC_28.server.Server;
+import it.polimi.ingsw.GC_28.server.SocketClientHandler;
 import it.polimi.ingsw.GC_28.spaces.ProdHarvSpace;
 import it.polimi.ingsw.GC_28.spaces.ProdHarvType;
 
@@ -83,7 +84,7 @@ public class GoToHPEffectTest {
 	    when(socket.getOutputStream()).thenReturn(byteArrayOutputStream);
 	    
 
-		clientHandler = new ClientHandler(socket);
+		clientHandler = new SocketClientHandler(socket);
 		handlers.put(player, clientHandler);
 		players.add(player);
 		gb = new GameBoard();
