@@ -117,7 +117,5 @@ public class TakeCardAction extends Action{
 		System.out.println("step 10");
 		gameModel.notifyObserver(new Message("Action completed successfully!", true));
 
-	}
-	
-	
+	}	
 }

@@ -64,10 +64,7 @@ public class CardReader{
         try{
         	JsonReader reader = new JsonReader(new FileReader("cards2.json"));   
         	deck = gson.fromJson(reader, requestListTypeToken);
-        	System.out.println(deck.getTerritories().size());
-        	System.out.println(deck.getBuildings().size());
-        	System.out.println(deck.getCharacters().size());
-        	System.out.println(deck.getVentures().size());
+        
 	        reader.close();
     	}
     	catch(IOException e){

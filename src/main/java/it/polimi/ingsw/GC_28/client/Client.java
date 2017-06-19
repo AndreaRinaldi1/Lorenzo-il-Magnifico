@@ -31,6 +31,7 @@ public interface Client{
 	
 	public void startClient() throws IOException;
 	
+
 	public static String askConnectionType(){
 		String connection;
 		do{
@@ -41,6 +42,7 @@ public interface Client{
 			}
 			System.out.println("Not valid input!");
 		}while(true);
+
 	}
 	
 

@@ -4,7 +4,6 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 
-import java.io.PrintStream;
 import java.lang.reflect.Type;
 import java.net.ServerSocket;
 import java.net.Socket;
@@ -19,7 +18,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Scanner;
 import java.util.Timer;
 import java.util.TimerTask;
 import java.util.concurrent.ExecutorService;
@@ -43,6 +41,8 @@ import it.polimi.ingsw.GC_28.model.PlayerColor;
 
 
 public class Server extends UnicastRemoteObject implements ServerInt{
+
+	private static final long serialVersionUID = 1L;
 	private final int MIN_SIZE = 2;
 	private final int MAX_SIZE = 3;
 	private final int PORT = 1337;
@@ -74,8 +74,9 @@ public class Server extends UnicastRemoteObject implements ServerInt{
 			
 		}
 	}
-	
+
 	private void startServer() throws IOException{
+
 		executor = Executors.newCachedThreadPool();
 		serverSocket = new ServerSocket(PORT);
 		bonusList = initBonusTile(); 
@@ -107,6 +108,7 @@ public class Server extends UnicastRemoteObject implements ServerInt{
 		}
 	}
 	
+
 	private void checkNumOfPlayers(){
 		if(handlers.size() == MIN_SIZE){
 			timer = new Timer();
@@ -135,6 +137,7 @@ public class Server extends UnicastRemoteObject implements ServerInt{
 		}
 		return handlersCopy;
 	}
+
 
 	@Override
 	public void join(RMIClientInt cli) throws RemoteException {
@@ -209,7 +212,6 @@ public class Server extends UnicastRemoteObject implements ServerInt{
 		noStop = true;
 	}
 	
-
 	public String enterName(ClientHandler ch){
 		ch.send("Enter your name: ");
 		return ch.receive();
@@ -217,6 +219,8 @@ public class Server extends UnicastRemoteObject implements ServerInt{
 	
 	
 	private PlayerColor enterColor(ClientHandler ch){
+
+
 		boolean found = false;
 		do{
 			ch.send("Enter the color you prefer: [red / blue / green / yellow] ");
@@ -270,6 +274,5 @@ public class Server extends UnicastRemoteObject implements ServerInt{
 		List<BonusTile> bonusList = gson.fromJson(reader, bonusTileListType);
 		return bonusList;
 	}
-
 
 }

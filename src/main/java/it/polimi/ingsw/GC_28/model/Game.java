@@ -592,7 +592,6 @@ public class Game extends Observable<Action> implements Runnable, Observer<Messa
 		
 		SpaceAction spaceAction = new SpaceAction(this, gameModel);
 		Space chosenSpace;
-		
 		if(!(throughEffect == null)){
 			familyMember = new FamilyMember(currentPlayer, false, null); //familyMember fittizio
 			familyMember.setValue(throughEffect.getActionValue());
@@ -607,10 +606,8 @@ public class Game extends Observable<Action> implements Runnable, Observer<Messa
 			chosenSpace = askWhichSpace();
 			familyMember = askFamilyMember();
 		}
-		
 		incrementThroughServants = askForServantsIncrement();
 		familyMember.modifyValue(incrementThroughServants);
-		
 		decrement.put(ResourceType.SERVANT, incrementThroughServants);
 		res = Resource.of(decrement);
 		

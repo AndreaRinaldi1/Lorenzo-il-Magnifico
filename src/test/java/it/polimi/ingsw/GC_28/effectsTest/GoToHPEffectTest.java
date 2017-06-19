@@ -45,6 +45,7 @@ public class GoToHPEffectTest {
 	private FamilyMember fm;
 	private Player player;
 	private Game g;
+	private TestGame g1;
 	private GameBoard gb;
 	private ProdHarvSpace productionSpace2;
 	private Resource res;
@@ -55,6 +56,17 @@ public class GoToHPEffectTest {
 	private Socket socket = new Socket();
 	private ClientHandler clientHandler;
 	private Map<Player, ClientHandler> handlers = new HashMap<>();
+	
+	private class TestGame extends Game{
+		public TestGame(GameModel gameModel) {
+			super(gameModel);
+		}
+
+		@Override
+		public int askForServantsIncrement(){
+			return 0;
+		}
+	}
 	
 	@Before
 	public void goToHPEffect() throws IOException{
@@ -83,8 +95,8 @@ public class GoToHPEffectTest {
         when(socket.getInputStream()).thenReturn(byteArrayInputStream);
 	    when(socket.getOutputStream()).thenReturn(byteArrayOutputStream);
 	    
-
 		clientHandler = new SocketClientHandler(socket);
+
 		handlers.put(player, clientHandler);
 		players.add(player);
 		gb = new GameBoard();
@@ -94,24 +106,29 @@ public class GoToHPEffectTest {
 		g.setCurrentPlayer(player);
 		gb = new GameBoard();
 		productionSpace2 = new ProdHarvSpace(true, 1);
+		g1 = new TestGame(gameModel);
 	}
 	
 	@AfterClass
 	public static void tearDownAfterClass() throws Exception {
 	}
 
-/*	@Test
-	public void testApply() {
-		harvest = true;
-		gt.setActionValue(actionValue);
-		gt.setHarvest(this.harvest);
-		gt.setProduction(this.production);
-		gt.apply(this.fm, this.g);
-		//fail("Not yet implemented");
-
-		assertTrue(g.goToSpace(gt));
+	
+	//with Family Member
+	@Test
+	public void testApplyFm() {
+		gt.apply(fm, g1);
+		assertFalse(this.g1.goToSpace(gt));
+		
 	}
-*/
+	
+	//with Player
+	@Test
+	public void testApplyPlayer(){
+		gt.apply(fm.getPlayer(), g1);
+		assertFalse(this.g1.goToSpace(gt));
+	}
+
 	@Test
 	public void testGetActionValue() {
 		gt.setActionValue(actionValue);

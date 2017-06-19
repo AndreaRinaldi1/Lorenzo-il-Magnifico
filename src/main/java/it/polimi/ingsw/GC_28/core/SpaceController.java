@@ -42,7 +42,6 @@ public class SpaceController {
 			}
 		}
 		
-		
 		return true;
 	}
 			
@@ -88,5 +87,6 @@ public class SpaceController {
 			}
 		}
 		return false;
+		
 	}
 }
