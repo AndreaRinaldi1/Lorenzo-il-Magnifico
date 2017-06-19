@@ -31,7 +31,7 @@ public class CopyEffect extends Effect {
 	public void apply(Player player, Game game){
 		if(!copied){
 			List<LeaderCard> leader = new ArrayList<>();
-			game.getHandlers().get(player).getOut().println("Which ability do you want to copy?[enter the name]");
+			game.getHandlers().get(player).send("Which ability do you want to copy?[enter the name]");
 			for(Player p: game.getHandlers().keySet()){
 				String s = new String();
 				for(LeaderCard lc : p.getLeaderCards()){
@@ -40,23 +40,21 @@ public class CopyEffect extends Effect {
 						s += lc.getName() + " " + lc.getEffect().toString() + "\n";
 					}
 				}
-				game.getHandlers().get(player).getOut().println(s);
+				game.getHandlers().get(player).send(s);
 			}
-			game.getHandlers().get(player).getOut().flush();
-			boolean procede = false;
+			boolean proceed = false;
 			do{
-				String line = game.getHandlers().get(player).getIn().nextLine();
+				String line = game.getHandlers().get(player).receive();
 				for(LeaderCard lc : leader){
 					if(line.equalsIgnoreCase(lc.getName())){
 						setEffect(lc.getEffect());
 						changeCardAttributes(player, lc);
-						procede = true;
+						proceed = true;
 					}
 				}if(this.effect == null){
-					game.getHandlers().get(player).getOut().println("The name isn't valid, retry");
-					game.getHandlers().get(player).getOut().flush();
+					game.getHandlers().get(player).send("The name isn't valid, retry");
 				}
-			}while(!procede);
+			}while(!proceed);
 			copied = true;
 		}
 		this.effect.apply(player, game);//attiva l'effetto anche se lo ha appena copiato

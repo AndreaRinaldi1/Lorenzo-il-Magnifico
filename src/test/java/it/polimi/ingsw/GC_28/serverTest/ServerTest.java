@@ -21,7 +21,7 @@ import it.polimi.ingsw.GC_28.server.Server;
 
 public class ServerTest {
 	
-	private Server server = new Server(1338);
+	private Server server;
 	
 	
 	
@@ -151,7 +151,7 @@ public class ServerTest {
 		System.out.println("partito");
 		s.schedule(b, 200, TimeUnit.MILLISECONDS);
 		try {
-			s.awaitTermination(16, TimeUnit.SECONDS);
+			s.awaitTermination(1, TimeUnit.SECONDS);
 		} catch (InterruptedException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

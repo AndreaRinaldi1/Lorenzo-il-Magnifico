@@ -4,28 +4,27 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 
-import java.io.PrintStream;
 import java.lang.reflect.Type;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.rmi.AlreadyBoundException;
+import java.rmi.RemoteException;
+import java.rmi.registry.LocateRegistry;
+import java.rmi.registry.Registry;
+import java.rmi.server.UnicastRemoteObject;
 import java.util.List;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
+
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Scanner;
 import java.util.Timer;
 import java.util.TimerTask;
-import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
-import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import org.omg.CORBA.TIMEOUT;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -33,8 +32,7 @@ import com.google.gson.reflect.TypeToken;
 import com.google.gson.stream.JsonReader;
 
 import it.polimi.ingsw.GC_28.boards.BonusTile;
-import it.polimi.ingsw.GC_28.effects.HarvestEffect;
-import it.polimi.ingsw.GC_28.effects.ProductionEffect;
+import it.polimi.ingsw.GC_28.client.RMIClientInt;
 import it.polimi.ingsw.GC_28.model.BoardSetup;
 import it.polimi.ingsw.GC_28.model.BoardsInitializer;
 import it.polimi.ingsw.GC_28.model.Game;
@@ -42,25 +40,34 @@ import it.polimi.ingsw.GC_28.model.Player;
 import it.polimi.ingsw.GC_28.model.PlayerColor;
 
 
-public class Server {
-	private int port;
-	private ServerSocket server;
-	private PrintStream p;
-	private Scanner scan;
-	List<PlayerColor> usedColors = new ArrayList<>();
-	boolean noStop = false;
-	ExecutorService executor;
-	boolean started;
-	Map<Player, ClientHandler> handlers;
-	List<BonusTile> bonusList;
+public class Server extends UnicastRemoteObject implements ServerInt{
+
+	private static final long serialVersionUID = 1L;
+	private final int MIN_SIZE = 2;
+	private final int MAX_SIZE = 3;
+	private final int PORT = 1337;
+	transient private ServerSocket serverSocket;
+	transient List<PlayerColor> usedColors = new ArrayList<>();
+	transient ExecutorService executor;
+	transient Map<Player, ClientHandler> handlers = new HashMap<>();
+	transient List<BonusTile> bonusList;
+	transient Timer timer = new Timer();
 	
-	public Server(int p){
-		this.port = p;
+	boolean noStop = false;
+	boolean started = false;
+	
+	protected Server() throws RemoteException {
+		super();
 	}
 	
-	public static void main(String[] args) {
-		Server server = new Server(1337);
+	public static void main(String[] args) throws RemoteException, AlreadyBoundException {
 		
+		LocateRegistry.createRegistry(8080);
+        Registry reg = LocateRegistry.getRegistry(8080);
+        Server server = new Server();
+        reg.bind("rmiServer", server);
+        System.out.println("ChatServer RMI up and running...");
+            
 		try{
 			server.startServer();
 		}catch(IOException e){
@@ -68,100 +75,115 @@ public class Server {
 			
 		}
 	}
-	
-	public void startServer()throws IOException{
-		Timer timer = new Timer();
+
+	public void startServer() throws IOException{
 
 		executor = Executors.newCachedThreadPool();
-		server = new ServerSocket(port);
+		serverSocket = new ServerSocket(PORT);
 		bonusList = initBonusTile(); 
 		//server.setReuseAddress(true);
 		while(!noStop){
-			
-			handlers = new HashMap<>();
 			started = false;
 			
 			System.out.println("Server ready");
-			while(handlers.size() < 4){
-				Socket socket = server.accept();
-				p = new PrintStream(socket.getOutputStream());
-				scan = new Scanner(socket.getInputStream());
-				p.println("Enter your name:");
-				p.flush();
-				String name = scan.nextLine();
-				PlayerColor color = enterColor();
+
+			while(handlers.size() < MAX_SIZE){
+				Socket socket = serverSocket.accept();
+				ClientHandler ch = new SocketClientHandler(socket);
+				String name = enterName(ch);
+				PlayerColor color = enterColor(ch);
 				Player player = new Player(name, color);
-				ClientHandler ch = new ClientHandler(socket);
 				if(started){
 					started = false;
-					handlers = new HashMap<>();
 				}
 				handlers.put(player, ch);
-				if(handlers.size() == 2){
-					timer = new Timer();
-					timer.schedule(new TimerTask(){
-						@Override
-						public void run() {
-							System.out.println("passati 15 sec");
-							if(!started){
-								Map<Player, ClientHandler> handlers2 = new HashMap<>();
-								for(Player p : handlers.keySet()){
-									handlers2.put(p, handlers.get(p));
-								}
-								new Thread(){
-									public void run(){
-										startGame(handlers);
-									}
-								}.start();
-							}
-						}
-					}, 15000);
-				}
+				checkNumOfPlayers();
 			}
-
-			Map<Player, ClientHandler> handlers2 = new HashMap<>();
-			for(Player p : handlers.keySet()){
-				handlers2.put(p, handlers.get(p));
-			}
-			/*
-			 * QUESTE DUE RIGHE ERANO DA ANDREA
 			timer.cancel();
-			startGame(handlers);	*/
-			timer.cancel();
+			Map<Player, ClientHandler> copy = createHandlerCopy(handlers);
+			handlers = new HashMap<>();
 			new Thread(){
 				public void run(){
-					startGame(handlers2);
+					startGame(copy);
 				}
 			}.start();
-			
-			/*game.setHandlers(handlers);
-			BoardSetup bs = new BoardSetup(game);
-			bs.firstSetUpCards();
-			
-			
-			game.registerObserver(new Controller());
-			game.getGameModel().registerObserver(game);
-			//game.getGameBoard().display();
-			//game.setCurrentPlayer(gameModel.getPlayers().get(0));
-			//game.getCurrentPlayer().getBoard().display();
-			executor.submit(game);*/
 		}
 	}
 	
 
+	private void checkNumOfPlayers(){
+		if(handlers.size() == MIN_SIZE){
+			timer = new Timer();
+			timer.schedule(new TimerTask(){
+				@Override
+				public void run() {
+					System.out.println("passati 15 sec");
+					if(!started){
+						Map<Player, ClientHandler> copy = createHandlerCopy(handlers);
+						handlers = new HashMap<>();
+						new Thread(){
+							public void run(){
+								startGame(copy);
+							}
+						}.start();
+					}
+				}
+			}, 15000);
+		}
+	}
 	
-	public void startGame(Map<Player, ClientHandler> handlers){
+	private Map<Player, ClientHandler> createHandlerCopy(Map<Player, ClientHandler> original){
+		Map<Player, ClientHandler> handlersCopy = new HashMap<>();
+		for(Player p : original.keySet()){
+			handlersCopy.put(p, original.get(p));
+		}
+		return handlersCopy;
+	}
+
+
+	@Override
+	public void join(RMIClientInt cli) throws RemoteException {
+		ClientHandler ch = new RMIClientHandler(cli);
+		String name = enterName(ch);
+		PlayerColor color = enterColor(ch);
+		Player player = new Player(name, color);
+		if(started){
+			started = false;
+		}
+		handlers.put(player, ch);
+		checkNumOfPlayers();
+		if(handlers.size() == MAX_SIZE){
+			Map<Player, ClientHandler> copy = createHandlerCopy(handlers);
+			handlers = new HashMap<>();
+			startGame(copy);
+		}
+	}
+
+	@Override
+	public void leave(RMIClientInt cli) throws RemoteException {
+		// TODO Auto-generated method stub
+		
+	}
+	
+	
+	public void startGame(Map<Player, ClientHandler> handler){
 		started = true;
 		usedColors.clear();
 		BoardsInitializer bi = new BoardsInitializer();	
-		List<Player> players = new ArrayList<>(handlers.keySet());
+		List<Player> players = new ArrayList<>(handler.keySet());
 		List<BonusTile> tileInstance = new ArrayList<BonusTile>();
+		System.out.println("in game");
+		for(Player p : handler.keySet()){
+			System.out.println(p.getName());
+		}
 		try{
 			for(int i = 0; i < bonusList.size(); i++){
 				tileInstance.add(bonusList.get(i));
 			}
 			Game game = bi.initializeBoard(players);
-			game.setHandlers(handlers);
+
+			game.setHandlers(handler);
+
 			BoardSetup bs = new BoardSetup(game);
 			bs.firstSetUpCards();
 
@@ -172,30 +194,18 @@ public class Server {
 
 			Collections.reverse(reversePlayer);
 			for(Player p : reversePlayer){
-				enterBonusTile(tileInstance, handlers, p);
+				enterBonusTile(tileInstance, handler, p);
 			}
 			
 			
 			game.registerObserver(new Controller());
 			game.getGameModel().registerObserver(game);
-			//game.getGameBoard().display();
-			//game.setCurrentPlayer(gameModel.getPlayers().get(0));
-			//game.getCurrentPlayer().getBoard().display();
-			
+
 			executor.submit(game);
-			
-		}catch(FileNotFoundException e){
-			for(Player p : players){
-				handlers.get(p).getOut().println("The server didn't start the game due to an FileNotFoundException,\n"
-						+ " we're trying to fix the problem asap. Thanks for your patience!");
-				handlers.get(p).getOut().flush();
-			}
-			Logger.getAnonymousLogger().log(Level.SEVERE,"Cannot start the server" + e);
 		}catch(IOException e){
 			for(Player p : players){
-				handlers.get(p).getOut().println("The server didn't start the game due to an IOException,\n"
+				handlers.get(p).send("The server didn't start the game due to an FileNotFoundException,\n"
 						+ " we're trying to fix the problem asap. Thanks for your patience!");
-				handlers.get(p).getOut().flush();
 			}
 			Logger.getAnonymousLogger().log(Level.SEVERE,"Cannot start the server" + e);
 		}
@@ -205,12 +215,20 @@ public class Server {
 		noStop = true;
 	}
 	
-	private PlayerColor enterColor(){
+
+	public String enterName(ClientHandler ch){
+		ch.send("Enter your name: ");
+		return ch.receive();
+	}
+	
+	
+	private PlayerColor enterColor(ClientHandler ch){
+
+
 		boolean found = false;
 		do{
-			p.println("Enter the color you prefer: [red / blue / green / yellow] ");
-			p.flush();
-			String playerColor = scan.nextLine().toUpperCase();
+			ch.send("Enter the color you prefer: [red / blue / green / yellow] ");
+			String playerColor = ch.receive().toUpperCase();
 			for(PlayerColor color : PlayerColor.values()){
 				if(playerColor.equals(color.name())){
 					if(!usedColors.contains(color)){
@@ -218,31 +236,29 @@ public class Server {
 						return color;
 					}
 					else{
-						p.println("This color has already been choosed");
+						ch.send("This color has already been choosed");
 						found = true;
 						break;
 					}
 				}
 			}
 			if(!found){
-				p.println("Not valid input!");
+				ch.send("Not valid input!");
 			}
 		}while(true);
 	}
 	
-	private void enterBonusTile(List<BonusTile> bonusList,Map<Player,ClientHandler> handlers, Player p){
+	private void enterBonusTile(List<BonusTile> bonusList,Map<Player,ClientHandler> handlers, Player p) throws RemoteException{
 		boolean found = false;
 		do{
 			int i = 1;
 			for(BonusTile bt : bonusList){
-				handlers.get(p).getOut().println("bonusTile n°: "+ i+ "\n");
-				handlers.get(p).getOut().println(bt.toString());
+				handlers.get(p).send("bonusTile n°: "+ i+ "\n");
+				handlers.get(p).send(bt.toString());
 				i++;
 			}
-			handlers.get(p).getOut().println("Choose from above your personal bonusTile: [input number from 1 to " + bonusList.size()+ "]");
-			handlers.get(p).getOut().flush();
-			Integer bonusTile = handlers.get(p).getIn().nextInt();
-			handlers.get(p).getIn().nextLine();
+			handlers.get(p).send("Choose from above your personal bonusTile: [input number from 1 to " + bonusList.size()+ "]");
+			Integer bonusTile = Integer.parseInt(handlers.get(p).receive());
 			if(0 < bonusTile && bonusTile <= bonusList.size()){
 				BonusTile bt = bonusList.get(bonusTile-1);
 				System.out.println(bt.toString());
@@ -250,7 +266,7 @@ public class Server {
 				bonusList.remove(bt);
 				found = true;
 			}else{
-				handlers.get(p).getOut().println("Not valid input!");
+				handlers.get(p).send("Not valid input!");
 			}
 		}while(!found);
 	}
@@ -262,139 +278,5 @@ public class Server {
 		List<BonusTile> bonusList = gson.fromJson(reader, bonusTileListType);
 		return bonusList;
 	}
-	
+
 }
-
-
-
-/*class AcceptPlayer implements Runnable{
-	private ServerSocket server;
-	private Map<Player,ClientHandler> handlers;
-	private PrintStream p;
-	private Scanner scan;
-	//List<PlayerColor> usedColors = new ArrayList<>();
-	private Socket s;
-	
-	public AcceptPlayer(ServerSocket server, Map<Player,ClientHandler> handlers, Socket s){
-		this.server = server;
-		this.handlers = handlers;
-		this.s = s;
-	}
-	@Override
-	public void run(){
-		/*while(handlers.size() < 4){
-			try{
-			Socket socket = server.accept();
-			p = new PrintStream(socket.getOutputStream());
-			scan = new Scanner(socket.getInputStream());
-			p.println("Enter your name:");
-			p.flush();
-			String name = scan.nextLine();
-			PlayerColor color = enterColor();
-			Player player = new Player(name, color);
-			ClientHandler ch = new ClientHandler(socket);
-			handlers.put(player, ch);
-			}catch(IOException e){
-				e.printStackTrace();
-			}
-		}
-		usedColors.clear();
-		
-	}
-
-	@Override
-	public void run() {
-		// TODO Auto-generated method stub
-		System.out.println("handlers size :"+handlers.size());
-		while(handlers.size() < 4){
-		Socket socket;
-		try{
-		if(handlers.size() == 1){
-			socket = s;
-		}
-		else{
-			socket = server.accept();
-		}
-		p = new PrintStream(socket.getOutputStream());
-		scan = new Scanner(socket.getInputStream());
-		p.println("Enter your name:");
-		p.flush();
-		String name = scan.nextLine();
-		PlayerColor color = enterColor();
-		Player player = new Player(name, color);
-		ClientHandler ch = new ClientHandler(socket);
-		handlers.put(player, ch);
-		}catch(IOException e){
-			e.printStackTrace();
-		}
-	}
-	usedColors.clear();
-	}
-	
-	private PlayerColor enterColor(){
-		boolean found = false;
-		do{
-			p.println("Enter the color you prefer: [red / blue / green / yellow] ");
-			p.flush();
-			String playerColor = scan.nextLine().toUpperCase();
-			for(PlayerColor color : PlayerColor.values()){
-				if(playerColor.equals(color.name())){
-					if(!usedColors.contains(color)){
-						usedColors.add(color);
-						return color;
-					}
-					else{
-						p.println("This color has already been choosed");
-						found = true;
-						break;
-					}
-				}
-			}
-			if(!found){
-				p.println("Not valid input!");
-			}
-		}while(true);
-	}
-	
-}*/
-
-/*while(handlers.size() < 4){
-Socket socket = server.accept();
-p = new PrintStream(socket.getOutputStream());
-scan = new Scanner(socket.getInputStream());
-p.println("Enter your name:");
-p.flush();
-String name = scan.nextLine();
-PlayerColor color = enterColor();
-Player player = new Player(name, color);
-ClientHandler ch = new ClientHandler(socket);
-handlers.put(player, ch);
-}*/
-
-
-/*Socket socket = server.accept();
-p = new PrintStream(socket.getOutputStream());
-scan = new Scanner(socket.getInputStream());
-p.println("Enter your name:");
-p.flush();
-String name = scan.nextLine();
-PlayerColor color = enterColor();
-Player player = new Player(name, color);
-ClientHandler ch = new ClientHandler(socket);
-handlers.put(player, ch);
-System.out.println("qua");
-Socket socket2 = server.accept();
-System.out.println(socket);
-System.out.println(socket2);
-System.out.println("ot");*/
-
-
-
-
-
-
-
-
-
-
-

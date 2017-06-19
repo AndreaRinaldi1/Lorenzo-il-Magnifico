@@ -85,7 +85,7 @@ public class ExchangeEffect extends Effect{
 
 
 	@Override
-	public void apply(FamilyMember familyMember, Game game){
+	public void apply(FamilyMember familyMember, Game game) {
 		System.out.println("apply di ExchangeEffect");
 		if(game.askPermission()){
 			
@@ -119,10 +119,8 @@ public class ExchangeEffect extends Effect{
 							return;
 						}
 					}
-					game.getHandlers().get(familyMember.getPlayer()).getIn().nextLine();
-					game.getHandlers().get(familyMember.getPlayer()).getOut().println("Are you unable to pay for anything and you want to skip? [y/n]");
-					game.getHandlers().get(familyMember.getPlayer()).getOut().flush();
-					if (game.getHandlers().get(familyMember.getPlayer()).getIn().nextLine().equals("y")){
+					game.getHandlers().get(familyMember.getPlayer()).send("Are you unable to pay for anything and you want to skip? [y/n]");
+					if (game.getHandlers().get(familyMember.getPlayer()).receive().equals("y")){
 						return;
 					}
 				}
