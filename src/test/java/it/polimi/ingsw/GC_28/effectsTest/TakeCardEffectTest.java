@@ -3,6 +3,7 @@ package it.polimi.ingsw.GC_28.effectsTest;
 import static org.junit.Assert.*;
 
 import java.io.BufferedReader;
+
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
@@ -14,10 +15,14 @@ import java.net.Socket;
 import java.rmi.RemoteException;
 import java.util.ArrayList;
 import java.util.Collections;
+
+
+
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
+
 import java.util.concurrent.ScheduledThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 
@@ -46,16 +51,54 @@ import it.polimi.ingsw.GC_28.server.ClientHandler;
 import it.polimi.ingsw.GC_28.server.Controller;
 import it.polimi.ingsw.GC_28.server.SocketClientHandler;
 
+import it.polimi.ingsw.GC_28.boards.GameBoard;
+import it.polimi.ingsw.GC_28.boards.PlayerBoard;
+import it.polimi.ingsw.GC_28.components.DiceColor;
+import it.polimi.ingsw.GC_28.components.FamilyMember;
+
+import it.polimi.ingsw.GC_28.model.GameModel;
+
+
+
 public class TakeCardEffectTest {
 	private TakeCardEffect tce;
 	private int actionValue = 1;
 	private boolean discountPresence;
 	private DiscountEffect discount;
+	private TestGame testGame;
+	
+	private Player player;
+	private FamilyMember familyMember;
+	private GameModel gameModel;
+	private GameBoard gb;
+	private PlayerBoard pb;
+	private List<Player> players = new ArrayList<>();
+	
+	private class TestGame extends Game{
+		public TestGame(GameModel gameModel) {
+			super(gameModel);
+		}
+		
+		@Override
+		public boolean askCard(TakeCardEffect throughEffect){
+			return false;
+		}
+	}
 	
 	@Before
 	public void takeCardEffect(){
 		tce = new TakeCardEffect();
 		discount = new DiscountEffect();
+
+		player = new Player("aiuto", PlayerColor.BLUE);
+		familyMember = new FamilyMember(player, false, DiceColor.BLACK);
+		gb = new GameBoard();
+		FamilyMember[] familyMembers = new FamilyMember[1];
+		familyMembers[0] = familyMember;
+		player.setFamilyMembers(familyMembers);
+		players.add(player);
+		gameModel = new GameModel(gb, players);
+		testGame = new TestGame(gameModel);
 	}
 	
 	@AfterClass
@@ -211,7 +254,6 @@ public class TakeCardEffectTest {
 					
 					p.println("stewie");
 					p.flush();
-					System.out.println("inviato");
 					String fawd = b.readLine();
 					System.out.println(fawd);
 					p.println("red");
@@ -262,6 +304,8 @@ public class TakeCardEffectTest {
 			e.printStackTrace();
 		}
 	}
+
+
 
 	@Test
 	public void testGetActionValue() {
