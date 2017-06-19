@@ -2,9 +2,13 @@ package it.polimi.ingsw.GC_28.coreTest;
 
 import static org.junit.Assert.*;
 
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.EnumMap;
 import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -12,6 +16,7 @@ import org.junit.Test;
 
 import it.polimi.ingsw.GC_28.boards.BonusTile;
 import it.polimi.ingsw.GC_28.boards.Cell;
+import it.polimi.ingsw.GC_28.boards.FinalBonus;
 import it.polimi.ingsw.GC_28.boards.GameBoard;
 import it.polimi.ingsw.GC_28.boards.PlayerBoard;
 import it.polimi.ingsw.GC_28.boards.Tower;
@@ -34,6 +39,8 @@ import it.polimi.ingsw.GC_28.effects.IncrementHPEffect;
 import it.polimi.ingsw.GC_28.effects.OtherEffect;
 import it.polimi.ingsw.GC_28.effects.ResourceEffect;
 import it.polimi.ingsw.GC_28.effects.TakeCardEffect;
+import it.polimi.ingsw.GC_28.model.BoardSetup;
+import it.polimi.ingsw.GC_28.model.BoardsInitializer;
 import it.polimi.ingsw.GC_28.model.Game;
 import it.polimi.ingsw.GC_28.model.GameModel;
 import it.polimi.ingsw.GC_28.model.Player;
@@ -51,11 +58,15 @@ public class TakeCardActionTest {
 	private PlayerBoard playerBoard;
 	private Player player;
 	private ArrayList<Player> players = new ArrayList<>();
+	private BoardsInitializer bi = new BoardsInitializer();
+	
+	private BoardSetup setUp;
 	
 	private Map<CardType, Tower> towers = new EnumMap<>(CardType.class);
 	private Tower tower;
-	private Cell[] cells = new Cell[1];
+	private Cell[] cells = new Cell[2];
 	private Cell cell = new Cell(null, 1, true);
+	private Cell cell1 = new Cell(null, 2, true);
 	private Card card0;
 	private Card card1;
 	private Card card2;
@@ -75,18 +86,19 @@ public class TakeCardActionTest {
 		public TestGame(GameModel gameModel) {
 			super(gameModel);
 		}
-
-		
 	}
 
 	
+	
+	
 	@Before
-	public void takeCardActionTest(){
+	public void takeCardActionTest() throws FileNotFoundException, IOException{
 		player = new Player("bob", PlayerColor.BLUE);
 		familyMember = new FamilyMember(player, false, DiceColor.BLACK);
 		this.familyMembers[0] = familyMember;
 		this.player.setFamilyMembers(familyMembers);
 		players.add(player);
+		
 		
 		resources.put(ResourceType.COIN, 2);
 		resource = Resource.of(resources);
@@ -272,27 +284,39 @@ public class TakeCardActionTest {
 
 	//"io presente" 
 	@Test
-	public void testIsApplicableFamMem() {
-		card0 = new Building("bob", 1, 1);
-		cell.setCard((Building)card0);
+	public void testIsApplicableFamMem() throws IOException {
+		card0 = new Territory("bob", 1, 1);
+		card1 = new Territory("bob", 2, 1);
+		cell.setCard((Territory)card0);
+		cell.setCard((Territory)card1);
 		cells[0] = cell;
+		cells[1] = cell1;
 		tower = new Tower(cells);
 		tower.setCells(cells);
-		towers.put(CardType.BUILDING, tower);
+		towers.put(CardType.TERRITORY, tower);
 			
-			
-		playerBoard.addCard((Building)card0);
+		
+		
+		playerBoard.addCard((Territory)card0);
+		playerBoard.addCard((Territory)card1);
 		playerBoard.setResources(resource);
 		player.setBoard(playerBoard);
 	
+		
 		gameBoard.setTowers(towers);
 		takeCard.setFamilyMember(familyMember);
 		takeCard.setName("bob");
 		takeCard.setThroughEffect(null);
 		takeCard.isApplicable();
 		assertFalse(this.takeCard.isApplicable());
+		
 	}
 	
+	
+	@Test
+	public void testApply(){
+		takeCard.apply();
+	}
 	
 	
 }

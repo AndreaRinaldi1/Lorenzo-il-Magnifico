@@ -83,7 +83,9 @@ public class TakeCardController {
 	 */
 	private boolean checkCardExistance(String name, TakeCardEffect throughEffect){
 		for(CardType ct : gameBoard.getTowers().keySet()){
+			System.out.println("check card 1");
 			if(gameBoard.getTowers().get(ct).findCard(name) != null){ //se ho trovato la carta
+				System.out.println("check card 2");
 				if(!(throughEffect == null)){ //se ho l'effetto
 					if(throughEffect.getCardType() == null){ //se posso prendere qualunque cardType
 						cardType = ct;
@@ -97,6 +99,7 @@ public class TakeCardController {
 					}
 				}
 				else{
+					System.out.println("check Card 3");
 					cardType = ct; //se non ho l'effetto e ho trovato la cella
 					return true;
 				}
@@ -178,7 +181,7 @@ public class TakeCardController {
 				System.out.println("checkResourceLoop");
 				if(familyMember.getPlayer().getBoard().getTerritories().size() > 1){
 				//if(familyMember.getPlayer().getBoard().getTerritories().get(i) == null){
-					boolean active = checkForNoMilitaryForTerritoryEffect(familyMember.getPlayer());//FIXME
+					boolean active = checkForNoMilitaryForTerritoryEffect(familyMember.getPlayer());
 					//System.out.println("controllo valore active" + active);
 					/*for(LeaderCard lc : familyMember.getPlayer().getLeaderCards()){ //check if Cesare Borgia leader is active for the currentPlayer, if so skip the check of his resources requested for territories
 						if(lc.getName().equalsIgnoreCase("Cesare Borgia") && lc.getPlayed() && lc.getActive()){
@@ -200,7 +203,6 @@ public class TakeCardController {
 				}
 			}
 		}
-
 		
 		EnumMap<ResourceType, Integer> res = new EnumMap<>(ResourceType.class);
 		Resource tmp = Resource.of(res);

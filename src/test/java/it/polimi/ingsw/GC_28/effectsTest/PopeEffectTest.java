@@ -3,6 +3,7 @@ package it.polimi.ingsw.GC_28.effectsTest;
 import static org.junit.Assert.*;
 
 import java.util.ArrayList;
+import java.util.EnumMap;
 import java.util.List;
 
 import org.junit.AfterClass;
@@ -13,17 +14,17 @@ import it.polimi.ingsw.GC_28.boards.GameBoard;
 import it.polimi.ingsw.GC_28.boards.PlayerBoard;
 import it.polimi.ingsw.GC_28.components.DiceColor;
 import it.polimi.ingsw.GC_28.components.FamilyMember;
-import it.polimi.ingsw.GC_28.effects.ServantEffect;
+import it.polimi.ingsw.GC_28.components.Resource;
+import it.polimi.ingsw.GC_28.components.ResourceType;
+import it.polimi.ingsw.GC_28.effects.PopeEffect;
 import it.polimi.ingsw.GC_28.model.Game;
 import it.polimi.ingsw.GC_28.model.GameModel;
 import it.polimi.ingsw.GC_28.model.Player;
 import it.polimi.ingsw.GC_28.model.PlayerColor;
 
-public class ServantEffectTest {
+public class PopeEffectTest {
 
-	private ServantEffect servantEffect;
-	private int numberOfServant;
-	private int increment;
+	private PopeEffect popeEffect;
 	
 	private Player player;
 	private FamilyMember familyMember;
@@ -31,24 +32,40 @@ public class ServantEffectTest {
 	private GameBoard gb;
 	private PlayerBoard pb;
 	private List<Player> players = new ArrayList<>();
-	private Game game;
+	private TestGame testGame;
+	
+	private Resource bonus;
+	EnumMap<ResourceType, Integer> resource;
+	
+	private class TestGame extends Game{
+		public TestGame(GameModel gameModel) {
+			super(gameModel);
+		}
+		
+	}
 	
 	@Before
-	public void servantEffect(){
+	public void popeEffect(){
+		popeEffect = new PopeEffect();
+		
+		resource = new EnumMap<>(ResourceType.class);
+		resource.put(ResourceType.COIN, 3);
+		bonus = Resource.of(resource);
+		
+		popeEffect.setBonus(bonus);
 		
 		player = new Player("aiuto", PlayerColor.BLUE);
 		familyMember = new FamilyMember(player, false, DiceColor.BLACK);
 		gb = new GameBoard();
+		pb = new PlayerBoard(null, bonus);
+		player.setBoard(pb);
 		FamilyMember[] familyMembers = new FamilyMember[1];
 		familyMembers[0] = familyMember;
 		player.setFamilyMembers(familyMembers);
 		players.add(player);
 		gameModel = new GameModel(gb, players);
-		game = new Game(gameModel);
-		
-		servantEffect = new ServantEffect();
-		servantEffect.setIncrement(increment);
-		servantEffect.setNumberOfServant(numberOfServant);
+		testGame = new TestGame(gameModel);
+
 	}
 	
 	@AfterClass
@@ -57,17 +74,12 @@ public class ServantEffectTest {
 
 	@Test
 	public void testApplyPlayerGame() {
-		servantEffect.apply(player, game);
+		popeEffect.apply(player, testGame);
 	}
 
 	@Test
-	public void testGetNumberOfServant() {
-		assertEquals(this.numberOfServant, this.servantEffect.getNumberOfServant());
-	}
-
-	@Test
-	public void testGetIncrement() {
-		assertEquals(this.increment, this.servantEffect.getIncrement());
+	public void testGetBonus() {
+		assertEquals(this.bonus, this.popeEffect.getBonus());
 	}
 
 }

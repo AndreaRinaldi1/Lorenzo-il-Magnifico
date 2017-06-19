@@ -12,6 +12,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import it.polimi.ingsw.GC_28.boards.GameBoard;
+import it.polimi.ingsw.GC_28.boards.PlayerBoard;
 import it.polimi.ingsw.GC_28.components.CouncilPrivilege;
 import it.polimi.ingsw.GC_28.components.DiceColor;
 import it.polimi.ingsw.GC_28.components.FamilyMember;
@@ -27,7 +28,7 @@ import it.polimi.ingsw.GC_28.model.PlayerColor;
 
 public class HarvestEffectTest {
 	private HarvestEffect he;
-	private int harvestValue = 5;
+	private int harvestValue = 1;
 	private ResourceEffect resourceHarvestBonus;
 	private PrivilegesEffect councilPrivilegeBonus;
 	private CouncilPrivilege cp;
@@ -37,10 +38,32 @@ public class HarvestEffectTest {
 	
 	private Player player;
 	private FamilyMember familyMember;
-	private Game game;
 	private GameModel gameModel;
 	private GameBoard gb;
+	private PlayerBoard pb;
 	private List<Player> players = new ArrayList<>();
+	private TestGame testGame;
+	
+	private class TestGame extends Game{
+		public TestGame(GameModel gameModel) {
+			super(gameModel);
+		}
+		
+		@Override
+		public Resource checkResourceExcommunication(Resource amount){
+			resource = new EnumMap<>(ResourceType.class);
+			resource.put(ResourceType.COIN, 3);
+			bonus = Resource.of(resource);
+			return bonus;
+		}
+		
+		@Override
+		public ArrayList<Character> askPrivilege(int numberOfCouncilPrivileges, boolean different){
+			ArrayList<Character> tmp = new ArrayList<>();
+			tmp.add('c');
+			return tmp;
+		}
+	}
 	
 	@Before
 	public void harvestEffect(){
@@ -59,12 +82,17 @@ public class HarvestEffectTest {
 		player = new Player("aiuto", PlayerColor.BLUE);
 		familyMember = new FamilyMember(player, false, DiceColor.BLACK);
 		gb = new GameBoard();
+		pb = new PlayerBoard(null, bonus);
+		player.setBoard(pb);
+		FamilyMember[] familyMembers = new FamilyMember[1];
+		familyMembers[0] = familyMember;
+		player.setFamilyMembers(familyMembers);
 		players.add(player);
 		gameModel = new GameModel(gb, players);
-		game = new Game(gameModel);
+		testGame = new TestGame(gameModel);
 		
 		
-		he.setCouncilPrivilegeBonus(councilPrivilegeBonus);
+		//he.setCouncilPrivilegeBonus(councilPrivilegeBonus);
 		he.setHarvestValue(harvestValue);
 		he.setResourceHarvestBonus(resourceHarvestBonus);
 	}
@@ -73,11 +101,31 @@ public class HarvestEffectTest {
 	public static void tearDownAfterClass() throws Exception {
 	}
 
+	//test Resource Harvest Bonus
 	@Test
 	public void testApply() {
+		he.setCouncilPrivilegeBonus(null);
+		familyMember.setValue(3);
+		he.apply(familyMember, testGame);
+		he.apply(familyMember.getPlayer(), testGame);
+	}
 	
-		he.apply(familyMember, game);
+	//test council bonus
+	@Test
+	public void testApply1(){
+		he.setCouncilPrivilegeBonus(councilPrivilegeBonus);
+		familyMember.setValue(3);
+		he.apply(familyMember, testGame);
+		he.apply(familyMember.getPlayer(), testGame);
+	}
 	
+	//test else
+	@Test
+	public void testApply2(){
+		he.setCouncilPrivilegeBonus(null);
+		familyMember.setValue(0);
+		he.apply(familyMember, testGame);
+		he.apply(familyMember.getPlayer(), testGame);
 	}
 
 	@Test
@@ -92,6 +140,7 @@ public class HarvestEffectTest {
 
 	@Test
 	public void testGetCouncilPrivilegeBonus() {
+		he.setCouncilPrivilegeBonus(councilPrivilegeBonus);
 		assertEquals(this.councilPrivilegeBonus, this.he.getCouncilPrivilegeBonus());
 	}
 
