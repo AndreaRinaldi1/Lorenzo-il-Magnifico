@@ -81,6 +81,7 @@ public class Game extends Observable<Action> implements Runnable, Observer<Messa
 				for(currentRound = 1; currentRound <= 4; currentRound++){					
 					for(currentTurn = 0; currentTurn < gameModel.getPlayers().size(); currentTurn++){
 						try {
+							System.out.println("play");
 							play();
 						} catch (IOException e) {
 							Logger.getAnonymousLogger().log(Level.SEVERE,"Cannot play that move in method run()" + e);
@@ -464,31 +465,23 @@ public class Game extends Observable<Action> implements Runnable, Observer<Messa
 		Resource amountCopy = Resource.of(resCopy);
 		for(ExcommunicationTile t : currentPlayer.getExcommunicationTile()){ //guardo tra le scomuniche del currentPlayer
 			if(t.getEffect() instanceof DiscountEffect){ //se trovo un discounteffect
-				System.out.println("checkEx 1");
 				DiscountEffect eff = (DiscountEffect) t.getEffect();
 				boolean disc = false;
 				boolean altDisc = false;
 				
 				for(ResourceType resType : eff.getDiscount().getResource().keySet()){ //guardo tra i resourceType del discounteff
-					System.out.println("checkEx 2");
 					if(!(eff.getDiscount().getResource().get(resType).equals(0))){ //se ne trovo uno diverso da 0
-						System.out.println("checkEx 3");
 						System.out.println(amount.toString());
 						if(!amount.getResource().get(resType).equals(0)){ // e se io l'ho preso quel tipo di risorsa
-							System.out.println("checkEx 4");
 							disc = true; //allora setto un bool
 							break;
 						}
 					}
 				}
-				System.out.println("check 5");
 				if(eff.getAlternativeDiscountPresence()){ //se ho due alternative
-					System.out.println("check 6");
 					for(ResourceType resType : eff.getAlternativeDiscount().getResource().keySet()){ 
 						if(!(eff.getAlternativeDiscount().getResource().get(resType).equals(0))){
-							System.out.println("check 7");
 							if(!amount.getResource().get(resType).equals(0)){
-								System.out.println("check 8");
 								altDisc = true; // se ho preso anche la risorsa diversa da zero dell'alternativediscount setto un bool
 								break;
 							}
@@ -496,19 +489,15 @@ public class Game extends Observable<Action> implements Runnable, Observer<Messa
 					}
 				}
 					
-				System.out.println("check 9");
 				System.out.println("disc " + disc);
 				System.out.println("altDisc "+ altDisc);
 				if(disc && altDisc){ // se ho preso entrambi chiedo quale togliere
-					System.out.println("check 10");
 					eff.setChosenAlternativeDiscount(askAlternative(eff.getDiscount(), eff.getAlternativeDiscount(), "malus")); 
 				}
 				else if(disc){ //altrimenti tolgo disc..
-					System.out.println("check 11");
 					eff.setChosenAlternativeDiscount(eff.getDiscount());
 				}
 				else if(altDisc){ //o alternative disc
-					System.out.println("check 11");
 					eff.setChosenAlternativeDiscount(eff.getAlternativeDiscount());
 				}
 				else{ //se non ho preso niente di quei tipi non tolgo niente
@@ -518,10 +507,8 @@ public class Game extends Observable<Action> implements Runnable, Observer<Messa
 						w.put(resType, 0);
 					}
 					Resource res = Resource.of(w);
-					System.out.println("check 13");
 					eff.setChosenAlternativeDiscount(res);
 				}
-				System.out.println("check 14");
 				System.out.println(amount.toString());
 				amountCopy.modifyResource(eff.getChosenAlternativeDiscount(), true);
 				System.out.println(amount.toString());

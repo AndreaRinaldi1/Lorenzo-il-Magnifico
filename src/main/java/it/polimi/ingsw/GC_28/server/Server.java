@@ -82,7 +82,7 @@ public class Server {
 			started = false;
 			
 			System.out.println("Server ready");
-			while(handlers.size() < 2){
+			while(handlers.size() < 4){
 				Socket socket = server.accept();
 				p = new PrintStream(socket.getOutputStream());
 				scan = new Scanner(socket.getInputStream());
@@ -161,16 +161,15 @@ public class Server {
 				tileInstance.add(bonusList.get(i));
 			}
 			Game game = bi.initializeBoard(players);
-
 			game.setHandlers(handlers);
 			BoardSetup bs = new BoardSetup(game);
 			bs.firstSetUpCards();
-			
 
 			List<Player> reversePlayer = new ArrayList<>();
 			for(Player p : players){
 				reversePlayer.add(p);
 			}
+
 			Collections.reverse(reversePlayer);
 			for(Player p : reversePlayer){
 				enterBonusTile(tileInstance, handlers, p);
@@ -206,7 +205,7 @@ public class Server {
 		noStop = true;
 	}
 	
-	public PlayerColor enterColor(){
+	private PlayerColor enterColor(){
 		boolean found = false;
 		do{
 			p.println("Enter the color you prefer: [red / blue / green / yellow] ");
@@ -256,7 +255,7 @@ public class Server {
 		}while(!found);
 	}
 	
-	private List<BonusTile> initBonusTile() throws FileNotFoundException{
+	public List<BonusTile> initBonusTile() throws FileNotFoundException{
 		Gson gson = new GsonBuilder().create();
 		Type bonusTileListType = new TypeToken<ArrayList<BonusTile>>() {}.getType();
 		JsonReader reader = new JsonReader(new FileReader("bonusTile2.json"));
