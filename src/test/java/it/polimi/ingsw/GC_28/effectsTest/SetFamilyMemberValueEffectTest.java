@@ -3,6 +3,7 @@ package it.polimi.ingsw.GC_28.effectsTest;
 import static org.junit.Assert.*;
 
 import java.util.ArrayList;
+import java.util.EnumMap;
 import java.util.List;
 
 import org.junit.AfterClass;
@@ -13,6 +14,8 @@ import it.polimi.ingsw.GC_28.boards.GameBoard;
 import it.polimi.ingsw.GC_28.cards.LeaderCard;
 import it.polimi.ingsw.GC_28.components.DiceColor;
 import it.polimi.ingsw.GC_28.components.FamilyMember;
+import it.polimi.ingsw.GC_28.components.Resource;
+import it.polimi.ingsw.GC_28.components.ResourceType;
 import it.polimi.ingsw.GC_28.effects.EffectType;
 import it.polimi.ingsw.GC_28.effects.SetFamilyMemberValueEffect;
 import it.polimi.ingsw.GC_28.model.Game;
@@ -30,6 +33,7 @@ public class SetFamilyMemberValueEffectTest {
 	private FamilyMember familyMember1;
 	private FamilyMember familyMember2;
 	private Game game;
+	private TestGame testGame;
 	private Player player;
 	private Player player1;
 	private GameModel gameModel;
@@ -41,6 +45,20 @@ public class SetFamilyMemberValueEffectTest {
 	private boolean active = true;
 	private boolean played = true;
 	private String name = "Federico da Montefeltro";
+	
+	private class TestGame extends Game{
+		public TestGame(GameModel gameModel) {
+			super(gameModel);
+		}
+		
+		@Override
+		public FamilyMember askFamilyMember(){
+			return familyMember;
+			
+		}
+	}
+	
+	
 	@Before
 	public void setFamilyMemberValueEffect(){
 		setValueEffect = new SetFamilyMemberValueEffect();
@@ -55,6 +73,7 @@ public class SetFamilyMemberValueEffectTest {
 		gameBoard = new GameBoard();
 		gameModel = new GameModel(gameBoard, players);
 		game = new Game(gameModel);
+		testGame = new TestGame(gameModel);
 		
 		//Fede da Monfe
 		lc = new LeaderCard();
@@ -67,19 +86,16 @@ public class SetFamilyMemberValueEffectTest {
 	public static void tearDownAfterClass() throws Exception {
 	}
 	
-	//TODO TEST WITH FEDERICO DA MONFERRATO EFFECT AND COLORED = TRUE
-	
-	//TODO THE FIX OF GAME
 	//Test with Federico da Montefeltro effect
-	/*@Test
+	@Test
 	public void testApplyPlayerGame1(){
 		colored = true;
 		setValueEffect.setColored(colored);
 		List<LeaderCard> leaderCards = new ArrayList<>();
 		leaderCards.add(lc);
 		player1.setLeaderCards(leaderCards );
-		this.setValueEffect.apply(player1, game);
-	}*/
+		this.setValueEffect.apply(player1, testGame);
+	}
 	
 	//test without fede da monte effect but colored = true
 	@Test
@@ -92,23 +108,8 @@ public class SetFamilyMemberValueEffectTest {
 		this.player1.setFamilyMembers(familyMembers);
 		this.setValueEffect.apply(player1, game);
 		boolean x = this.player1.getFamilyMembers()[0].getValue().equals(this.value);
-		System.out.println(this.player1.getFamilyMembers()[0].getValue());
-		System.out.println(this.value);
 		assertTrue(x);
-	}
-	
-	//test without federico da monferrato effect
-	@Test
-	public void testApplyFamilyMemberGame() {
-		colored = false;
-		setValueEffect.setColored(colored);
-		FamilyMember[] familyMembers = new FamilyMember[1];
-		familyMembers[0] = familyMember1;
-		this.player1.setFamilyMembers(familyMembers);
-		this.setValueEffect.apply(this.familyMember1, game);		
-		boolean x = this.player1.getFamilyMembers()[0].getValue().equals(this.value);
-		assertTrue(x);
-	}
+	}	
 
 	//test without federico da monferrato effect
 	@Test
@@ -118,11 +119,12 @@ public class SetFamilyMemberValueEffectTest {
 		FamilyMember[] familyMembers = new FamilyMember[1];
 		familyMembers[0] = familyMember1;
 		this.player1.setFamilyMembers(familyMembers);
-		this.setValueEffect.apply(this.player1, game);		
+		this.setValueEffect.apply(this.familyMember1.getPlayer(), game);		
 		boolean x = this.player1.getFamilyMembers()[0].getValue().equals(this.value);
 		assertTrue(x);
 		//assertEquals(this.value, this.player1.getFamilyMembers()[0].getValue());
 	}
+	
 
 	@Test
 	public void testIsColored() {

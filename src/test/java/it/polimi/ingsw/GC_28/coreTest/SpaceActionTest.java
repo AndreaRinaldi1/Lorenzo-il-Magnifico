@@ -259,7 +259,7 @@ public class SpaceActionTest {
 		assertTrue(x);
 	}
 
-	//TODO
+
 	//PRODUCTION APPLY
 	@Test	
 	public void testApplyProduction() {

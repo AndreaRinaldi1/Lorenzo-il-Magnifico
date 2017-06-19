@@ -15,6 +15,7 @@ import it.polimi.ingsw.GC_28.boards.FinalBonus;
 import it.polimi.ingsw.GC_28.boards.GameBoard;
 import it.polimi.ingsw.GC_28.boards.PlayerBoard;
 import it.polimi.ingsw.GC_28.cards.Building;
+import it.polimi.ingsw.GC_28.cards.Card;
 import it.polimi.ingsw.GC_28.cards.CardType;
 import it.polimi.ingsw.GC_28.cards.Character;
 import it.polimi.ingsw.GC_28.cards.Territory;
@@ -25,6 +26,7 @@ import it.polimi.ingsw.GC_28.components.Resource;
 import it.polimi.ingsw.GC_28.components.ResourceType;
 import it.polimi.ingsw.GC_28.effects.MultiplierEffect;
 import it.polimi.ingsw.GC_28.effects.NoFinalBonusEffect;
+import it.polimi.ingsw.GC_28.effects.ResourceEffect;
 import it.polimi.ingsw.GC_28.model.Game;
 import it.polimi.ingsw.GC_28.model.GameModel;
 import it.polimi.ingsw.GC_28.model.Player;
@@ -38,7 +40,7 @@ public class NoFinalBonusEffectTest {
 	private Resource resourceBonus;
 	EnumMap<ResourceType, Integer> resource1;
 	
-	private	Game g;
+	private TestGame testGame;
 	private FamilyMember fm;
 	private Player player;
 	
@@ -48,11 +50,17 @@ public class NoFinalBonusEffectTest {
 	private List<Player> players = new ArrayList<>();
 	private BonusTile bt;
 	
-	private Building b;
+	private Card card;
 
 	private FinalBonus finalBonus;
 	private ArrayList<Resource> finalCharactersBonus;
 	
+	private class TestGame extends Game{
+		public TestGame(GameModel gameModel) {
+			super(gameModel);
+		}
+		
+	}
 	
 	@Before
 	public void noFinalBonusEffect(){
@@ -88,13 +96,11 @@ public class NoFinalBonusEffectTest {
 		resource1.put(ResourceType.SERVANT, 2);
 		resourceBonus = Resource.of(resource1);
 			
-		b = new Building("casa", 2, 1);
-		nfbe.setCardType(cardType);
-				
+	
 		//fai il game
 		players.add(player);
 		gameModel = new GameModel(gb, players);
-		g = new Game(gameModel);
+		testGame = new TestGame(gameModel);
 		
 		//fai i familyMember
 		fm = new FamilyMember(player, false, DiceColor.ORANGE);
@@ -102,7 +108,7 @@ public class NoFinalBonusEffectTest {
 				
 		//fai gb e la setti in game e setti currentPlayer in game
 		gb = new GameBoard();
-		g.setCurrentPlayer(player);
+		testGame.setCurrentPlayer(player);
 		
 	}
 	
@@ -110,19 +116,60 @@ public class NoFinalBonusEffectTest {
 	public static void tearDownAfterClass() throws Exception {
 	}
 
+	//case Territory
 	@Test
 	public void testApplyPlayerGame() {
-		System.out.println(fm.getPlayer().getBoard().getVentures());
-		System.out.println(fm.getPlayer().getBoard().getResources());
-		
-		nfbe.apply(player, g);
-		
-		
+		//pb.addCard(c);
+		card = new Territory("aba", 2, 1);
+		pb.addCard((Territory) card);
+		finalCharactersBonus.add(resourceBonus);
+		finalCharactersBonus.add(resourceCost);
+		finalBonus.setFinalTerritoriesBonus(finalCharactersBonus);
+		nfbe.setCardType(CardType.TERRITORY);
+		//pb.addCard(v);
+		nfbe.apply(fm, testGame);
+		nfbe.apply(fm.getPlayer(), testGame);
+	}
 
+	//case Character
+	@Test
+	public void testApplyCharacter() {
+		//pb.addCard(c);
+		card = new Character("aba", 2, 1);
+		pb.addCard((Character) card);
+		finalCharactersBonus.add(resourceBonus);
+		finalCharactersBonus.add(resourceCost);
+		finalBonus.setFinalTerritoriesBonus(finalCharactersBonus);
+		nfbe.setCardType(CardType.CHARACTER);
+		//pb.addCard(v);
+		nfbe.apply(fm, testGame);
+		nfbe.apply(fm.getPlayer(), testGame);
+	}
+
+	//case Venture
+	@Test
+	public void testApplyVenture() {
+		//pb.addCard(c);
+		Venture card1 = new Venture("aba", 2, 1);
+		ResourceEffect permanentEffect = new ResourceEffect();
+		permanentEffect.setResourceBonus(resourceBonus);
+		card1.setPermanentEffect(permanentEffect );
+		pb.addCard(card1);
+		
+		finalCharactersBonus.add(resourceBonus);
+		finalCharactersBonus.add(resourceCost);
+		finalBonus.setFinalTerritoriesBonus(finalCharactersBonus);
+		nfbe.setCardType(CardType.VENTURE);
+		//pb.addCard(v);
+		nfbe.apply(fm, testGame);
+		nfbe.apply(fm.getPlayer(), testGame);
 	}
 
 	@Test
 	public void testGetCardType() {
+		card = new Building("casa", 2, 1);
+		nfbe.setCardType(cardType);
+					
 		cardType = CardType.BUILDING;
 		boolean x = cardType.equals(nfbe.getCardType());
 		assertTrue(x);
