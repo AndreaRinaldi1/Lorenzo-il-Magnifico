@@ -28,6 +28,8 @@ import com.google.gson.reflect.TypeToken;
 import com.google.gson.stream.JsonReader;
 
 import it.polimi.ingsw.GC_28.boards.BonusTile;
+import it.polimi.ingsw.GC_28.cards.CardReader;
+import it.polimi.ingsw.GC_28.cards.Deck;
 import it.polimi.ingsw.GC_28.cards.LeaderCard;
 import it.polimi.ingsw.GC_28.cards.LeaderCardReader;
 import it.polimi.ingsw.GC_28.client.Client;
@@ -185,7 +187,7 @@ public class GameTest {
 					String socketLine = b.readLine();
 					System.out.println(socketLine);
 					
-					p.println("stewie");
+					p.println("Chris");
 					p.flush();
 					System.out.println("inviato");
 					String fawd = b.readLine();
@@ -476,6 +478,7 @@ public class GameTest {
 						}
 						
 						game.getGameModel().getGameBoard().getMixedSpace().setFree(true);
+						
 						game.registerObserver(new Controller());
 						game.getGameModel().registerObserver(game);
 						Thread prova = new Thread(game);
@@ -863,9 +866,15 @@ public class GameTest {
 						}
 						LeaderCardReader reader = new LeaderCardReader();
 						ArrayList<LeaderCard> ld = (ArrayList<LeaderCard>) reader.start();
+						CardReader cd = new CardReader();
+						Deck d = cd.startRead();
 						game.getGameModel().getPlayers().get(0).getLeaderCards().add(0, ld.get(ld.size()-4));
 						game.getGameModel().getPlayers().get(0).getLeaderCards().get(0).setActive(true);
 						game.getGameModel().getPlayers().get(0).getLeaderCards().get(0).setPlayed(true);
+						game.getGameModel().getPlayers().get(0).getBoard().getBuildings().add(d.getBuildings().get(0));
+						game.getGameModel().getPlayers().get(0).getBoard().getBuildings().add(d.getBuildings().get(1));
+						game.getGameModel().getPlayers().get(0).getFamilyMembers()[0].setValue(6);
+						
 						System.out.println(ld.get(ld.size()-4));
 						
 						game.getGameModel().getPlayers().get(0).getFamilyMembers()[1].setUsed(true);

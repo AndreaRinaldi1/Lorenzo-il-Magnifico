@@ -252,7 +252,7 @@ public class TakeCardEffectTest {
 					String socketLine = b.readLine();
 					System.out.println(socketLine);
 					
-					p.println("stewie");
+					p.println("Peter");
 					p.flush();
 					String fawd = b.readLine();
 					System.out.println(fawd);
