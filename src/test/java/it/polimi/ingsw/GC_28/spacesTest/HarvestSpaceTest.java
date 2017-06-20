@@ -22,12 +22,12 @@ import it.polimi.ingsw.GC_28.components.ResourceType;
 import it.polimi.ingsw.GC_28.effects.HarvestEffect;
 import it.polimi.ingsw.GC_28.effects.ProductionEffect;
 import it.polimi.ingsw.GC_28.effects.ResourceEffect;
-import it.polimi.ingsw.GC_28.model.Game;
 import it.polimi.ingsw.GC_28.model.GameModel;
 import it.polimi.ingsw.GC_28.model.Player;
 import it.polimi.ingsw.GC_28.model.PlayerColor;
 import it.polimi.ingsw.GC_28.spaces.ProdHarvSpace;
 import it.polimi.ingsw.GC_28.spaces.ProdHarvType;
+import it.polimi.ingsw.GC_28.view.GameView;
 
 public class HarvestSpaceTest {
 
@@ -37,8 +37,8 @@ public class HarvestSpaceTest {
 		private Player p;
 		private boolean neutral;
 		
-		private Game g;
-		private Game g1;
+		private GameView g;
+		private GameView g1;
 		private FamilyMember fm;
 		private FamilyMember fm1;
 		private PlayerBoard pb;
@@ -98,7 +98,7 @@ public class HarvestSpaceTest {
 			GameBoard gb = new GameBoard();
 			GameModel gm = new GameModel(gb,players);
 			
-			g = new Game(gm);
+			g = new GameView(gm);
 		
 			g.setCurrentPlayer(p);
 			

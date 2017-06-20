@@ -5,7 +5,7 @@ import it.polimi.ingsw.GC_28.boards.GameBoard;
 import it.polimi.ingsw.GC_28.components.FamilyMember;
 
 import it.polimi.ingsw.GC_28.components.Resource;
-import it.polimi.ingsw.GC_28.model.Game;
+import it.polimi.ingsw.GC_28.view.GameView;
 
 public class ProductionEffect extends Effect{
 	private int productionValue;
@@ -64,7 +64,7 @@ public class ProductionEffect extends Effect{
 	
 
 	@Override
-	public void apply(FamilyMember familyMember, Game game) {
+	public void apply(FamilyMember familyMember, GameView game) {
 		System.out.println("apply di ProductionEffect");
 		if(familyMember.getValue() >= productionValue){
 			if(resourceProductionBonus != null){

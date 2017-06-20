@@ -12,6 +12,8 @@ import it.polimi.ingsw.GC_28.cards.Character;
 import it.polimi.ingsw.GC_28.components.Resource;
 import it.polimi.ingsw.GC_28.components.ResourceType;
 import it.polimi.ingsw.GC_28.effects.ResourceEffect;
+import it.polimi.ingsw.GC_28.view.GameManager;
+import it.polimi.ingsw.GC_28.view.GameView;
 
 public class Prova {
 	public static void main(String[] args) throws IOException {
@@ -81,9 +83,10 @@ public class Prova {
 		p1.getBoard().addCard(v);
 		pb2.addCard(new Character("sca", 3,3 ));
 
-		Game g = new Game(gm);
-		
-		g.applyFinalBonus();
+		GameView g = new GameView(gm);
+		GameManager gameM = new GameManager();
+		gameM.setView(g);
+		gameM.applyFinalBonus();
 		System.out.println("dopo");
 		for(Player player : l){
 			System.out.println(player.getName());
@@ -91,13 +94,13 @@ public class Prova {
 		}
 		p2.addResource(res4);
 		p3.addResource(res3);
-		g.sortBy(l, ResourceType.MILITARYPOINT);
+		gameM.sortBy(l, ResourceType.MILITARYPOINT);
 		System.out.println("Dopo sort");
 		for(Player player : l){
 			System.out.println(player.getName());
 			System.out.println(player.getBoard().getResources().toString());
 		}
-		g.assignBonusForMilitary();
+		gameM.assignBonusForMilitary();
 		System.out.println("Dopo assign");
 		for(Player player : l){
 			System.out.println(player.getName());
@@ -105,7 +108,7 @@ public class Prova {
 		}
 		
 		
-		g.sortBy(l, ResourceType.VICTORYPOINT);
+		gameM.sortBy(l, ResourceType.VICTORYPOINT);
 		System.out.println("winner: " + l.get(0).getName());
 
 		System.out.println("\nend");

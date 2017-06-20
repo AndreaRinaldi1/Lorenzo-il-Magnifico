@@ -11,12 +11,12 @@ import it.polimi.ingsw.GC_28.components.FamilyMember;
 import it.polimi.ingsw.GC_28.components.Resource;
 import it.polimi.ingsw.GC_28.effects.Effect;
 import it.polimi.ingsw.GC_28.effects.TakeCardEffect;
-import it.polimi.ingsw.GC_28.model.Game;
 import it.polimi.ingsw.GC_28.model.GameModel;
 import it.polimi.ingsw.GC_28.server.Message;
+import it.polimi.ingsw.GC_28.view.GameView;
 
 public class TakeCardAction extends Action{
-	private Game game;
+	private GameView game;
 	private GameBoard gameBoard;
 	private TakeCardController takeCardController;
 	private FamilyMember familyMember;
@@ -24,7 +24,7 @@ public class TakeCardAction extends Action{
 	private TakeCardEffect throughEffect;
 	private GameModel gameModel;
 	
-	public TakeCardAction(Game game, GameModel gameModel){
+	public TakeCardAction(GameView game, GameModel gameModel){
 		this.game = game;
 		this.gameBoard = gameModel.getGameBoard();
 		this.gameModel = gameModel;

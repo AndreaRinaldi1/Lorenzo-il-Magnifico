@@ -17,10 +17,11 @@ import it.polimi.ingsw.GC_28.cards.Territory;
 import it.polimi.ingsw.GC_28.cards.Venture;
 import it.polimi.ingsw.GC_28.model.BoardSetup;
 import it.polimi.ingsw.GC_28.model.BoardsInitializer;
-import it.polimi.ingsw.GC_28.model.Game;
 import it.polimi.ingsw.GC_28.model.GameModel;
 import it.polimi.ingsw.GC_28.model.Player;
 import it.polimi.ingsw.GC_28.model.PlayerColor;
+import it.polimi.ingsw.GC_28.view.GameManager;
+import it.polimi.ingsw.GC_28.view.GameView;
 
 public class BoardSetUpTest {
 	
@@ -32,7 +33,7 @@ public class BoardSetUpTest {
 	private List<Player> players = new ArrayList<>();
 	//private GameBoard gameBoard = new GameBoard();
 	//private GameModel gameModel = new GameModel(gameBoard, players);
-	private Game g ;
+	private GameView g ;
 	
 	private BoardsInitializer bi = new BoardsInitializer();
 	
@@ -54,7 +55,9 @@ public class BoardSetUpTest {
 		} catch (IOException e) {
 			Logger.getAnonymousLogger().log(Level.SEVERE, e.getMessage());
 		}
-		bs = new BoardSetup(g);
+		GameManager gameM = new GameManager();
+		gameM.setView(g);
+		bs = new BoardSetup(gameM);
 	}
 	
 	@Test

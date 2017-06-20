@@ -4,8 +4,8 @@ import java.util.ArrayList;
 
 import it.polimi.ingsw.GC_28.boards.GameBoard;
 import it.polimi.ingsw.GC_28.components.*;
-import it.polimi.ingsw.GC_28.model.Game;
 import it.polimi.ingsw.GC_28.model.Player;
+import it.polimi.ingsw.GC_28.view.GameView;
 
 public class PrivilegesEffect extends Effect{
 	private int numberOfCouncilPrivileges;
@@ -34,7 +34,7 @@ public class PrivilegesEffect extends Effect{
 	}
 	
 	@Override
-	public void apply(FamilyMember familyMember, Game game) {
+	public void apply(FamilyMember familyMember, GameView game) {
 		System.out.println("apply di PrivilegesEffect");
 		ArrayList<Character> choices = game.askPrivilege(numberOfCouncilPrivileges, different);
 		for(int i = 0; i < choices.size(); i++){
@@ -43,7 +43,7 @@ public class PrivilegesEffect extends Effect{
 	}
 	
 	@Override
-	public void apply(Player player, Game game) {
+	public void apply(Player player, GameView game) {
 		System.out.println("Ludovico Gonzaga Effect");
 		ArrayList<Character> choices = game.askPrivilege(numberOfCouncilPrivileges, different);
 		for(int i = 0; i<choices.size(); i++ ){

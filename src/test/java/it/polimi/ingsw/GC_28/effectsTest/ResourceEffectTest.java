@@ -18,9 +18,9 @@ import it.polimi.ingsw.GC_28.components.Resource;
 import it.polimi.ingsw.GC_28.components.ResourceType;
 import it.polimi.ingsw.GC_28.effects.ResourceEffect;
 import it.polimi.ingsw.GC_28.model.BoardsInitializer;
-import it.polimi.ingsw.GC_28.model.Game;
 import it.polimi.ingsw.GC_28.model.Player;
 import it.polimi.ingsw.GC_28.model.PlayerColor;
+import it.polimi.ingsw.GC_28.view.GameView;
 
 public class ResourceEffectTest {
 	private ResourceEffect re;
@@ -29,7 +29,7 @@ public class ResourceEffectTest {
 	private Player p = new Player("stan", PlayerColor.BLUE);
 	FamilyMember[] fm = new FamilyMember[4];
 	
-	private Game game;
+	private GameView game;
 	private BoardsInitializer bi = new BoardsInitializer();
 	@Before
 	public void resourceEffect(){

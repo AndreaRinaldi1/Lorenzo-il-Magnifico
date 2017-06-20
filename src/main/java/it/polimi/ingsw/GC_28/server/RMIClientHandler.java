@@ -2,6 +2,7 @@ package it.polimi.ingsw.GC_28.server;
 
 import java.rmi.RemoteException;
 import java.rmi.server.RemoteObject;
+import java.util.NoSuchElementException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -30,7 +31,7 @@ public class RMIClientHandler implements ClientHandler {
 		try{
 			answer = user.receive();
 		}
-		catch(RemoteException e){
+		catch(NoSuchElementException | IllegalStateException | RemoteException e){
 			Logger.getAnonymousLogger().log(Level.SEVERE,"Cannot receive a message" + e);
 		}
 		return answer;

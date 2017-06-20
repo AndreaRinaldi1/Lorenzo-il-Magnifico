@@ -35,16 +35,17 @@ import it.polimi.ingsw.GC_28.boards.BonusTile;
 import it.polimi.ingsw.GC_28.client.RMIClientInt;
 import it.polimi.ingsw.GC_28.model.BoardSetup;
 import it.polimi.ingsw.GC_28.model.BoardsInitializer;
-import it.polimi.ingsw.GC_28.model.Game;
 import it.polimi.ingsw.GC_28.model.Player;
 import it.polimi.ingsw.GC_28.model.PlayerColor;
+import it.polimi.ingsw.GC_28.view.GameManager;
+import it.polimi.ingsw.GC_28.view.GameView;
 
 
 public class Server extends UnicastRemoteObject implements ServerInt{
 
 	private static final long serialVersionUID = 1L;
 	private final int MIN_SIZE = 2;
-	private final int MAX_SIZE = 3;
+	private final int MAX_SIZE = 2;
 	private final int PORT = 1337;
 	transient private ServerSocket serverSocket;
 	transient List<PlayerColor> usedColors = new ArrayList<>();
@@ -180,11 +181,12 @@ public class Server extends UnicastRemoteObject implements ServerInt{
 			for(int i = 0; i < bonusList.size(); i++){
 				tileInstance.add(bonusList.get(i));
 			}
-			Game game = bi.initializeBoard(players);
+			GameView game = bi.initializeBoard(players);
 
 			game.setHandlers(handler);
-
-			BoardSetup bs = new BoardSetup(game);
+			GameManager gameManager = new GameManager();
+			gameManager.setView(game);
+			BoardSetup bs = new BoardSetup(gameManager);
 			bs.firstSetUpCards();
 
 			List<Player> reversePlayer = new ArrayList<>();
@@ -201,7 +203,7 @@ public class Server extends UnicastRemoteObject implements ServerInt{
 			game.registerObserver(new Controller());
 			game.getGameModel().registerObserver(game);
 
-			executor.submit(game);
+			executor.submit(gameManager);
 		}catch(IOException e){
 			for(Player p : players){
 				handlers.get(p).send("The server didn't start the game due to an FileNotFoundException,\n"
@@ -258,16 +260,23 @@ public class Server extends UnicastRemoteObject implements ServerInt{
 				i++;
 			}
 			handlers.get(p).send("Choose from above your personal bonusTile: [input number from 1 to " + bonusList.size()+ "]");
-			Integer bonusTile = Integer.parseInt(handlers.get(p).receive());
-			if(0 < bonusTile && bonusTile <= bonusList.size()){
-				BonusTile bt = bonusList.get(bonusTile-1);
-				System.out.println(bt.toString());
-				p.getBoard().setBonusTile(bt);
-				bonusList.remove(bt);
-				found = true;
-			}else{
+			try{
+				Integer bonusTile = Integer.parseInt(handlers.get(p).receive());
+				if(0 < bonusTile && bonusTile <= bonusList.size()){
+					BonusTile bt = bonusList.get(bonusTile-1);
+					System.out.println(bt.toString());
+					p.getBoard().setBonusTile(bt);
+					bonusList.remove(bt);
+					found = true;
+				}
+				else{
+					handlers.get(p).send("Not valid input!");
+				}
+			}
+			catch(NumberFormatException e){
 				handlers.get(p).send("Not valid input!");
 			}
+			
 		}while(!found);
 	}
 	

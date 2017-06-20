@@ -6,8 +6,8 @@ import it.polimi.ingsw.GC_28.cards.Building;
 import it.polimi.ingsw.GC_28.cards.CardType;
 import it.polimi.ingsw.GC_28.components.Resource;
 import it.polimi.ingsw.GC_28.components.ResourceType;
-import it.polimi.ingsw.GC_28.model.Game;
 import it.polimi.ingsw.GC_28.model.Player;
+import it.polimi.ingsw.GC_28.view.GameView;
 import it.polimi.ingsw.GC_28.cards.Character;
 import it.polimi.ingsw.GC_28.cards.Territory;
 import it.polimi.ingsw.GC_28.cards.Venture;
@@ -39,7 +39,7 @@ public class FinalReduceEffect  extends Effect{
 		return amount;
 	}
 	
-	public void apply(Player player, Game game){
+	public void apply(Player player, GameView game){
 		int times = 0;
 		
 		switch(cardType){

@@ -17,10 +17,10 @@ import it.polimi.ingsw.GC_28.components.FamilyMember;
 import it.polimi.ingsw.GC_28.components.Resource;
 import it.polimi.ingsw.GC_28.components.ResourceType;
 import it.polimi.ingsw.GC_28.effects.DiscountEffect;
-import it.polimi.ingsw.GC_28.model.Game;
 import it.polimi.ingsw.GC_28.model.GameModel;
 import it.polimi.ingsw.GC_28.model.Player;
 import it.polimi.ingsw.GC_28.model.PlayerColor;
+import it.polimi.ingsw.GC_28.view.GameView;
 
 public class DiscountEffectTest {
 	private DiscountEffect de;
@@ -33,7 +33,7 @@ public class DiscountEffectTest {
 	EnumMap<ResourceType, Integer> resource2;
 	
 	private FamilyMember fm;
-	private Game g;
+	private GameView g;
 	private Player p;
 	
 	@Before
@@ -63,7 +63,7 @@ public class DiscountEffectTest {
 		GameBoard gb = new GameBoard();
 		GameModel gm = new GameModel(gb,players);
 		
-		g = new Game(gm);
+		g = new GameView(gm);
 	
 		g.setCurrentPlayer(p);
 	}

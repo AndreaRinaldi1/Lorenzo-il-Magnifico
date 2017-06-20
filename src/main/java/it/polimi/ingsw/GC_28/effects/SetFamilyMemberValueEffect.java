@@ -3,8 +3,8 @@ package it.polimi.ingsw.GC_28.effects;
 import it.polimi.ingsw.GC_28.cards.LeaderCard;
 import it.polimi.ingsw.GC_28.components.DiceColor;
 import it.polimi.ingsw.GC_28.components.FamilyMember;
-import it.polimi.ingsw.GC_28.model.Game;
 import it.polimi.ingsw.GC_28.model.Player;
+import it.polimi.ingsw.GC_28.view.GameView;
 
 public class SetFamilyMemberValueEffect extends Effect {
 	private boolean colored;
@@ -33,7 +33,7 @@ public class SetFamilyMemberValueEffect extends Effect {
 		return type;
 	}
 
-	public void apply(Player player, Game game){
+	public void apply(Player player, GameView game){
 		if(colored){//check if it's federico da monferrato effect
 			for(LeaderCard lc : player.getLeaderCards()){
 				if(lc.getName().equalsIgnoreCase("Federico da Montefeltro") && lc.getPlayed() && lc.getActive()){
@@ -58,7 +58,7 @@ public class SetFamilyMemberValueEffect extends Effect {
 		}
 	}
 	
-	public void apply(FamilyMember familyMember, Game game){
+	public void apply(FamilyMember familyMember, GameView game){
 		this.apply(familyMember.getPlayer(), game);
 	}
 }

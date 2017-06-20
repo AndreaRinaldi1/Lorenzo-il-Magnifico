@@ -6,22 +6,22 @@ import it.polimi.ingsw.GC_28.components.FamilyMember;
 import it.polimi.ingsw.GC_28.effects.EffectType;
 import it.polimi.ingsw.GC_28.effects.GoToHPEffect;
 import it.polimi.ingsw.GC_28.effects.IncrementHPEffect;
-import it.polimi.ingsw.GC_28.model.Game;
 import it.polimi.ingsw.GC_28.model.GameModel;
 import it.polimi.ingsw.GC_28.server.Message;
 import it.polimi.ingsw.GC_28.spaces.ProdHarvSpace;
 import it.polimi.ingsw.GC_28.spaces.ProdHarvType;
 import it.polimi.ingsw.GC_28.spaces.Space;
+import it.polimi.ingsw.GC_28.view.GameView;
 
 public class SpaceAction extends Action{
-	private Game game;
+	private GameView game;
 	private SpaceController spaceController;
 	private FamilyMember familyMember;
 	private Space space;
 	private GoToHPEffect throughEffect;
 	private GameModel gameModel;
 	
-	public SpaceAction(Game game, GameModel gameModel){
+	public SpaceAction(GameView game, GameModel gameModel){
 		this.gameModel = gameModel;
 		this.game = game;
 		spaceController = new SpaceController(gameModel);

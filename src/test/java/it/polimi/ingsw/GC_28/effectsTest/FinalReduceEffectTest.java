@@ -28,10 +28,10 @@ import it.polimi.ingsw.GC_28.components.FamilyMember;
 import it.polimi.ingsw.GC_28.components.Resource;
 import it.polimi.ingsw.GC_28.components.ResourceType;
 import it.polimi.ingsw.GC_28.effects.FinalReduceEffect;
-import it.polimi.ingsw.GC_28.model.Game;
 import it.polimi.ingsw.GC_28.model.GameModel;
 import it.polimi.ingsw.GC_28.model.Player;
 import it.polimi.ingsw.GC_28.model.PlayerColor;
+import it.polimi.ingsw.GC_28.view.GameView;
 
 public class FinalReduceEffectTest {
 	private FinalReduceEffect fre;
@@ -46,7 +46,7 @@ public class FinalReduceEffectTest {
 	private Resource amount;
 	
 	private FamilyMember fm;
-	private Game g;
+	private GameView g;
 	private Player p;
 	private Player p1;
 	private GameModel gameModel;
@@ -85,7 +85,7 @@ public class FinalReduceEffectTest {
 		players.add(p1);
 		gameBoard = new GameBoard();
 		gameModel = new GameModel(gameBoard, players);
-		g = new Game(gameModel);
+		g = new GameView(gameModel);
 		p = new Player("bob", PlayerColor.YELLOW);
 		p1 = new Player("wob", PlayerColor.BLUE);
 		p.setBoard(pb);

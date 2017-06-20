@@ -18,11 +18,11 @@ import it.polimi.ingsw.GC_28.components.FamilyMember;
 import it.polimi.ingsw.GC_28.components.Resource;
 import it.polimi.ingsw.GC_28.components.ResourceType;
 import it.polimi.ingsw.GC_28.effects.ResourceEffect;
-import it.polimi.ingsw.GC_28.model.Game;
 import it.polimi.ingsw.GC_28.model.GameModel;
 import it.polimi.ingsw.GC_28.model.Player;
 import it.polimi.ingsw.GC_28.model.PlayerColor;
 import it.polimi.ingsw.GC_28.spaces.MarketSpace;
+import it.polimi.ingsw.GC_28.view.GameView;
 
 public class MarketSpaceTest {
 	private MarketSpace ms;
@@ -30,7 +30,7 @@ public class MarketSpaceTest {
 	private Resource r;
 	EnumMap<ResourceType, Integer> resource;
 	
-	private Game g;
+	private GameView g;
 	private FamilyMember fm;
 	private Player p;
 	private boolean neutral;
@@ -66,7 +66,7 @@ public class MarketSpaceTest {
 		GameBoard gb = new GameBoard();
 		GameModel gm = new GameModel(gb,players);
 		
-		g = new Game(gm);
+		g = new GameView(gm);
 	
 		g.setCurrentPlayer(p);
 	}

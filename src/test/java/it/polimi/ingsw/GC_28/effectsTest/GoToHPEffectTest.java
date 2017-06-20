@@ -26,7 +26,6 @@ import it.polimi.ingsw.GC_28.components.FamilyMember;
 import it.polimi.ingsw.GC_28.components.Resource;
 import it.polimi.ingsw.GC_28.components.ResourceType;
 import it.polimi.ingsw.GC_28.effects.GoToHPEffect;
-import it.polimi.ingsw.GC_28.model.Game;
 import it.polimi.ingsw.GC_28.model.GameModel;
 import it.polimi.ingsw.GC_28.model.Player;
 import it.polimi.ingsw.GC_28.model.PlayerColor;
@@ -35,6 +34,7 @@ import it.polimi.ingsw.GC_28.server.Server;
 import it.polimi.ingsw.GC_28.server.SocketClientHandler;
 import it.polimi.ingsw.GC_28.spaces.ProdHarvSpace;
 import it.polimi.ingsw.GC_28.spaces.ProdHarvType;
+import it.polimi.ingsw.GC_28.view.GameView;
 
 public class GoToHPEffectTest {
 	private GoToHPEffect gt;
@@ -44,7 +44,7 @@ public class GoToHPEffectTest {
 	
 	private FamilyMember fm;
 	private Player player;
-	private Game g;
+	private GameView g;
 	private TestGame g1;
 	private GameBoard gb;
 	private ProdHarvSpace productionSpace2;
@@ -57,7 +57,7 @@ public class GoToHPEffectTest {
 	private ClientHandler clientHandler;
 	private Map<Player, ClientHandler> handlers = new HashMap<>();
 	
-	private class TestGame extends Game{
+	private class TestGame extends GameView{
 		public TestGame(GameModel gameModel) {
 			super(gameModel);
 		}
@@ -101,7 +101,7 @@ public class GoToHPEffectTest {
 		players.add(player);
 		gb = new GameBoard();
 		gameModel = new GameModel(gb, players);
-		g = new Game(gameModel);
+		g = new GameView(gameModel);
 		g.setHandlers(handlers);
 		g.setCurrentPlayer(player);
 		gb = new GameBoard();

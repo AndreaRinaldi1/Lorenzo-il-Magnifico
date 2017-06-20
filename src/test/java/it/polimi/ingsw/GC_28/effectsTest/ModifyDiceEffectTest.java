@@ -18,10 +18,10 @@ import it.polimi.ingsw.GC_28.components.FamilyMember;
 import it.polimi.ingsw.GC_28.components.Resource;
 import it.polimi.ingsw.GC_28.components.ResourceType;
 import it.polimi.ingsw.GC_28.effects.ModifyDiceEffect;
-import it.polimi.ingsw.GC_28.model.Game;
 import it.polimi.ingsw.GC_28.model.GameModel;
 import it.polimi.ingsw.GC_28.model.Player;
 import it.polimi.ingsw.GC_28.model.PlayerColor;
+import it.polimi.ingsw.GC_28.view.GameView;
 
 public class ModifyDiceEffectTest {
 	
@@ -36,7 +36,7 @@ public class ModifyDiceEffectTest {
 	
 	private GameModel gameModel;
 	private List<Player> players = new ArrayList<>();
-	private Game game;
+	private GameView game;
 	private FamilyMember[] familyMembers = new FamilyMember[4];
 	private FamilyMember[] familyMembers1 = new FamilyMember[4];
 	private FamilyMember fm;
@@ -57,7 +57,7 @@ public class ModifyDiceEffectTest {
 		players.add(player);
 		players.add(player1);
 		gameModel = new GameModel(gb, players);
-		game = new Game(gameModel);
+		game = new GameView(gameModel);
 		player.setFamilyMembers(familyMembers);
 		player1.setFamilyMembers(familyMembers1);
 		for(int i = 0; i < DiceColor.values().length; i ++){

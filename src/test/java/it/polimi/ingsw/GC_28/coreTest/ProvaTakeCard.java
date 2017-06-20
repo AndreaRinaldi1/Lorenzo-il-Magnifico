@@ -18,15 +18,18 @@ import org.junit.Test;
 import it.polimi.ingsw.GC_28.boards.GameBoard;
 import it.polimi.ingsw.GC_28.boards.Tower;
 import it.polimi.ingsw.GC_28.cards.CardType;
+import it.polimi.ingsw.GC_28.components.DiceColor;
+import it.polimi.ingsw.GC_28.components.FamilyMember;
 import it.polimi.ingsw.GC_28.core.TakeCardAction;
 import it.polimi.ingsw.GC_28.effects.DiscountEffect;
 import it.polimi.ingsw.GC_28.effects.TakeCardEffect;
 import it.polimi.ingsw.GC_28.model.BoardSetup;
 import it.polimi.ingsw.GC_28.model.BoardsInitializer;
-import it.polimi.ingsw.GC_28.model.Game;
 import it.polimi.ingsw.GC_28.model.GameModel;
 import it.polimi.ingsw.GC_28.model.Player;
 import it.polimi.ingsw.GC_28.model.PlayerColor;
+import it.polimi.ingsw.GC_28.view.GameManager;
+import it.polimi.ingsw.GC_28.view.GameView;
 
 public class ProvaTakeCard {
 
@@ -40,7 +43,7 @@ public class ProvaTakeCard {
 	private List<Player> players = new ArrayList<>();
 	private GameBoard gameBoard = new GameBoard();
 	private GameModel gameModel;
-	private Game g;
+	private GameView g;
 	
 	private BoardsInitializer bi = new BoardsInitializer();
 	
@@ -65,8 +68,10 @@ public class ProvaTakeCard {
 		} catch (IOException e) {
 			Logger.getAnonymousLogger().log(Level.SEVERE, e.getMessage());
 		}
-		
-		bs = new BoardSetup(g);
+		GameManager gameM = new GameManager();
+		gameM.setView(g);
+		g.setCurrentPlayer(p1);
+		bs = new BoardSetup(gameM);
 		//bs.setUpBoard();
 		
 		try {
@@ -88,12 +93,14 @@ public class ProvaTakeCard {
 
 	@Test
 	public void testIsApplicable() {
+		FamilyMember fm = new FamilyMember(p1, false, DiceColor.BLACK);
 		this.gameBoard = this.g.getGameModel().getGameBoard();
 		this.gameModel = this.g.getGameModel();
 		takeCard = new TakeCardAction(g, gameModel);
 		String name = this.g.getGameModel().getGameBoard().getTowers().get(CardType.TERRITORY).getCells()[0].getCard().getName();
 		this.takeCard.setName(name);
 		this.takeCard.setThroughEffect(null);
+		this.takeCard.setFamilyMember(fm);
 		this.takeCard.isApplicable();
 	}
 

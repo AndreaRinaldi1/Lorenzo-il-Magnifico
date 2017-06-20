@@ -23,6 +23,10 @@ public class RMIClient extends UnicastRemoteObject implements Client, RMIClientI
 	@Override
 	public void send(String message) {
 		System.out.println(message);
+		if(message.equals("sospeso")){
+			System.out.println("rmi");
+		}
+		
 	}
 
 	@Override

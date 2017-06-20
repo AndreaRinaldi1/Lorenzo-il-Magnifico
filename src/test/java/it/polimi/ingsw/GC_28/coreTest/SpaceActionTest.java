@@ -30,7 +30,6 @@ import it.polimi.ingsw.GC_28.effects.IncrementHPEffect;
 import it.polimi.ingsw.GC_28.effects.OtherEffect;
 import it.polimi.ingsw.GC_28.effects.ProductionEffect;
 import it.polimi.ingsw.GC_28.effects.ResourceEffect;
-import it.polimi.ingsw.GC_28.model.Game;
 import it.polimi.ingsw.GC_28.model.GameModel;
 import it.polimi.ingsw.GC_28.model.Player;
 import it.polimi.ingsw.GC_28.model.PlayerColor;
@@ -38,6 +37,7 @@ import it.polimi.ingsw.GC_28.spaces.MarketSpace;
 import it.polimi.ingsw.GC_28.spaces.PrivilegesSpace;
 import it.polimi.ingsw.GC_28.spaces.ProdHarvSpace;
 import it.polimi.ingsw.GC_28.spaces.ProdHarvType;
+import it.polimi.ingsw.GC_28.view.GameView;
 
 public class SpaceActionTest {
 
@@ -48,7 +48,7 @@ public class SpaceActionTest {
 	private PlayerBoard playerBoard;
 	private Player player;
 	private ArrayList<Player> players = new ArrayList<>();
-	private Game game;
+	private GameView game;
 	private TestGame testGame;
 	
 	private FamilyMember[] familyMembers = new FamilyMember[1];
@@ -84,7 +84,7 @@ public class SpaceActionTest {
 	private BonusTile bonusTile;
 	private HarvestEffect harvestEffect;
 	
-	private class TestGame extends Game{
+	private class TestGame extends GameView{
 		public TestGame(GameModel gameModel) {
 			super(gameModel);
 		}
@@ -150,7 +150,7 @@ public class SpaceActionTest {
 		this.gameBoard.setCoinSpace(coinSpace2);
 		
 		gameModel = new GameModel(gameBoard, players);
-		game = new Game(gameModel); 
+		game = new GameView(gameModel); 
 		testGame = new TestGame(gameModel);
 		
 		spaceAction = new SpaceAction(game, gameModel);
