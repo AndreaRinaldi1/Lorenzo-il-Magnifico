@@ -57,6 +57,7 @@ public class TakeCardActionTest {
 
 	private TakeCardAction takeCard;
 	private TestGame testGame;
+	private Game game1;
 	private GameModel gameModel;
 	private GameBoard gameBoard;
 	private PlayerBoard playerBoard;
@@ -65,8 +66,7 @@ public class TakeCardActionTest {
 	private ArrayList<Player> players = new ArrayList<>();
 	private BoardsInitializer bi = new BoardsInitializer();
 	
-	private BoardSetup setUp;
-	
+	private BoardSetup bs;
 	private Map<CardType, Tower> towers = new EnumMap<>(CardType.class);
 	private Tower tower;
 	private Cell[] cells = new Cell[2];
@@ -333,8 +333,8 @@ public class TakeCardActionTest {
 		tower.setCells(cells);
 		towers.put(CardType.TERRITORY, tower);
 			
-		Game game = bi.initializeBoard(players);
-		BoardSetup bs = new BoardSetup(game);
+		game1 = bi.initializeBoard(players);
+		bs = new BoardSetup(game1);
 		bs.firstSetUpCards();
 		
 		for(ResourceType resType : ResourceType.values()){
@@ -343,7 +343,6 @@ public class TakeCardActionTest {
 		Resource res = Resource.of(resources);
 		playerBoard.setResources(res);
 		playerBoard.addCard((Territory)card0);
-		playerBoard.addCard((Territory)card1);
 		playerBoard.setResources(resource);
 		player.setBoard(playerBoard);
 	
