@@ -16,19 +16,26 @@ import it.polimi.ingsw.GC_28.boards.Cell;
 import it.polimi.ingsw.GC_28.boards.GameBoard;
 import it.polimi.ingsw.GC_28.boards.PlayerBoard;
 import it.polimi.ingsw.GC_28.boards.Tower;
+import it.polimi.ingsw.GC_28.cards.Building;
 import it.polimi.ingsw.GC_28.cards.Card;
 import it.polimi.ingsw.GC_28.cards.CardType;
 import it.polimi.ingsw.GC_28.cards.Character;
 import it.polimi.ingsw.GC_28.cards.ExcommunicationTile;
 import it.polimi.ingsw.GC_28.cards.LeaderCard;
+import it.polimi.ingsw.GC_28.cards.Territory;
 import it.polimi.ingsw.GC_28.cards.Venture;
 import it.polimi.ingsw.GC_28.components.DiceColor;
 import it.polimi.ingsw.GC_28.components.FamilyMember;
 import it.polimi.ingsw.GC_28.components.Resource;
 import it.polimi.ingsw.GC_28.components.ResourceType;
 import it.polimi.ingsw.GC_28.core.TakeCardAction;
+import it.polimi.ingsw.GC_28.core.TakeCardController;
+import it.polimi.ingsw.GC_28.effects.DiscountEffect;
+import it.polimi.ingsw.GC_28.effects.EffectType;
 import it.polimi.ingsw.GC_28.effects.IncrementCardEffect;
 import it.polimi.ingsw.GC_28.effects.OtherEffect;
+import it.polimi.ingsw.GC_28.effects.ResourceEffect;
+import it.polimi.ingsw.GC_28.effects.TakeCardEffect;
 import it.polimi.ingsw.GC_28.model.BoardSetup;
 import it.polimi.ingsw.GC_28.model.BoardsInitializer;
 import it.polimi.ingsw.GC_28.model.Game;
@@ -48,8 +55,6 @@ public class TakeCardActionApplyTest {
 	private ArrayList<Player> players = new ArrayList<>();
 	private BoardsInitializer bi = new BoardsInitializer();
 	
-	private BoardSetup setUp;
-	
 	private Map<CardType, Tower> towers = new EnumMap<>(CardType.class);
 	private Tower tower;
 	private Cell[] cells = new Cell[2];
@@ -58,18 +63,14 @@ public class TakeCardActionApplyTest {
 	private Card card0;
 	private Card card1;
 
-	private Venture v;
-	private Venture v1;
 	private Character c;
 	private Character c1;
-	
+	private Building b;
+	private Building b1;
 	
 	private EnumMap<ResourceType, Integer> resources = new EnumMap<>(ResourceType.class);
 	private Resource resource = Resource.of(resources);
 	
-	private EnumMap<ResourceType, Integer> w = new EnumMap<>(ResourceType.class);
-	private Resource alternativeCost = Resource.of(resources);
-
 	private EnumMap<ResourceType, Integer> resources1 = new EnumMap<>(ResourceType.class);
 	private Resource cost = Resource.of(resources1);
 
@@ -79,7 +80,12 @@ public class TakeCardActionApplyTest {
 	private FamilyMember familyMember1;
 	private FamilyMember[] familyMembers = new FamilyMember[1];
 	
+	private TakeCardEffect throughEffect = new TakeCardEffect();
+
 	private OtherEffect otherEffect;
+	private OtherEffect otherEffect2;
+	private DiscountEffect discount = new DiscountEffect();
+	private ResourceEffect immediateEffect = new ResourceEffect();
 	private LeaderCard leaderCard = new LeaderCard();
 	private ArrayList<LeaderCard> leaderCards = new ArrayList<>();
 
@@ -91,9 +97,25 @@ public class TakeCardActionApplyTest {
 			super(gameModel);
 		}
 		
+		@Override
+		public Resource askAlternative(Resource discount1, Resource discount2, String type){
+			
+			EnumMap<ResourceType, Integer> z = new EnumMap<>(ResourceType.class);
+			z.put(ResourceType.COIN, 5);
+			Resource bonus = Resource.of(z);
+			return bonus;
+		}
+		
+		@Override
+		public Resource checkResourceExcommunication(Resource amount){
+			EnumMap<ResourceType, Integer> z = new EnumMap<>(ResourceType.class);
+			z.put(ResourceType.COIN, 0);
+			Resource bonus = Resource.of(z);
+			return bonus;
+		}
 		
 	}
-
+	
 	@Before
 	public void testTakeCardActionApply(){
 		player = new Player("bob", PlayerColor.BLUE);
@@ -122,29 +144,62 @@ public class TakeCardActionApplyTest {
 	public static void tearDownAfterClass() throws Exception {
 	}
 
+	
 	@Test
-	public void testApply() throws FileNotFoundException, IOException {
+	public void testApply1() throws FileNotFoundException, IOException {
 		card0 = new Venture("bob", 1, 1);
 		card1 = new Venture("bob", 2, 1);
+		
+		c = new Character("bob", 1, 1);
+		c1 = new Character("bob", 1, 1);
+		otherEffect2 = new OtherEffect();
+		otherEffect2.setType(EffectType.NOCELLBONUS);
+		c.setPermanentEffect(otherEffect2);
+		
+		discount.setAlternativeDiscountPresence(true);
+		discount.setAlternativeDiscount(cost);
+		
+		permanentCardEffect.setCardType(CardType.VENTURE);
+		permanentCardEffect.setIncrement(1);
+		permanentCardEffect.setDiscountPresence(true);
+		permanentCardEffect.setDiscount(discount);
+		c1.setPermanentEffect(permanentCardEffect);
+		
+		card0.setCost(cost);
+		card1.setCost(cost);
 		cell.setCard((Venture)card0);
-		cell.setCard((Venture)card1);
+		cell1.setCard((Venture)card1);
+		cell.setActionValue(-1);
+		cell1.setActionValue(-1);
 		cells[0] = cell;
 		cells[1] = cell1;
 		tower = new Tower(cells);
 		tower.setCells(cells);
 		towers.put(CardType.VENTURE, tower);
-				
+			
+		otherEffect = new OtherEffect();
+		otherEffect.setType(EffectType.NOEXTRACOSTINTOWEREFFECT);
+		leaderCard.setEffect(otherEffect);
+		leaderCard.setActive(true);
+		leaderCard.setPlayed(true);
+		leaderCard.setName("Pico della Mirandola");
+		leaderCards.add(leaderCard);
+		player.setLeaderCards(leaderCards);
+		
+		
 		Game game = bi.initializeBoard(players);
 		BoardSetup bs = new BoardSetup(game);
 		bs.firstSetUpCards();
 			
 		for(ResourceType resType : ResourceType.values()){
-			resources.put(resType, 1);
+			resources.put(resType, 9);
 		}
 		Resource res = Resource.of(resources);
 		playerBoard.setResources(res);
 		playerBoard.addCard((Venture)card0);
 		playerBoard.addCard((Venture)card1);
+		playerBoard.addCard(c);
+		playerBoard.addCard(c1);
 		playerBoard.setResources(resource);
 		player.setBoard(playerBoard);
 		
@@ -153,11 +208,316 @@ public class TakeCardActionApplyTest {
 		gameBoard.getTowers().get(CardType.VENTURE).getCells()[0].setFree(false);
 		gameBoard.getTowers().get(CardType.VENTURE).getCells()[0].setFamilyMember(familyMember1);
 
+	
+		
 		takeCard.setFamilyMember(familyMember);
 		takeCard.setName("bob");
-		takeCard.setThroughEffect(null);
-		
+		throughEffect.setCardType(CardType.VENTURE);
+		throughEffect.setDiscountPresence(true);
+		throughEffect.setDiscount(discount );
+		takeCard.setThroughEffect(throughEffect );
+		takeCard.isApplicable();
 		takeCard.apply();
 	}
+	
+	@Test
+	public void testApply2() throws FileNotFoundException, IOException {
+		card0 = new Venture("bob", 1, 1);
+		card1 = new Venture("bob", 2, 1);
+		
+		c = new Character("bob", 1, 1);
+		c1 = new Character("bob", 1, 1);
+		
+		discount.setAlternativeDiscountPresence(false);
+		discount.setAlternativeDiscount(cost);
+		
+		permanentCardEffect.setCardType(CardType.VENTURE);
+		permanentCardEffect.setIncrement(1);
+		permanentCardEffect.setDiscountPresence(true);
+		permanentCardEffect.setDiscount(discount);
+		
+		
+		c.setPermanentEffect(permanentCardEffect);
+		c1.setPermanentEffect(permanentCardEffect);
+		
+		card0.setCost(cost);
+		card1.setCost(cost);
+		cell.setCard((Venture)card0);
+		cell1.setCard((Venture)card1);
+		cell.setActionValue(-1);
+		cell1.setActionValue(-1);
+		cells[0] = cell;
+		cells[1] = cell1;
+		tower = new Tower(cells);
+		tower.setCells(cells);
+		towers.put(CardType.VENTURE, tower);
+			
+		otherEffect = new OtherEffect();
+		otherEffect.setType(EffectType.NOEXTRACOSTINTOWEREFFECT);
+		leaderCard.setEffect(otherEffect);
+		leaderCard.setActive(true);
+		leaderCard.setPlayed(true);
+		leaderCard.setName("Pico della Mirandola");
+		leaderCards.add(leaderCard);
+		player.setLeaderCards(leaderCards);
+		
+		
+		Game game = bi.initializeBoard(players);
+		BoardSetup bs = new BoardSetup(game);
+		bs.firstSetUpCards();
+			
+		for(ResourceType resType : ResourceType.values()){
+			resources.put(resType, 9);
+		}
+		Resource res = Resource.of(resources);
+		playerBoard.setResources(res);
+		playerBoard.addCard((Venture)card0);
+		playerBoard.addCard((Venture)card1);
+		playerBoard.addCard(c);
+		playerBoard.addCard(c1);
+		playerBoard.setResources(resource);
+		player.setBoard(playerBoard);
+		
+			
+		gameBoard.setTowers(towers);
+		gameBoard.getTowers().get(CardType.VENTURE).getCells()[0].setFree(false);
+		gameBoard.getTowers().get(CardType.VENTURE).getCells()[0].setFamilyMember(familyMember1);
 
+	
+		
+		takeCard.setFamilyMember(familyMember);
+		takeCard.setName("bob");
+		throughEffect.setCardType(CardType.VENTURE);
+		throughEffect.setDiscountPresence(true);
+		throughEffect.setDiscount(discount );
+		takeCard.setThroughEffect(throughEffect );
+		takeCard.isApplicable();
+		takeCard.apply();
+	}
+	
+	//take territory Card
+	@Test
+	public void testApply3() throws FileNotFoundException, IOException {
+		card0 = new Territory("bob", 1, 1);
+		card1 = new Territory("bob", 2, 1);
+		
+		c = new Character("bob", 1, 1);
+		c1 = new Character("bob", 1, 1);
+		
+		discount.setAlternativeDiscountPresence(false);
+		discount.setAlternativeDiscount(cost);
+		
+		permanentCardEffect.setCardType(CardType.TERRITORY);
+		permanentCardEffect.setIncrement(1);
+		permanentCardEffect.setDiscountPresence(true);
+		permanentCardEffect.setDiscount(discount);
+		
+		
+		c.setPermanentEffect(permanentCardEffect);
+		c1.setPermanentEffect(permanentCardEffect);
+		
+		card0.setCost(cost);
+		card1.setCost(cost);
+		cell.setCard((Territory)card0);
+		cell1.setCard((Territory)card1);
+		cell.setActionValue(-1);
+		cell1.setActionValue(-1);
+		cells[0] = cell;
+		cells[1] = cell1;
+		tower = new Tower(cells);
+		tower.setCells(cells);
+		towers.put(CardType.TERRITORY, tower);
+			
+		otherEffect = new OtherEffect();
+		otherEffect.setType(EffectType.NOEXTRACOSTINTOWEREFFECT);
+		leaderCard.setEffect(otherEffect);
+		leaderCard.setActive(true);
+		leaderCard.setPlayed(true);
+		leaderCard.setName("Pico della Mirandola");
+		leaderCards.add(leaderCard);
+		player.setLeaderCards(leaderCards);
+		
+		
+		Game game = bi.initializeBoard(players);
+		BoardSetup bs = new BoardSetup(game);
+		bs.firstSetUpCards();
+			
+		for(ResourceType resType : ResourceType.values()){
+			resources.put(resType, 9);
+		}
+		Resource res = Resource.of(resources);
+		playerBoard.setResources(res);
+		playerBoard.addCard((Territory)card0);
+		playerBoard.addCard((Territory)card1);
+		playerBoard.addCard(c);
+		playerBoard.addCard(c1);
+		playerBoard.setResources(resource);
+		player.setBoard(playerBoard);
+		
+			
+		gameBoard.setTowers(towers);
+		gameBoard.getTowers().get(CardType.TERRITORY).getCells()[0].setFree(false);
+		gameBoard.getTowers().get(CardType.TERRITORY).getCells()[0].setFamilyMember(familyMember1);
+
+	
+		
+		takeCard.setFamilyMember(familyMember);
+		takeCard.setName("bob");
+		throughEffect.setCardType(CardType.TERRITORY);
+		throughEffect.setDiscountPresence(true);
+		throughEffect.setDiscount(discount );
+		takeCard.setThroughEffect(throughEffect );
+		takeCard.isApplicable();
+		takeCard.apply();
+	}
+	
+	//take Character Card
+	@Test
+	public void testApply4() throws FileNotFoundException, IOException {
+		card0 = new Character("bob", 1, 1);
+		card1 = new Character("bob", 2, 1);
+		
+		c = new Character("bob", 1, 1);
+		c1 = new Character("bob", 1, 1);
+		
+		discount.setAlternativeDiscountPresence(false);
+		discount.setAlternativeDiscount(cost);
+		
+		permanentCardEffect.setCardType(CardType.CHARACTER);
+		permanentCardEffect.setIncrement(1);
+		permanentCardEffect.setDiscountPresence(true);
+		permanentCardEffect.setDiscount(discount);
+		
+		
+		c.setPermanentEffect(permanentCardEffect);
+		c1.setPermanentEffect(permanentCardEffect);
+		
+		card0.setCost(cost);
+		card1.setCost(cost);
+		cell.setCard((Character)card0);
+		cell1.setCard((Character)card1);
+		cell.setActionValue(-1);
+		cell1.setActionValue(-1);
+		cells[0] = cell;
+		cells[1] = cell1;
+		tower = new Tower(cells);
+		tower.setCells(cells);
+		towers.put(CardType.CHARACTER, tower);
+			
+		otherEffect = new OtherEffect();
+		otherEffect.setType(EffectType.NOEXTRACOSTINTOWEREFFECT);
+		leaderCard.setEffect(otherEffect);
+		leaderCard.setActive(true);
+		leaderCard.setPlayed(true);
+		leaderCard.setName("Pico della Mirandola");
+		leaderCards.add(leaderCard);
+		player.setLeaderCards(leaderCards);
+		
+		
+		Game game = bi.initializeBoard(players);
+		BoardSetup bs = new BoardSetup(game);
+		bs.firstSetUpCards();
+			
+		for(ResourceType resType : ResourceType.values()){
+			resources.put(resType, 9);
+		}
+		Resource res = Resource.of(resources);
+		playerBoard.setResources(res);
+		playerBoard.addCard((Character)card0);
+		playerBoard.addCard((Character)card1);
+		playerBoard.addCard(c);
+		playerBoard.addCard(c1);
+		playerBoard.setResources(resource);
+		player.setBoard(playerBoard);
+		
+			
+		gameBoard.setTowers(towers);
+		gameBoard.getTowers().get(CardType.CHARACTER).getCells()[0].setFree(false);
+		gameBoard.getTowers().get(CardType.CHARACTER).getCells()[0].setFamilyMember(familyMember1);
+		
+		
+		takeCard.setFamilyMember(familyMember);
+		takeCard.setName("bob");
+		throughEffect.setCardType(CardType.CHARACTER);
+		throughEffect.setDiscountPresence(true);
+		throughEffect.setDiscount(discount );
+		takeCard.setThroughEffect(throughEffect );
+		takeCard.isApplicable();
+		takeCard.apply();
+	}
+	
+	//take Building Card
+	@Test
+	public void testApply5() throws FileNotFoundException, IOException {
+		c = new Character("bob", 1, 1);
+		c1 = new Character("bob", 1, 1);
+		
+		b = new Building("bob", 1, 2);
+		b1 = new Building("bob", 1, 2);
+		discount.setAlternativeDiscountPresence(false);
+		discount.setAlternativeDiscount(cost);
+		
+		permanentCardEffect.setCardType(CardType.CHARACTER);
+		permanentCardEffect.setIncrement(1);
+		permanentCardEffect.setDiscountPresence(true);
+		permanentCardEffect.setDiscount(discount);
+		
+		b.setImmediateEffect(immediateEffect);
+		
+		c.setPermanentEffect(permanentCardEffect);
+		c1.setPermanentEffect(permanentCardEffect);
+		
+		b.setCost(cost);
+		b1.setCost(cost);
+		cell.setCard(b);
+		cell1.setCard(b1);
+		cell.setActionValue(-1);
+		cell1.setActionValue(-1);
+		cells[0] = cell;
+		cells[1] = cell1;
+		tower = new Tower(cells);
+		tower.setCells(cells);
+		towers.put(CardType.BUILDING, tower);
+			
+		otherEffect = new OtherEffect();
+		otherEffect.setType(EffectType.NOEXTRACOSTINTOWEREFFECT);
+		leaderCard.setEffect(otherEffect);
+		leaderCard.setActive(true);
+		leaderCard.setPlayed(true);
+		leaderCard.setName("Pico della Mirandola");
+		leaderCards.add(leaderCard);
+		player.setLeaderCards(leaderCards);
+		
+		
+		Game game = bi.initializeBoard(players);
+		BoardSetup bs = new BoardSetup(game);
+		bs.firstSetUpCards();
+			
+		for(ResourceType resType : ResourceType.values()){
+			resources.put(resType, 9);
+		}
+		Resource res = Resource.of(resources);
+		playerBoard.setResources(res);
+		playerBoard.addCard(b);
+		playerBoard.addCard(b1);
+		playerBoard.addCard(c);
+		playerBoard.addCard(c1);
+		playerBoard.setResources(resource);
+		player.setBoard(playerBoard);
+		
+			
+		gameBoard.setTowers(towers);
+		gameBoard.getTowers().get(CardType.BUILDING).getCells()[0].setFree(false);
+		gameBoard.getTowers().get(CardType.BUILDING).getCells()[0].setFamilyMember(familyMember1);
+		
+		
+		takeCard.setFamilyMember(familyMember);
+		takeCard.setName("bob");
+		throughEffect.setCardType(CardType.BUILDING);
+		throughEffect.setDiscountPresence(true);
+		throughEffect.setDiscount(discount );
+		takeCard.setThroughEffect(throughEffect );
+		takeCard.isApplicable();
+		takeCard.apply();
+	}
 }
