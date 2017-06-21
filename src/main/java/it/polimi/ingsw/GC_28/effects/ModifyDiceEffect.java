@@ -5,8 +5,8 @@ import java.util.List;
 
 import it.polimi.ingsw.GC_28.components.DiceColor;
 import it.polimi.ingsw.GC_28.components.FamilyMember;
-import it.polimi.ingsw.GC_28.model.Game;
 import it.polimi.ingsw.GC_28.model.Player;
+import it.polimi.ingsw.GC_28.view.GameView;
 
 public class ModifyDiceEffect extends Effect{
 	
@@ -24,7 +24,7 @@ public class ModifyDiceEffect extends Effect{
 		this.reduce = reduce;
 	}
 	
-	public void apply(Player player, Game game) {
+	public void apply(Player player, GameView game) {
 		for(FamilyMember fm : player.getFamilyMembers()){
 			for(DiceColor color : diceColor){
 				if(fm.getDiceColor().equals(color)){

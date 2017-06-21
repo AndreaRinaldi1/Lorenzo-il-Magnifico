@@ -20,10 +20,10 @@ import it.polimi.ingsw.GC_28.components.FamilyMember;
 import it.polimi.ingsw.GC_28.components.Resource;
 import it.polimi.ingsw.GC_28.components.ResourceType;
 import it.polimi.ingsw.GC_28.effects.PrivilegesEffect;
-import it.polimi.ingsw.GC_28.model.Game;
 import it.polimi.ingsw.GC_28.model.GameModel;
 import it.polimi.ingsw.GC_28.model.Player;
 import it.polimi.ingsw.GC_28.model.PlayerColor;
+import it.polimi.ingsw.GC_28.view.GameView;
 
 public class PrivilegesEffectTest {
 	private PrivilegesEffect pe;
@@ -44,7 +44,7 @@ public class PrivilegesEffectTest {
 	private ArrayList<Player> players;
 	
 
-	private class TestGame extends Game{
+	private class TestGame extends GameView{
 		public TestGame(GameModel gameModel) {
 			super(gameModel);
 		}

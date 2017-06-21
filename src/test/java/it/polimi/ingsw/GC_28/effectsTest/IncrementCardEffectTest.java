@@ -14,10 +14,10 @@ import it.polimi.ingsw.GC_28.cards.CardType;
 import it.polimi.ingsw.GC_28.components.DiceColor;
 import it.polimi.ingsw.GC_28.components.FamilyMember;
 import it.polimi.ingsw.GC_28.effects.*;
-import it.polimi.ingsw.GC_28.model.Game;
 import it.polimi.ingsw.GC_28.model.GameModel;
 import it.polimi.ingsw.GC_28.model.Player;
 import it.polimi.ingsw.GC_28.model.PlayerColor;
+import it.polimi.ingsw.GC_28.view.GameView;
 
 public class IncrementCardEffectTest {
 	private IncrementCardEffect ic;
@@ -25,7 +25,7 @@ public class IncrementCardEffectTest {
 	private boolean discountPresence;
 	private DiscountEffect discount;
 	
-	private	Game g;
+	private	GameView g;
 	private FamilyMember fm;
 	private FamilyMember fm2;
 	private Player player;
@@ -44,7 +44,7 @@ public class IncrementCardEffectTest {
 		players.add(player2);
 		gameBoard = new GameBoard();
 		gameModel = new GameModel(gameBoard, players);
-		g = new Game(gameModel);
+		g = new GameView(gameModel);
 		fm = new FamilyMember(player, false, DiceColor.ORANGE);
 		fm2 = new FamilyMember(player2, false, DiceColor.WHITE);
 		fm.setValue(2);

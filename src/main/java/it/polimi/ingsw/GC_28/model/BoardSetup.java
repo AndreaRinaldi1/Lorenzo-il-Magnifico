@@ -17,24 +17,25 @@ import it.polimi.ingsw.GC_28.cards.Venture;
 import it.polimi.ingsw.GC_28.components.Dice;
 import it.polimi.ingsw.GC_28.components.DiceColor;
 import it.polimi.ingsw.GC_28.components.FamilyMember;
-
-import it.polimi.ingsw.GC_28.model.Game;
 import it.polimi.ingsw.GC_28.model.Player;
+import it.polimi.ingsw.GC_28.view.GameManager;
+import it.polimi.ingsw.GC_28.view.GameView;
 import it.polimi.ingsw.GC_28.boards.Cell;
 import it.polimi.ingsw.GC_28.boards.GameBoard;
 import it.polimi.ingsw.GC_28.cards.Building;
 import it.polimi.ingsw.GC_28.cards.Character;
 
 public class BoardSetup {
-	
-	private Game game ;
+	private GameManager gameManager;
+	private GameView game ;
 	private GameBoard gameBoard;
 	private GameModel gameModel;
 	private static Deck deck = new Deck(); //once initialize it will not change 
 	
-	public BoardSetup(Game g){
-		this.game = g;
-		this.gameModel = g.getGameModel();
+	public BoardSetup(GameManager g){
+		this.gameManager = g;
+		this.game = g.getView();
+		this.gameModel = game.getGameModel();
 		gameBoard = gameModel.getGameBoard();
 		
 	}
@@ -75,8 +76,8 @@ public class BoardSetup {
 				int randomInt = new Random().nextInt(deck.getTerritories().size());
 				/*the condition check if the era of the randomly selected card is correct and
 				 *  if the card has already been drafted, otherwise the choice of the card is repeated*/
-				if(deck.getTerritories().get(randomInt).getEra() == game.getCurrentEra() && game.getCurrentPeriod() == 1
-						|| deck.getTerritories().get(randomInt).getEra() == (game.getCurrentEra()+1) && game.getCurrentPeriod() == 2){
+				if(deck.getTerritories().get(randomInt).getEra() == gameManager.getCurrentEra() && gameManager.getCurrentPeriod() == 1
+						|| deck.getTerritories().get(randomInt).getEra() == (gameManager.getCurrentEra()+1) && gameManager.getCurrentPeriod() == 2){
 					Territory t = deck.getTerritories().get(randomInt);
 					cell[i].setCard(t);
 					cell[i].setFree(true);
@@ -96,8 +97,8 @@ public class BoardSetup {
 				int randomInt = ThreadLocalRandom.current().nextInt(0, deck.getBuildings().size());
 				/*the condition check if the era of the randomly selected card is correct and
 				 *  if the card has already been drafted, otherwise the choice of the card is repeated*/
-				if(deck.getBuildings().get(randomInt).getEra() == game.getCurrentEra() && game.getCurrentPeriod() == 1
-						|| deck.getBuildings().get(randomInt).getEra() == (game.getCurrentEra()+1) && game.getCurrentPeriod() == 2){ 
+				if(deck.getBuildings().get(randomInt).getEra() == gameManager.getCurrentEra() && gameManager.getCurrentPeriod() == 1
+						|| deck.getBuildings().get(randomInt).getEra() == (gameManager.getCurrentEra()+1) && gameManager.getCurrentPeriod() == 2){ 
 					Building b = deck.getBuildings().get(randomInt);
 					cell[i].setCard(b);
 					cell[i].setFree(true);
@@ -117,8 +118,8 @@ public class BoardSetup {
 				int randomInt = ThreadLocalRandom.current().nextInt(0, deck.getCharacters().size());
 				/*the condition check if the era of the randomly selected card is correct and
 				 *  if the card has already been drafted, otherwise the choice of the card is repeated*/
-				if(deck.getCharacters().get(randomInt).getEra() == game.getCurrentEra() && game.getCurrentPeriod() == 1
-						|| deck.getCharacters().get(randomInt).getEra() == (game.getCurrentEra()+1) && game.getCurrentPeriod() == 2){ 
+				if(deck.getCharacters().get(randomInt).getEra() == gameManager.getCurrentEra() && gameManager.getCurrentPeriod() == 1
+						|| deck.getCharacters().get(randomInt).getEra() == (gameManager.getCurrentEra()+1) && gameManager.getCurrentPeriod() == 2){ 
 					Character c = deck.getCharacters().get(randomInt);
 					cell[i].setCard(c);
 					cell[i].setFree(true);
@@ -138,8 +139,8 @@ public class BoardSetup {
 				int randomInt = ThreadLocalRandom.current().nextInt(0, deck.getVentures().size());
 				/*the condition check if the era of the randomly selected card is correct and
 				 *  if the card has already been drafted, otherwise the choice of the card is repeated*/
-				if(deck.getVentures().get(randomInt).getEra() == game.getCurrentEra() && game.getCurrentPeriod() == 1
-						|| deck.getVentures().get(randomInt).getEra() == (game.getCurrentEra()+1) && game.getCurrentPeriod() == 2){ 
+				if(deck.getVentures().get(randomInt).getEra() == gameManager.getCurrentEra() && gameManager.getCurrentPeriod() == 1
+						|| deck.getVentures().get(randomInt).getEra() == (gameManager.getCurrentEra()+1) && gameManager.getCurrentPeriod() == 2){ 
 					Venture v = deck.getVentures().get(randomInt);
 					cell[i].setCard(v);
 					cell[i].setFree(true);
@@ -258,12 +259,13 @@ public class BoardSetup {
 	}
 	
 	private void deActiveLeaderCard(){
-		List<Player> players = new ArrayList<>();
-		players = gameModel.getPlayers();
-		for(Player p : players){
+		for(Player p : gameModel.getPlayers()){
 			for(LeaderCard lc : p.getLeaderCards()){
 				if(!(lc.getPermanent()) && lc.getPlayed()){
 					lc.setActive(false);
+				}
+				else if(lc.getPermanent() && lc.getPlayed() && !lc.getName().equalsIgnoreCase("Sisto IV") && lc.getName().equalsIgnoreCase("Santa Rita")){
+					lc.getEffect().apply(p, game);
 				}
 			}
 		}

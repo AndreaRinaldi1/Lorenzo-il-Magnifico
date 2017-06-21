@@ -18,11 +18,11 @@ import it.polimi.ingsw.GC_28.components.FamilyMember;
 import it.polimi.ingsw.GC_28.components.Resource;
 import it.polimi.ingsw.GC_28.components.ResourceType;
 import it.polimi.ingsw.GC_28.effects.PrivilegesEffect;
-import it.polimi.ingsw.GC_28.model.Game;
 import it.polimi.ingsw.GC_28.model.GameModel;
 import it.polimi.ingsw.GC_28.model.Player;
 import it.polimi.ingsw.GC_28.model.PlayerColor;
 import it.polimi.ingsw.GC_28.spaces.PrivilegesSpace;
+import it.polimi.ingsw.GC_28.view.GameView;
 
 public class PrivilegesSpaceTest {
 	private PrivilegesSpace ps;
@@ -37,7 +37,7 @@ public class PrivilegesSpaceTest {
 	private	List<Player> players = new ArrayList<>();
 	
 	private GameBoard gameBoard;
-	private Game game; 
+	private GameView game; 
 	private GameModel gameModel;
 	
 	@Before
@@ -59,7 +59,7 @@ public class PrivilegesSpaceTest {
 		players.add(player);
 		gameBoard = new GameBoard();
 		gameModel = new GameModel(gameBoard, players);
-		game = new Game(gameModel); 
+		game = new GameView(gameModel); 
 		
 		ps.setBonus(pe);
 	}

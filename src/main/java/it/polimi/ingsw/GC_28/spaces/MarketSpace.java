@@ -3,7 +3,7 @@ import it.polimi.ingsw.GC_28.cards.*;
 import it.polimi.ingsw.GC_28.components.FamilyMember;
 import it.polimi.ingsw.GC_28.components.Resource;
 import it.polimi.ingsw.GC_28.effects.ResourceEffect;
-import it.polimi.ingsw.GC_28.model.Game;
+import it.polimi.ingsw.GC_28.view.GameView;
 
 
 public class MarketSpace extends Space{
@@ -22,7 +22,7 @@ public class MarketSpace extends Space{
 	}
 
 	@Override
-	public void applyBonus(Game game, FamilyMember familyMember){
+	public void applyBonus(GameView game, FamilyMember familyMember){
 		bonus.apply(familyMember, game);
 	}
 }

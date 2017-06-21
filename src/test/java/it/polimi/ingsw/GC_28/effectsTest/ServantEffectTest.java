@@ -14,10 +14,10 @@ import it.polimi.ingsw.GC_28.boards.PlayerBoard;
 import it.polimi.ingsw.GC_28.components.DiceColor;
 import it.polimi.ingsw.GC_28.components.FamilyMember;
 import it.polimi.ingsw.GC_28.effects.ServantEffect;
-import it.polimi.ingsw.GC_28.model.Game;
 import it.polimi.ingsw.GC_28.model.GameModel;
 import it.polimi.ingsw.GC_28.model.Player;
 import it.polimi.ingsw.GC_28.model.PlayerColor;
+import it.polimi.ingsw.GC_28.view.GameView;
 
 public class ServantEffectTest {
 
@@ -31,7 +31,7 @@ public class ServantEffectTest {
 	private GameBoard gb;
 	private PlayerBoard pb;
 	private List<Player> players = new ArrayList<>();
-	private Game game;
+	private GameView game;
 	
 	@Before
 	public void servantEffect(){
@@ -44,7 +44,7 @@ public class ServantEffectTest {
 		player.setFamilyMembers(familyMembers);
 		players.add(player);
 		gameModel = new GameModel(gb, players);
-		game = new Game(gameModel);
+		game = new GameView(gameModel);
 		
 		servantEffect = new ServantEffect();
 		servantEffect.setIncrement(increment);

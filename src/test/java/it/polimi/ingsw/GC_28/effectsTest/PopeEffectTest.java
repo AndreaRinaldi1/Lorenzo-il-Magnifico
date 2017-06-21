@@ -20,10 +20,10 @@ import it.polimi.ingsw.GC_28.components.FamilyMember;
 import it.polimi.ingsw.GC_28.components.Resource;
 import it.polimi.ingsw.GC_28.components.ResourceType;
 import it.polimi.ingsw.GC_28.effects.PopeEffect;
-import it.polimi.ingsw.GC_28.model.Game;
 import it.polimi.ingsw.GC_28.model.GameModel;
 import it.polimi.ingsw.GC_28.model.Player;
 import it.polimi.ingsw.GC_28.model.PlayerColor;
+import it.polimi.ingsw.GC_28.view.GameView;
 
 public class PopeEffectTest {
 
@@ -41,7 +41,7 @@ public class PopeEffectTest {
 	private Resource bonus;
 	EnumMap<ResourceType, Integer> resource;
 	
-	private class TestGame extends Game{
+	private class TestGame extends GameView{
 		public TestGame(GameModel gameModel) {
 			super(gameModel);
 		}

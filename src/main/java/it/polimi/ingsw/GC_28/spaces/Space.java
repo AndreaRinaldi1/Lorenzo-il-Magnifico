@@ -5,7 +5,7 @@ import java.util.ArrayList;
 
 
 import it.polimi.ingsw.GC_28.components.FamilyMember;
-import it.polimi.ingsw.GC_28.model.Game;
+import it.polimi.ingsw.GC_28.view.GameView;
 
 public abstract class Space {
 	private boolean free;
@@ -47,5 +47,5 @@ public abstract class Space {
 	} 
 	
 	
-	public void applyBonus(Game game, FamilyMember familyMember){}
+	public void applyBonus(GameView game, FamilyMember familyMember){}
 }

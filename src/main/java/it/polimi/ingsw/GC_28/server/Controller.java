@@ -2,7 +2,7 @@ package it.polimi.ingsw.GC_28.server;
 
 
 import it.polimi.ingsw.GC_28.core.*;
-import it.polimi.ingsw.GC_28.model.Game;
+import it.polimi.ingsw.GC_28.view.GameView;
 
 public class Controller implements Observer<Action> {
 

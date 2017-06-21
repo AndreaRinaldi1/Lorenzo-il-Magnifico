@@ -41,10 +41,11 @@ import it.polimi.ingsw.GC_28.effects.ResourceEffect;
 import it.polimi.ingsw.GC_28.effects.TakeCardEffect;
 import it.polimi.ingsw.GC_28.model.BoardSetup;
 import it.polimi.ingsw.GC_28.model.BoardsInitializer;
-import it.polimi.ingsw.GC_28.model.Game;
 import it.polimi.ingsw.GC_28.model.GameModel;
 import it.polimi.ingsw.GC_28.model.Player;
 import it.polimi.ingsw.GC_28.model.PlayerColor;
+import it.polimi.ingsw.GC_28.view.GameManager;
+import it.polimi.ingsw.GC_28.view.GameView;
 
 public class TakeCardActionApplyTest {
 
@@ -95,7 +96,7 @@ public class TakeCardActionApplyTest {
 	private ExcommunicationTile excommunicationTile = new ExcommunicationTile();
 	private ArrayList<ExcommunicationTile> excommunicationTiles = new ArrayList<>();
 	
-	private class TestGame extends Game{
+	private class TestGame extends GameView{
 		public TestGame(GameModel gameModel) {
 			super(gameModel);
 		}
@@ -190,8 +191,10 @@ public class TakeCardActionApplyTest {
 		player.setLeaderCards(leaderCards);
 		
 		
-		Game game = bi.initializeBoard(players);
-		BoardSetup bs = new BoardSetup(game);
+		GameView game = bi.initializeBoard(players);
+		GameManager gameM = new GameManager();
+		gameM.setView(game);
+		BoardSetup bs = new BoardSetup(gameM);
 		bs.firstSetUpCards();
 			
 		for(ResourceType resType : ResourceType.values()){
@@ -265,8 +268,10 @@ public class TakeCardActionApplyTest {
 		player.setLeaderCards(leaderCards);
 		
 		
-		Game game = bi.initializeBoard(players);
-		BoardSetup bs = new BoardSetup(game);
+		GameView game = bi.initializeBoard(players);
+		GameManager gameM = new GameManager();
+		gameM.setView(game);
+		BoardSetup bs = new BoardSetup(gameM);
 		bs.firstSetUpCards();
 			
 		for(ResourceType resType : ResourceType.values()){
@@ -341,8 +346,10 @@ public class TakeCardActionApplyTest {
 		player.setLeaderCards(leaderCards);
 		
 		
-		Game game = bi.initializeBoard(players);
-		BoardSetup bs = new BoardSetup(game);
+		GameView game = bi.initializeBoard(players);
+		GameManager gameM = new GameManager();
+		gameM.setView(game);
+		BoardSetup bs = new BoardSetup(gameM);
 		bs.firstSetUpCards();
 			
 		for(ResourceType resType : ResourceType.values()){
@@ -372,10 +379,15 @@ public class TakeCardActionApplyTest {
 		throughEffect.setDiscountPresence(true);
 		throughEffect.setDiscount(discount );
 		takeCard.setThroughEffect(throughEffect );
+<<<<<<< HEAD
 		if(takeCard.isApplicable()){
 			takeCard.apply();
 		}
 		
+=======
+		takeCard.isApplicable();
+		takeCard.apply();
+>>>>>>> 880ac9d6da364de38738ab112c3e1e3639b3fde7
 	}*/
 	
 	//take Character Card
@@ -421,8 +433,10 @@ public class TakeCardActionApplyTest {
 		player.setLeaderCards(leaderCards);
 		
 		
-		Game game = bi.initializeBoard(players);
-		BoardSetup bs = new BoardSetup(game);
+		GameView game = bi.initializeBoard(players);
+		GameManager gameM = new GameManager();
+		gameM.setView(game);
+		BoardSetup bs = new BoardSetup(gameM);
 		bs.firstSetUpCards();
 			
 		for(ResourceType resType : ResourceType.values()){
@@ -495,8 +509,10 @@ public class TakeCardActionApplyTest {
 		player.setLeaderCards(leaderCards);
 		
 		
-		Game game = bi.initializeBoard(players);
-		BoardSetup bs = new BoardSetup(game);
+		GameView game = bi.initializeBoard(players);
+		GameManager gameM = new GameManager();
+		gameM.setView(game);
+		BoardSetup bs = new BoardSetup(gameM);
 		bs.firstSetUpCards();
 			
 		for(ResourceType resType : ResourceType.values()){

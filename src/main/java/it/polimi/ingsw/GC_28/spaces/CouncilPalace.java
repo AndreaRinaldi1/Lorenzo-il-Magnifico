@@ -3,7 +3,7 @@ package it.polimi.ingsw.GC_28.spaces;
 import it.polimi.ingsw.GC_28.components.FamilyMember;
 import it.polimi.ingsw.GC_28.effects.PrivilegesEffect;
 import it.polimi.ingsw.GC_28.effects.ResourceEffect;
-import it.polimi.ingsw.GC_28.model.Game;
+import it.polimi.ingsw.GC_28.view.GameView;
 
 import java.util.List;
 
@@ -52,7 +52,7 @@ public class CouncilPalace extends Space{
 	
 	
 	@Override
-	public void applyBonus(Game game, FamilyMember familyMember){
+	public void applyBonus(GameView game, FamilyMember familyMember){
 		bonus1.apply(familyMember, game);
 		bonus2.apply(familyMember, game);
 	}

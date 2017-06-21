@@ -42,9 +42,10 @@ import it.polimi.ingsw.GC_28.cards.Deck;
 import it.polimi.ingsw.GC_28.client.SocketClient;
 import it.polimi.ingsw.GC_28.effects.DiscountEffect;
 import it.polimi.ingsw.GC_28.effects.TakeCardEffect;
+
 import it.polimi.ingsw.GC_28.model.BoardSetup;
 import it.polimi.ingsw.GC_28.model.BoardsInitializer;
-import it.polimi.ingsw.GC_28.model.Game;
+
 import it.polimi.ingsw.GC_28.model.Player;
 import it.polimi.ingsw.GC_28.model.PlayerColor;
 import it.polimi.ingsw.GC_28.server.ClientHandler;
@@ -52,12 +53,17 @@ import it.polimi.ingsw.GC_28.server.Controller;
 import it.polimi.ingsw.GC_28.server.SocketClientHandler;
 
 import it.polimi.ingsw.GC_28.boards.GameBoard;
-import it.polimi.ingsw.GC_28.boards.PlayerBoard;
+
 import it.polimi.ingsw.GC_28.components.DiceColor;
 import it.polimi.ingsw.GC_28.components.FamilyMember;
 
 import it.polimi.ingsw.GC_28.model.GameModel;
 
+
+
+
+import it.polimi.ingsw.GC_28.view.GameManager;
+import it.polimi.ingsw.GC_28.view.GameView;
 
 
 public class TakeCardEffectTest {
@@ -71,10 +77,9 @@ public class TakeCardEffectTest {
 	private FamilyMember familyMember;
 	private GameModel gameModel;
 	private GameBoard gb;
-	private PlayerBoard pb;
 	private List<Player> players = new ArrayList<>();
 	
-	private class TestGame extends Game{
+	private class TestGame extends GameView{
 		public TestGame(GameModel gameModel) {
 			super(gameModel);
 		}
@@ -139,9 +144,12 @@ public class TakeCardEffectTest {
 						for(int i = 0; i < bonusList.size(); i++){
 							tileInstance.add(bonusList.get(i));
 						}
-						Game game = bi.initializeBoard(players);
+						GameManager gm = new GameManager();
+						GameView game = bi.initializeBoard(players);
+						gm.setView(game);
 						game.setHandlers(handlers);
-						BoardSetup bs = new BoardSetup(game);
+						
+						BoardSetup bs = new BoardSetup(gm);
 						bs.firstSetUpCards();
 						System.out.println(player.getFamilyMembers()[0].toString());
 						List<Player> reversePlayer = new ArrayList<>();
@@ -163,7 +171,7 @@ public class TakeCardEffectTest {
 						System.out.println(d.getTerritories().get(1));
 						game.registerObserver(new Controller());
 						game.getGameModel().registerObserver(game);
-						Thread prova = new Thread(game);
+						Thread prova = new Thread(gm);
 						prova.start();
 						//s.awaitTermination(3, TimeUnit.SECONDS);
 					}catch(IOException e){

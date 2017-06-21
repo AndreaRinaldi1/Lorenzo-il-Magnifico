@@ -48,6 +48,7 @@ import it.polimi.ingsw.GC_28.effects.NoFinalBonusEffect;
 import it.polimi.ingsw.GC_28.effects.OtherEffect;
 import it.polimi.ingsw.GC_28.model.Player;
 import it.polimi.ingsw.GC_28.spaces.EverySpace;
+import it.polimi.ingsw.GC_28.view.GameView;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -68,7 +69,7 @@ public class BoardsInitializer {
 	//private Game g = new Game();
 	private GameModel gameModel;
 	
-	public Game initializeBoard(List<Player> players)throws FileNotFoundException,IOException{
+	public GameView initializeBoard(List<Player> players)throws FileNotFoundException,IOException{
 		//try {
 			this.players  = players;
 			initDices();
@@ -88,7 +89,7 @@ public class BoardsInitializer {
 		/*} catch (FileNotFoundException e) {
 			Logger.getAnonymousLogger().log(Level.SEVERE, "cannot start initialize" + e);
 		}*/
-		return new Game(gameModel);
+		return new GameView(gameModel);
 	}
 	
 	private static Cell[] prepareCell(CardType ct) throws FileNotFoundException{ //LinkedList allow the order of elements

@@ -20,10 +20,10 @@ import it.polimi.ingsw.GC_28.cards.Venture;
 import it.polimi.ingsw.GC_28.cards.Character;
 
 import it.polimi.ingsw.GC_28.components.*;
-import it.polimi.ingsw.GC_28.model.Game;
 import it.polimi.ingsw.GC_28.model.GameModel;
 import it.polimi.ingsw.GC_28.model.Player;
 import it.polimi.ingsw.GC_28.model.PlayerColor;
+import it.polimi.ingsw.GC_28.view.GameView;
 
 
 public class Prova {

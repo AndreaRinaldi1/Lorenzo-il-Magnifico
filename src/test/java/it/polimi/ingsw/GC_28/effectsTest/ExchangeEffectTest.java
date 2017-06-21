@@ -20,11 +20,11 @@ import it.polimi.ingsw.GC_28.components.Resource;
 import it.polimi.ingsw.GC_28.components.ResourceType;
 import it.polimi.ingsw.GC_28.effects.ExchangeEffect;
 import it.polimi.ingsw.GC_28.effects.PrivilegesEffect;
-import it.polimi.ingsw.GC_28.model.Game;
 import it.polimi.ingsw.GC_28.model.GameModel;
 import it.polimi.ingsw.GC_28.model.Player;
 import it.polimi.ingsw.GC_28.model.PlayerColor;
 import it.polimi.ingsw.GC_28.spaces.PrivilegesSpace;
+import it.polimi.ingsw.GC_28.view.GameView;
 
 public class ExchangeEffectTest {
 	private ExchangeEffect exchange;
@@ -49,7 +49,7 @@ public class ExchangeEffectTest {
 
 
 	private FamilyMember fm;
-	private Game g;
+	private GameView g;
 	private Player p;
 	
 	@Before
@@ -81,7 +81,7 @@ public class ExchangeEffectTest {
 		GameBoard gb = new GameBoard();
 		GameModel gm = new GameModel(gb,players);
 		
-		g = new Game(gm);
+		g = new GameView(gm);
 	
 		g.setCurrentPlayer(p);
 	}

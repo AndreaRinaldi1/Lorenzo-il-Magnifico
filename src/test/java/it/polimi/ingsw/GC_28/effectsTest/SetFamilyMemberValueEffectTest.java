@@ -18,10 +18,10 @@ import it.polimi.ingsw.GC_28.components.Resource;
 import it.polimi.ingsw.GC_28.components.ResourceType;
 import it.polimi.ingsw.GC_28.effects.EffectType;
 import it.polimi.ingsw.GC_28.effects.SetFamilyMemberValueEffect;
-import it.polimi.ingsw.GC_28.model.Game;
 import it.polimi.ingsw.GC_28.model.GameModel;
 import it.polimi.ingsw.GC_28.model.Player;
 import it.polimi.ingsw.GC_28.model.PlayerColor;
+import it.polimi.ingsw.GC_28.view.GameView;
 
 public class SetFamilyMemberValueEffectTest {
 
@@ -32,7 +32,7 @@ public class SetFamilyMemberValueEffectTest {
 	private FamilyMember familyMember;
 	private FamilyMember familyMember1;
 	private FamilyMember familyMember2;
-	private Game game;
+	private GameView game;
 	private TestGame testGame;
 	private Player player;
 	private Player player1;
@@ -46,7 +46,7 @@ public class SetFamilyMemberValueEffectTest {
 	private boolean played = true;
 	private String name = "Federico da Montefeltro";
 	
-	private class TestGame extends Game{
+	private class TestGame extends GameView{
 		public TestGame(GameModel gameModel) {
 			super(gameModel);
 		}
@@ -72,7 +72,7 @@ public class SetFamilyMemberValueEffectTest {
 		players.add(player1);
 		gameBoard = new GameBoard();
 		gameModel = new GameModel(gameBoard, players);
-		game = new Game(gameModel);
+		game = new GameView(gameModel);
 		testGame = new TestGame(gameModel);
 		
 		//Fede da Monfe

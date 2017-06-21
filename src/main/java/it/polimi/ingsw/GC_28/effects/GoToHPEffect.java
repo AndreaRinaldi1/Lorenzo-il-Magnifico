@@ -4,9 +4,9 @@ import it.polimi.ingsw.GC_28.boards.GameBoard;
 import it.polimi.ingsw.GC_28.boards.PlayerBoard;
 import it.polimi.ingsw.GC_28.components.FamilyMember;
 import it.polimi.ingsw.GC_28.components.ResourceType;
-import it.polimi.ingsw.GC_28.model.Game;
 import it.polimi.ingsw.GC_28.model.Player;
 import it.polimi.ingsw.GC_28.spaces.ProdHarvType;
+import it.polimi.ingsw.GC_28.view.GameView;
 
 public class GoToHPEffect extends Effect{
 	private int actionValue;
@@ -36,13 +36,13 @@ public class GoToHPEffect extends Effect{
 	}
 
 	@Override
-	public void apply(FamilyMember familyMember, Game game){
+	public void apply(FamilyMember familyMember, GameView game){
 		System.out.println("apply di GoToHPEffect");
 		game.goToSpace(this);
 	}
 	
 	@Override
-	public void apply(Player player, Game game) {
+	public void apply(Player player, GameView game) {
 		System.out.println("Leader Effect");
 		game.goToSpace(this);
 	}

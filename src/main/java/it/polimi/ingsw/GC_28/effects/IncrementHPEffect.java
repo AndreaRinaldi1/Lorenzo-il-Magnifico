@@ -1,7 +1,7 @@
 package it.polimi.ingsw.GC_28.effects;
 
 import it.polimi.ingsw.GC_28.components.FamilyMember;
-import it.polimi.ingsw.GC_28.model.Game;
+import it.polimi.ingsw.GC_28.view.GameView;
 
 public class IncrementHPEffect extends Effect{
 
@@ -30,7 +30,7 @@ public class IncrementHPEffect extends Effect{
 	}
 
 	@Override
-	public void apply(FamilyMember familyMember, Game game) {
+	public void apply(FamilyMember familyMember, GameView game) {
 		System.out.println("apply di IncrementProductionEffect");
 		
 		familyMember.modifyValue(increment);

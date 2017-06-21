@@ -25,7 +25,7 @@ import it.polimi.ingsw.GC_28.effects.Effect;
 import it.polimi.ingsw.GC_28.effects.HarvestEffect;
 import it.polimi.ingsw.GC_28.effects.ProductionEffect;
 import it.polimi.ingsw.GC_28.effects.ResourceEffect;
-import it.polimi.ingsw.GC_28.model.Game;
+import it.polimi.ingsw.GC_28.view.GameView;
 
 public class DeckTest {
 	

@@ -4,8 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import it.polimi.ingsw.GC_28.cards.LeaderCard;
-import it.polimi.ingsw.GC_28.model.Game;
 import it.polimi.ingsw.GC_28.model.Player;
+import it.polimi.ingsw.GC_28.view.GameView;
 
 public class CopyEffect extends Effect {
 	
@@ -28,7 +28,7 @@ public class CopyEffect extends Effect {
 	}
 	
 	@Override
-	public void apply(Player player, Game game){
+	public void apply(Player player, GameView game){
 		if(!copied){
 			List<LeaderCard> leader = new ArrayList<>();
 			game.getHandlers().get(player).send("Which ability do you want to copy?[enter the name]");

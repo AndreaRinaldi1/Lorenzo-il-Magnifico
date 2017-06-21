@@ -1,8 +1,8 @@
 package it.polimi.ingsw.GC_28.effects;
 
 import it.polimi.ingsw.GC_28.components.Resource;
-import it.polimi.ingsw.GC_28.model.Game;
 import it.polimi.ingsw.GC_28.model.Player;
+import it.polimi.ingsw.GC_28.view.GameView;
 
 public class PopeEffect extends Effect{
 	
@@ -18,7 +18,8 @@ public class PopeEffect extends Effect{
 	}
 	
 	@Override
-	public void apply(Player player, Game game) {
+	public void apply(Player player, GameView game) {
+		System.out.println("Pope Effect");
 		player.addResource(bonus);
 	}
 }

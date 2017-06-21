@@ -14,10 +14,10 @@ import it.polimi.ingsw.GC_28.components.DiceColor;
 import it.polimi.ingsw.GC_28.components.FamilyMember;
 import it.polimi.ingsw.GC_28.effects.*;
 import it.polimi.ingsw.GC_28.effects.OtherEffect;
-import it.polimi.ingsw.GC_28.model.Game;
 import it.polimi.ingsw.GC_28.model.GameModel;
 import it.polimi.ingsw.GC_28.model.Player;
 import it.polimi.ingsw.GC_28.model.PlayerColor;
+import it.polimi.ingsw.GC_28.view.GameView;
 
 public class OtherEffectTest {
 	private OtherEffect other;
@@ -27,7 +27,7 @@ public class OtherEffectTest {
 	private List<Player> l = new ArrayList<>();
 	private GameModel gameModel = new GameModel(new GameBoard(),l );
 	private FamilyMember fm = new FamilyMember(p, false, DiceColor.ORANGE);
-	private Game g = new Game(gameModel);
+	private GameView g = new GameView(gameModel);
 	@Before
 	public void otherEffectTest(){
 		other = new OtherEffect();
