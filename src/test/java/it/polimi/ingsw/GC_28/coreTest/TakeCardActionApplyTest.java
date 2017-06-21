@@ -379,6 +379,10 @@ public class TakeCardActionApplyTest {
 		takeCard.setThroughEffect(throughEffect );
 		takeCard.isApplicable();
 		takeCard.apply();
+<<<<<<< HEAD
+	
+=======
+>>>>>>> refs/remotes/origin/master
 	
 	}*/
 	
