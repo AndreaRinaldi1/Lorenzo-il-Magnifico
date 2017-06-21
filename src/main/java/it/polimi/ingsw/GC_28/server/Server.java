@@ -45,7 +45,7 @@ public class Server extends UnicastRemoteObject implements ServerInt{
 
 	private static final long serialVersionUID = 1L;
 	private final int MIN_SIZE = 2;
-	private final int MAX_SIZE = 1;
+	private final int MAX_SIZE = 4;
 	private final int PORT = 1337;
 	transient private ServerSocket serverSocket;
 	transient List<PlayerColor> usedColors = new ArrayList<>();

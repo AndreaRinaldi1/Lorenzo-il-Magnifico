@@ -95,7 +95,11 @@ public class ServerTest {
 					String socketLine = b.readLine();
 					System.out.println(socketLine);
 					p = new PrintStream(sock.getOutputStream());
-					p.println("fanculo");
+					p.println("rmi");
+					p.flush();
+					String faw = b.readLine();
+					System.out.println(faw);
+					p.println("Bart");
 					p.flush();
 					String fawd = b.readLine();
 					System.out.println(fawd);
@@ -134,7 +138,11 @@ public class ServerTest {
 					String socketLine = b.readLine();
 					System.out.println(socketLine);
 					p = new PrintStream(sock.getOutputStream());
-					p.println("fanculo");
+					p.println("soc");
+					p.flush();
+					String faw = b.readLine();
+					System.out.println(faw);
+					p.println("Lisa");
 					p.flush();
 					String fawd = b.readLine();
 					System.out.println(fawd);
