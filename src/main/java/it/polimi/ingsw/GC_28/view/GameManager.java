@@ -53,7 +53,7 @@ public class GameManager implements Runnable{
 						
 						// TIMER CHE "FUNZIONA" SOLO SU PRIMA DOMANDA 
 						boolean timeEnded = false;
-						long time = System.currentTimeMillis() + 16000;
+						long time = System.currentTimeMillis() + 300000;
 						Thread t = new Thread(){
 							public void run(){
 								try {

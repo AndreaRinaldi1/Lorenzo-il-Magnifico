@@ -259,12 +259,13 @@ public class BoardSetup {
 	}
 	
 	private void deActiveLeaderCard(){
-		List<Player> players = new ArrayList<>();
-		players = gameModel.getPlayers();
-		for(Player p : players){
+		for(Player p : gameModel.getPlayers()){
 			for(LeaderCard lc : p.getLeaderCards()){
 				if(!(lc.getPermanent()) && lc.getPlayed()){
 					lc.setActive(false);
+				}
+				else if(lc.getPermanent() && lc.getPlayed() && !lc.getName().equalsIgnoreCase("Sisto IV") && lc.getName().equalsIgnoreCase("Santa Rita")){
+					lc.getEffect().apply(p, game);
 				}
 			}
 		}
