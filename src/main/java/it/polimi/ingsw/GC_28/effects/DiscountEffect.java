@@ -4,8 +4,8 @@ import it.polimi.ingsw.GC_28.boards.GameBoard;
 import it.polimi.ingsw.GC_28.cards.*;
 import it.polimi.ingsw.GC_28.components.FamilyMember;
 import it.polimi.ingsw.GC_28.components.Resource;
-import it.polimi.ingsw.GC_28.model.Game;
 import it.polimi.ingsw.GC_28.model.Player;
+import it.polimi.ingsw.GC_28.view.GameView;
 
 public class DiscountEffect extends Effect{
 	private boolean alternativeDiscountPresence;
@@ -56,12 +56,12 @@ public class DiscountEffect extends Effect{
 	}
 
 	@Override
-	public void apply(FamilyMember familyMember, Game game){
+	public void apply(FamilyMember familyMember, GameView game){
 		apply(familyMember.getPlayer(), game);
 	}
 
 	@Override
-	public void apply(Player player, Game game){
+	public void apply(Player player, GameView game){
 		System.out.println("apply di DiscountEffect");
 		if(alternativeDiscountPresence == true){
 			player.addResource(game.askAlternative(discount, alternativeDiscount, "discount")); 

@@ -4,7 +4,7 @@ import it.polimi.ingsw.GC_28.boards.GameBoard;
 import it.polimi.ingsw.GC_28.boards.PlayerBoard;
 import it.polimi.ingsw.GC_28.cards.CardType;
 import it.polimi.ingsw.GC_28.components.FamilyMember;
-import it.polimi.ingsw.GC_28.model.Game;
+import it.polimi.ingsw.GC_28.view.GameView;
 
 public class TakeCardEffect extends Effect{
 	private int actionValue;
@@ -50,7 +50,7 @@ public class TakeCardEffect extends Effect{
 	}
 
 	@Override
-	public void apply(FamilyMember familyMember, Game game) {
+	public void apply(FamilyMember familyMember, GameView game) {
 		System.out.println("apply di TakeCardEffect");
 		//game.askCard(this);
 		boolean ok = false;

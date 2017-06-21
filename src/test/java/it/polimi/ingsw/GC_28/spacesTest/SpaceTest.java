@@ -12,11 +12,11 @@ import org.junit.Test;
 import it.polimi.ingsw.GC_28.boards.GameBoard;
 import it.polimi.ingsw.GC_28.components.DiceColor;
 import it.polimi.ingsw.GC_28.components.FamilyMember;
-import it.polimi.ingsw.GC_28.model.Game;
 import it.polimi.ingsw.GC_28.model.GameModel;
 import it.polimi.ingsw.GC_28.model.Player;
 import it.polimi.ingsw.GC_28.model.PlayerColor;
 import it.polimi.ingsw.GC_28.spaces.Space;
+import it.polimi.ingsw.GC_28.view.GameView;
 
 public class SpaceTest {
 	private boolean free = true;
@@ -32,7 +32,7 @@ public class SpaceTest {
 	private GameModel gameModel;
 	private GameBoard gameBoard; 
 	private List<Player> players = new ArrayList<>();
-	private Game g;
+	private GameView g;
 	
 	@Before
 	public void space(){
@@ -46,7 +46,7 @@ public class SpaceTest {
 		players.add(p1);
 		gameBoard = new GameBoard();
 		gameModel = new GameModel(gameBoard, players);
-		g = new Game(gameModel); 
+		g = new GameView(gameModel); 
 		s.setFree(free);
 		s.addPlayer(fm);
 		players1.add(fm);

@@ -6,8 +6,8 @@ import java.rmi.RemoteException;
 import it.polimi.ingsw.GC_28.boards.GameBoard;
 import it.polimi.ingsw.GC_28.cards.CardType;
 import it.polimi.ingsw.GC_28.components.FamilyMember;
-import it.polimi.ingsw.GC_28.model.Game;
 import it.polimi.ingsw.GC_28.model.Player;
+import it.polimi.ingsw.GC_28.view.GameView;
 
 public abstract class Effect {
 	//private EffectType type;
@@ -17,9 +17,9 @@ public abstract class Effect {
 	
 
 	
-	public void apply(FamilyMember familyMember, Game game){}
+	public void apply(FamilyMember familyMember, GameView game){}
 		//System.out.println("apply di Effect");
-	public void apply(Player player, Game game){}
+	public void apply(Player player, GameView game){}
 	
 	
 	

@@ -32,11 +32,11 @@ import it.polimi.ingsw.GC_28.components.Resource;
 import it.polimi.ingsw.GC_28.components.ResourceType;
 import it.polimi.ingsw.GC_28.effects.DiscountEffect;
 import it.polimi.ingsw.GC_28.effects.TakeCardEffect;
-import it.polimi.ingsw.GC_28.model.Game;
 import it.polimi.ingsw.GC_28.model.GameModel;
 import it.polimi.ingsw.GC_28.model.Player;
 import it.polimi.ingsw.GC_28.model.PlayerColor;
 import it.polimi.ingsw.GC_28.server.ClientHandler;
+import it.polimi.ingsw.GC_28.view.GameView;
 
 public class TakeCardEffectTest {
 	private TakeCardEffect tce;
@@ -52,7 +52,7 @@ public class TakeCardEffectTest {
 	private PlayerBoard pb;
 	private List<Player> players = new ArrayList<>();
 	
-	private class TestGame extends Game{
+	private class TestGame extends GameView{
 		public TestGame(GameModel gameModel) {
 			super(gameModel);
 		}

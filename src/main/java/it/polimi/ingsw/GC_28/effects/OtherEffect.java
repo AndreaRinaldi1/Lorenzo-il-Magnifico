@@ -4,8 +4,8 @@ import it.polimi.ingsw.GC_28.boards.GameBoard;
 import it.polimi.ingsw.GC_28.boards.PlayerBoard;
 import it.polimi.ingsw.GC_28.components.FamilyMember;
 import it.polimi.ingsw.GC_28.components.ResourceType;
-import it.polimi.ingsw.GC_28.model.Game;
 import it.polimi.ingsw.GC_28.model.Player;
+import it.polimi.ingsw.GC_28.view.GameView;
 
 public class OtherEffect extends Effect{
 	public final EffectType type = EffectType.OTHEREFFECT;
@@ -29,14 +29,14 @@ public class OtherEffect extends Effect{
 
 
 	@Override
-	public void apply(FamilyMember familyMember, Game game) {
+	public void apply(FamilyMember familyMember, GameView game) {
 		System.out.println("apply di OtherEffect");
 		//Effettivamente questo effetto non ha molto senso perche quando in action faccio apply (dell'azione) se vedo che tra le carte ho un
 		//NoCellBonus, basta che chiamo isPresence per farlo, e se ritorna true, non prendo le risorse in 5 e 7
 	}
 	
 	@Override
-	public void apply(Player player, Game game) {
+	public void apply(Player player, GameView game) {
 		super.apply(player, game);
 	}
 }

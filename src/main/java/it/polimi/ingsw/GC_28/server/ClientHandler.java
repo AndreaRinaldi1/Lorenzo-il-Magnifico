@@ -9,7 +9,7 @@ import java.util.Scanner;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import it.polimi.ingsw.GC_28.model.Game;
+import it.polimi.ingsw.GC_28.view.GameView;
 
 public interface ClientHandler{
 	public abstract void send(String message) ;

@@ -21,14 +21,14 @@ import it.polimi.ingsw.GC_28.components.FamilyMember;
 import it.polimi.ingsw.GC_28.components.Resource;
 import it.polimi.ingsw.GC_28.components.ResourceType;
 import it.polimi.ingsw.GC_28.effects.NoEffect;
-import it.polimi.ingsw.GC_28.model.Game;
 import it.polimi.ingsw.GC_28.model.GameModel;
 import it.polimi.ingsw.GC_28.model.Player;
 import it.polimi.ingsw.GC_28.model.PlayerColor;
+import it.polimi.ingsw.GC_28.view.GameView;
 
 public class NoEffectTest {
 	private NoEffect ne;
-	private Game g;
+	private GameView g;
 	private FamilyMember fm;
 	private Player player;
 	
@@ -53,7 +53,7 @@ public class NoEffectTest {
 		player.setBoard(pb);
 		players.add(player);
 		gameModel = new GameModel(gb, players);
-		g = new Game(gameModel);
+		g = new GameView(gameModel);
 		g.setCurrentPlayer(player);
 		gb = new GameBoard();
 	}

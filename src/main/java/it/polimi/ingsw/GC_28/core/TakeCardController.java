@@ -14,10 +14,10 @@ import it.polimi.ingsw.GC_28.effects.EffectType;
 import it.polimi.ingsw.GC_28.effects.IncrementCardEffect;
 import it.polimi.ingsw.GC_28.effects.OtherEffect;
 import it.polimi.ingsw.GC_28.effects.TakeCardEffect;
-import it.polimi.ingsw.GC_28.model.Game;
 import it.polimi.ingsw.GC_28.model.GameModel;
 import it.polimi.ingsw.GC_28.model.Player;
 import it.polimi.ingsw.GC_28.server.Message;
+import it.polimi.ingsw.GC_28.view.GameView;
 import it.polimi.ingsw.GC_28.cards.Character;
 import it.polimi.ingsw.GC_28.cards.ExcommunicationTile;
 import it.polimi.ingsw.GC_28.cards.LeaderCard;
@@ -35,7 +35,7 @@ public class TakeCardController {
 		this.gameBoard = gameModel.getGameBoard();
 	}
 	
-	public boolean check(Game game, String name, FamilyMember familyMember, TakeCardEffect throughEffect){
+	public boolean check(GameView game, String name, FamilyMember familyMember, TakeCardEffect throughEffect){
 		/*if(throughEffect.equals(null)){ //non ho effetto 
 			cardType = null;
 		}
@@ -173,7 +173,7 @@ public class TakeCardController {
 	 * @param cardType
 	 * @return true if the player has enough resources to take the card
 	 */
-	private boolean checkResource(Game game, String cardName, FamilyMember familyMember, TakeCardEffect throughEffect){
+	private boolean checkResource(GameView game, String cardName, FamilyMember familyMember, TakeCardEffect throughEffect){
 		System.out.println("checkResource 1");
 		if(cardType.equals(CardType.TERRITORY)){
 			System.out.println("checkResource 2");
@@ -316,7 +316,7 @@ public class TakeCardController {
 
 	}
 	
-	protected void lookForNoCellBonus(Game game, FamilyMember familyMember, boolean check, Resource tmp, String cardName){
+	protected void lookForNoCellBonus(GameView game, FamilyMember familyMember, boolean check, Resource tmp, String cardName){
 		boolean noCellBonus = false;
 		System.out.println("nocell 1");
 		for(Character character : familyMember.getPlayer().getBoard().getCharacters()){
@@ -347,7 +347,7 @@ public class TakeCardController {
 	}
 	
 	
-	protected void lookForTakeCardDiscount(FamilyMember familyMember, boolean check, Resource tmp, Game game, TakeCardEffect throughEffect){
+	protected void lookForTakeCardDiscount(FamilyMember familyMember, boolean check, Resource tmp, GameView game, TakeCardEffect throughEffect){
 		if(!(throughEffect == null)){
 			if(throughEffect.isDiscountPresence()){ //discount di takecardeffect
 				if(throughEffect.getDiscount().getAlternativeDiscountPresence()){
@@ -371,7 +371,7 @@ public class TakeCardController {
 		}
 	}
 	
-	protected void lookForIncrementCardDiscount(FamilyMember familyMember, boolean check, Resource tmp, Game game){
+	protected void lookForIncrementCardDiscount(FamilyMember familyMember, boolean check, Resource tmp, GameView game){
 		for(Character character : familyMember.getPlayer().getBoard().getCharacters()){
 			if(character.getPermanentEffect() instanceof IncrementCardEffect){
 				IncrementCardEffect eff = (IncrementCardEffect) character.getPermanentEffect();
@@ -407,7 +407,7 @@ public class TakeCardController {
 	 * @param familyMember
 	 * @return true if the familyMember has actionvalue >= required cell action value
 	 */
-	private boolean checkActionValue(Game game, String cardName, FamilyMember familyMember){
+	private boolean checkActionValue(GameView game, String cardName, FamilyMember familyMember){
 		IncrementCardEffect eff;
 		int tmp = familyMember.getValue();
 		for(Character character : familyMember.getPlayer().getBoard().getCharacters()){
@@ -437,7 +437,7 @@ public class TakeCardController {
 		return false;
 	}
 	
-	protected void lookForPicoDellaMirandola(FamilyMember familyMember, Resource tmp, Game game){//FIXME
+	protected void lookForPicoDellaMirandola(FamilyMember familyMember, Resource tmp, GameView game){//FIXME
 		for(LeaderCard lc : familyMember.getPlayer().getLeaderCards()){//check if the player has the card and  if it's played and activate 
 			if(lc.getName().equalsIgnoreCase("Pico della Mirandola") && lc.getPlayed() && lc.getActive()){
 				System.out.println("Pico della Mirandola");

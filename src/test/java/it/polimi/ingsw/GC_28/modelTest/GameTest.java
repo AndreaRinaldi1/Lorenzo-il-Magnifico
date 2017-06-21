@@ -32,13 +32,14 @@ import it.polimi.ingsw.GC_28.client.Client;
 import it.polimi.ingsw.GC_28.client.SocketClient;
 import it.polimi.ingsw.GC_28.model.BoardSetup;
 import it.polimi.ingsw.GC_28.model.BoardsInitializer;
-import it.polimi.ingsw.GC_28.model.Game;
 import it.polimi.ingsw.GC_28.model.Player;
 import it.polimi.ingsw.GC_28.model.PlayerColor;
 import it.polimi.ingsw.GC_28.server.ClientHandler;
 import it.polimi.ingsw.GC_28.server.Controller;
 import it.polimi.ingsw.GC_28.server.Server;
 import it.polimi.ingsw.GC_28.server.SocketClientHandler;
+import it.polimi.ingsw.GC_28.view.GameManager;
+import it.polimi.ingsw.GC_28.view.GameView;
 
 public class GameTest {
 	
@@ -76,9 +77,11 @@ public class GameTest {
 						for(int i = 0; i < bonusList.size(); i++){
 							tileInstance.add(bonusList.get(i));
 						}
-						Game game = bi.initializeBoard(players);
+						GameView game = bi.initializeBoard(players);
 						game.setHandlers(handlers);
-						BoardSetup bs = new BoardSetup(game);
+						GameManager gameM = new GameManager();
+						gameM.setView(game);
+						BoardSetup bs = new BoardSetup(gameM);
 						bs.firstSetUpCards();
 						System.out.println(player.getFamilyMembers()[0].toString());
 						List<Player> reversePlayer = new ArrayList<>();
@@ -94,7 +97,7 @@ public class GameTest {
 						
 						game.registerObserver(new Controller());
 						game.getGameModel().registerObserver(game);
-						Thread prova = new Thread(game);
+						Thread prova = new Thread(gameM);
 						prova.start();
 						//s.awaitTermination(3, TimeUnit.SECONDS);
 					}catch(IOException e){
@@ -267,9 +270,11 @@ public class GameTest {
 						for(int i = 0; i < bonusList.size(); i++){
 							tileInstance.add(bonusList.get(i));
 						}
-						Game game = bi.initializeBoard(players);
+						GameView game = bi.initializeBoard(players);
 						game.setHandlers(handlers);
-						BoardSetup bs = new BoardSetup(game);
+						GameManager gameM = new GameManager();
+						gameM.setView(game);
+						BoardSetup bs = new BoardSetup(gameM);
 						bs.firstSetUpCards();
 						System.out.println(player.getFamilyMembers()[0].toString());
 						List<Player> reversePlayer = new ArrayList<>();
@@ -285,7 +290,7 @@ public class GameTest {
 						
 						game.registerObserver(new Controller());
 						game.getGameModel().registerObserver(game);
-						Thread prova = new Thread(game);
+						Thread prova = new Thread(gameM);
 						prova.start();
 						//s.awaitTermination(3, TimeUnit.SECONDS);
 					}catch(IOException e){
@@ -458,9 +463,11 @@ public class GameTest {
 						for(int i = 0; i < bonusList.size(); i++){
 							tileInstance.add(bonusList.get(i));
 						}
-						Game game = bi.initializeBoard(players);
+						GameView game = bi.initializeBoard(players);
 						game.setHandlers(handlers);
-						BoardSetup bs = new BoardSetup(game);
+						GameManager gameM = new GameManager();
+						gameM.setView(game);
+						BoardSetup bs = new BoardSetup(gameM);
 						bs.firstSetUpCards();
 						System.out.println(player.getFamilyMembers()[0].toString());
 						List<Player> reversePlayer = new ArrayList<>();
@@ -476,7 +483,7 @@ public class GameTest {
 						game.getGameModel().getGameBoard().getMixedSpace().setFree(true);
 						game.registerObserver(new Controller());
 						game.getGameModel().registerObserver(game);
-						Thread prova = new Thread(game);
+						Thread prova = new Thread(gameM);
 						prova.start();
 						//s.awaitTermination(3, TimeUnit.SECONDS);
 					}catch(IOException e){
@@ -649,9 +656,11 @@ public class GameTest {
 						for(int i = 0; i < bonusList.size(); i++){
 							tileInstance.add(bonusList.get(i));
 						}
-						Game game = bi.initializeBoard(players);
+						GameView game = bi.initializeBoard(players);
 						game.setHandlers(handlers);
-						BoardSetup bs = new BoardSetup(game);
+						GameManager gameM = new GameManager();
+						gameM.setView(game);
+						BoardSetup bs = new BoardSetup(gameM);
 						bs.firstSetUpCards();
 						System.out.println(player.getFamilyMembers()[0].toString());
 						List<Player> reversePlayer = new ArrayList<>();
@@ -667,7 +676,7 @@ public class GameTest {
 						game.getGameModel().getGameBoard().getPrivilegesSpace().setFree(true);
 						game.registerObserver(new Controller());
 						game.getGameModel().registerObserver(game);
-						Thread prova = new Thread(game);
+						Thread prova = new Thread(gameM);
 						prova.start();
 						//s.awaitTermination(3, TimeUnit.SECONDS);
 					}catch(IOException e){
@@ -840,9 +849,11 @@ public class GameTest {
 						for(int i = 0; i < bonusList.size(); i++){
 							tileInstance.add(bonusList.get(i));
 						}
-						Game game = bi.initializeBoard(players);
+						GameView game = bi.initializeBoard(players);
 						game.setHandlers(handlers);
-						BoardSetup bs = new BoardSetup(game);
+						GameManager gameM = new GameManager();
+						gameM.setView(game);
+						BoardSetup bs = new BoardSetup(gameM);
 						bs.firstSetUpCards();
 						System.out.println(player.getFamilyMembers()[0].toString());
 						List<Player> reversePlayer = new ArrayList<>();
@@ -859,7 +870,7 @@ public class GameTest {
 						game.getGameModel().getPlayers().get(0).getFamilyMembers()[1].setUsed(true);
 						game.registerObserver(new Controller());
 						game.getGameModel().registerObserver(game);
-						Thread prova = new Thread(game);
+						Thread prova = new Thread(gameM);
 						prova.start();
 						//s.awaitTermination(3, TimeUnit.SECONDS);
 					}catch(IOException e){

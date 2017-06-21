@@ -14,17 +14,17 @@ import it.polimi.ingsw.GC_28.components.DiceColor;
 import it.polimi.ingsw.GC_28.components.FamilyMember;
 import it.polimi.ingsw.GC_28.effects.EffectType;
 import it.polimi.ingsw.GC_28.effects.IncrementHPEffect;
-import it.polimi.ingsw.GC_28.model.Game;
 import it.polimi.ingsw.GC_28.model.GameModel;
 import it.polimi.ingsw.GC_28.model.Player;
 import it.polimi.ingsw.GC_28.model.PlayerColor;
+import it.polimi.ingsw.GC_28.view.GameView;
 
 public class IncrementHPEffectTest {
 	private IncrementHPEffect incH;
 	private int increment = 3;
 
 	
-	private	Game g;
+	private	GameView g;
 	private FamilyMember fm;
 	private FamilyMember fm2;
 	private Player player;
@@ -44,7 +44,7 @@ public class IncrementHPEffectTest {
 		players.add(player2);
 		gameBoard = new GameBoard();
 		gameModel = new GameModel(gameBoard, players);
-		g = new Game(gameModel);
+		g = new GameView(gameModel);
 		fm = new FamilyMember(player, false, DiceColor.ORANGE);
 		fm2 = new FamilyMember(player2, false, DiceColor.WHITE);
 		fm.setValue(2);

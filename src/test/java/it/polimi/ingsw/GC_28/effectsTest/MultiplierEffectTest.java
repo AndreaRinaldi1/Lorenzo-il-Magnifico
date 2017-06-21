@@ -24,10 +24,10 @@ import it.polimi.ingsw.GC_28.components.FamilyMember;
 import it.polimi.ingsw.GC_28.components.Resource;
 import it.polimi.ingsw.GC_28.components.ResourceType;
 import it.polimi.ingsw.GC_28.effects.MultiplierEffect;
-import it.polimi.ingsw.GC_28.model.Game;
 import it.polimi.ingsw.GC_28.model.GameModel;
 import it.polimi.ingsw.GC_28.model.Player;
 import it.polimi.ingsw.GC_28.model.PlayerColor;
+import it.polimi.ingsw.GC_28.view.GameView;
 
 public class MultiplierEffectTest {
 	private MultiplierEffect me;
@@ -37,7 +37,7 @@ public class MultiplierEffectTest {
 	private Resource resourceBonus;
 	EnumMap<ResourceType, Integer> resource1;
 	
-	private	Game g;
+	private	GameView g;
 	private FamilyMember fm;
 	private FamilyMember fm2;
 	private Player player;
@@ -95,7 +95,7 @@ public class MultiplierEffectTest {
 		players.add(player);
 		players.add(player2);
 		gameModel = new GameModel(gb, players);
-		g = new Game(gameModel);
+		g = new GameView(gameModel);
 		
 		//fai i familyMember
 		fm = new FamilyMember(player, false, DiceColor.ORANGE);
