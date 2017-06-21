@@ -302,9 +302,9 @@ public class TakeCardActionApplyTest {
 		takeCard.isApplicable();
 		takeCard.apply();
 	}
-/*	
+
 	//take territory Card
-	@Test
+	/*@Test
 	public void testApply3() throws FileNotFoundException, IOException {
 		card0 = new Territory("bob", 1, 1);
 		card1 = new Territory("bob", 2, 1);
@@ -379,8 +379,9 @@ public class TakeCardActionApplyTest {
 		takeCard.setThroughEffect(throughEffect );
 		takeCard.isApplicable();
 		takeCard.apply();
-	}
-*/	
+	
+	}*/
+	
 	//take Character Card
 	@Test
 	public void testApply4() throws FileNotFoundException, IOException {
