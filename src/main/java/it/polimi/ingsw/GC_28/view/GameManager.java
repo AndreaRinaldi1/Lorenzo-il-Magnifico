@@ -1,6 +1,7 @@
 package it.polimi.ingsw.GC_28.view;
 
 import java.io.IOException;
+import java.util.EnumMap;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -31,6 +32,17 @@ public class GameManager implements Runnable{
 	public void run() {
 		setCurrentPlayer(view.getGameModel().getPlayers().get(0));
 		BoardSetup bs = new BoardSetup(this);
+		EnumMap<ResourceType, Integer> res = new EnumMap<>(ResourceType.class);//TODO remove this
+		res.put(ResourceType.COIN, 20);
+		res.put(ResourceType.WOOD, 20);
+		res.put(ResourceType.STONE, 20);
+		res.put(ResourceType.SERVANT, 20);
+		res.put(ResourceType.VICTORYPOINT, 20);
+		res.put(ResourceType.MILITARYPOINT, 20);
+		res.put(ResourceType.FAITHPOINT, 20);
+		Resource resources = Resource.of(res);
+		currentPlayer.getBoard().setResources(resources);
+		System.out.println(currentPlayer.getBoard().getResources().toString());
 		for(currentEra = 1; currentEra <= 3; currentEra++){
 			skipPlayers();
 			for(currentPeriod = 1; currentPeriod <= 2; currentPeriod++){

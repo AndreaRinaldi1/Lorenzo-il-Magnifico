@@ -27,6 +27,7 @@ import it.polimi.ingsw.GC_28.components.Resource;
 import it.polimi.ingsw.GC_28.components.ResourceType;
 import it.polimi.ingsw.GC_28.core.Action;
 import it.polimi.ingsw.GC_28.core.SpaceAction;
+import it.polimi.ingsw.GC_28.core.SpecialAction;
 import it.polimi.ingsw.GC_28.core.TakeCardAction;
 import it.polimi.ingsw.GC_28.effects.DiscountEffect;
 import it.polimi.ingsw.GC_28.effects.EffectType;
@@ -618,7 +619,7 @@ public class GameView extends Observable<Action> implements  Observer<Message>{
 						p.addResource(bonusForFaithPoint);
 						p.getBoard().getResources().getResource().put(ResourceType.FAITHPOINT, 0);
 						for(LeaderCard lc : p.getLeaderCards()){
-							if(CheckForPopeEffect(lc)){//FIXME
+							if(CheckForPopeEffect(lc)){
 								lc.getEffect().apply(p, this);
 							}
 						}
@@ -626,8 +627,24 @@ public class GameView extends Observable<Action> implements  Observer<Message>{
 				}
 			}
 	}
-	
-	void specialAction() {//FIXME
+	void specialAction(){//TODO
+		SpecialAction specialAction = new SpecialAction(currentPlayer,gameModel,this);
+		handlers.get(currentPlayer).send(currentPlayer.displayLeader());
+		String proceed;
+		do{
+			handlers.get(currentPlayer).send("Which special action do you want to undertake?[discard/play/activate]");
+			String action = handlers.get(currentPlayer).receive();
+			specialAction.setActionType(action);
+			handlers.get(currentPlayer).send("On which of your LeaderCard would you like to undertake this action?[enter LeaderCard name]");
+			String name = handlers.get(currentPlayer).receive();
+			specialAction.setLeaderName(name);
+			this.notifyObserver(specialAction);
+			handlers.get(currentPlayer).send("Do you want to do another special action?[y/n]");
+			proceed = handlers.get(currentPlayer).receive();
+		}while(!proceed.equalsIgnoreCase("n"));
+	}
+	@Deprecated
+	void specialActionOld() {//FIXME
 		handlers.get(currentPlayer).send(currentPlayer.displayLeader());
 		String proceed;
 		do{
