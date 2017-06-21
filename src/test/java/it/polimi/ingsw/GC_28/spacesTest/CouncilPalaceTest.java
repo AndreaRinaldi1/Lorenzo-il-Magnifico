@@ -19,11 +19,11 @@ import it.polimi.ingsw.GC_28.components.ResourceType;
 import it.polimi.ingsw.GC_28.core.TakeCardAction;
 import it.polimi.ingsw.GC_28.effects.PrivilegesEffect;
 import it.polimi.ingsw.GC_28.effects.ResourceEffect;
-import it.polimi.ingsw.GC_28.model.Game;
 import it.polimi.ingsw.GC_28.model.GameModel;
 import it.polimi.ingsw.GC_28.model.Player;
 import it.polimi.ingsw.GC_28.model.PlayerColor;
 import it.polimi.ingsw.GC_28.spaces.CouncilPalace;
+import it.polimi.ingsw.GC_28.view.GameView;
 
 public class CouncilPalaceTest {
 	private ResourceEffect bonus1;
@@ -48,7 +48,7 @@ public class CouncilPalaceTest {
 
 	EnumMap<ResourceType, Integer> resource1;
 	
-	private class TestGame extends Game{
+	private class TestGame extends GameView{
 		public TestGame(GameModel gameModel) {
 			super(gameModel);
 		}

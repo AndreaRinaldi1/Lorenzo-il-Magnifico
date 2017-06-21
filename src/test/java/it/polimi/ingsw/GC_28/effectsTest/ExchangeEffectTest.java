@@ -49,13 +49,75 @@ public class ExchangeEffectTest {
 
 
 	private FamilyMember fm;
-	private GameView g;
 	private Player p;
+	private TestGame testGame;
+	private TestGame1 testGame1;
+	
+	private class TestGame extends GameView{
+		public TestGame(GameModel gameModel) {
+			super(gameModel);
+		}
+		
+		@Override
+		public boolean askPermission(){
+			return true;
+		}
+		
+		@Override
+		public ArrayList<Character> askPrivilege(int numberOfCouncilPrivileges, boolean different){
+			ArrayList<Character> tmp = new ArrayList<>();
+			tmp.add('c');
+			return tmp;
+		}
+		
+		@Override
+		public Resource checkResourceExcommunication(Resource amount){
+			CouncilPrivilege councilPrivilege = CouncilPrivilege.instance();
+			councilPrivilege.setOptions(options);
+			return options.get('c');
+		}
+		
+		@Override
+		public int askAlternativeExchange(Resource firstCost, Resource firstBonus, Resource secondCost, Resource secondBonus){
+			return 1;
+		}
+	}
+	
+	private class TestGame1 extends GameView{
+		public TestGame1(GameModel gameModel) {
+			super(gameModel);
+		}
+		
+		@Override
+		public boolean askPermission(){
+			return true;
+		}
+		
+		@Override
+		public ArrayList<Character> askPrivilege(int numberOfCouncilPrivileges, boolean different){
+			ArrayList<Character> tmp = new ArrayList<>();
+			tmp.add('c');
+			return tmp;
+		}
+		
+		@Override
+		public Resource checkResourceExcommunication(Resource amount){
+			CouncilPrivilege councilPrivilege = CouncilPrivilege.instance();
+			councilPrivilege.setOptions(options);
+			return options.get('c');
+		}
+		
+		@Override
+		public int askAlternativeExchange(Resource firstCost, Resource firstBonus, Resource secondCost, Resource secondBonus){
+			return 6;
+		}
+	}
 	
 	@Before
 	public void exchangeEffect(){
 		exchange = new ExchangeEffect();
-	
+		privilegeBonus = new PrivilegesEffect();
+		
 		resource = new EnumMap<>(ResourceType.class);
 		resource1 = new EnumMap<>(ResourceType.class);
 		resource2 = new EnumMap<>(ResourceType.class);
@@ -65,10 +127,22 @@ public class ExchangeEffectTest {
 		ps = new PrivilegesSpace(true, 1);
 		cp = CouncilPrivilege.instance();
 
+		options = new HashMap<>();
+		resource = new EnumMap<>(ResourceType.class);
+		resource.put(ResourceType.COIN, 3);
+		bonus = Resource.of(resource);
+		options.put('c', bonus);
+		cp.setOptions(options);
 		
+		privilegeCost = Resource.of(resource);
+		privilegeBonus.setDifferent(false);
+		privilegeBonus.setNumberOfCouncilPrivileges(1);
+		ps.setBonus(privilegeBonus);
+		exchange.setPrivilegeBonus(privilegeBonus);	
+		exchange.setPrivilegeCost(privilegeCost);
 		
 		for(ResourceType resType : ResourceType.values()){
-			w.put(resType, 0);
+			w.put(resType, 5);
 		}
 		Resource res = Resource.of(w);
 		PlayerBoard pb = new PlayerBoard(null, res);
@@ -81,16 +155,17 @@ public class ExchangeEffectTest {
 		GameBoard gb = new GameBoard();
 		GameModel gm = new GameModel(gb,players);
 		
-		g = new GameView(gm);
-	
-		g.setCurrentPlayer(p);
+		testGame = new TestGame(gm);
+		testGame1 = new TestGame1(gm);
+		testGame.setCurrentPlayer(p);
 	}
 	
 	@AfterClass
 	public static void tearDownAfterClass() throws Exception {
 	}
 
-	/*@Test
+	//privilegeBonus != null and alternative false
+	@Test
 	public void testApply() {
 		resource.put(ResourceType.COIN, 2);
 		firstCost = Resource.of(resource);
@@ -98,7 +173,7 @@ public class ExchangeEffectTest {
 		resource2.put(ResourceType.SERVANT, 1);
 		firstBonus = Resource.of(resource2);
 		exchange.setFirstBonus(firstBonus);
-		exchange.apply(fm, g);
+		exchange.apply(fm, testGame);
 		Resource res = Resource.of(w);
 		res.modifyResource(firstCost, false);
 		res.modifyResource(firstBonus, true);
@@ -106,8 +181,70 @@ public class ExchangeEffectTest {
 		boolean x = res.equals(fm.getPlayer().getBoard().getResources());
 		
 		assertTrue(x);
-	}*/
+	}
 
+	//privilegeBonus == null and alternative false
+	@Test
+	public void testApply1() {
+		resource.put(ResourceType.COIN, 2);
+		firstCost = Resource.of(resource);
+		exchange.setFirstCost(firstCost);
+		resource2.put(ResourceType.SERVANT, 1);
+		firstBonus = Resource.of(resource2);
+		exchange.setPrivilegeBonus(null);
+		exchange.setFirstBonus(firstBonus);
+		exchange.apply(fm, testGame);
+		Resource res = Resource.of(w);
+		res.modifyResource(firstCost, false);
+		res.modifyResource(firstBonus, true);
+
+		boolean x = res.equals(fm.getPlayer().getBoard().getResources());
+		
+		assertTrue(x);
+	}
+	
+	//privilegeBonus != null, game.askAlternativeExchange(firstCost, firstBonus, secondCost, secondBonus) == 1 and alternative true
+	@Test
+	public void testApply3() {
+		resource.put(ResourceType.COIN, 2);
+		firstCost = Resource.of(resource);
+		exchange.setFirstCost(firstCost);
+		resource2.put(ResourceType.SERVANT, 1);
+		firstBonus = Resource.of(resource2);
+		exchange.setAlternative(true);
+		exchange.setFirstBonus(firstBonus);
+		exchange.apply(fm, testGame);
+		Resource res = Resource.of(w);
+		res.modifyResource(firstCost, false);
+		res.modifyResource(firstBonus, true);
+
+		boolean x = res.equals(fm.getPlayer().getBoard().getResources());
+		
+		assertTrue(x);
+	}
+	
+	//privilegeBonus != null, game.askAlternativeExchange(firstCost, firstBonus, secondCost, secondBonus) != 1 and alternative true
+	@Test
+	public void testApply4() {
+		resource.put(ResourceType.COIN, 1);
+		firstCost = Resource.of(resource);
+		secondCost = Resource.of(resource);
+		exchange.setFirstCost(firstCost);
+		exchange.setSecondCost(secondCost);
+		resource2.put(ResourceType.SERVANT, 1);
+		firstBonus = Resource.of(resource2);
+		exchange.setAlternative(true);
+		exchange.setFirstBonus(firstBonus);
+		exchange.apply(fm, testGame1);
+		Resource res = Resource.of(w);
+		res.modifyResource(firstCost, false);
+		res.modifyResource(firstBonus, true);
+
+		boolean x = res.equals(fm.getPlayer().getBoard().getResources());
+		
+		assertTrue(x);
+	}
+	
 	@Test
 	public void testGetFirstCost() {
 		resource.put(ResourceType.COIN, 2);
@@ -156,13 +293,7 @@ public class ExchangeEffectTest {
 
 	@Test
 	public void testGetPrivilegeBonus() {
-		options = new HashMap<>();
-		resource = new EnumMap<>(ResourceType.class);
-		resource.put(ResourceType.COIN, 3);
-		bonus = Resource.of(resource);
-		options.put('c', bonus);
-		cp.setOptions(options);
-		ps.setBonus(privilegeBonus);
+		assertEquals(this.privilegeBonus, this.exchange.getPrivilegeBonus());
 	}
 
 }

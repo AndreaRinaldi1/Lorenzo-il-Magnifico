@@ -21,6 +21,7 @@ import it.polimi.ingsw.GC_28.boards.PlayerBoard;
 import it.polimi.ingsw.GC_28.cards.Building;
 import it.polimi.ingsw.GC_28.cards.CardReader;
 import it.polimi.ingsw.GC_28.cards.CardType;
+import it.polimi.ingsw.GC_28.cards.Character;
 import it.polimi.ingsw.GC_28.cards.Deck;
 import it.polimi.ingsw.GC_28.cards.Venture;
 import it.polimi.ingsw.GC_28.components.DiceColor;
@@ -55,7 +56,7 @@ public class FinalReduceEffectTest {
 	private PlayerBoard pb;
 
 	private Building b;
-	private Venture v;
+	private it.polimi.ingsw.GC_28.cards.Character c;
 	
 	@Before
 	public void finalReduceEffect() throws FileNotFoundException{
@@ -94,8 +95,8 @@ public class FinalReduceEffectTest {
 	
 		b = new Building("casa", 2, 1);
 		b.setCost(resourceCost1);
-		v = new Venture("ladsf", 2, 3);
-		v.setCost(resourceCost1);
+		c = new Character("io", 5, 1);
+		c.setCost(resourceCost);
 	}
 	
 	@AfterClass
@@ -108,13 +109,6 @@ public class FinalReduceEffectTest {
 		int times1 = 0;
 		
 		pb.addCard(b);	//random card
-		for(Building b : p1.getBoard().getBuildings()){
-			for(ResourceType resType : resourceCost1.getResource().keySet()){
-				if(!(resourceCost1.getResource().get(resType).equals(0))){
-					times1 +=  b.getCost().getResource().get(resType) / resourceCost1.getResource().get(resType);
-				}
-			}
-		}
 		p1.addResource(fre.multiplyResource(times));
 
 		fre.apply(p, g);
@@ -122,24 +116,25 @@ public class FinalReduceEffectTest {
 		assertEquals(this.p.getBoard().getResources(), this.p1.getBoard().getResources());
 	}
 
-	//apply with character card
+	//apply with Character card
 	@Test
 	public void testApplyPlayerGameCharacter() {
-		int times1 = 0;
+		fre.setCardType(CardType.CHARACTER);
+		pb.addCard(c);	//random card
 		
-		pb.addCard(v);	//random card
-		for(Venture v : p1.getBoard().getVentures()){
-			for(ResourceType resType : resourceCost1.getResource().keySet()){
-				if(!(resourceCost1.getResource().get(resType).equals(0))){
-					times1 +=  v.getCost().getResource().get(resType) / resourceCost1.getResource().get(resType);
-				}
-			}
-		}
 		p1.addResource(fre.multiplyResource(times));
 
-		fre.apply(p, g);
-
-		assertEquals(this.p.getBoard().getResources(), this.p1.getBoard().getResources());
+		fre.apply(p1, g);
+	}
+	
+	//apply with Other card
+	@Test
+	public void testApplyPlayerGameOther() {
+		fre.setCardType(CardType.VENTURE);
+		
+		p1.addResource(fre.multiplyResource(times));
+		fre.apply(p1, g);
+		fre.getType();
 	}
 	
 	@Test

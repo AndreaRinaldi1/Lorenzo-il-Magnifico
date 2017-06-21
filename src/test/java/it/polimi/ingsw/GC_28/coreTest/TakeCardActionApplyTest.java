@@ -6,6 +6,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.EnumMap;
+import java.util.List;
 import java.util.Map;
 
 import org.junit.AfterClass;
@@ -31,6 +32,7 @@ import it.polimi.ingsw.GC_28.components.ResourceType;
 import it.polimi.ingsw.GC_28.core.TakeCardAction;
 import it.polimi.ingsw.GC_28.core.TakeCardController;
 import it.polimi.ingsw.GC_28.effects.DiscountEffect;
+import it.polimi.ingsw.GC_28.effects.Effect;
 import it.polimi.ingsw.GC_28.effects.EffectType;
 import it.polimi.ingsw.GC_28.effects.IncrementCardEffect;
 import it.polimi.ingsw.GC_28.effects.OtherEffect;
@@ -61,9 +63,9 @@ public class TakeCardActionApplyTest {
 	private Cell[] cells = new Cell[2];
 	private Cell cell = new Cell(null, 1, true);
 	private Cell cell1 = new Cell(null, 2, true);
-	private Card card0;
-	private Card card1;
-
+	
+	private Venture v;
+	private Venture v1;
 	private Character c;
 	private Character c1;
 	private Building b;
@@ -148,8 +150,8 @@ public class TakeCardActionApplyTest {
 	
 	@Test
 	public void testApply1() throws FileNotFoundException, IOException {
-		card0 = new Venture("bob", 1, 1);
-		card1 = new Venture("bob", 2, 1);
+		v = new Venture("bob", 1, 1);
+		v1 = new Venture("bob", 2, 1);
 		
 		c = new Character("bob", 1, 1);
 		c1 = new Character("bob", 1, 1);
@@ -166,10 +168,14 @@ public class TakeCardActionApplyTest {
 		permanentCardEffect.setDiscount(discount);
 		c1.setPermanentEffect(permanentCardEffect);
 		
-		card0.setCost(cost);
-		card1.setCost(cost);
-		cell.setCard((Venture)card0);
-		cell1.setCard((Venture)card1);
+		
+		List<Effect> immediateEffects = new ArrayList<>();
+		immediateEffects.add(immediateEffect);
+		v.setImmediateEffect(immediateEffects );
+		v.setCost(cost);
+		v1.setCost(cost);
+		cell.setCard(v);
+		cell1.setCard(v1);
 		cell.setActionValue(-1);
 		cell1.setActionValue(-1);
 		cells[0] = cell;
@@ -199,8 +205,8 @@ public class TakeCardActionApplyTest {
 		}
 		Resource res = Resource.of(resources);
 		playerBoard.setResources(res);
-		playerBoard.addCard((Venture)card0);
-		playerBoard.addCard((Venture)card1);
+		playerBoard.addCard(v);
+		playerBoard.addCard(v1);
 		playerBoard.addCard(c);
 		playerBoard.addCard(c1);
 		playerBoard.setResources(resource);
@@ -225,8 +231,8 @@ public class TakeCardActionApplyTest {
 	
 	@Test
 	public void testApply2() throws FileNotFoundException, IOException {
-		card0 = new Venture("bob", 1, 1);
-		card1 = new Venture("bob", 2, 1);
+		v = new Venture("bob", 1, 1);
+		v1 = new Venture("bob", 2, 1);
 		
 		c = new Character("bob", 1, 1);
 		c1 = new Character("bob", 1, 1);
@@ -243,10 +249,10 @@ public class TakeCardActionApplyTest {
 		c.setPermanentEffect(permanentCardEffect);
 		c1.setPermanentEffect(permanentCardEffect);
 		
-		card0.setCost(cost);
-		card1.setCost(cost);
-		cell.setCard((Venture)card0);
-		cell1.setCard((Venture)card1);
+		v.setCost(cost);
+		v1.setCost(cost);
+		cell.setCard(v);
+		cell1.setCard(v1);
 		cell.setActionValue(-1);
 		cell1.setActionValue(-1);
 		cells[0] = cell;
@@ -276,8 +282,8 @@ public class TakeCardActionApplyTest {
 		}
 		Resource res = Resource.of(resources);
 		playerBoard.setResources(res);
-		playerBoard.addCard((Venture)card0);
-		playerBoard.addCard((Venture)card1);
+		playerBoard.addCard(v);
+		playerBoard.addCard(v1);
 		playerBoard.addCard(c);
 		playerBoard.addCard(c1);
 		playerBoard.setResources(resource);
@@ -292,14 +298,11 @@ public class TakeCardActionApplyTest {
 		
 		takeCard.setFamilyMember(familyMember);
 		takeCard.setName("bob");
-		throughEffect.setCardType(CardType.VENTURE);
-		throughEffect.setDiscountPresence(true);
-		throughEffect.setDiscount(discount );
-		takeCard.setThroughEffect(throughEffect );
+		takeCard.setThroughEffect(null);
 		takeCard.isApplicable();
 		takeCard.apply();
 	}
-	
+/*	
 	//take territory Card
 	@Test
 	public void testApply3() throws FileNotFoundException, IOException {
@@ -377,12 +380,10 @@ public class TakeCardActionApplyTest {
 		takeCard.isApplicable();
 		takeCard.apply();
 	}
-	
+*/	
 	//take Character Card
 	@Test
 	public void testApply4() throws FileNotFoundException, IOException {
-		card0 = new Character("bob", 1, 1);
-		card1 = new Character("bob", 2, 1);
 		
 		c = new Character("bob", 1, 1);
 		c1 = new Character("bob", 1, 1);
@@ -395,14 +396,16 @@ public class TakeCardActionApplyTest {
 		permanentCardEffect.setDiscountPresence(true);
 		permanentCardEffect.setDiscount(discount);
 		
-		
+		List<Effect> immediateEffects = new ArrayList<>();
+		immediateEffects.add(immediateEffect);
+		c.setImmediateEffect(immediateEffects);
 		c.setPermanentEffect(permanentCardEffect);
 		c1.setPermanentEffect(permanentCardEffect);
 		
-		card0.setCost(cost);
-		card1.setCost(cost);
-		cell.setCard((Character)card0);
-		cell1.setCard((Character)card1);
+		c.setCost(cost);
+		c1.setCost(cost);
+		cell.setCard(c);
+		cell1.setCard(c1);
 		cell.setActionValue(-1);
 		cell1.setActionValue(-1);
 		cells[0] = cell;
@@ -432,8 +435,6 @@ public class TakeCardActionApplyTest {
 		}
 		Resource res = Resource.of(resources);
 		playerBoard.setResources(res);
-		playerBoard.addCard((Character)card0);
-		playerBoard.addCard((Character)card1);
 		playerBoard.addCard(c);
 		playerBoard.addCard(c1);
 		playerBoard.setResources(resource);
