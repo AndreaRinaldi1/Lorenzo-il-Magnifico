@@ -439,6 +439,7 @@ public class GameView extends Observable<Action> implements  Observer<Message>{
 		takeCardAction.setThroughEffect(throughEffect);
 		
 		this.notifyObserver(takeCardAction);
+		System.out.println(5);
 		if(modifiedWithServants){
 			familyMember.modifyValue((-1)*(incrementThroughServants));
 		}
@@ -604,7 +605,7 @@ public class GameView extends Observable<Action> implements  Observer<Message>{
 				handlers.get(p).send(p.displayExcommunication());
 				int faith = p.getBoard().getResources().getResource().get(ResourceType.FAITHPOINT);
 				if(faith < (2+ currentEra)){
-					handlers.get(p).send("You receive an Excommunication, because you cannot pay to avoid it");
+					handlers.get(p).send("You recive an Excommunication, because you cannot pay to avoid it");
 					p.getExcommunicationTile().get(currentEra -1).setEffect(gameModel.getGameBoard().getExcommunications()[currentEra-1].getEffect());
 					//p.getExcommunicationTile().add(currentEra-1, gameBoard.getExcommunications()[currentEra-1]);
 				}else{

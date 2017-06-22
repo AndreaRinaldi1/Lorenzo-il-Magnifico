@@ -119,7 +119,7 @@ public class SetFamilyMemberValueEffectTest {
 		FamilyMember[] familyMembers = new FamilyMember[1];
 		familyMembers[0] = familyMember1;
 		this.player1.setFamilyMembers(familyMembers);
-		this.setValueEffect.apply(this.familyMember1.getPlayer(), game);		
+		this.setValueEffect.apply(this.familyMember1, game);		
 		boolean x = this.player1.getFamilyMembers()[0].getValue().equals(this.value);
 		assertTrue(x);
 		//assertEquals(this.value, this.player1.getFamilyMembers()[0].getValue());

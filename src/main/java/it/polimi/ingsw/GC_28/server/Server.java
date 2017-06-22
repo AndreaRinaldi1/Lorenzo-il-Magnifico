@@ -129,7 +129,7 @@ public class Server extends UnicastRemoteObject implements ServerInt{
 						}.start();
 					}
 				}
-			}, 20000);
+			}, 15000);
 		}
 	}
 	

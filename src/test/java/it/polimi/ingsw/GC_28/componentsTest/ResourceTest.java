@@ -30,7 +30,6 @@ public class ResourceTest {
 		bonus = Resource.of(resource);
 		bonus3 = Resource.of(resource);
 		resource1 = new EnumMap<ResourceType, Integer>(ResourceType.class);
-		resource1.put(ResourceType.FAITHPOINT, 6);
 		resource1.put(ResourceType.COIN, 6);
 		bonus1 = Resource.of(resource1);
 		resource2 = new EnumMap<ResourceType, Integer>(ResourceType.class);
@@ -104,4 +103,29 @@ public class ResourceTest {
 		}
 		assertEquals(s.toString(), this.bonus.toString());
 	}
+	
+	//resource.get(rt) >= res.getResource().get(rt)
+	@Test
+	public void testGreaterOrEqual(){
+		boolean x = prova.greaterOrEqual(bonus2);
+		if(x){
+			assertTrue(x);
+		}
+		else{
+			assertFalse(x);
+		}
+	}
+	
+	//resource.get(rt) >= res.getResource().get(rt)
+	@Test
+	public void testGreaterOrEqual1(){
+		boolean x = bonus.greaterOrEqual(bonus1);
+		if(x){
+			assertTrue(x);
+		}
+		else{
+			assertFalse(x);
+		}
+	}
+	
 }

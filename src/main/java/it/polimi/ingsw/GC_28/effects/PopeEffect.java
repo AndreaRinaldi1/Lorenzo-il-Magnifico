@@ -19,7 +19,6 @@ public class PopeEffect extends Effect{
 	
 	@Override
 	public void apply(Player player, GameView game) {
-		System.out.println("Pope Effect");
 		player.addResource(bonus);
 	}
 }
