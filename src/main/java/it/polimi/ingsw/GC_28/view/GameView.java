@@ -27,6 +27,7 @@ import it.polimi.ingsw.GC_28.components.Resource;
 import it.polimi.ingsw.GC_28.components.ResourceType;
 import it.polimi.ingsw.GC_28.core.Action;
 import it.polimi.ingsw.GC_28.core.SpaceAction;
+import it.polimi.ingsw.GC_28.core.SpecialAction;
 import it.polimi.ingsw.GC_28.core.TakeCardAction;
 import it.polimi.ingsw.GC_28.effects.DiscountEffect;
 import it.polimi.ingsw.GC_28.effects.EffectType;
@@ -601,6 +602,7 @@ public class GameView extends Observable<Action> implements  Observer<Message>{
 	}
 	
 	protected void giveExcommunication(int currentEra) {
+		System.out.println("entro in scomuniche");
 		for(Player p : gameModel.getPlayers()){
 				handlers.get(p).send(p.displayExcommunication());
 				int faith = p.getBoard().getResources().getResource().get(ResourceType.FAITHPOINT);
@@ -614,21 +616,43 @@ public class GameView extends Observable<Action> implements  Observer<Message>{
 						p.getExcommunicationTile().add(currentEra-1, gameModel.getGameBoard().getExcommunications()[currentEra-1]);
 					}else{
 						handlers.get(p).send("You paid to avoid Excommunication, your faith points have been reset to 0");
+						System.out.println("y 1");
 						int numberOfFaithPoint = p.getBoard().getResources().getResource().get(ResourceType.FAITHPOINT);
+						System.out.println("y 2");
 						Resource bonusForFaithPoint = FinalBonus.instance().getFaithPointTrack().get(numberOfFaithPoint-1);
+						System.out.println("y 3");
 						p.addResource(bonusForFaithPoint);
+						System.out.println("y 4");
 						p.getBoard().getResources().getResource().put(ResourceType.FAITHPOINT, 0);
+						System.out.println("giveEx ultimo loop");
 						for(LeaderCard lc : p.getLeaderCards()){
-							if(CheckForPopeEffect(lc)){//FIXME
+							if(CheckForPopeEffect(lc)){
 								lc.getEffect().apply(p, this);
 							}
 						}
 					}
 				}
 			}
+		System.out.println("fine scomuniche");
 	}
-	
-	void specialAction() {//FIXME
+	void specialAction(){//TODO
+		SpecialAction specialAction = new SpecialAction(currentPlayer,gameModel,this);
+		handlers.get(currentPlayer).send(currentPlayer.displayLeader());
+		String proceed;
+		do{
+			handlers.get(currentPlayer).send("Which special action do you want to undertake?[discard/play/activate]");
+			String action = handlers.get(currentPlayer).receive();
+			specialAction.setActionType(action);
+			handlers.get(currentPlayer).send("On which of your LeaderCard would you like to undertake this action?[enter LeaderCard name]");
+			String name = handlers.get(currentPlayer).receive();
+			specialAction.setLeaderName(name);
+			this.notifyObserver(specialAction);
+			handlers.get(currentPlayer).send("Do you want to do another special action?[y/n]");
+			proceed = handlers.get(currentPlayer).receive();
+		}while(!proceed.equalsIgnoreCase("n"));
+	}
+	@Deprecated
+	void specialActionOld() {//FIXME
 		handlers.get(currentPlayer).send(currentPlayer.displayLeader());
 		String proceed;
 		do{

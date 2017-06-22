@@ -79,7 +79,7 @@ public class HarvestEffectTest {
 		options.put('c', bonus);
 		//cp.setOptions(options);
 		
-		player = new Player("aiuto", PlayerColor.BLUE);
+		player = new Player("bart", PlayerColor.BLUE);
 		familyMember = new FamilyMember(player, false, DiceColor.BLACK);
 		gb = new GameBoard();
 		pb = new PlayerBoard(null, bonus);
@@ -143,5 +143,4 @@ public class HarvestEffectTest {
 		he.setCouncilPrivilegeBonus(councilPrivilegeBonus);
 		assertEquals(this.councilPrivilegeBonus, this.he.getCouncilPrivilegeBonus());
 	}
-
 }
