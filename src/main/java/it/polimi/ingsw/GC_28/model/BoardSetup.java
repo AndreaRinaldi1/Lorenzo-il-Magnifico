@@ -259,12 +259,16 @@ public class BoardSetup {
 	}
 	
 	private void deActiveLeaderCard(){
+		System.out.println("entro deactivateLeader");
 		for(Player p : gameModel.getPlayers()){
+			System.out.println(p.getName());
 			for(LeaderCard lc : p.getLeaderCards()){
 				if(!(lc.getPermanent()) && lc.getPlayed()){
+					System.out.println("disattivo"+ lc.getName());
 					lc.setActive(false);
 				}
 				else if(lc.getPermanent() && lc.getPlayed() && !lc.getName().equalsIgnoreCase("Sisto IV") && lc.getName().equalsIgnoreCase("Santa Rita")){
+					System.out.println("applico perchè permanente" + lc.getName());
 					lc.getEffect().apply(p, game);
 				}
 			}

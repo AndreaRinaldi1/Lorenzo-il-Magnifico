@@ -32,17 +32,17 @@ public class GameManager implements Runnable{
 	public void run() {
 		setCurrentPlayer(view.getGameModel().getPlayers().get(0));
 		BoardSetup bs = new BoardSetup(this);
-		EnumMap<ResourceType, Integer> res = new EnumMap<>(ResourceType.class);//TODO remove this
+		/*EnumMap<ResourceType, Integer> res = new EnumMap<>(ResourceType.class);//TODO remove this
 		res.put(ResourceType.COIN, 20);
 		res.put(ResourceType.WOOD, 20);
 		res.put(ResourceType.STONE, 20);
 		res.put(ResourceType.SERVANT, 20);
 		res.put(ResourceType.VICTORYPOINT, 20);
 		res.put(ResourceType.MILITARYPOINT, 20);
-		res.put(ResourceType.FAITHPOINT, 20);
+		res.put(ResourceType.FAITHPOINT, 10);
 		Resource resources = Resource.of(res);
 		currentPlayer.getBoard().setResources(resources);
-		System.out.println(currentPlayer.getBoard().getResources().toString());
+		System.out.println(currentPlayer.getBoard().getResources().toString());*/
 		for(currentEra = 1; currentEra <= 3; currentEra++){
 			skipPlayers();
 			for(currentPeriod = 1; currentPeriod <= 2; currentPeriod++){
@@ -137,13 +137,18 @@ public class GameManager implements Runnable{
 					currentPlayer = view.getGameModel().getPlayers().get(0);
 				}
 			}
+			System.out.println("finito era"+ currentEra);
 			view.giveExcommunication(currentEra);
 		}
+		System.out.println("inizio final bonus");
 		applyFinalBonus();
+		System.out.println("bonus dati, faccio i malus");
 		applyFinalMalus();
+		System.out.println("malus dati, inizio punti militari");
 		sortBy(view.getGameModel().getPlayers(), ResourceType.MILITARYPOINT);
 		assignBonusForMilitary();
 		sortBy(view.getGameModel().getPlayers(), ResourceType.VICTORYPOINT);
+		System.out.println("dichiaro vincitore");
 		view.declareWinner();
 		
 		
@@ -270,10 +275,14 @@ public class GameManager implements Runnable{
 	}
 	
 	public void applyFinalMalus(){
+		System.out.println("entro malus");
 		ExcommunicationTile t;
+		System.out.println("malus loop");
 		for(Player p : view.getGameModel().getPlayers()){
 			t = p.getExcommunicationTile().get(currentEra-2);
-			if(t != null){
+			System.out.println("prima dell'if");
+			if(t.getEffect() != null){
+				System.out.println(t.getEffect());
 				t.getEffect().apply(p, view);
 			}
 		}

@@ -601,6 +601,7 @@ public class GameView extends Observable<Action> implements  Observer<Message>{
 	}
 	
 	protected void giveExcommunication(int currentEra) {
+		System.out.println("entro in scomuniche");
 		for(Player p : gameModel.getPlayers()){
 				handlers.get(p).send(p.displayExcommunication());
 				int faith = p.getBoard().getResources().getResource().get(ResourceType.FAITHPOINT);
@@ -614,10 +615,15 @@ public class GameView extends Observable<Action> implements  Observer<Message>{
 						p.getExcommunicationTile().add(currentEra-1, gameModel.getGameBoard().getExcommunications()[currentEra-1]);
 					}else{
 						handlers.get(p).send("You paid to avoid Excommunication, your faith points have been reset to 0");
+						System.out.println("y 1");
 						int numberOfFaithPoint = p.getBoard().getResources().getResource().get(ResourceType.FAITHPOINT);
+						System.out.println("y 2");
 						Resource bonusForFaithPoint = FinalBonus.instance().getFaithPointTrack().get(numberOfFaithPoint-1);
+						System.out.println("y 3");
 						p.addResource(bonusForFaithPoint);
+						System.out.println("y 4");
 						p.getBoard().getResources().getResource().put(ResourceType.FAITHPOINT, 0);
+						System.out.println("giveEx ultimo loop");
 						for(LeaderCard lc : p.getLeaderCards()){
 							if(CheckForPopeEffect(lc)){
 								lc.getEffect().apply(p, this);
@@ -626,6 +632,7 @@ public class GameView extends Observable<Action> implements  Observer<Message>{
 					}
 				}
 			}
+		System.out.println("fine scomuniche");
 	}
 	void specialAction(){//TODO
 		SpecialAction specialAction = new SpecialAction(currentPlayer,gameModel,this);
