@@ -18,19 +18,15 @@ import it.polimi.ingsw.GC_28.boards.GameBoard;
 import it.polimi.ingsw.GC_28.boards.PlayerBoard;
 import it.polimi.ingsw.GC_28.boards.Tower;
 import it.polimi.ingsw.GC_28.cards.Building;
-import it.polimi.ingsw.GC_28.cards.Card;
 import it.polimi.ingsw.GC_28.cards.CardType;
 import it.polimi.ingsw.GC_28.cards.Character;
-import it.polimi.ingsw.GC_28.cards.ExcommunicationTile;
 import it.polimi.ingsw.GC_28.cards.LeaderCard;
-import it.polimi.ingsw.GC_28.cards.Territory;
 import it.polimi.ingsw.GC_28.cards.Venture;
 import it.polimi.ingsw.GC_28.components.DiceColor;
 import it.polimi.ingsw.GC_28.components.FamilyMember;
 import it.polimi.ingsw.GC_28.components.Resource;
 import it.polimi.ingsw.GC_28.components.ResourceType;
 import it.polimi.ingsw.GC_28.core.TakeCardAction;
-import it.polimi.ingsw.GC_28.core.TakeCardController;
 import it.polimi.ingsw.GC_28.effects.DiscountEffect;
 import it.polimi.ingsw.GC_28.effects.Effect;
 import it.polimi.ingsw.GC_28.effects.EffectType;
@@ -92,9 +88,7 @@ public class TakeCardActionApplyTest {
 	private LeaderCard leaderCard = new LeaderCard();
 	private ArrayList<LeaderCard> leaderCards = new ArrayList<>();
 
-	private ExcommunicationTile excommunicationTile = new ExcommunicationTile();
-	private ArrayList<ExcommunicationTile> excommunicationTiles = new ArrayList<>();
-	
+
 	private class TestGame extends GameView{
 		public TestGame(GameModel gameModel) {
 			super(gameModel);
