@@ -72,8 +72,7 @@ public class SpaceActionTest {
 	private ArrayList<ExcommunicationTile> excommunicationTile = new ArrayList<>();
 	private ExcommunicationTile excomm;
 	private OtherEffect otherEffect;
-	private OtherEffect otherEffect1;
-	private OtherEffect otherEffect2;
+
 	
 	private ExcommunicationTile excommHarvest;
 	private ExcommunicationTile excommProduction;
@@ -130,15 +129,9 @@ public class SpaceActionTest {
 		excomm.setEffect(otherEffect);
 		excommunicationTile.add(excomm);
 		
-		otherEffect1 = new OtherEffect();
-		otherEffect1.setType(EffectType.INCREMENTHARVESTEFFECT);
-		excommHarvest = new ExcommunicationTile();
-		excommHarvest.setEffect(otherEffect1);
 		
-		otherEffect2 = new OtherEffect();
-		otherEffect2.setType(EffectType.INCREMENTPRODUCTIONEFFECT);
+		excommHarvest = new ExcommunicationTile();
 		excommProduction = new ExcommunicationTile();
-		excommProduction.setEffect(otherEffect2);
 		
 		privilegesSpace = new PrivilegesSpace(free, actionValue);
 		
@@ -243,6 +236,7 @@ public class SpaceActionTest {
 		familyMember.setValue(6);
 		incrementHPEffect.setIncrement(actionValue);
 		incrementHPEffect.setType(EffectType.INCREMENTHARVESTEFFECT);
+		excommHarvest.setEffect(incrementHPEffect);
 		characterCard.setPermanentEffect(incrementHPEffect );
 		familyMember.getPlayer().getBoard().getCharacters().add(characterCard );
 		
@@ -255,7 +249,7 @@ public class SpaceActionTest {
 		spaceActionTest.setSpace(prodHarvSpace);
 		spaceActionTest.setThroughEffect(throughEffect);
 		spaceActionTest.apply();
-		boolean x = this.familyMember.getValue()==6;
+		boolean x = this.familyMember.getValue()==9;
 		assertTrue(x);
 	}
 
@@ -266,6 +260,8 @@ public class SpaceActionTest {
 		familyMember.setValue(6);
 		incrementHPEffect.setIncrement(actionValue);
 		incrementHPEffect.setType(EffectType.INCREMENTPRODUCTIONEFFECT);
+		excommProduction.setEffect(incrementHPEffect);
+
 		Building buildingCard = new Building("ciao", 2, 1);
 		ProductionEffect productionEffect = new ProductionEffect();
 		productionEffect.setResourceBonus(effect);
@@ -283,7 +279,7 @@ public class SpaceActionTest {
 		prodHarvSpace.setSecondarySpace(true);
 		spaceActionTest.setSpace(prodHarvSpace);
 		spaceActionTest.apply();
-		boolean x = this.familyMember.getValue()==3;
+		boolean x = this.familyMember.getValue()==6;
 		assertTrue(x);
 	}
 

@@ -95,7 +95,7 @@ public class ServerTest {
 					String socketLine = b.readLine();
 					System.out.println(socketLine);
 					p = new PrintStream(sock.getOutputStream());
-					p.println("fanculo");
+					p.println("Peter");
 					p.flush();
 					String fawd = b.readLine();
 					System.out.println(fawd);
@@ -134,7 +134,7 @@ public class ServerTest {
 					String socketLine = b.readLine();
 					System.out.println(socketLine);
 					p = new PrintStream(sock.getOutputStream());
-					p.println("fanculo");
+					p.println("peter");
 					p.flush();
 					String fawd = b.readLine();
 					System.out.println(fawd);
