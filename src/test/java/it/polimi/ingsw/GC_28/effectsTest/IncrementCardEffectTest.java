@@ -3,6 +3,7 @@ package it.polimi.ingsw.GC_28.effectsTest;
 import static org.junit.Assert.*;
 
 import java.util.ArrayList;
+import java.util.EnumMap;
 import java.util.List;
 
 import org.junit.AfterClass;
@@ -10,9 +11,12 @@ import org.junit.Before;
 import org.junit.Test;
 
 import it.polimi.ingsw.GC_28.boards.GameBoard;
+import it.polimi.ingsw.GC_28.boards.PlayerBoard;
 import it.polimi.ingsw.GC_28.cards.CardType;
 import it.polimi.ingsw.GC_28.components.DiceColor;
 import it.polimi.ingsw.GC_28.components.FamilyMember;
+import it.polimi.ingsw.GC_28.components.Resource;
+import it.polimi.ingsw.GC_28.components.ResourceType;
 import it.polimi.ingsw.GC_28.effects.*;
 import it.polimi.ingsw.GC_28.model.GameModel;
 import it.polimi.ingsw.GC_28.model.Player;
@@ -30,6 +34,7 @@ public class IncrementCardEffectTest {
 	private FamilyMember fm2;
 	private Player player;
 	private Player player2;
+	private PlayerBoard pb;
 	private GameModel gameModel;
 	private GameBoard gameBoard; 
 	private List<Player> players = new ArrayList<>();
@@ -42,8 +47,15 @@ public class IncrementCardEffectTest {
 		player2 = new Player("Mariangiongianela", PlayerColor.BLUE);
 		players.add(player);
 		players.add(player2);
+		EnumMap<ResourceType, Integer> w = new EnumMap<ResourceType, Integer>(ResourceType.class);
+		for(ResourceType resType : ResourceType.values()){
+			w.put(resType, 0);
+		}
+		Resource res = Resource.of(w);
+		pb = new PlayerBoard(null, res);
 		gameBoard = new GameBoard();
 		gameModel = new GameModel(gameBoard, players);
+		player.setBoard(pb);
 		g = new GameView(gameModel);
 		fm = new FamilyMember(player, false, DiceColor.ORANGE);
 		fm2 = new FamilyMember(player2, false, DiceColor.WHITE);
@@ -57,6 +69,7 @@ public class IncrementCardEffectTest {
 
 	@Test
 	public void testApply() {
+		discountPresence = true;
 		ic.setIncrement(increment);
 		ic.setDiscountPresence(discountPresence);
 		ic.setCardType(CardType.BUILDING);

@@ -2,28 +2,40 @@ package it.polimi.ingsw.GC_28.spacesTest;
 
 import static org.junit.Assert.*;
 
+import java.util.ArrayList;
 import java.util.EnumMap;
 
 import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.Test;
 
+import it.polimi.ingsw.GC_28.boards.GameBoard;
+import it.polimi.ingsw.GC_28.boards.PlayerBoard;
 import it.polimi.ingsw.GC_28.components.CouncilPrivilege;
 import it.polimi.ingsw.GC_28.components.DiceColor;
 import it.polimi.ingsw.GC_28.components.FamilyMember;
 import it.polimi.ingsw.GC_28.components.Resource;
 import it.polimi.ingsw.GC_28.components.ResourceType;
+import it.polimi.ingsw.GC_28.core.TakeCardAction;
 import it.polimi.ingsw.GC_28.effects.PrivilegesEffect;
 import it.polimi.ingsw.GC_28.effects.ResourceEffect;
+import it.polimi.ingsw.GC_28.model.GameModel;
 import it.polimi.ingsw.GC_28.model.Player;
 import it.polimi.ingsw.GC_28.model.PlayerColor;
 import it.polimi.ingsw.GC_28.spaces.CouncilPalace;
+import it.polimi.ingsw.GC_28.view.GameView;
 
 public class CouncilPalaceTest {
 	private ResourceEffect bonus1;
 	private PrivilegesEffect bonus2;
 	private CouncilPalace cp = CouncilPalace.instance();
 	
+	private TestGame testGame;
+	private GameModel gameModel;
+	private GameBoard gameBoard;
+	private PlayerBoard playerBoard;
+	private ArrayList<Player> players = new ArrayList<>();
+
 	private Resource r;
 	EnumMap<ResourceType, Integer> resource;
 	private int numberOfCouncilPrivileges=1;
@@ -36,6 +48,27 @@ public class CouncilPalaceTest {
 
 	EnumMap<ResourceType, Integer> resource1;
 	
+	private class TestGame extends GameView{
+		public TestGame(GameModel gameModel) {
+			super(gameModel);
+		}
+		
+		@Override
+		public Resource checkResourceExcommunication(Resource amount){
+			EnumMap<ResourceType, Integer> z = new EnumMap<>(ResourceType.class);
+			z.put(ResourceType.COIN, 0);
+			Resource bonus = Resource.of(z);
+			return bonus;
+		}
+		
+		@Override
+		public ArrayList<Character> askPrivilege(int numberOfCouncilPrivileges, boolean different){
+			ArrayList<Character> c = new ArrayList<>();
+			c.add('c');
+			return c;
+		}
+
+	}
 	
 	@Before
 	public void councilPalace(){
@@ -62,6 +95,20 @@ public class CouncilPalaceTest {
 		
 		cp.addPlayer(fm1);
 		cp.addPlayer(fm2);
+
+		
+		players.add(p1);
+		playerBoard = new PlayerBoard(null, null);
+		for(ResourceType resType : ResourceType.values()){
+			resource.put(resType, 9);
+		}
+		Resource res = Resource.of(resource);
+		playerBoard.setResources(res);
+		fm1.getPlayer().setBoard(playerBoard);
+		gameBoard = new GameBoard();
+		gameModel = new GameModel(gameBoard, players);
+				
+		testGame = new TestGame(gameModel);
 	}
 	
 	@AfterClass
@@ -70,7 +117,10 @@ public class CouncilPalaceTest {
 
 	@Test
 	public void testApplyBonus() {
-		//fail("Not yet implemented");
+		bonus1.setResourceBonus(r);
+		bonus2.setNumberOfCouncilPrivileges(numberOfCouncilPrivileges);
+		bonus2.setDifferent(true);
+		cp.applyBonus(testGame, fm1);
 	}
 
 	@Test

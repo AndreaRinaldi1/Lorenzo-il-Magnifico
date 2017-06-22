@@ -564,6 +564,7 @@ public class TakeCardActionTest {
 			
 	}
 	
+
 	//"io presente" with CardType Venture with coin>3 venture.getMinimumRequiredMilitaryPoints() <= familyMember.getPlayer().getBoard().getResources().getResource().get(ResourceType.MILITARYPOINT)
 	@Test
 	public void testIsApplicableFamMemVenture6() throws IOException {

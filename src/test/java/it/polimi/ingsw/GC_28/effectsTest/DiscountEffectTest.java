@@ -12,6 +12,7 @@ import org.junit.Test;
 
 import it.polimi.ingsw.GC_28.boards.GameBoard;
 import it.polimi.ingsw.GC_28.boards.PlayerBoard;
+import it.polimi.ingsw.GC_28.components.CouncilPrivilege;
 import it.polimi.ingsw.GC_28.components.DiceColor;
 import it.polimi.ingsw.GC_28.components.FamilyMember;
 import it.polimi.ingsw.GC_28.components.Resource;
@@ -35,6 +36,22 @@ public class DiscountEffectTest {
 	private FamilyMember fm;
 	private GameView g;
 	private Player p;
+	private TestGame testGame;
+	
+	private class TestGame extends GameView{
+		public TestGame(GameModel gameModel) {
+			super(gameModel);
+		}
+		
+		@Override
+		public Resource askAlternative(Resource discount1, Resource discount2, String type) {
+			EnumMap<ResourceType, Integer> z = new EnumMap<>(ResourceType.class);
+			z.put(ResourceType.COIN, 0);
+			Resource bonus = Resource.of(z);
+			return bonus;
+		}
+		
+	}
 	
 	@Before
 	public void discountEffect(){
@@ -64,7 +81,7 @@ public class DiscountEffectTest {
 		GameModel gm = new GameModel(gb,players);
 		
 		g = new GameView(gm);
-	
+		testGame = new TestGame(gm);
 		g.setCurrentPlayer(p);
 	}
 	
@@ -83,6 +100,17 @@ public class DiscountEffectTest {
 //		assertEquals(this.fm.getPlayer().getBoard().get, de);
 	}
 
+	@Test
+	public void testApply1() {
+		discount = Resource.of(resource);
+		de.setDiscount(discount);
+		de.setAlternativeDiscountPresence(true);
+		de.apply(fm, testGame);
+		boolean x = discount.equals(fm.getPlayer().getBoard().getResources());
+		assertFalse(x);
+//		assertEquals(this.fm.getPlayer().getBoard().get, de);
+	}
+	
 	@Test
 	public void testGetAlternativeDiscount() {
 		alternativeDiscount = Resource.of(resource1);
