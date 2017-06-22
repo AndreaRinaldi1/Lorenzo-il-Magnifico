@@ -382,19 +382,9 @@ public class TakeCardActionApplyTest {
 		throughEffect.setDiscountPresence(true);
 		throughEffect.setDiscount(discount );
 		takeCard.setThroughEffect(throughEffect );
-<<<<<<< HEAD
 		if(takeCard.isApplicable()){
 			takeCard.apply();
 		}
-		
-=======
-		takeCard.isApplicable();
-		takeCard.apply();
-<<<<<<< HEAD
-	
-=======
->>>>>>> 880ac9d6da364de38738ab112c3e1e3639b3fde7
->>>>>>> 4a0fd55e2047a5526293eefce5015d548c8a2f5b
 	}*/
 	
 	//take Character Card
