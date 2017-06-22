@@ -348,7 +348,7 @@ public class TakeCardActionApplyTest {
 		gameM.setView(game);
 		BoardSetup bs = new BoardSetup(gameM);
 		bs.firstSetUpCards();
-			
+		bi.initFinalBonus();
 		for(ResourceType resType : ResourceType.values()){
 			resources.put(resType, 9);
 		}
@@ -374,6 +374,7 @@ public class TakeCardActionApplyTest {
 		throughEffect.setDiscountPresence(true);
 		throughEffect.setDiscount(discount );
 		takeCard.setThroughEffect(throughEffect );
+		
 		takeCard.isApplicable();
 		takeCard.apply();
 	}
