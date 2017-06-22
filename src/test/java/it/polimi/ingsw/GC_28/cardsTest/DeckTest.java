@@ -40,7 +40,7 @@ public class DeckTest {
 	private HarvestEffect permanentEffect;
 	private Building b = new Building("Palazzo", 42, 1);
 	private Character c = new Character("Ciccio", 41, 1);
-	private Venture v = new Venture("Ammazzo Tutti", 66, 2);
+	private Venture v = new Venture("Lala", 66, 2);
 
 	private	List<Effect> immediateEffect = new ArrayList<>();
 	private ResourceEffect testEffect = new ResourceEffect();
