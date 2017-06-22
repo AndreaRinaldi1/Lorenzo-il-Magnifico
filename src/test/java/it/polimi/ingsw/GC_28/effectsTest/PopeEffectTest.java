@@ -1,12 +1,15 @@
 package it.polimi.ingsw.GC_28.effectsTest;
 
+
 import static org.junit.Assert.*;
+
 
 import java.util.ArrayList;
 import java.util.EnumMap;
 import java.util.List;
 
 import org.junit.AfterClass;
+
 import org.junit.Before;
 import org.junit.Test;
 
@@ -23,6 +26,7 @@ import it.polimi.ingsw.GC_28.model.PlayerColor;
 import it.polimi.ingsw.GC_28.view.GameView;
 
 public class PopeEffectTest {
+
 
 	private PopeEffect popeEffect;
 	

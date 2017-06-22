@@ -9,14 +9,16 @@
       "permanentEffect": {
         "harvestValue": 1,
         "resourceHarvestBonus": {
-          "resource": {
-            "COIN": 1,
-            "WOOD": 0,
-            "STONE": 0,
-            "SERVANT": 0,
-            "MILITARYPOINT": 0,
-            "VICTORYPOINT": 0,
-            "FAITHPOINT": 0
+            "resourceBonus":{
+              "resource": {
+                "COIN": 1,
+                "WOOD": 0,
+                "STONE": 0,
+                "SERVANT": 0,
+                "MILITARYPOINT": 0,
+                "VICTORYPOINT": 0,
+                "FAITHPOINT": 0
+             }
           }
         },
         "type": "HARVESTEFFECT"
@@ -52,6 +54,7 @@
       "permanentEffect": {
         "harvestValue": 2,
         "resourceHarvestBonus": {
+        "resourceBonus":{
           "resource": {
             "COIN": 0,
             "WOOD": 1,
@@ -61,7 +64,8 @@
             "VICTORYPOINT": 0,
             "FAITHPOINT": 0
           }
-        },
+        }
+      },
         "type": "HARVESTEFFECT"
       },
       "name": "Bosco",
@@ -84,14 +88,16 @@
       "permanentEffect": {
         "harvestValue": 3,
         "resourceHarvestBonus": {
-          "resource": {
-            "COIN": 1,
-            "WOOD": 0,
-            "STONE": 0,
-            "SERVANT": 1,
-            "MILITARYPOINT": 0,
-            "VICTORYPOINT": 0,
-            "FAITHPOINT": 0
+            "resourceBonus":{
+              "resource": {
+                "COIN": 1,
+                "WOOD": 0,
+                "STONE": 0,
+                "SERVANT": 1,
+                "MILITARYPOINT": 0,
+                "VICTORYPOINT": 0,
+                "FAITHPOINT": 0
+              }
           }
         },
         "type": "HARVESTEFFECT"
@@ -127,14 +133,16 @@
       "permanentEffect": {
         "harvestValue": 4,
         "resourceHarvestBonus": {
-          "resource": {
-            "COIN": 0,
-            "WOOD": 0,
-            "STONE": 2,
-            "SERVANT": 0,
-            "MILITARYPOINT": 0,
-            "VICTORYPOINT": 0,
-            "FAITHPOINT": 0
+            "resourceBonus":{
+              "resource": {
+                "COIN": 0,
+                "WOOD": 0,
+                "STONE": 2,
+                "SERVANT": 0,
+                "MILITARYPOINT": 0,
+                "VICTORYPOINT": 0,
+                "FAITHPOINT": 0
+              }
           }
         },
         "type": "HARVESTEFFECT"
@@ -170,14 +178,16 @@
       "permanentEffect": {
         "harvestValue": 5,
         "resourceHarvestBonus": {
-          "resource": {
-            "COIN": 0,
-            "WOOD": 3,
-            "STONE": 0,
-            "SERVANT": 0,
-            "MILITARYPOINT": 0,
-            "VICTORYPOINT": 0,
-            "FAITHPOINT": 0
+        "resourceBonus":{
+              "resource": {
+                "COIN": 0,
+                "WOOD": 3,
+                "STONE": 0,
+                "SERVANT": 0,
+                "MILITARYPOINT": 0,
+                "VICTORYPOINT": 0,
+                "FAITHPOINT": 0
+              }
           }
         },
         "type": "HARVESTEFFECT"
@@ -213,14 +223,16 @@
       "permanentEffect": {
         "harvestValue": 6,
         "resourceHarvestBonus": {
-          "resource": {
-            "COIN": 0,
-            "WOOD": 0,
-            "STONE": 1,
-            "SERVANT": 0,
-            "MILITARYPOINT": 0,
-            "VICTORYPOINT": 0,
-            "FAITHPOINT": 1
+            "resourceBonus":{
+              "resource": {
+                "COIN": 0,
+                "WOOD": 0,
+                "STONE": 1,
+                "SERVANT": 0,
+                "MILITARYPOINT": 0,
+                "VICTORYPOINT": 0,
+                "FAITHPOINT": 1
+              }
           }
         },
         "type": "HARVESTEFFECT"
@@ -245,15 +257,17 @@
       "permanentEffect": {
         "harvestValue": 5,
         "resourceHarvestBonus": {
-          "resource": {
-            "COIN": 0,
-            "WOOD": 0,
-            "STONE": 1,
-            "SERVANT": 0,
-            "MILITARYPOINT": 2,
-            "VICTORYPOINT": 0,
-            "FAITHPOINT": 0
-          }
+            "resourceBonus":{
+              "resource": {
+                "COIN": 0,
+                "WOOD": 0,
+                "STONE": 1,
+                "SERVANT": 0,
+                "MILITARYPOINT": 2,
+                "VICTORYPOINT": 0,
+                "FAITHPOINT": 0
+              }
+           }
         },
         "type": "HARVESTEFFECT"
       },
@@ -325,14 +339,16 @@
       "permanentEffect": {
         "harvestValue": 1,
         "resourceHarvestBonus": {
-          "resource": {
-            "COIN": 2,
-            "WOOD": 0,
-            "STONE": 0,
-            "SERVANT": 0,
-            "MILITARYPOINT": 0,
-            "VICTORYPOINT": 0,
-            "FAITHPOINT": 0
+            "resourceBonus": {
+              "resource": {
+                "COIN": 2,
+                "WOOD": 0,
+                "STONE": 0,
+                "SERVANT": 0,
+                "MILITARYPOINT": 0,
+                "VICTORYPOINT": 0,
+                "FAITHPOINT": 0
+              }
           }
         },
         "type": "HARVESTEFFECT"
@@ -368,14 +384,16 @@
       "permanentEffect": {
         "harvestValue": 3,
         "resourceHarvestBonus": {
-          "resource": {
-            "COIN": 0,
-            "WOOD": 2,
-            "STONE": 0,
-            "SERVANT": 0,
-            "MILITARYPOINT": 1,
-            "VICTORYPOINT": 0,
-            "FAITHPOINT": 0
+            "resourceBonus":{
+              "resource": {
+                "COIN": 0,
+                "WOOD": 2,
+                "STONE": 0,
+                "SERVANT": 0,
+                "MILITARYPOINT": 1,
+                "VICTORYPOINT": 0,
+                "FAITHPOINT": 0
+              }
           }
         },
         "type": "HARVESTEFFECT"
@@ -411,15 +429,17 @@
       "permanentEffect": {
         "harvestValue": 4,
         "resourceHarvestBonus": {
-          "resource": {
-            "COIN": 0,
-            "WOOD": 0,
-            "STONE": 2,
-            "SERVANT": 1,
-            "MILITARYPOINT": 0,
-            "VICTORYPOINT": 0,
-            "FAITHPOINT": 0
-          }
+            "resourceBonus":{
+              "resource": {
+                "COIN": 0,
+                "WOOD": 0,
+                "STONE": 2,
+                "SERVANT": 1,
+                "MILITARYPOINT": 0,
+                "VICTORYPOINT": 0,
+                "FAITHPOINT": 0
+              }
+           }
         },
         "type": "HARVESTEFFECT"
       },
@@ -454,15 +474,17 @@
       "permanentEffect": {
         "harvestValue": 3,
         "resourceHarvestBonus": {
-          "resource": {
-            "COIN": 0,
-            "WOOD": 0,
-            "STONE": 3,
-            "SERVANT": 0,
-            "MILITARYPOINT": 0,
-            "VICTORYPOINT": 0,
-            "FAITHPOINT": 0
-          }
+            "resourceBonus":{
+              "resource": {
+                "COIN": 0,
+                "WOOD": 0,
+                "STONE": 3,
+                "SERVANT": 0,
+                "MILITARYPOINT": 0,
+                "VICTORYPOINT": 0,
+                "FAITHPOINT": 0
+              }
+            }
         },
         "type": "HARVESTEFFECT"
       },
@@ -497,14 +519,16 @@
       "permanentEffect": {
         "harvestValue": 4,
         "resourceHarvestBonus": {
-          "resource": {
-            "COIN": 1,
-            "WOOD": 2,
-            "STONE": 0,
-            "SERVANT": 0,
-            "MILITARYPOINT": 0,
-            "VICTORYPOINT": 0,
-            "FAITHPOINT": 0
+            "resourceBonus":{
+              "resource": {
+                "COIN": 1,
+                "WOOD": 2,
+                "STONE": 0,
+                "SERVANT": 0,
+                "MILITARYPOINT": 0,
+                "VICTORYPOINT": 0,
+                "FAITHPOINT": 0
+              }
           }
         },
         "type": "HARVESTEFFECT"
@@ -540,14 +564,16 @@
       "permanentEffect": {
         "harvestValue": 2,
         "resourceHarvestBonus": {
-          "resource": {
-            "COIN": 0,
-            "WOOD": 0,
-            "STONE": 0,
-            "SERVANT": 0,
-            "MILITARYPOINT": 0,
-            "VICTORYPOINT": 0,
-            "FAITHPOINT": 1
+            "resourceBonus":{
+              "resource": {
+                "COIN": 0,
+                "WOOD": 0,
+                "STONE": 0,
+                "SERVANT": 0,
+                "MILITARYPOINT": 0,
+                "VICTORYPOINT": 0,
+                "FAITHPOINT": 1
+              }
           }
         },
         "type": "HARVESTEFFECT"
@@ -572,14 +598,16 @@
       "permanentEffect": {
         "harvestValue": 5,
         "resourceHarvestBonus": {
-          "resource": {
-            "COIN": 0,
-            "WOOD": 0,
-            "STONE": 0,
-            "SERVANT": 2,
-            "MILITARYPOINT": 2,
-            "VICTORYPOINT": 0,
-            "FAITHPOINT": 0
+            "resourceBonus":{
+              "resource": {
+                "COIN": 0,
+                "WOOD": 0,
+                "STONE": 0,
+                "SERVANT": 2,
+                "MILITARYPOINT": 2,
+                "VICTORYPOINT": 0,
+                "FAITHPOINT": 0
+              }
           }
         },
         "type": "HARVESTEFFECT"
@@ -615,14 +643,16 @@
       "permanentEffect": {
         "harvestValue": 6,
         "resourceHarvestBonus": {
-          "resource": {
-            "COIN": 1,
-            "WOOD": 2,
-            "STONE": 1,
-            "SERVANT": 0,
-            "MILITARYPOINT": 0,
-            "VICTORYPOINT": 0,
-            "FAITHPOINT": 0
+            "resourceBonus":{
+              "resource": {
+                "COIN": 1,
+                "WOOD": 2,
+                "STONE": 1,
+                "SERVANT": 0,
+                "MILITARYPOINT": 0,
+                "VICTORYPOINT": 0,
+                "FAITHPOINT": 0
+              }
           }
         },
         "type": "HARVESTEFFECT"
@@ -658,14 +688,16 @@
       "permanentEffect": {
         "harvestValue": 1,
         "resourceHarvestBonus": {
-          "resource": {
-            "COIN": 3,
-            "WOOD": 0,
-            "STONE": 0,
-            "SERVANT": 0,
-            "MILITARYPOINT": 0,
-            "VICTORYPOINT": 0,
-            "FAITHPOINT": 0
+            "resourceBonus":{
+              "resource": {
+                "COIN": 3,
+                "WOOD": 0,
+                "STONE": 0,
+                "SERVANT": 0,
+                "MILITARYPOINT": 0,
+                "VICTORYPOINT": 0,
+                "FAITHPOINT": 0
+              }
           }
         },
         "type": "HARVESTEFFECT"
@@ -701,14 +733,16 @@
       "permanentEffect": {
         "harvestValue": 3,
         "resourceHarvestBonus": {
-          "resource": {
-            "COIN": 0,
-            "WOOD": 2,
-            "STONE": 0,
-            "SERVANT": 0,
-            "MILITARYPOINT": 0,
-            "VICTORYPOINT": 2,
-            "FAITHPOINT": 0
+            "resourceBonus":{
+              "resource": {
+                "COIN": 0,
+                "WOOD": 2,
+                "STONE": 0,
+                "SERVANT": 0,
+                "MILITARYPOINT": 0,
+                "VICTORYPOINT": 2,
+                "FAITHPOINT": 0
+              }
           }
         },
         "type": "HARVESTEFFECT"
@@ -744,14 +778,16 @@
       "permanentEffect": {
         "harvestValue": 5,
         "resourceHarvestBonus": {
-          "resource": {
-            "COIN": 0,
-            "WOOD": 1,
-            "STONE": 0,
-            "SERVANT": 0,
-            "MILITARYPOINT": 0,
-            "VICTORYPOINT": 4,
-            "FAITHPOINT": 0
+            "resourceBonus":{
+              "resource": {
+                "COIN": 0,
+                "WOOD": 1,
+                "STONE": 0,
+                "SERVANT": 0,
+                "MILITARYPOINT": 0,
+                "VICTORYPOINT": 4,
+                "FAITHPOINT": 0
+              }
           }
         },
         "type": "HARVESTEFFECT"
@@ -787,14 +823,16 @@
       "permanentEffect": {
         "harvestValue": 2,
         "resourceHarvestBonus": {
-          "resource": {
-            "COIN": 0,
-            "WOOD": 0,
-            "STONE": 2,
-            "SERVANT": 0,
-            "MILITARYPOINT": 0,
-            "VICTORYPOINT": 1,
-            "FAITHPOINT": 0
+            "resourceBonus":{
+              "resource": {
+                "COIN": 0,
+                "WOOD": 0,
+                "STONE": 2,
+                "SERVANT": 0,
+                "MILITARYPOINT": 0,
+                "VICTORYPOINT": 1,
+                "FAITHPOINT": 0
+              }
           }
         },
         "type": "HARVESTEFFECT"
@@ -881,14 +919,16 @@
       "permanentEffect": {
         "harvestValue": 1,
         "resourceHarvestBonus": {
-          "resource": {
-            "COIN": 1,
-            "WOOD": 0,
-            "STONE": 0,
-            "SERVANT": 0,
-            "MILITARYPOINT": 0,
-            "VICTORYPOINT": 0,
-            "FAITHPOINT": 1
+            "resourceBonus":{
+              "resource": {
+                "COIN": 1,
+                "WOOD": 0,
+                "STONE": 0,
+                "SERVANT": 0,
+                "MILITARYPOINT": 0,
+                "VICTORYPOINT": 0,
+                "FAITHPOINT": 1
+              }
           }
         },
         "type": "HARVESTEFFECT"
@@ -924,19 +964,21 @@
       "permanentEffect": {
         "harvestValue": 4,
         "resourceHarvestBonus": {
-          "resource": {
-            "COIN": 0,
-            "WOOD": 0,
-            "STONE": 0,
-            "SERVANT": 1,
-            "MILITARYPOINT": 3,
-            "VICTORYPOINT": 0,
-            "FAITHPOINT": 0
+            "resourceBonus":{
+              "resource": {
+                "COIN": 0,
+                "WOOD": 0,
+                "STONE": 0,
+                "SERVANT": 1,
+                "MILITARYPOINT": 3,
+                "VICTORYPOINT": 0,
+                "FAITHPOINT": 0
+              }
           }
         },
         "type": "HARVESTEFFECT"
       },
-      "name": "Castello ",
+      "name": "Castello",
       "IDNumber": 23,
       "era": 3,
       "color": {
@@ -967,14 +1009,16 @@
       "permanentEffect": {
         "harvestValue": 2,
         "resourceHarvestBonus": {
-          "resource": {
-            "COIN": 0,
-            "WOOD": 0,
-            "STONE": 0,
-            "SERVANT": 2,
-            "MILITARYPOINT": 1,
-            "VICTORYPOINT": 0,
-            "FAITHPOINT": 0
+            "resourceBonus":{
+              "resource": {
+                "COIN": 0,
+                "WOOD": 0,
+                "STONE": 0,
+                "SERVANT": 2,
+                "MILITARYPOINT": 1,
+                "VICTORYPOINT": 0,
+                "FAITHPOINT": 0
+              }
           }
         },
         "type": "HARVESTEFFECT"
@@ -1961,14 +2005,16 @@
       "permanentEffect": {
         "productionValue": 6,
         "resourceProductionBonus": {
-          "resource": {
-            "COIN": 0,
-            "WOOD": 0,
-            "STONE": 0,
-            "SERVANT": 0,
-            "MILITARYPOINT": 2,
-            "VICTORYPOINT": 2,
-            "FAITHPOINT": 0
+            "resourceBonus":{
+              "resource": {
+                "COIN": 0,
+                "WOOD": 0,
+                "STONE": 0,
+                "SERVANT": 0,
+                "MILITARYPOINT": 2,
+                "VICTORYPOINT": 2,
+                "FAITHPOINT": 0
+              }
           }
         },
         "type": "PRODUCTIONEFFECT"
@@ -2010,15 +2056,17 @@
       "permanentEffect": {
         "productionValue": 2,
         "resourceProductionBonus": {
-          "resource": {
-            "COIN": 5,
-            "WOOD": 0,
-            "STONE": 0,
-            "SERVANT": 0,
-            "MILITARYPOINT": 0,
-            "VICTORYPOINT": 0,
-            "FAITHPOINT": 0
-          }
+            "resourceBonus":{
+              "resource": {
+                "COIN": 5,
+                "WOOD": 0,
+                "STONE": 0,
+                "SERVANT": 0,
+                "MILITARYPOINT": 0,
+                "VICTORYPOINT": 0,
+                "FAITHPOINT": 0
+              }
+            }
         },
         "type": "PRODUCTIONEFFECT"
       },
@@ -2173,7 +2221,7 @@
       },
       "permanentEffect": {
         "productionValue": 5,
-        "resourceBonus": {
+        "resourceProductionBonus": {
           "resourceBonus": {
             "resource": {
               "COIN": 0,

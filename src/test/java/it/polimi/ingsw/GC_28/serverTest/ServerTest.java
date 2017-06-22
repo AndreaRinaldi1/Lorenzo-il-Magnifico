@@ -95,7 +95,15 @@ public class ServerTest {
 					String socketLine = b.readLine();
 					System.out.println(socketLine);
 					p = new PrintStream(sock.getOutputStream());
+<<<<<<< HEAD
 					p.println("Peter");
+=======
+					p.println("rmi");
+					p.flush();
+					String faw = b.readLine();
+					System.out.println(faw);
+					p.println("Bart");
+>>>>>>> 4a0fd55e2047a5526293eefce5015d548c8a2f5b
 					p.flush();
 					String fawd = b.readLine();
 					System.out.println(fawd);
@@ -134,7 +142,15 @@ public class ServerTest {
 					String socketLine = b.readLine();
 					System.out.println(socketLine);
 					p = new PrintStream(sock.getOutputStream());
+<<<<<<< HEAD
 					p.println("peter");
+=======
+					p.println("soc");
+					p.flush();
+					String faw = b.readLine();
+					System.out.println(faw);
+					p.println("Lisa");
+>>>>>>> 4a0fd55e2047a5526293eefce5015d548c8a2f5b
 					p.flush();
 					String fawd = b.readLine();
 					System.out.println(fawd);
@@ -156,11 +172,11 @@ public class ServerTest {
 			}
 		};
 		s.execute(st);
-		s.schedule(a, 2, TimeUnit.SECONDS);
+		s.schedule(a, 1, TimeUnit.SECONDS);
 		System.out.println("partito");
-		s.schedule(b, 4, TimeUnit.SECONDS);
+		s.schedule(b, 2, TimeUnit.SECONDS);
 		try {
-			s.awaitTermination(16, TimeUnit.SECONDS);
+			s.awaitTermination(17, TimeUnit.SECONDS);
 		} catch (InterruptedException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
