@@ -31,6 +31,7 @@ public class ResourceEffect extends Effect{
 	@Override
 	public void apply(FamilyMember familyMember, GameView game) {//FIXME
 		System.out.println("apply di ResourceEffect");
+
 		familyMember.getPlayer().addResource(game.checkResourceExcommunication(resourceBonus));
 		//check for Santa Rita LeaderCard
 		/*for(LeaderCard lc : familyMember.getPlayer().getLeaderCards()){

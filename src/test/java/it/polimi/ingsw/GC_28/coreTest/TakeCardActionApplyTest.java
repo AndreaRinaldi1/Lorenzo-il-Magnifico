@@ -14,26 +14,19 @@ import org.junit.Before;
 import org.junit.Test;
 
 import it.polimi.ingsw.GC_28.boards.Cell;
-import it.polimi.ingsw.GC_28.boards.FinalBonus;
 import it.polimi.ingsw.GC_28.boards.GameBoard;
 import it.polimi.ingsw.GC_28.boards.PlayerBoard;
 import it.polimi.ingsw.GC_28.boards.Tower;
 import it.polimi.ingsw.GC_28.cards.Building;
-import it.polimi.ingsw.GC_28.cards.Card;
-import it.polimi.ingsw.GC_28.cards.CardReader;
 import it.polimi.ingsw.GC_28.cards.CardType;
 import it.polimi.ingsw.GC_28.cards.Character;
-import it.polimi.ingsw.GC_28.cards.Deck;
-import it.polimi.ingsw.GC_28.cards.ExcommunicationTile;
 import it.polimi.ingsw.GC_28.cards.LeaderCard;
-import it.polimi.ingsw.GC_28.cards.Territory;
 import it.polimi.ingsw.GC_28.cards.Venture;
 import it.polimi.ingsw.GC_28.components.DiceColor;
 import it.polimi.ingsw.GC_28.components.FamilyMember;
 import it.polimi.ingsw.GC_28.components.Resource;
 import it.polimi.ingsw.GC_28.components.ResourceType;
 import it.polimi.ingsw.GC_28.core.TakeCardAction;
-import it.polimi.ingsw.GC_28.core.TakeCardController;
 import it.polimi.ingsw.GC_28.effects.DiscountEffect;
 import it.polimi.ingsw.GC_28.effects.Effect;
 import it.polimi.ingsw.GC_28.effects.EffectType;
@@ -95,9 +88,7 @@ public class TakeCardActionApplyTest {
 	private LeaderCard leaderCard = new LeaderCard();
 	private ArrayList<LeaderCard> leaderCards = new ArrayList<>();
 
-	private ExcommunicationTile excommunicationTile = new ExcommunicationTile();
-	private ArrayList<ExcommunicationTile> excommunicationTiles = new ArrayList<>();
-	
+
 	private class TestGame extends GameView{
 		public TestGame(GameModel gameModel) {
 			super(gameModel);
@@ -236,9 +227,7 @@ public class TakeCardActionApplyTest {
 	public void testApply2() throws FileNotFoundException, IOException {
 		v = new Venture("bob", 1, 1);
 		v1 = new Venture("bob", 2, 1);
-		
-		c = new Character("bob", 1, 1);
-		c1 = new Character("bob", 1, 1);
+
 		
 		discount.setAlternativeDiscountPresence(false);
 		discount.setAlternativeDiscount(cost);
@@ -248,6 +237,8 @@ public class TakeCardActionApplyTest {
 		permanentCardEffect.setDiscountPresence(true);
 		permanentCardEffect.setDiscount(discount);
 		
+		c = new Character("sum", 4, 1);
+		c1 = new Character("blink", 18, 2);
 		
 		c.setPermanentEffect(permanentCardEffect);
 		c1.setPermanentEffect(permanentCardEffect);
@@ -354,43 +345,35 @@ public class TakeCardActionApplyTest {
 		gameM.setView(game);
 		BoardSetup bs = new BoardSetup(gameM);
 		bs.firstSetUpCards();
-		bi.initFinalBonus();
+			
 		for(ResourceType resType : ResourceType.values()){
 			resources.put(resType, 9);
 		}
 		Resource res = Resource.of(resources);
-		game.getGameModel().getPlayers().get(0).getBoard().setResources(res);
-		game.getGameModel().getPlayers().get(0).getBoard().addCard((Territory)card0);
-		game.getGameModel().getPlayers().get(0).getBoard().addCard((Territory)card1);
-		game.getGameModel().getPlayers().get(0).getBoard().addCard(c);
-		game.getGameModel().getPlayers().get(0).getBoard().addCard(c1);
-		game.getGameModel().getPlayers().get(0).getBoard().setResources(resource);
-		//player.setBoard(playerBoard);
+		playerBoard.setResources(res);
+		playerBoard.addCard((Territory)card0);
+		playerBoard.addCard((Territory)card1);
+		playerBoard.addCard(c);
+		playerBoard.addCard(c1);
+		playerBoard.setResources(resource);
+		player.setBoard(playerBoard);
 		
-		CardReader cd = new CardReader();
-		Deck d = cd.startRead();
-		game.getGameModel().getGameBoard().setTowers(towers);
-		game.getGameModel().getGameBoard().getTowers().get(CardType.TERRITORY).getCells()[0].setFree(false);
-		game.getGameModel().getGameBoard().getTowers().get(CardType.TERRITORY).getCells()[0].setFamilyMember(familyMember1);
-		game .getGameModel().getGameBoard().getTowers().get(CardType.TERRITORY).getCells()[0].setCard(d.getTerritories().get(1));
-		game.setCurrentPlayer(game.getGameModel().getPlayers().get(0));
+			
+		gameBoard.setTowers(towers);
+		gameBoard.getTowers().get(CardType.TERRITORY).getCells()[0].setFree(false);
+		gameBoard.getTowers().get(CardType.TERRITORY).getCells()[0].setFamilyMember(familyMember1);
+
+	
 		
-		takeCard = new TakeCardAction(game, game.getGameModel());
-		takeCard.setFamilyMember(game.getGameModel().getPlayers().get(0).getFamilyMembers()[0]);
-		takeCard.setName("bosco");
+		takeCard.setFamilyMember(familyMember);
+		takeCard.setName("bob");
 		throughEffect.setCardType(CardType.TERRITORY);
 		throughEffect.setDiscountPresence(true);
 		throughEffect.setDiscount(discount );
 		takeCard.setThroughEffect(throughEffect );
-<<<<<<< HEAD
-		
 		takeCard.isApplicable();
 		takeCard.apply();
-	}
-=======
-		if(takeCard.isApplicable()){
-			takeCard.apply();
-		}
+	
 	}*/
 	
 	//take Character Card
@@ -456,6 +439,7 @@ public class TakeCardActionApplyTest {
 		gameBoard.setTowers(towers);
 		gameBoard.getTowers().get(CardType.CHARACTER).getCells()[0].setFree(false);
 		gameBoard.getTowers().get(CardType.CHARACTER).getCells()[0].setFamilyMember(familyMember1);
+		
 		
 		takeCard.setFamilyMember(familyMember);
 		takeCard.setName("bob");
