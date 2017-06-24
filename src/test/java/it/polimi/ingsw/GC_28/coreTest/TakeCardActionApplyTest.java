@@ -237,6 +237,8 @@ public class TakeCardActionApplyTest {
 		permanentCardEffect.setDiscountPresence(true);
 		permanentCardEffect.setDiscount(discount);
 		
+		c = new Character("sum", 4, 1);
+		c1 = new Character("blink", 18, 2);
 		
 		c.setPermanentEffect(permanentCardEffect);
 		c1.setPermanentEffect(permanentCardEffect);

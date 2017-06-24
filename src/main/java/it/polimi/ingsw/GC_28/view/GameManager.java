@@ -257,6 +257,8 @@ public class GameManager implements Runnable{
 			p.getBoard().getResources().modifyResource(finalBonus.getFinalTerritoriesBonus().get(p.getBoard().getTerritories().size()), true);			
 			p.getBoard().getResources().modifyResource(finalBonus.getFinalCharactersBonus().get(p.getBoard().getCharacters().size()), true);
 			
+			System.out.println("ciao: " + finalBonus.getFinalCharactersBonus().get(p.getBoard().getCharacters().size()));
+			System.out.println("parapa: " +p.getBoard().getCharacters().size());
 			for(Venture v : p.getBoard().getVentures()){
 				p.addResource(v.getPermanentEffect().getResourceBonus());
 			}

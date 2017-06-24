@@ -17,6 +17,7 @@ import org.junit.Test;
 import it.polimi.ingsw.GC_28.boards.GameBoard;
 import it.polimi.ingsw.GC_28.boards.PlayerBoard;
 import it.polimi.ingsw.GC_28.cards.CardType;
+import it.polimi.ingsw.GC_28.cards.Character;
 import it.polimi.ingsw.GC_28.cards.ExcommunicationTile;
 import it.polimi.ingsw.GC_28.cards.Territory;
 import it.polimi.ingsw.GC_28.cards.Venture;
@@ -231,6 +232,7 @@ public class GameManagerTest {
 		BoardSetup bs = new BoardSetup(gameM);
 		bs.firstSetUpCards();
 		gameM.assignBonusForMilitary();
+
 	}
 
 	@Test
@@ -260,13 +262,16 @@ public class GameManagerTest {
 
 	@Test
 	public void testApplyFinalBonus() throws FileNotFoundException, IOException {
+		players.remove(0);
 		GameView game = bi.initializeBoard(players);
 		GameManager gameM = new GameManager();
 		gameM.setView(game);
 		BoardSetup bs = new BoardSetup(gameM);
 		bs.firstSetUpCards();
 		gameM.getView().getGameModel().getPlayers().get(0).getBoard()
-		.addCard((Venture) gameM.getView().getGameModel().getGameBoard().getTowers().get(CardType.VENTURE).getCells()[0].getCard());
+		.addCard((Territory) gameM.getView().getGameModel().getGameBoard().getTowers().get(CardType.TERRITORY).getCells()[0].getCard());
+		gameM.getView().getGameModel().getPlayers().get(0).getBoard()
+		.addCard((Character) gameM.getView().getGameModel().getGameBoard().getTowers().get(CardType.CHARACTER).getCells()[0].getCard());
 		gameM.applyFinalBonus();
 	}
 
