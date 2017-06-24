@@ -2,9 +2,13 @@ package it.polimi.ingsw.GC_28.viewTest;
 
 import static org.junit.Assert.*;
 
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.EnumMap;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -12,15 +16,24 @@ import org.junit.Test;
 
 import it.polimi.ingsw.GC_28.boards.GameBoard;
 import it.polimi.ingsw.GC_28.boards.PlayerBoard;
+import it.polimi.ingsw.GC_28.cards.CardType;
 import it.polimi.ingsw.GC_28.cards.ExcommunicationTile;
+import it.polimi.ingsw.GC_28.cards.Territory;
+import it.polimi.ingsw.GC_28.cards.Venture;
+import it.polimi.ingsw.GC_28.components.DiceColor;
+import it.polimi.ingsw.GC_28.components.FamilyMember;
 import it.polimi.ingsw.GC_28.components.Resource;
 import it.polimi.ingsw.GC_28.components.ResourceType;
 import it.polimi.ingsw.GC_28.effects.Effect;
 import it.polimi.ingsw.GC_28.effects.EffectType;
+import it.polimi.ingsw.GC_28.effects.ModifyDiceEffect;
 import it.polimi.ingsw.GC_28.effects.OtherEffect;
+import it.polimi.ingsw.GC_28.model.BoardSetup;
+import it.polimi.ingsw.GC_28.model.BoardsInitializer;
 import it.polimi.ingsw.GC_28.model.GameModel;
 import it.polimi.ingsw.GC_28.model.Player;
 import it.polimi.ingsw.GC_28.model.PlayerColor;
+import it.polimi.ingsw.GC_28.server.ClientHandler;
 import it.polimi.ingsw.GC_28.view.*;
 
 public class GameManagerTest {
@@ -33,6 +46,8 @@ public class GameManagerTest {
 	private GameBoard gameBoard;
 	private GameModel gameModel;
 	private ArrayList<Player> players = new ArrayList<>();
+	private FamilyMember familyMember;
+	private FamilyMember[] familyMembers = new FamilyMember[1];
 	
 	private PlayerBoard playerBoard;
 	private EnumMap<ResourceType, Integer> resources = new EnumMap<>(ResourceType.class);
@@ -41,11 +56,20 @@ public class GameManagerTest {
 	private Resource resource = Resource.of(resources);
 	private Resource resource1 = Resource.of(resources1);
 	
+	//make excommunication tile for reduce dice effect
+	private ModifyDiceEffect reduceDiceEffect = new ModifyDiceEffect();
+	private ArrayList<DiceColor> diceColors = new ArrayList<>();
+
 	//make excomunication tile for skipped effect
 	private OtherEffect skipRoundEffect = new OtherEffect();
 	private ExcommunicationTile excommunicationTile = new ExcommunicationTile();
+	private ExcommunicationTile excommunicationTile1 = new ExcommunicationTile();
 	private ArrayList<ExcommunicationTile> excommunicationTiles = new ArrayList<>();
 
+	private BoardsInitializer bi = new BoardsInitializer();
+	private HashMap<Player, ClientHandler> handlers = new HashMap<>();
+
+	
 	private class TestGameView extends GameView{
 		public TestGameView(GameModel gameModel) {
 			super(gameModel);
@@ -55,11 +79,51 @@ public class GameManagerTest {
 		public void play() throws IOException, IndexOutOfBoundsException{
 			
 		}
+		
+		@Override
+		public boolean checkSkipped(int currentRound){
+			return false;
+		}
+		
 	}
+	
+	/*
+	private class TestBoardInitializer extends BoardsInitializer{
+		public TestBoardInitializer(){
+			super();
+		}
+		
+		@Override
+		public TestGameView initializeBoard(List<Player> players)throws FileNotFoundException,IOException{
+			//try {
+				this.players  = players;
+				initDices();
+				initCouncilPrivilege();
+				initGameBoard();
+				initSpaces();
+				//gameModel.setGameBoard(gameBoard);
+				initExcommunication();
+				initPlayerBoard();
+				initFinalBonus();
+				initFamilyMember();
+				gameModel = new GameModel(gameBoard, players);
+				placeBonusTile();
+				//gameModel.setPlayers(players);
+				completeExcommunicationArray();
+				initLeaderCard();
+			} catch (FileNotFoundException e) {
+				Logger.getAnonymousLogger().log(Level.SEVERE, "cannot start initialize" + e);
+			}
+			return new TestGameView(gameModel);
+		}
+	}
+	*/
 	
 	@Before
 	public void gameManagerTest(){
 		gameManager = new GameManager();
+		
+		diceColors.add(DiceColor.BLACK);
 		
 		//make 2 new players
 		player = new Player("Gino", PlayerColor.BLUE);
@@ -72,10 +136,13 @@ public class GameManagerTest {
 		resource = Resource.of(resources);
 		resource1 = Resource.of(resources1);
 		
+		reduceDiceEffect.setReduce(1);
+		reduceDiceEffect.setDiceColor(diceColors);
 		skipRoundEffect.setType(EffectType.SKIPROUNDEFFECT);
 		excommunicationTile.setEffect(skipRoundEffect);
+		excommunicationTile1.setEffect(reduceDiceEffect);
 		excommunicationTiles.add(excommunicationTile);
-		
+		excommunicationTiles.add(excommunicationTile1);
 		//make 2 new playerboards for sortBy test
 		playerBoard = new PlayerBoard(null, resource);
 		playerBoard1 = new PlayerBoard(null, resource1);
@@ -89,21 +156,44 @@ public class GameManagerTest {
 		players.add(player1);
 		players.add(player);
 		
+		familyMember = new FamilyMember(player, false, DiceColor.BLACK);
+		familyMembers[0] = familyMember;
+		
 		gameBoard = new GameBoard();
 		gameModel = new GameModel(gameBoard, players);
 		gameView = new TestGameView(gameModel);
+		
+		ClientHandler value = new ClientHandler() {
+			
+			@Override
+			public void send(String message) {
+				
+			}
+			
+			@Override
+			public String receive() {
+				return null;
+			}
+		};
+		handlers.put(player, value );
 		
 	}
 	
 	@AfterClass
 	public static void tearDownAfterClass() throws Exception {
 	}
-
-	@Test
-	public void testRun() {
-		fail("Not yet implemented");
+/*
+	@Test 
+	public void testRun() throws FileNotFoundException, IOException{
+		GameView game = bi.initializeBoard(players);
+		game.setHandlers(handlers);
+		GameManager gameM = new GameManager();
+		gameM.setView(game);
+		BoardSetup bs = new BoardSetup(gameM);
+		bs.firstSetUpCards();
+		gameM.run();
 	}
-
+	*/
 	@Test
 	public void testGetCurrentPeriod() {
 		gameManager.setPeriod(time);
@@ -134,18 +224,25 @@ public class GameManagerTest {
 	}
 
 	@Test
-	public void testAssignBonusForMilitary() {
-		fail("Not yet implemented");
+	public void testAssignBonusForMilitary() throws FileNotFoundException, IOException {
+		GameView game = bi.initializeBoard(players);
+		GameManager gameM = new GameManager();
+		gameM.setView(game);
+		BoardSetup bs = new BoardSetup(gameM);
+		bs.firstSetUpCards();
+		gameM.assignBonusForMilitary();
 	}
 
 	@Test
 	public void testSkipPlayers() {
-		fail("Not yet implemented");
+		gameManager.setView(gameView);
+		this.gameManager.skipPlayers();
 	}
 
 	@Test
 	public void testCheckSkippedPlayers() {
-		gameView.setCurrentPlayer(player);
+		
+		gameView.setCurrentPlayer(player1);
 		gameManager.setPeriod(2);
 		gameManager.setView(gameView);
 		this.gameView.getSkipped().add(player);
@@ -154,17 +251,31 @@ public class GameManagerTest {
 
 	@Test
 	public void testCheckDiceReduction() {
-		fail("Not yet implemented");
+		player.setFamilyMembers(familyMembers);
+		gameView.setCurrentPlayer(player);
+		gameManager.setPeriod(2);
+		gameManager.setView(gameView);
+		this.gameManager.checkDiceReduction();
 	}
 
 	@Test
-	public void testApplyFinalBonus() {
-		fail("Not yet implemented");
+	public void testApplyFinalBonus() throws FileNotFoundException, IOException {
+		GameView game = bi.initializeBoard(players);
+		GameManager gameM = new GameManager();
+		gameM.setView(game);
+		BoardSetup bs = new BoardSetup(gameM);
+		bs.firstSetUpCards();
+		gameM.getView().getGameModel().getPlayers().get(0).getBoard()
+		.addCard((Venture) gameM.getView().getGameModel().getGameBoard().getTowers().get(CardType.VENTURE).getCells()[0].getCard());
+		gameM.applyFinalBonus();
 	}
 
 	@Test
 	public void testApplyFinalMalus() {
-		fail("Not yet implemented");
+		player1.setExcommunicationTile(excommunicationTiles);
+		this.gameManager.setCurrentEra(2);
+		this.gameManager.setView(gameView);
+		this.gameManager.applyFinalMalus();
 	}
 
 }

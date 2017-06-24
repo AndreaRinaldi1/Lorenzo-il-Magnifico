@@ -227,9 +227,7 @@ public class TakeCardActionApplyTest {
 	public void testApply2() throws FileNotFoundException, IOException {
 		v = new Venture("bob", 1, 1);
 		v1 = new Venture("bob", 2, 1);
-		
-		c = new Character("bob", 1, 1);
-		c1 = new Character("bob", 1, 1);
+
 		
 		discount.setAlternativeDiscountPresence(false);
 		discount.setAlternativeDiscount(cost);
