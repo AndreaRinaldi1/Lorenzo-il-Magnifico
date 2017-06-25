@@ -65,7 +65,6 @@ public class SpecialAction extends Action{
 			for(LeaderCard l : player.getLeaderCards()){
 				if(l.getName().equalsIgnoreCase(leaderName)){
 					l.setPlayed(true);
-					System.out.println(l.getName() + l.getPlayed());
 					return;
 				}
 			}
@@ -76,8 +75,7 @@ public class SpecialAction extends Action{
 					if(l.getPlayed()){
 						if(!(l.getActive())){
 							l.setActive(true);
-							if(!(l.getName().equalsIgnoreCase("Sisto IV")) && !(l.getName().equalsIgnoreCase("Santa Rita"))){
-								System.out.println("attivo " + l.getName());
+							if(!(("Sisto IV").equalsIgnoreCase(l.getName())) && !(("Santa Rita").equalsIgnoreCase(l.getName()))){
 								l.getEffect().apply(player, gameView);
 								return;
 								}

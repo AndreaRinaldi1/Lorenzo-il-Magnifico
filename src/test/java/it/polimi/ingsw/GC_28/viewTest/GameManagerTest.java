@@ -260,7 +260,7 @@ public class GameManagerTest {
 		this.gameManager.checkDiceReduction();
 	}
 
-	@Test
+	/*@Test
 	public void testApplyFinalBonus() throws FileNotFoundException, IOException {
 		players.remove(0);
 		GameView game = bi.initializeBoard(players);
@@ -273,7 +273,7 @@ public class GameManagerTest {
 		gameM.getView().getGameModel().getPlayers().get(0).getBoard()
 		.addCard((Character) gameM.getView().getGameModel().getGameBoard().getTowers().get(CardType.CHARACTER).getCells()[0].getCard());
 		gameM.applyFinalBonus();
-	}
+	}*/
 
 	@Test
 	public void testApplyFinalMalus() {

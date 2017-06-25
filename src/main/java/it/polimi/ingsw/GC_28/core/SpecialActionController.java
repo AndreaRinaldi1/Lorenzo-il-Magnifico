@@ -34,7 +34,6 @@ public class SpecialActionController {
 		}else{
 			if("play".equalsIgnoreCase(action.getActionType())){
 				if(!checkPlayAction()){
-					//gameModel.notifyObserver(new Message("you cannot play this Leader card", false));
 					return false;
 				}
 			}else if("activate".equalsIgnoreCase(action.getActionType())){
@@ -62,11 +61,9 @@ public class SpecialActionController {
 				Resource cardResourceCost = l.getResourceCost();
 				Map<CardType,Integer> cardCost = l.getCardCost();
 				if(checkForLucreziaBorgiaCost(l)){
-					//l.setPlayed(true);
 					return true;
 				}
 				else if(enoughResources(cardResourceCost) && enoughCard(cardCost)){
-					//l.setPlayed(true);
 					return true;
 				}
 			}
@@ -79,8 +76,7 @@ public class SpecialActionController {
 			if(l.getName().equalsIgnoreCase(action.getLeaderName())){
 				if(l.getPlayed()){
 					if(!(l.getActive())){
-						if(!(l.getName().equalsIgnoreCase("Sisto IV")) && !(l.getName().equalsIgnoreCase("Santa Rita"))){
-							//l.getEffect().apply(player, );//FIXME change all the possible apply(familyMember,game) to apply(player,game) if possible
+						if(!(("Sisto IV").equalsIgnoreCase(l.getName())) && !(("Santa Rita").equalsIgnoreCase(l.getName()))){
 							return true;
 							}
 					}else{
@@ -88,7 +84,6 @@ public class SpecialActionController {
 						return false;
 					}
 				}else{
-					//handlers.get(currentPlayer).send("You can't activate this card because you've not played it yet");
 					gameModel.notifyObserver(new Message("You can't activate this card because you've not played it yet", false));
 					return false;
 				}
@@ -105,7 +100,6 @@ public class SpecialActionController {
 		}
 		for(ResourceType rt: resourceCost.getResource().keySet()){
 			if(player.getBoard().getResources().getResource().get(rt) < resourceCost.getResource().get(rt)){
-				//handlers.get(player).send("You haven't enough resources to play this Leader");
 				gameModel.notifyObserver(new Message("You haven't enough resources to play this Leader", false));
 				return false;
 			}
@@ -118,22 +112,18 @@ public class SpecialActionController {
 			return true;
 		}
 		if(player.getBoard().getTerritories().size() < cardCost.get(CardType.TERRITORY).intValue()){
-			//handlers.get(currentPlayer).send("You haven't enough Territories cards  to play this Leader");
 			gameModel.notifyObserver(new Message("You haven't enough Territories cards  to play this Leader", false));
 			return false;
 		}
 		if(player.getBoard().getBuildings().size() < cardCost.get(CardType.BUILDING).intValue()){
-			//handlers.get(currentPlayer).send("You haven't enough Building cards  to play this Leader");
 			gameModel.notifyObserver(new Message("You haven't enough Buildings cards  to play this Leader", false));
 			return false;
 		}
 		if(player.getBoard().getCharacters().size() < cardCost.get(CardType.CHARACTER).intValue()){
-			//handlers.get(currentPlayer).send("You haven't enough Characters cards  to play this Leader");
 			gameModel.notifyObserver(new Message("You haven't enough Characters cards  to play this Leader", false));
 			return false;
 		}
 		if(player.getBoard().getVentures().size() < cardCost.get(CardType.VENTURE).intValue()){
-			//handlers.get(currentPlayer).send("You haven't enough Ventures cards  to play this Leader");
 			gameModel.notifyObserver(new Message("You haven't enough Venture cards  to play this Leader", false));
 			return false;
 		}
@@ -151,7 +141,6 @@ public class SpecialActionController {
 			}else if(player.getBoard().getVentures().size() == 6){
 				return true;
 			}else{
-				//handlers.get(currentPlayer).send("You haven't enough card to play thi leader");
 				gameModel.notifyObserver(new Message("You haven't enough card to play thi leader", false));
 				return false;
 			}
