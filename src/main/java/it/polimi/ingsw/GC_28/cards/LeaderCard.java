@@ -1,6 +1,5 @@
 package it.polimi.ingsw.GC_28.cards;
 
-import java.util.EnumMap;
 import java.util.Map;
 
 import it.polimi.ingsw.GC_28.components.Resource;

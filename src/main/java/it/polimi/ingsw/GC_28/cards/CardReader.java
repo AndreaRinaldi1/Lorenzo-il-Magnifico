@@ -29,8 +29,6 @@ import java.lang.reflect.Type;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import javax.swing.SingleSelectionModel;
-
 public class CardReader{
 
     public static void main(String[] args) throws FileNotFoundException{

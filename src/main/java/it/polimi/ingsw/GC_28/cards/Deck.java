@@ -21,37 +21,5 @@ public class Deck {
 	public List<Venture> getVentures() {
 		return ventures;
 	}
-	@Override
-	public String toString(){
-		for(int i = 0; i < territories.size(); i++){
-			System.out.println(this.territories.get(i).toString());
-			for(int j = 0; j < this.territories.get(i).getImmediateEffect().size(); j++){
-				System.out.println(this.territories.get(i).getImmediateEffect().get(j).getClass());
-			}
-			System.out.println(this.territories.get(i).getPermanentEffect().getClass());
-		}
-		for(int i = 0; i < buildings.size(); i++){
-			System.out.println(this.buildings.get(i).toString());
-			System.out.println(this.buildings.get(i).getImmediateEffect().getClass());
-			System.out.println(this.buildings.get(i).getPermanentEffect().getClass());
 
-		}
-		for(int i = 0; i < characters.size(); i++){
-			System.out.println(this.characters.get(i).toString());
-			for(int j = 0; j < this.characters.get(i).getImmediateEffect().size(); j++){
-				System.out.println(this.characters.get(i).getImmediateEffect().get(j).getClass());
-			}
-			System.out.println(this.characters.get(i).getPermanentEffect().getClass());
-
-		}
-		for(int i = 0; i < ventures.size(); i++){
-			System.out.println(this.ventures.get(i).toString());
-			for(int j = 0; j < this.ventures.get(i).getImmediateEffect().size(); j++){
-				System.out.println(this.ventures.get(i).getImmediateEffect().get(j).getClass());
-			}
-			System.out.println(this.ventures.get(i).getPermanentEffect().getClass());
-		}
-		return "";
-		
-	}
 }

@@ -18,14 +18,9 @@ public class PlayerBoard {
 	private List<Building> buildings = new ArrayList<>();
 	private List<Character> characters = new ArrayList<>();
 	private List<Venture> ventures = new ArrayList<>();
-	
-
-	
 	private BonusTile bonusTile;
 	private Resource resources;
-	
-	
-	private String retLine = "------------------------\n";
+	private final String retLine = "------------------------\n";
 	
 	public PlayerBoard(BonusTile bonusTile, Resource resources){
 		this.bonusTile = bonusTile;
@@ -93,14 +88,12 @@ public class PlayerBoard {
 				resources.getResource().get(ResourceType.SERVANT));
 		res.addRule();
 		ret.append(res.render() + "\n");
-		//ret.append(resources.toString()); 
 		ret.append("\n" + retLine);
 		
 		return ret.toString();
 		
 	}
 	
-	//methods in overloading
 	public void addCard(Territory t){ 
 		territories.add(t);
 	}

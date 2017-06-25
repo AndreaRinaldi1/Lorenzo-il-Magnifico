@@ -1,7 +1,6 @@
 package it.polimi.ingsw.GC_28.boards;
 
 import java.util.EnumMap;
-import java.util.HashMap;
 import java.util.Map;
 
 import de.vandermeer.asciitable.AsciiTable;
@@ -9,8 +8,6 @@ import it.polimi.ingsw.GC_28.cards.*;
 import it.polimi.ingsw.GC_28.components.Dice;
 import it.polimi.ingsw.GC_28.components.FamilyMember;
 import it.polimi.ingsw.GC_28.components.Resource;
-import it.polimi.ingsw.GC_28.components.ResourceType;
-import it.polimi.ingsw.GC_28.model.Player;
 import it.polimi.ingsw.GC_28.spaces.CouncilPalace;
 import it.polimi.ingsw.GC_28.spaces.MarketSpace;
 import it.polimi.ingsw.GC_28.spaces.PrivilegesSpace;
@@ -35,13 +32,8 @@ public class GameBoard {
 	
 	private String emptySpace = "( )\n";
 	private String occSpace = "(X)\n";
-	private String bigEmptySpace = "(        )\n";
 	private String bigOccupiedSpace = "XXXXXXX";
-	
-	public GameBoard(){
-		/*empty for testing*/
-	}
-	
+
 
 	public String display(){
 		
@@ -51,23 +43,13 @@ public class GameBoard {
 		AsciiTable at = new AsciiTable();
 		at.addRule();
 		at.addRow("TERRITORY","CHARACTER","BUILDING", "VENTURE");
-		Map<CardType, String> cards = new HashMap<>();
+		Map<CardType, String> cards = new EnumMap<>(CardType.class);
 		for(int i = 3; i >= 0; i--){
 			for(CardType ct : CardType.values()){
 				Cell cell = towers.get(ct).getCells()[i];
 				StringBuilder cardInfo = new StringBuilder();
 				if(cell.getCard() != null){
 					cardInfo.append(cell.getCard().getName());
-					/*if(ct == CardType.VENTURE){
-						Venture v = (Venture) cell.getCard();
-						if(v.getAlternativeCostPresence()){
-							cardInfo.append(v.getMinimumRequiredMilitaryPoints()+ " - " + v.getAlternativeCost().getResource().get(ResourceType.MILITARYPOINT) + " MP\n");
-						}
-					}
-					if(cell.getCard().getCost() != null){
-						cardInfo.append(cell.getCard().getCost().toString());
-					}
-					cards.put(ct,cardInfo.toString());*/
 					cards.put(ct,cardInfo.toString());
 				}
 				else{
@@ -85,12 +67,6 @@ public class GameBoard {
 					cards.get(CardType.CHARACTER),
 					cards.get(CardType.BUILDING), 
 					cards.get(CardType.VENTURE));
-			
-						/*at.addRow( ? towers.get(CardType.TERRITORY).getCells()[i].getCard().getName() :  "***",
-					  towers.get(CardType.CHARACTER).getCells()[i].getCard() != null ?  : "***",
-					  towers.get(CardType.BUILDING).getCells()[i].getCard() != null ? towers.get(CardType.BUILDING).getCells()[i].getCard().getName() :  "***",
-					  towers.get(CardType.VENTURE).getCells()[i].getCard() != null ? towers.get(CardType.VENTURE).getCells()[i].getCard().getName() :  "***" );
-		*/
 		}
 		at.addRule();
 		String board = at.render() + "\n";
@@ -108,24 +84,7 @@ public class GameBoard {
 		councilTable.addRule();
 		String cp = councilTable.render() + "\n";
 		ret.append(cp);
-		/*ret.append("CHURCH\n");
-		AsciiTable church = new AsciiTable();
-		church.addRule();
-		StringBuilder churchString = new StringBuilder();
-		for(Player p : gameBoardChurch.getPlayersMarkers().get(Integer.valueOf(0))){
-			System.out.println(p.getColor());
-		}
-		for(int i = 1 ; i < 16 ; i++){
-			churchString.append(i);
-			for(Player p : gameBoardChurch.getPlayersMarkers().get(Integer.valueOf(i))){
-				churchString.append(" "+ p.getColor());
-			}
-		}
-		church.addRow("1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15");
-		church.addRow(churchString.toString());
-		church.addRule();
-		ret.append(church.render() + "\n");			//ho bisogno delle carte scomunica
-*/		
+		
 		AsciiTable spaces = new AsciiTable();
 		spaces.addRule();
 		spaces.addRow("Coin Space", "Servant Space", "Mixed Space", "Privileges Space");

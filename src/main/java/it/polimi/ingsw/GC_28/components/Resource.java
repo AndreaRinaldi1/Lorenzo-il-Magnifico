@@ -1,26 +1,20 @@
 package it.polimi.ingsw.GC_28.components;
 
-import java.util.EnumMap;
 import java.util.Map;
-import java.util.Set;
 
 public class Resource{
-	//attributes and methods parameters in class Resource need Map and not EnumMap (fromJson's fault)
-	
-	private Map<ResourceType, Integer> resource; 
-	
-	//public Resource(){}; //per le prove, al massimo dopo si toglie o private
-	
+	private Map<ResourceType, Integer> res; 
+		
 	private Resource(Map<ResourceType, Integer> resource){
-		this.resource = resource;
+		this.res = resource;
 	} 
 	
-	public static Resource of(EnumMap<ResourceType, Integer> resource){
+	public static Resource of(Map<ResourceType, Integer> resource){
 		return new Resource(resource);
 	}
 	
 	public Map<ResourceType, Integer> getResource(){
-		return this.resource;
+		return this.res;
 	}
 	
 	public void modifyResource(Resource amount, boolean sum){
@@ -46,19 +40,10 @@ public class Resource{
 	
 	
 	
-	public String toString(){
-		Set<ResourceType> keySet = resource.keySet();
-		StringBuilder s = new StringBuilder();
-		for(ResourceType resType : keySet){
-			if(resource.get(resType) != 0){
-				s.append(resType.name() + ": " + resource.get(resType) +"\n");
-			}
-		}
-		return s.toString();
-	}
 	
-	
-	public boolean equals(Resource otherResource){
+	@Override
+	public boolean equals(Object obj){
+		Resource otherResource = (Resource) obj;
 		Resource shorterResource;
 		Resource longerResource;
 		if(otherResource == null){
@@ -66,7 +51,7 @@ public class Resource{
 		}
 		else{
 			if(!(otherResource.getResource().isEmpty())){
-				if(resource.size() > otherResource.getResource().size()){
+				if(res.size() > otherResource.getResource().size()){
 					shorterResource = otherResource;
 					longerResource = this;
 				}
@@ -91,9 +76,9 @@ public class Resource{
 		}
 	}
 
-	public boolean greaterOrEqual(Resource res) {
-		for(ResourceType rt : res.getResource().keySet()){
-			if(resource.get(rt) < res.getResource().get(rt)){
+	public boolean greaterOrEqual(Resource otherRes) {
+		for(ResourceType rt : otherRes.getResource().keySet()){
+			if(res.get(rt) < otherRes.getResource().get(rt)){
 				return false;
 			}
 		}

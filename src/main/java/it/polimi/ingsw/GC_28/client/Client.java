@@ -8,18 +8,16 @@ import java.util.logging.Logger;
 
 
 public interface Client{
-	
-	static Scanner input = new Scanner(System.in);
-
+	Scanner input = new Scanner(System.in);
 
 	public static void main(String[] args) {
 		try{
 			String connection = askConnectionType();
-			if(connection.equalsIgnoreCase("RMI")){
+			if("RMI".equalsIgnoreCase(connection)){
 				 RMIClient client = new RMIClient();
 				 client.startClient();
 			}
-			else if(connection.equalsIgnoreCase("SOC")){
+			else if("SOC".equalsIgnoreCase(connection)){
 				int port = 1337;
 				SocketClient client = new SocketClient(port);
 				client.startClient();
@@ -39,12 +37,11 @@ public interface Client{
 		do{
 			System.out.println("Do you want to play using Socket or RMI? [SOC/RMI]");
 			connection = input.nextLine();
-			if(connection.equalsIgnoreCase("SOC") || connection.equalsIgnoreCase("RMI")){
+			if("SOC".equalsIgnoreCase(connection) || "RMI".equalsIgnoreCase(connection)){
 				return connection;				
 			}
 			System.out.println("Not valid input!");
 		}while(true);
-
 	}
 	
 

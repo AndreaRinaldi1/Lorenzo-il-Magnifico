@@ -45,7 +45,7 @@ public class Server extends UnicastRemoteObject implements ServerInt{
 
 	private static final long serialVersionUID = 1L;
 	private final int MIN_SIZE = 2;
-	private final int MAX_SIZE = 4;
+	private final int MAX_SIZE = 1;
 	private final int PORT = 1337;
 	transient private ServerSocket serverSocket;
 	transient List<PlayerColor> usedColors = new ArrayList<>();
@@ -162,8 +162,7 @@ public class Server extends UnicastRemoteObject implements ServerInt{
 
 	@Override
 	public void leave(RMIClientInt cli) throws RemoteException {
-		// TODO Auto-generated method stub
-		
+		cli.send("The game has ended");
 	}
 	
 	
@@ -238,7 +237,7 @@ public class Server extends UnicastRemoteObject implements ServerInt{
 						return color;
 					}
 					else{
-						ch.send("This color has already been choosed");
+						ch.send("This color has already been chosen");
 						found = true;
 						break;
 					}

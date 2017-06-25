@@ -42,10 +42,6 @@ public class CouncilPrivilegeTest {
 		assertEquals(this.cp, cp = CouncilPrivilege.instance());
 	}
 	
-	@Test
-	public void testChoose() {
-		assertEquals(this.resourceBonus, this.cp.choose('c'));
-	}
 
 	@Test
 	public void testGetOptions() {

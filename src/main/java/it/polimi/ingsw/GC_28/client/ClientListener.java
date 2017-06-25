@@ -5,7 +5,6 @@ import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.Socket;
 import java.util.*;
-import java.util.concurrent.Future;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -26,12 +25,11 @@ public class ClientListener implements Runnable{
 			do{
 				socketLine = socketIn.readLine();
 				System.out.println(socketLine);
-				if(socketLine.equals("sospeso")){
-					System.out.println("entro");
+				if("suspended".equals(socketLine)){
 					socketOut.println("disconnect");
 					socketOut.flush();
 				}
-			}while(!socketLine.equals("close"));
+			}while(!"close".equals(socketLine));
 		}
 		catch(IOException | IllegalStateException | NoSuchElementException e){
 			Logger.getAnonymousLogger().log(Level.SEVERE,"Cannot receive a message" + e);
@@ -39,10 +37,11 @@ public class ClientListener implements Runnable{
 		finally{
 			try {
 				if(socketIn != null){
+					socket.close();
 					socketIn.close();
 				}
 			} catch (IOException e) {
-				System.err.println(e.getMessage());
+				Logger.getAnonymousLogger().log(Level.SEVERE, "cannot close the socket");
 			}
 		}
 	}
