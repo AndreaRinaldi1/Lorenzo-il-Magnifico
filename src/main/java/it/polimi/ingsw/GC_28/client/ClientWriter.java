@@ -22,7 +22,7 @@ public class ClientWriter implements Runnable{
 		try {
 			socketOut = new PrintWriter(socket.getOutputStream());
 			stdin = new Scanner(System.in);
-			while(true){
+			while(stdin.hasNextLine()){
 				String inputLine = stdin.nextLine();
 				
 				socketOut.println(inputLine);
@@ -35,9 +35,6 @@ public class ClientWriter implements Runnable{
 		finally{
 			try{
 				socket.close();
-				if(stdin != null){
-					stdin.close();
-				}
 				if(socketOut != null){
 					socketOut.close();
 				}

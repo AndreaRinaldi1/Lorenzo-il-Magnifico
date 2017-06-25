@@ -41,11 +41,7 @@ public class Resource{
 	}
 	
 	
-	
-	
-	@Override
-	public boolean equals(Object obj){
-		Resource otherResource = (Resource) obj;
+	public boolean equals(Resource otherResource){
 		Resource shorterResource;
 		Resource longerResource;
 		if(otherResource == null){

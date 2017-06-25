@@ -16,7 +16,7 @@ import it.polimi.ingsw.GC_28.server.ServerInt;
 public class RMIClient extends UnicastRemoteObject implements Client, RMIClientInt, Serializable{
 	transient Scanner input = new Scanner(System.in);
 	private static final long serialVersionUID = 1L;
-	ServerInt server;
+	transient ServerInt server;
 	protected RMIClient() throws RemoteException {
 	}
 
