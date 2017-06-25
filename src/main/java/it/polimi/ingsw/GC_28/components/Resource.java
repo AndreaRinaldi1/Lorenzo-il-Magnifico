@@ -1,20 +1,22 @@
 package it.polimi.ingsw.GC_28.components;
 
+import java.util.EnumMap;
 import java.util.Map;
+import java.util.Set;
 
 public class Resource{
-	private Map<ResourceType, Integer> res; 
+	private Map<ResourceType, Integer> resource; 
 		
 	private Resource(Map<ResourceType, Integer> resource){
-		this.res = resource;
+		this.resource = resource;
 	} 
 	
-	public static Resource of(Map<ResourceType, Integer> resource){
+	public static Resource of(EnumMap<ResourceType, Integer> resource){
 		return new Resource(resource);
 	}
 	
 	public Map<ResourceType, Integer> getResource(){
-		return this.res;
+		return this.resource;
 	}
 	
 	public void modifyResource(Resource amount, boolean sum){
@@ -51,7 +53,7 @@ public class Resource{
 		}
 		else{
 			if(!(otherResource.getResource().isEmpty())){
-				if(res.size() > otherResource.getResource().size()){
+				if(resource.size() > otherResource.getResource().size()){
 					shorterResource = otherResource;
 					longerResource = this;
 				}
@@ -76,9 +78,20 @@ public class Resource{
 		}
 	}
 
+	public String toString(){
+ 		Set<ResourceType> keySet = resource.keySet();
+		StringBuilder s = new StringBuilder();
+ 		for(ResourceType resType : keySet){
+ 			if(resource.get(resType) != 0){
+ 				s.append(resType.name() + ": " + resource.get(resType) +"\n");
+ 			}
+ 		}
+ 		return s.toString();
+ 	}
+	
 	public boolean greaterOrEqual(Resource otherRes) {
 		for(ResourceType rt : otherRes.getResource().keySet()){
-			if(res.get(rt) < otherRes.getResource().get(rt)){
+			if(resource.get(rt) < otherRes.getResource().get(rt)){
 				return false;
 			}
 		}
