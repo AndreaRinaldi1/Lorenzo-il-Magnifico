@@ -118,8 +118,8 @@ public class BoardSetup {
 				int randomInt = ThreadLocalRandom.current().nextInt(0, deck.getCharacters().size());
 				/*the condition check if the era of the randomly selected card is correct and
 				 *  if the card has already been drafted, otherwise the choice of the card is repeated*/
-				if(deck.getCharacters().get(randomInt).getEra() == gameManager.getCurrentEra() && gameManager.getCurrentPeriod() == 1
-						|| deck.getCharacters().get(randomInt).getEra() == (gameManager.getCurrentEra()+1) && gameManager.getCurrentPeriod() == 2){ 
+				if((deck.getCharacters().get(randomInt).getEra() == gameManager.getCurrentEra() && gameManager.getCurrentPeriod() == 1)
+						|| (deck.getCharacters().get(randomInt).getEra() == (gameManager.getCurrentEra()+1) && gameManager.getCurrentPeriod() == 2)){ 
 					Character c = deck.getCharacters().get(randomInt);
 					cell[i].setCard(c);
 					cell[i].setFree(true);

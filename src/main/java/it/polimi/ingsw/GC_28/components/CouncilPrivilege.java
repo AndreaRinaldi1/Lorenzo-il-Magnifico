@@ -17,16 +17,12 @@ public class CouncilPrivilege {
 		}
 		return instance;
 	}
-	
-	public Resource choose(Character c){ //forse non necessario
-		return options.get(c); 
-	}
-	
+
 	public Map<Character, Resource> getOptions() {
 		return options;
 	}
 	
-	public void setOptions(HashMap<Character, Resource> options) {
+	public void setOptions(Map<Character, Resource> options) {
 		this.options = options;
 	}
 	

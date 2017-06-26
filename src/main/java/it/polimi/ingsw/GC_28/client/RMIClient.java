@@ -14,19 +14,27 @@ import java.util.logging.Logger;
 import it.polimi.ingsw.GC_28.server.ServerInt;
 
 public class RMIClient extends UnicastRemoteObject implements Client, RMIClientInt, Serializable{
-
+	transient Scanner input = new Scanner(System.in);
 	private static final long serialVersionUID = 1L;
+	transient ServerInt server;
 	protected RMIClient() throws RemoteException {
 	}
 
-	transient Scanner input = new Scanner(System.in);
 	@Override
 	public void send(String message) {
-		System.out.println(message);
-		if(message.equals("sospeso")){
-			System.out.println("rmi");
+		if("suspended".equals(message)){
+			System.out.println("Type 'reconnect' twice to reconnect");
 		}
-		
+		else if("close".equals(message)){
+			System.out.println("THE END");
+			try{
+				server.leave(this);
+			}
+			catch(RemoteException e){
+				Logger.getAnonymousLogger().log(Level.FINE, "Error in the game ending closing the RMI client");
+			}
+		}
+		System.out.println(message);
 	}
 
 	@Override
@@ -38,13 +46,13 @@ public class RMIClient extends UnicastRemoteObject implements Client, RMIClientI
 	public void startClient() throws IOException {
 		try {
 			Registry reg = LocateRegistry.getRegistry(8080);
-            ServerInt server = (ServerInt) reg.lookup("rmiServer");
+            server = (ServerInt) reg.lookup("rmiServer");
+			System.out.println("Connection Estabilished!");
 			server.join(this);
 		} catch (RemoteException e) {
-			Logger.getAnonymousLogger().log(Level.SEVERE,"Cannor start RMIClient" + e);
+			Logger.getAnonymousLogger().log(Level.SEVERE,"Cannot start RMIClient" + e);
 		} catch (NotBoundException e) {
 			Logger.getAnonymousLogger().log(Level.SEVERE,"Cannot find the registry name to bind to" + e);
-
 		}	
 	}
 

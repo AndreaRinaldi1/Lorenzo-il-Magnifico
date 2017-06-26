@@ -5,7 +5,7 @@ import java.util.EnumMap;
 import it.polimi.ingsw.GC_28.boards.Cell;
 import it.polimi.ingsw.GC_28.boards.FinalBonus;
 import it.polimi.ingsw.GC_28.boards.GameBoard;
-import it.polimi.ingsw.GC_28.boards.Tower;
+
 import it.polimi.ingsw.GC_28.cards.CardType;
 import it.polimi.ingsw.GC_28.components.FamilyMember;
 import it.polimi.ingsw.GC_28.components.Resource;
@@ -27,7 +27,6 @@ public class TakeCardController {
 	private GameModel gameModel;
 	private GameBoard gameBoard;
 	protected CardType cardType;
-	//private Cell cell;
 	private final int MAX_SIZE = 6;
 	
 	public TakeCardController(GameModel gameModel){
@@ -36,43 +35,31 @@ public class TakeCardController {
 	}
 	
 	public boolean check(GameView game, String name, FamilyMember familyMember, TakeCardEffect throughEffect){
-		/*if(throughEffect.equals(null)){ //non ho effetto 
-			cardType = null;
-		}
-		else{
-			if(throughEffect.getCardType().equals(null)){ //con l'effetto posso prendere ogni carta
-				cardType = null;
-			}
-			else{
-				cardType = throughEffect.getCardType(); //con l'effetto posso prendere un solo tipo di carta
-			}
-		}*/
 		if(!(checkCardExistance(name, throughEffect))){
 			gameModel.notifyObserver(new Message("this card doesn't exist", false));
 			return false;
 		}
-		System.out.println("carte esiste");
+	
 		if(checkMoreThanSix(familyMember)){
 			gameModel.notifyObserver(new Message("You already have six cards of the type " + cardType.name().toLowerCase() , false));
 			return false;
 		}
 		
-		System.out.println("non ne ho 6");
 		if(throughEffect == null){
 			if(checkThisPlayerPresent(familyMember)){
 				gameModel.notifyObserver(new Message("You already are in this tower" , false));
 				return false;
 			}
 		}
-		System.out.println("io non presente");
+		
 		if(!(checkResource(game, name,  familyMember, throughEffect))){
 			return false;
 		}
-		System.out.println("ho le risorse");
+		
 		if(!(checkActionValue(game, name, familyMember))){
 			return false;
 		}
-		System.out.println("ho action value");
+		
 		return true;
 	}
 	
@@ -83,9 +70,7 @@ public class TakeCardController {
 	 */
 	private boolean checkCardExistance(String name, TakeCardEffect throughEffect){
 		for(CardType ct : gameBoard.getTowers().keySet()){
-			System.out.println("check card 1");
 			if(gameBoard.getTowers().get(ct).findCard(name) != null){ //se ho trovato la carta
-				System.out.println("check card 2");
 				if(!(throughEffect == null)){ //se ho l'effetto
 					if(throughEffect.getCardType() == null){ //se posso prendere qualunque cardType
 						cardType = ct;
@@ -99,7 +84,6 @@ public class TakeCardController {
 					}
 				}
 				else{
-					System.out.println("check Card 3");
 					cardType = ct; //se non ho l'effetto e ho trovato la cella
 					return true;
 				}
@@ -174,26 +158,14 @@ public class TakeCardController {
 	 * @return true if the player has enough resources to take the card
 	 */
 	private boolean checkResource(GameView game, String cardName, FamilyMember familyMember, TakeCardEffect throughEffect){
-		System.out.println("checkResource 1");
 		if(cardType.equals(CardType.TERRITORY)){
-			System.out.println("checkResource 2");
 			for(int i = 0; i < familyMember.getPlayer().getBoard().getTerritories().size(); i++){
-				System.out.println("checkResourceLoop");
 				if(familyMember.getPlayer().getBoard().getTerritories().size() > 1){
-				//if(familyMember.getPlayer().getBoard().getTerritories().get(i) == null){
 					boolean active = checkForNoMilitaryForTerritoryEffect(familyMember.getPlayer());
-					//System.out.println("controllo valore active" + active);
-					/*for(LeaderCard lc : familyMember.getPlayer().getLeaderCards()){ //check if Cesare Borgia leader is active for the currentPlayer, if so skip the check of his resources requested for territories
-						if(lc.getName().equalsIgnoreCase("Cesare Borgia") && lc.getPlayed() && lc.getActive()){
-							active = true;
-						}
-					}*/
 					if(!active){
-						System.out.println("checkResource 3");
+
 						int size = familyMember.getPlayer().getBoard().getTerritories().size();
 						for(ResourceType resType : FinalBonus.instance().getResourceForTerritories().get(size).getResource().keySet()){
-							System.out.println("checkResource 4");
-							System.out.println(FinalBonus.instance().getResourceForTerritories().get(size).getResource().toString());
 							if(familyMember.getPlayer().getBoard().getResources().getResource().get(resType) < FinalBonus.instance().getResourceForTerritories().get(size+1).getResource().get(resType)){
 								gameModel.notifyObserver(new Message("You don'have the requested resources to take another " + cardType.name().toLowerCase() , false));
 								return false;
@@ -275,7 +247,9 @@ public class TakeCardController {
 		}
 		return true;
 	}
-	
+	/*check if Cesare Borgia leader is active for the currentPlayer,
+	 *  if so skip the check of his resources requested for territories
+	 */
 	private boolean checkForNoMilitaryForTerritoryEffect(Player player){
 		for(LeaderCard ls : player.getLeaderCards()){
 			if(ls.getEffect().getClass().equals(OtherEffect.class)){
@@ -289,7 +263,7 @@ public class TakeCardController {
 	}
 	
 	private boolean checkForNoExtraCostInTowerEffect(Player player){
-		for(LeaderCard lc : player.getLeaderCards()){ //check if current player can avoid to pay the 3 coins FIXME
+		for(LeaderCard lc : player.getLeaderCards()){ //check if current player can avoid to pay the 3 coins 
 			if(lc.getEffect().getClass().equals(OtherEffect.class)){
 				OtherEffect e = (OtherEffect)lc.getEffect();
 				if(e.getType().equals(EffectType.NOEXTRACOSTINTOWEREFFECT) && lc.getPlayed() && lc.getActive()){
@@ -318,32 +292,23 @@ public class TakeCardController {
 	
 	protected void lookForNoCellBonus(GameView game, FamilyMember familyMember, boolean check, Resource tmp, String cardName){
 		boolean noCellBonus = false;
-		System.out.println("nocell 1");
 		for(Character character : familyMember.getPlayer().getBoard().getCharacters()){
 			if(character.getPermanentEffect() instanceof OtherEffect){
-				System.out.println("noCell 2");
 				OtherEffect otherEffect = (OtherEffect) character.getPermanentEffect();
-				System.out.println("noCell 3");
 				if(otherEffect.getType().equals(EffectType.NOCELLBONUS)){
-					System.out.println("noCell 4");
 					noCellBonus = true;
 				}
 			}
 		}
 		if(!noCellBonus){
-			System.out.println("noCell 5");
 			Resource bonus = gameBoard.getTowers().get(cardType).findCard(cardName).getBonus();
-			System.out.println("noCell 6");
 			if(check){
-				System.out.println("nocCell 7");
 				tmp.modifyResource(bonus, true);
 			}
 			else{
-				System.out.println("noCell 8");
 				familyMember.getPlayer().addResource(game.checkResourceExcommunication(bonus));
 			}
 		}
-		System.out.println("noCell 9");
 	}
 	
 	
@@ -437,10 +402,9 @@ public class TakeCardController {
 		return false;
 	}
 	
-	protected void lookForPicoDellaMirandola(FamilyMember familyMember, Resource tmp, GameView game){//FIXME
+	protected void lookForPicoDellaMirandola(FamilyMember familyMember, Resource tmp, GameView game){
 		for(LeaderCard lc : familyMember.getPlayer().getLeaderCards()){//check if the player has the card and  if it's played and activate 
 			if(lc.getName().equalsIgnoreCase("Pico della Mirandola") && lc.getPlayed() && lc.getActive()){
-				System.out.println("Pico della Mirandola");
 				EnumMap<ResourceType, Integer> temp = new EnumMap<>(ResourceType.class);
 				temp.put(ResourceType.COIN, 3);
 				Resource tempResource = Resource.of(temp);

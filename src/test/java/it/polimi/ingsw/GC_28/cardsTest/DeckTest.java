@@ -126,19 +126,4 @@ public class DeckTest {
 				this.d.getVentures().get(0));
 		//fail("Not yet implemented");
 	}
-
-	@Test
-	public void testToString() {
-		s= new String();
-		s.equals(this.d.toString());
-		assertEquals(this.s, this.d.toString());
-	}
-
-	//System.out for a territory card
-/*	public void testTerritoryToString(){
-		this.d.getTerritories().add(t);
-		System.out.println(this.d.getTerritories().toString());
-		
-	}
-	*/
 }

@@ -89,8 +89,7 @@ public class GameManager implements Runnable{
 						}
 						if(timeEnded){
 							t.interrupt();
-							view.getHandlers().get(currentPlayer).send("sospeso");
-							System.out.println("sono passati 15 sec");
+							view.getHandlers().get(currentPlayer).send("suspended");
 							view.getHandlers().get(currentPlayer).send("you have been suspended. Type 'reconnect' to play again");
 							view.getSuspended().add(currentPlayer);
 							new Thread(new Listener(view.getSuspended() ,currentPlayer, view.getHandlers().get(currentPlayer))).start();

@@ -60,11 +60,4 @@ public class FamilyMember {
 		return this.diceColor;
 	}
 	
-	public String toString(){
-		StringBuilder s = new StringBuilder();
-		s.append(" Color: " + diceColor);
-		s.append(" value: " + value);
-		s.append(" used: " + used);
-		return s.toString();
-	}
 }

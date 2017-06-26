@@ -26,14 +26,7 @@ import it.polimi.ingsw.GC_28.effects.ModifyDiceEffect;
 import it.polimi.ingsw.GC_28.effects.ServantEffect;
 
 public class ExcommunicationReader {
-	
-	
-	
-	
-	/*public static void main(String[] args) {
-		ExcommunicationReader reader = new ExcommunicationReader();
-		reader.startRead();
-	}*/
+
 	
 	public List<ExcommunicationTile> startRead()throws IOException{
 		List<ExcommunicationTile> excomm = new ArrayList<>();
@@ -53,14 +46,10 @@ public class ExcommunicationReader {
 				.registerSubtype(FinalReduceEffect.class, "FINALREDUCEEFFECT");
 		
 		Gson gson = new GsonBuilder().registerTypeAdapterFactory(typeFactory).create();
-		
-		//try{
-			JsonReader read = new JsonReader(new FileReader("excommunication.json"));
-			excomm = gson.fromJson(read, requestListTypeToken);
-			read.close();
-		/*}catch(IOException e){
-			Logger.getAnonymousLogger().log(Level.SEVERE, "excommunication file not found"+ e);
-		}*/
+		JsonReader read = new JsonReader(new FileReader("excommunication.json"));
+		excomm = gson.fromJson(read, requestListTypeToken);
+		read.close();
+
 		return excomm;
 	}
 }

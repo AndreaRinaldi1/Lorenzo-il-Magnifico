@@ -5,12 +5,8 @@ import java.util.Map;
 import java.util.Set;
 
 public class Resource{
-	//attributes and methods parameters in class Resource need Map and not EnumMap (fromJson's fault)
-	
 	private Map<ResourceType, Integer> resource; 
-	
-	//public Resource(){}; //per le prove, al massimo dopo si toglie o private
-	
+		
 	private Resource(Map<ResourceType, Integer> resource){
 		this.resource = resource;
 	} 
@@ -42,19 +38,6 @@ public class Resource{
 			x = x + i*amount.getResource().get(resourceType);
 			this.getResource().put(resourceType, x);
 		}
-	}
-	
-	
-	
-	public String toString(){
-		Set<ResourceType> keySet = resource.keySet();
-		StringBuilder s = new StringBuilder();
-		for(ResourceType resType : keySet){
-			if(resource.get(resType) != 0){
-				s.append(resType.name() + ": " + resource.get(resType) +"\n");
-			}
-		}
-		return s.toString();
 	}
 	
 	
@@ -91,9 +74,20 @@ public class Resource{
 		}
 	}
 
-	public boolean greaterOrEqual(Resource res) {
-		for(ResourceType rt : res.getResource().keySet()){
-			if(resource.get(rt) < res.getResource().get(rt)){
+	public String toString(){
+ 		Set<ResourceType> keySet = resource.keySet();
+		StringBuilder s = new StringBuilder();
+ 		for(ResourceType resType : keySet){
+ 			if(resource.get(resType) != 0){
+ 				s.append(resType.name() + ": " + resource.get(resType) +"\n");
+ 			}
+ 		}
+ 		return s.toString();
+ 	}
+	
+	public boolean greaterOrEqual(Resource otherRes) {
+		for(ResourceType rt : otherRes.getResource().keySet()){
+			if(resource.get(rt) < otherRes.getResource().get(rt)){
 				return false;
 			}
 		}
