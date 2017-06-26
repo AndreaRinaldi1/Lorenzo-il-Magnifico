@@ -2,7 +2,6 @@ package it.polimi.ingsw.GC_28.effects;
 
 import java.util.EnumMap;
 
-import it.polimi.ingsw.GC_28.boards.GameBoard;
 import it.polimi.ingsw.GC_28.cards.*;
 import it.polimi.ingsw.GC_28.components.FamilyMember;
 import it.polimi.ingsw.GC_28.components.Resource;

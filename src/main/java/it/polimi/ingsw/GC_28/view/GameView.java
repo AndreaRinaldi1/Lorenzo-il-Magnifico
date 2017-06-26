@@ -119,7 +119,7 @@ public class GameView extends Observable<Action> implements  Observer<Message>{
 		chart.addRow("Position", "Name", "Points");
 		chart.addRule();
 		for(int i = 0; i < gameModel.getPlayers().size(); i++){
-			chart.addRow((i+1) , gameModel.getPlayers().get(i).getName(), gameModel.getPlayers().get(i).getBoard().getResources().getResource().get(ResourceType.VICTORYPOINT));
+			chart.addRow( i+1 , gameModel.getPlayers().get(i).getName(), gameModel.getPlayers().get(i).getBoard().getResources().getResource().get(ResourceType.VICTORYPOINT));
 			chart.addRule();
 		}
 		ret.append(chart.render() + "\n");
@@ -158,8 +158,7 @@ public class GameView extends Observable<Action> implements  Observer<Message>{
 		tracks.addRule();
 		tracks.addRow(church.toString(), military.toString(), victory.toString());
 		tracks.addRule();
-		String ret = tracks.render();
-		return ret;
+		return tracks.render();
 	}
 
 
@@ -639,7 +638,7 @@ public class GameView extends Observable<Action> implements  Observer<Message>{
 			this.notifyObserver(specialAction);
 			handlers.get(currentPlayer).send("Do you want to do another special action?[y/n]");
 			proceed = handlers.get(currentPlayer).receive();
-		}while(!proceed.equalsIgnoreCase("n"));
+		}while(!("n").equalsIgnoreCase(proceed));
 	}
 	
 	
@@ -699,8 +698,6 @@ public class GameView extends Observable<Action> implements  Observer<Message>{
 	
 	@Override
 	public void update() {
-		/*
-		 * never used;
-		 */
+		
 	}
 }

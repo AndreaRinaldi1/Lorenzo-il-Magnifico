@@ -2,7 +2,6 @@ package it.polimi.ingsw.GC_28.effects;
 
 import java.util.ArrayList;
 
-import it.polimi.ingsw.GC_28.boards.GameBoard;
 import it.polimi.ingsw.GC_28.components.*;
 import it.polimi.ingsw.GC_28.model.Player;
 import it.polimi.ingsw.GC_28.view.GameView;

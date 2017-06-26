@@ -9,8 +9,6 @@ import it.polimi.ingsw.GC_28.components.ResourceType;
 import it.polimi.ingsw.GC_28.model.Player;
 import it.polimi.ingsw.GC_28.view.GameView;
 import it.polimi.ingsw.GC_28.cards.Character;
-import it.polimi.ingsw.GC_28.cards.Territory;
-import it.polimi.ingsw.GC_28.cards.Venture;
 
 public class FinalReduceEffect  extends Effect{
 	private CardType cardType;
