@@ -27,14 +27,10 @@ public class RMIClient extends UnicastRemoteObject implements Client, RMIClientI
 		}
 		else if("close".equals(message)){
 			System.out.println("THE END");
-			try{
-				server.leave(this);
-			}
-			catch(RemoteException e){
-				Logger.getAnonymousLogger().log(Level.FINE, "Error in the game ending closing the RMI client");
-			}
 		}
-		System.out.println(message);
+		else{
+			System.out.println(message);
+		}
 	}
 
 	@Override

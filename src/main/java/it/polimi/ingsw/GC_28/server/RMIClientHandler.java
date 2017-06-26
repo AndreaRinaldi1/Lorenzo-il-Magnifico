@@ -20,8 +20,7 @@ public class RMIClientHandler implements ClientHandler {
 			user.send(message);
 		}
 		catch(RemoteException e){
-			Logger.getAnonymousLogger().log(Level.SEVERE,"Cannot send a message" + e);
-
+			Logger.getAnonymousLogger().log(Level.FINE,"Cannot send a message" + e);
 		}
 	}
 	
@@ -32,7 +31,7 @@ public class RMIClientHandler implements ClientHandler {
 			answer = user.receive();
 		}
 		catch(NoSuchElementException | IllegalStateException | RemoteException e){
-			Logger.getAnonymousLogger().log(Level.SEVERE,"Cannot receive a message" + e);
+			Logger.getAnonymousLogger().log(Level.FINE,"Cannot receive a message" + e);
 		}
 		return answer;
 	}

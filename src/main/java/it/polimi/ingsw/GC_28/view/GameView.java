@@ -91,8 +91,6 @@ public class GameView extends Observable<Action> implements  Observer<Message>{
 		this.currentPlayer = currentPlayer;
 	}
 	
-	
-	
 
 	private void display(){
 		for(Player p: gameModel.getPlayers()){
@@ -189,9 +187,6 @@ public class GameView extends Observable<Action> implements  Observer<Message>{
 			else if(("askcost").equalsIgnoreCase(line)){
 				askCost();
 			}
-			else if(("disconnect").equals(line)){
-				return;
-			}
 			else if(("specialaction").equalsIgnoreCase(line)){
 				specialAction();
 			}
@@ -218,13 +213,9 @@ public class GameView extends Observable<Action> implements  Observer<Message>{
 		
 	}
 
-	
-	
-
-	
 
 	public boolean checkSkipped(int currentRound){
-		if(skipped.contains(currentPlayer) && currentRound == 1){ //se è tra i giocatori in skipped allora salta turno
+		if(skipped.contains(currentPlayer) && currentRound == 1){
 			handlers.get(currentPlayer).send("Skipped first turn due to excommunication");
 			return true;
 		}
@@ -290,7 +281,7 @@ public class GameView extends Observable<Action> implements  Observer<Message>{
 	}
 	
 	
-	public ArrayList<Character> askPrivilege(int numberOfCouncilPrivileges, boolean different){
+	public List<Character> askPrivilege(int numberOfCouncilPrivileges, boolean different){
 		handlers.get(currentPlayer).send("Which council privilege do you want?");
 		for(Character key : CouncilPrivilege.instance().getOptions().keySet()){
 			handlers.get(currentPlayer).send("Type " + key + " if you want:");
@@ -356,7 +347,7 @@ public class GameView extends Observable<Action> implements  Observer<Message>{
 		SpaceAction spaceAction = new SpaceAction(this, gameModel);
 		Space chosenSpace;
 		if(!(throughEffect == null)){
-			familyMember = new FamilyMember(currentPlayer, false, null); //familyMember fittizio
+			familyMember = new FamilyMember(currentPlayer, false, null); 
 			familyMember.setValue(throughEffect.getActionValue());
 			if(throughEffect.getSpecificType() == ProdHarvType.HARVEST){
 				chosenSpace = gameModel.getGameBoard().getHarvestSpace();
@@ -458,7 +449,7 @@ public class GameView extends Observable<Action> implements  Observer<Message>{
 			handlers.get(currentPlayer).send("Enter which familyMember you would like to use: [ Orange / Black / White / Neutral ]");
 			String choice = handlers.get(currentPlayer).receive();
 			for(DiceColor color : DiceColor.values()){
-				if(choice.toUpperCase().equals(color.name())){
+				if(choice.equalsIgnoreCase(color.name())){
 					for(FamilyMember familyMember : currentPlayer.getFamilyMembers()){
 						if(familyMember.getDiceColor().equals(color)){
 							if(!familyMember.isUsed()){
@@ -492,7 +483,7 @@ public class GameView extends Observable<Action> implements  Observer<Message>{
 				}
 				int numberOfServants = currentPlayer.getBoard().getResources().getResource().get(ResourceType.SERVANT);
 				if(increment <= numberOfServants){
-					currentPlayer.getBoard().getResources().getResource().put(ResourceType.SERVANT, (numberOfServants-increment));
+					currentPlayer.getBoard().getResources().getResource().put(ResourceType.SERVANT, numberOfServants-increment);
 					modifiedWithServants = true;
 					
 					for(ExcommunicationTile t : currentPlayer.getExcommunicationTile()){ //guardo se tra le scomuniche ha servanteffect
@@ -607,7 +598,7 @@ public class GameView extends Observable<Action> implements  Observer<Message>{
 					p.getExcommunicationTile().get(currentEra -1).setEffect(gameModel.getGameBoard().getExcommunications()[currentEra-1].getEffect());
 				}else{
 					handlers.get(p).send("Do you want to pay to avoid Excommunication?[y/n]");
-					if(handlers.get(p).receive().equalsIgnoreCase("n")){
+					if("n".equalsIgnoreCase(handlers.get(p).receive())){
 						p.getExcommunicationTile().add(currentEra-1, gameModel.getGameBoard().getExcommunications()[currentEra-1]);
 					}else{
 						handlers.get(p).send("You paid to avoid Excommunication, your faith points have been reset to 0");
@@ -696,8 +687,5 @@ public class GameView extends Observable<Action> implements  Observer<Message>{
 		}	
 	}
 	
-	@Override
-	public void update() {
-		
-	}
+	
 }

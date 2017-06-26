@@ -21,6 +21,7 @@ public class PrivilegesSpace extends Space{
 		this.bonus = bonus;
 	}
 
+	@Override
 	public void applyBonus(GameView game, FamilyMember familyMember) {
 		bonus.apply(familyMember, game);
 	}	

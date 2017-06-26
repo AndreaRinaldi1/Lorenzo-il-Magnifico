@@ -29,7 +29,7 @@ public class ExcommunicationReader {
 
 	
 	public List<ExcommunicationTile> startRead()throws IOException{
-		List<ExcommunicationTile> excomm = new ArrayList<>();
+		List<ExcommunicationTile> excomm;
 
 		Type requestListTypeToken = new TypeToken<ArrayList<ExcommunicationTile>>() {}.getType();
 		

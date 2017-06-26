@@ -20,7 +20,7 @@ public class PlayerBoard {
 	private List<Venture> ventures = new ArrayList<>();
 	private BonusTile bonusTile;
 	private Resource resources;
-	private final String retLine = "------------------------\n";
+	private String retLine = "------------------------\n";
 	
 	public PlayerBoard(BonusTile bonusTile, Resource resources){
 		this.bonusTile = bonusTile;

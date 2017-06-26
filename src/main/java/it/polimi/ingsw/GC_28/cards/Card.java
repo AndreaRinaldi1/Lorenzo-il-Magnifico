@@ -25,8 +25,8 @@ public class Card {
 		this.name = name;
 	}
 
-	public void setIDNumber(int IDNumber) {
-		this.idNumber = IDNumber;
+	public void setIDNumber(int iDNumber) {
+		this.idNumber = iDNumber;
 	}
 
 	public void setEra(int era) {

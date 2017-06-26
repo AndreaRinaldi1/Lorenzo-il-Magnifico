@@ -1,6 +1,6 @@
 package it.polimi.ingsw.GC_28.effects;
 
-import java.util.ArrayList;
+import java.util.List;
 
 import it.polimi.ingsw.GC_28.components.*;
 import it.polimi.ingsw.GC_28.model.Player;
@@ -35,7 +35,7 @@ public class PrivilegesEffect extends Effect{
 	@Override
 	public void apply(FamilyMember familyMember, GameView game) {
 		System.out.println("apply di PrivilegesEffect");
-		ArrayList<Character> choices = game.askPrivilege(numberOfCouncilPrivileges, different);
+		List<Character> choices = game.askPrivilege(numberOfCouncilPrivileges, different);
 		for(int i = 0; i < choices.size(); i++){
 			familyMember.getPlayer().addResource(game.checkResourceExcommunication(CouncilPrivilege.instance().getOptions().get(choices.get(i))));
 		}
@@ -44,7 +44,7 @@ public class PrivilegesEffect extends Effect{
 	@Override
 	public void apply(Player player, GameView game) {
 		System.out.println("Ludovico Gonzaga Effect");
-		ArrayList<Character> choices = game.askPrivilege(numberOfCouncilPrivileges, different);
+		List<Character> choices = game.askPrivilege(numberOfCouncilPrivileges, different);
 		for(int i = 0; i<choices.size(); i++ ){
 			player.addResource(game.checkResourceExcommunication(CouncilPrivilege.instance().getOptions().get(choices.get(i))));
 		}

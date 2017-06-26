@@ -1,6 +1,6 @@
 package it.polimi.ingsw.GC_28.core;
 
-import java.util.ArrayList;
+import java.util.List;
 
 
 
@@ -53,7 +53,7 @@ public class SpecialAction extends Action{
 			for(LeaderCard l :player.getLeaderCards()){
 				if(l.getName().equalsIgnoreCase(leaderName)){
 					player.getLeaderCards().remove(l);
-					ArrayList<java.lang.Character> choices = gameView.askPrivilege(1, false);
+					List<java.lang.Character> choices = gameView.askPrivilege(1, false);
 					for(int i = 0; i < choices.size(); i++){
 						player.addResource(gameView.checkResourceExcommunication(CouncilPrivilege.instance().getOptions().get(choices.get(i))));
 					}
