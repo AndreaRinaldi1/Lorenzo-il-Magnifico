@@ -1,6 +1,5 @@
 package it.polimi.ingsw.GC_28.components;
 
-import java.util.EnumMap;
 import java.util.Map;
 import java.util.Set;
 
@@ -11,7 +10,7 @@ public class Resource{
 		this.resource = resource;
 	} 
 	
-	public static Resource of(EnumMap<ResourceType, Integer> resource){
+	public static Resource of(Map<ResourceType, Integer> resource){
 		return new Resource(resource);
 	}
 	
@@ -74,6 +73,7 @@ public class Resource{
 		}
 	}
 
+	@Override
 	public String toString(){
  		Set<ResourceType> keySet = resource.keySet();
 		StringBuilder s = new StringBuilder();

@@ -5,10 +5,6 @@ import it.polimi.ingsw.GC_28.effects.Effect;
 public class ExcommunicationTile {
 	private int era;
 	private Effect effect;
-	
-	public ExcommunicationTile(){
-		
-	}
 
 	public int getEra() {
 		return era;

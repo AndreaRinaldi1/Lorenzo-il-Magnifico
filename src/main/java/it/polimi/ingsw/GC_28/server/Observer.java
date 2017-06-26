@@ -6,5 +6,4 @@ public interface Observer<C> {
 		
 	}
 	
-	public void update();
 }

@@ -1,15 +1,14 @@
 package it.polimi.ingsw.GC_28.spaces;
 
-import java.io.IOException;
 import java.util.ArrayList;
-
+import java.util.List;
 
 import it.polimi.ingsw.GC_28.components.FamilyMember;
 import it.polimi.ingsw.GC_28.view.GameView;
 
 public abstract class Space {
 	private boolean free;
-	private ArrayList<FamilyMember> players = new ArrayList<FamilyMember>();
+	private List<FamilyMember> players = new ArrayList<>();
 	private int actionValue;
 	
 	public Space(){}
@@ -27,7 +26,7 @@ public abstract class Space {
 		this.free = free;
 	}
 
-	public ArrayList<FamilyMember> getPlayer() {
+	public List<FamilyMember> getPlayer() {
 		return players;
 	}
 	

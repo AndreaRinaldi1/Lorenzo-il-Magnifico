@@ -2,7 +2,6 @@ package it.polimi.ingsw.GC_28.components;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.lang.Character;
 
 public class CouncilPrivilege {
 	private Map<Character, Resource> options = new HashMap<>();

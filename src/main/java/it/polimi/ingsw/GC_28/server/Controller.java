@@ -13,12 +13,4 @@ public class Controller implements Observer<Action> {
 		}
 	}
 
-	@Override
-	public void update() {
-		// TODO Auto-generated method stub
-		
-	}
-
-
-	
 }

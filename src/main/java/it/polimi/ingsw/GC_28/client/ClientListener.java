@@ -20,14 +20,14 @@ public class ClientListener implements Runnable{
 		BufferedReader socketIn = null;
 		String socketLine;
 		try{
-			PrintWriter socketOut = new PrintWriter(socket.getOutputStream());
 			socketIn = new BufferedReader(new InputStreamReader(socket.getInputStream()));
 			do{
 				socketLine = socketIn.readLine();
-				System.out.println(socketLine);
 				if("suspended".equals(socketLine)){
-					socketOut.println("disconnect");
-					socketOut.flush();
+					System.out.println("Type 'reconnect' to play again");
+				}
+				else{
+					System.out.println(socketLine);
 				}
 			}while(!"close".equals(socketLine));
 		}

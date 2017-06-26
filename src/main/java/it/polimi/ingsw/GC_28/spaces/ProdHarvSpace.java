@@ -40,12 +40,12 @@ public class ProdHarvSpace extends Space{
 
 	@Override
 	public void addPlayer(FamilyMember player){
-		if(this.isFree() == true){
+		if(this.isFree()){
 			this.firstPlayer = player;
 			this.setFree(false);
 		}
 		else{
-			if(secondarySpace == true){
+			if(secondarySpace){
 				this.getPlayer().add(player);		
 			}
 		}

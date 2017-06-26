@@ -1,7 +1,6 @@
 package it.polimi.ingsw.GC_28.view;
 
 import java.io.IOException;
-import java.util.EnumMap;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -27,56 +26,31 @@ public class GameManager implements Runnable{
 
 	private GameView view;
 	
-	@SuppressWarnings("deprecation")
 	@Override
 	public void run() {
 		setCurrentPlayer(view.getGameModel().getPlayers().get(0));
 		BoardSetup bs = new BoardSetup(this);
-		/*EnumMap<ResourceType, Integer> res = new EnumMap<>(ResourceType.class);//TODO remove this
-		res.put(ResourceType.COIN, 20);
-		res.put(ResourceType.WOOD, 20);
-		res.put(ResourceType.STONE, 20);
-		res.put(ResourceType.SERVANT, 20);
-		res.put(ResourceType.VICTORYPOINT, 20);
-		res.put(ResourceType.MILITARYPOINT, 20);
-		res.put(ResourceType.FAITHPOINT, 10);
-		Resource resources = Resource.of(res);
-		currentPlayer.getBoard().setResources(resources);
-		System.out.println(currentPlayer.getBoard().getResources().toString());*/
 		for(currentEra = 1; currentEra <= 3; currentEra++){
 			skipPlayers();
 			for(currentPeriod = 1; currentPeriod <= 2; currentPeriod++){
 				checkDiceReduction();				
 				for(currentRound = 1; currentRound <= 4; currentRound++){					
 					for(currentTurn = 0; currentTurn < view.getGameModel().getPlayers().size(); currentTurn++){
-						/*try {
-							view.setCurrentPlayer(currentPlayer);
-							if(!view.checkSkipped(currentRound)){
-								view.play();
-							}
-						} catch (IOException e) {
-							Logger.getAnonymousLogger().log(Level.SEVERE,"Cannot play that move in method run()" + e);
-						}
-						if(currentTurn == (view.getGameModel().getPlayers().size()-1)){
-							currentPlayer = view.getGameModel().getPlayers().get(0);
-						}else{
-							currentPlayer = view.getGameModel().getPlayers().get((currentTurn+1));
-						}*/
-						
-						// TIMER CHE "FUNZIONA" SOLO SU PRIMA DOMANDA 
+					
 						boolean timeEnded = false;
-						long time = System.currentTimeMillis() + 16000;
+						long time = System.currentTimeMillis() + 30000;
 						Thread t = new Thread(){
+							@Override
 							public void run(){
 								try {
 									view.setCurrentPlayer(currentPlayer);
-									view.play();
+									if(!view.checkSkipped(currentRound)){
+										view.play();
+									}
 								} catch (IOException e) {
 									Logger.getAnonymousLogger().log(Level.SEVERE,"Cannot play that move in method run()" + e);
-								}
-								catch(IndexOutOfBoundsException ee){
-									System.out.println(ee.getMessage());
-									
+								} catch (IndexOutOfBoundsException e){
+									view.getHandlers().get(currentPlayer).send("Sorry, the last message was not for you. Please go on!");
 								}
 							}
 						};
@@ -89,68 +63,33 @@ public class GameManager implements Runnable{
 						}
 						if(timeEnded){
 							t.interrupt();
+							view.getHandlers().get(currentPlayer).send("\nYou have been suspended.");
 							view.getHandlers().get(currentPlayer).send("suspended");
-							view.getHandlers().get(currentPlayer).send("you have been suspended. Type 'reconnect' to play again");
 							view.getSuspended().add(currentPlayer);
 							new Thread(new Listener(view.getSuspended() ,currentPlayer, view.getHandlers().get(currentPlayer))).start();
-							System.out.println("dentro if(x)");
-							for(Player p : view.getSuspended()){
-								System.out.println(p.getName());
-							}
 						}
 						
 						if(currentTurn == (view.getGameModel().getPlayers().size()-1)){
 							currentPlayer = view.getGameModel().getPlayers().get(0);
 						}else{
-							currentPlayer = view.getGameModel().getPlayers().get((currentTurn+1));
+							currentPlayer = view.getGameModel().getPlayers().get(currentTurn+1);
 						}
-					
-						/*
-						t.start();
-						try {
-							t.join(15000);
-						} catch (InterruptedException e) {
-							System.out.println("sono passati 15 sec");
-							suspended.add(currentPlayer);
-							for(Player p : suspended){
-								System.out.println(p.getName());
-							}
-							handlers.get(currentPlayer).getOut().println("you have been suspended");
-						}
-						finally{
-							System.out.println(5);
-
-							if(currentTurn == (gameModel.getPlayers().size()-1)){
-								currentPlayer = gameModel.getPlayers().get(0);
-							}else{
-								currentPlayer = gameModel.getPlayers().get((currentTurn+1));
-							}
-						}
-							*/	
-						
 					} 	
 				}
 				checkSkippedPlayers();
-				if(!(currentEra == 3 && currentPeriod == 2)){//if it's the third Era and the second period it's evaluate as false;
+				if(!(currentEra == 3 && currentPeriod == 2)){
 					bs.setUpBoard();
 					currentPlayer = view.getGameModel().getPlayers().get(0);
 				}
 			}
-			System.out.println("finito era"+ currentEra);
 			view.giveExcommunication(currentEra);
 		}
-		System.out.println("inizio final bonus");
 		applyFinalBonus();
-		System.out.println("bonus dati, faccio i malus");
 		applyFinalMalus();
-		System.out.println("malus dati, inizio punti militari");
 		sortBy(view.getGameModel().getPlayers(), ResourceType.MILITARYPOINT);
 		assignBonusForMilitary();
 		sortBy(view.getGameModel().getPlayers(), ResourceType.VICTORYPOINT);
-		System.out.println("dichiaro vincitore");
-		view.declareWinner();
-		
-		
+		view.declareWinner();		
 	}
 	
 	public int getCurrentPeriod() {
@@ -169,12 +108,10 @@ public class GameManager implements Runnable{
 		this.currentPeriod = period;
 	}
 	
-
 	public GameView getView() {
 		return view;
 	}
 
-	
 	public void setView(GameView view) {
 		this.view = view;
 	}
@@ -256,8 +193,6 @@ public class GameManager implements Runnable{
 			p.getBoard().getResources().modifyResource(finalBonus.getFinalTerritoriesBonus().get(p.getBoard().getTerritories().size()), true);			
 			p.getBoard().getResources().modifyResource(finalBonus.getFinalCharactersBonus().get(p.getBoard().getCharacters().size()), true);
 			
-			System.out.println("ciao: " + finalBonus.getFinalCharactersBonus().get(p.getBoard().getCharacters().size()));
-			System.out.println("parapa: " +p.getBoard().getCharacters().size());
 			for(Venture v : p.getBoard().getVentures()){
 				p.addResource(v.getPermanentEffect().getResourceBonus());
 			}
@@ -276,14 +211,10 @@ public class GameManager implements Runnable{
 	}
 	
 	public void applyFinalMalus(){
-		System.out.println("entro malus");
 		ExcommunicationTile t;
-		System.out.println("malus loop");
 		for(Player p : view.getGameModel().getPlayers()){
 			t = p.getExcommunicationTile().get(currentEra-2);
-			System.out.println("prima dell'if");
 			if(t.getEffect() != null){
-				System.out.println(t.getEffect());
 				t.getEffect().apply(p, view);
 			}
 		}

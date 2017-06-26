@@ -11,11 +11,7 @@ public class CouncilPalace extends Space{
 	private ResourceEffect bonus1;
 	private PrivilegesEffect bonus2;
 	private static CouncilPalace instance;
-	
-	private CouncilPalace(boolean free, int actionValue) {
-		super(true, actionValue);
-	}
-	
+		
 	private CouncilPalace(){}
 
 	public static CouncilPalace instance(){
