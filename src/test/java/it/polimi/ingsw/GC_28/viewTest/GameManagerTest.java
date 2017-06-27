@@ -233,9 +233,8 @@ public class GameManagerTest {
 		bs.firstSetUpCards();
 		gameM.getView().getGameModel().getPlayers().get(0).getBoard()
 		.addCard((Territory) gameM.getView().getGameModel().getGameBoard().getTowers().get(CardType.TERRITORY).getCells()[0].getCard());
-		
 		gameM.getView().getGameModel().getPlayers().get(0).getBoard()
-		.addCard((Territory) gameM.getView().getGameModel().getGameBoard().getTowers().get(CardType.CHARACTER).getCells()[0].getCard());
+		.addCard((Character) gameM.getView().getGameModel().getGameBoard().getTowers().get(CardType.CHARACTER).getCells()[0].getCard());
 		
 		
 		try{

@@ -337,7 +337,7 @@ public class TakeCardActionTest {
 		card0 = new Territory("bob", 1, 1);
 		card1 = new Territory("bob", 2, 1);
 		cell.setCard((Territory)card0);
-		cell1.setCard((Territory)card1);
+		cell.setCard((Territory)card1);
 		cells[0] = cell;
 		cells[1] = cell1;
 		tower = new Tower(cells);

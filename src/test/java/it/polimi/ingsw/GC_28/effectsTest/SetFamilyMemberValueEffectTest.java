@@ -97,6 +97,72 @@ public class SetFamilyMemberValueEffectTest {
 		this.setValueEffect.apply(player1, testGame);
 	}
 	
+	//Test with Federico da Montefeltro effect
+	@Test
+	public void testApplyPlayerGame3(){
+		colored = true;
+		setValueEffect.setColored(colored);
+		List<LeaderCard> leaderCards = new ArrayList<>();
+		lc.setActive(false);
+		lc.setPlayed(false);
+		leaderCards.add(lc);
+		FamilyMember[] familyMembers = new FamilyMember[1];
+		familyMembers[0] = familyMember1;
+		player1.setFamilyMembers(familyMembers );
+		player1.setLeaderCards(leaderCards );
+		this.setValueEffect.apply(player1, testGame);
+	}
+
+	//Test with Federico da Montefeltro effect
+	@Test
+	public void testApplyPlayerGame5(){
+		colored = true;
+		setValueEffect.setColored(colored);
+		List<LeaderCard> leaderCards = new ArrayList<>();
+		lc.setActive(true);
+		lc.setPlayed(false);
+		leaderCards.add(lc);
+		FamilyMember[] familyMembers = new FamilyMember[1];
+		familyMembers[0] = familyMember1;
+		player1.setFamilyMembers(familyMembers );
+		player1.setLeaderCards(leaderCards );
+		this.setValueEffect.apply(player1, testGame);
+	}
+	
+	//Test with Federico da Montefeltro effect
+	@Test
+	public void testApplyPlayerGame6(){
+		colored = true;
+		setValueEffect.setColored(colored);
+		List<LeaderCard> leaderCards = new ArrayList<>();
+		lc.setActive(false);
+		lc.setPlayed(true);
+		leaderCards.add(lc);
+		FamilyMember[] familyMembers = new FamilyMember[1];
+		familyMembers[0] = familyMember1;
+		player1.setFamilyMembers(familyMembers );
+		player1.setLeaderCards(leaderCards );
+		this.setValueEffect.apply(player1, testGame);
+	}
+	
+	
+	//Test with Federico da Montefeltro effect
+	@Test
+	public void testApplyPlayerGame4(){
+		colored = false;
+		setValueEffect.setColored(colored);
+		List<LeaderCard> leaderCards = new ArrayList<>();
+		lc.setActive(false);
+		lc.setPlayed(false);
+		leaderCards.add(lc);
+		FamilyMember[] familyMembers = new FamilyMember[1];
+		familyMembers[0] = familyMember2;
+		player1.setFamilyMembers(familyMembers );
+		player1.setLeaderCards(leaderCards );
+		this.setValueEffect.apply(player1, testGame);
+	}
+
+	
 	//test without fede da monte effect but colored = true
 	@Test
 	public void testApplyPlayerGame2(){
