@@ -95,6 +95,9 @@ public class TakeCardActionTest {
 	private EnumMap<ResourceType, Integer> resources1 = new EnumMap<>(ResourceType.class);
 	private Resource cost = Resource.of(resources1);
 
+	private EnumMap<ResourceType, Integer> resources2 = new EnumMap<>(ResourceType.class);
+	private Resource resource1 = Resource.of(resources2);
+	
 	private IncrementCardEffect permanentCardEffect;
 	
 	private FamilyMember familyMember;
@@ -148,6 +151,13 @@ public class TakeCardActionTest {
 				
 		testGame = new TestGame(gameModel);
 		takeCard = new TakeCardAction(testGame, gameModel);
+	
+		for(ResourceType resType : ResourceType.values()){
+			resources2.put(resType, 0);
+		}
+		resource1 = Resource.of(resources2);
+		
+		
 	}
 	
 	@AfterClass
@@ -327,7 +337,7 @@ public class TakeCardActionTest {
 		card0 = new Territory("bob", 1, 1);
 		card1 = new Territory("bob", 2, 1);
 		cell.setCard((Territory)card0);
-		cell.setCard((Territory)card1);
+		cell1.setCard((Territory)card1);
 		cells[0] = cell;
 		cells[1] = cell1;
 		tower = new Tower(cells);
@@ -346,9 +356,62 @@ public class TakeCardActionTest {
 		Resource res = Resource.of(resources);
 		playerBoard.setResources(res);
 		playerBoard.addCard((Territory)card0);
+		playerBoard.addCard((Territory)card1);
 		playerBoard.setResources(resource);
 		player.setBoard(playerBoard);
 	
+		
+		gameBoard.setTowers(towers);
+		takeCard.setFamilyMember(familyMember);
+		takeCard.setName("bob");
+		takeCard.setThroughEffect(null);
+		
+		try{
+			takeCard.isApplicable();
+			assertFalse(this.takeCard.isApplicable());
+		}
+		catch(IndexOutOfBoundsException e){
+			Logger.getAnonymousLogger().log(Level.WARNING, "index out of bounds");
+		}	
+		
+	}
+
+	//"io presente" with CardType Territory checkMilitary false
+	@Test
+	public void testIsApplicableFamMem9() throws IOException {
+		card0 = new Territory("bob", 1, 1);
+		card1 = new Territory("bob", 2, 1);
+		cell.setCard((Territory)card0);
+		cell1.setCard((Territory)card1);
+		cells[0] = cell;
+		cells[1] = cell1;
+		tower = new Tower(cells);
+		tower.setCells(cells);
+		towers.put(CardType.TERRITORY, tower);
+			
+		game1 = bi.initializeBoard(players);
+		GameManager gameM = new GameManager();
+		gameM.setView(game1);
+		bs = new BoardSetup(gameM);
+		bs.firstSetUpCards();
+		
+		for(ResourceType resType : ResourceType.values()){
+			resources.put(resType, -1);
+		}
+		Resource res = Resource.of(resources);
+		playerBoard.setResources(res);
+		playerBoard.addCard((Territory)card0);
+		playerBoard.addCard((Territory)card1);
+		playerBoard.setResources(resource);
+		player.setBoard(playerBoard);
+	
+		otherEffect = new OtherEffect();
+		otherEffect.setType(EffectType.NOMILITARYFORTERRITORYEFFECT);
+		leaderCard.setEffect(otherEffect);
+		leaderCards.add(leaderCard);
+		leaderCard.setActive(true);
+		leaderCard.setPlayed(true);
+		player.setLeaderCards(leaderCards);
 		
 		gameBoard.setTowers(towers);
 		takeCard.setFamilyMember(familyMember);
@@ -358,6 +421,7 @@ public class TakeCardActionTest {
 		assertFalse(this.takeCard.isApplicable());
 		
 	}
+	
 	
 	//"io presente" with CardType Venture with coin<3
 	@Test
@@ -615,6 +679,59 @@ public class TakeCardActionTest {
 		assertFalse(this.takeCard.isApplicable());
 			
 	}
+
+	//"io presente" with CardType Venture with coin>3 venture.getMinimumRequiredMilitaryPoints() > familyMember.getPlayer().getBoard().getResources().getResource().get(ResourceType.MILITARYPOINT)
+	@Test
+	public void testIsApplicableFamMemVentureMax() throws IOException {
+		v = new Venture("bob", 1, 1);
+		v1 = new Venture("bob", 2, 1);
+		v1.setCost(resource1);
+		v1.setAlternativeCostPresence(true);
+		v1.setMinimumRequiredMilitaryPoints(700000);
+		
+		cell.setCard(v);
+		cell.setCard(v1);
+		cells[0] = cell;
+		cells[1] = cell1;
+		tower = new Tower(cells);
+		tower.setCells(cells);
+		towers.put(CardType.VENTURE, tower);
+				
+		GameView game = bi.initializeBoard(players);
+		GameManager gameM = new GameManager();
+		gameM.setView(game);
+		BoardSetup bs = new BoardSetup(gameM);
+		bs.firstSetUpCards();
+			
+		for(ResourceType resType : ResourceType.values()){
+			resources.put(resType, 4);
+		}
+		Resource res = Resource.of(resources);
+		playerBoard.setResources(res);
+		playerBoard.addCard(v);
+		playerBoard.addCard(v1);
+		playerBoard.setResources(resource);
+		player.setBoard(playerBoard);
+		
+		otherEffect = new OtherEffect();
+		otherEffect.setType(EffectType.NOEXTRACOSTINTOWEREFFECT);
+		leaderCard.setEffect(otherEffect);
+		leaderCard.setActive(true);
+		leaderCard.setPlayed(true);
+		leaderCards.add(leaderCard);
+		player.setLeaderCards(leaderCards);
+				
+		gameBoard.setTowers(towers);
+		gameBoard.getTowers().get(CardType.VENTURE).getCells()[0].setFree(false);
+		gameBoard.getTowers().get(CardType.VENTURE).getCells()[0].setFamilyMember(familyMember1);
+		takeCard.setFamilyMember(familyMember);
+		takeCard.setName("bob");
+		takeCard.setThroughEffect(null);
+		takeCard.isApplicable();
+		assertFalse(this.takeCard.isApplicable());
+			
+	}
+
 	
 	//"io presente" with CardType character 
 	@Test

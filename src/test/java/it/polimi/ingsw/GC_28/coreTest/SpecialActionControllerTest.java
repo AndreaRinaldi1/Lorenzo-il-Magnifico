@@ -51,6 +51,8 @@ public class SpecialActionControllerTest {
 	
 	private EnumMap<ResourceType, Integer> resources = new EnumMap<>(ResourceType.class);
 	private Resource resource = Resource.of(resources);
+	private EnumMap<ResourceType, Integer> resources1 = new EnumMap<>(ResourceType.class);
+	private Resource resource1 = Resource.of(resources1);
 	private HashMap<CardType, Integer> cardCost = new HashMap<>();
 	private PlayerBoard playerBoard;
 	
@@ -124,6 +126,10 @@ public class SpecialActionControllerTest {
 			resources.put(resType, -1);
 		}
 		resource = Resource.of(resources);
+		for(ResourceType resType : ResourceType.values()){
+			resources1.put(resType, 10);
+		}
+		resource1 = Resource.of(resources1);
 		playerBoard = new PlayerBoard(null, resource);
 		playerBoard.setResources(resource);
 		
@@ -381,6 +387,8 @@ public class SpecialActionControllerTest {
 		assertTrue(x);
 	}
 	
+		
+	
 	//action = Activate activate and played true
 	@Test
 	public void testCheck12() {
@@ -400,6 +408,28 @@ public class SpecialActionControllerTest {
 		boolean x = this.specialAction1.isApplicable();
 		assertFalse(x);
 	}
+
+	//action = Activate activate, no familyMembers
+	@Test
+	public void testCheck15() {
+		this.specialAction1.setActionType("discard");
+		t0 = new Territory("Giacomo", 2, 1);	
+		this.specialAction1.setActionType("activate");
+		cardCost.put(CardType.TERRITORY, 8);
+		cardCost.put(CardType.BUILDING, 0);
+		cardCost.put(CardType.CHARACTER, 0);
+		cardCost.put(CardType.VENTURE, 0);
+		leaderCard.setCardCost(cardCost);
+		leaderCard.setResourceCost(resource);
+		leaderCard.setName("Aldo");
+		leaderCard.setActive(true);
+		leaderCard.setPlayed(true);
+		this.specialAction1.setLeaderName("Aldo");
+		this.gameManager.getView().getGameModel().getPlayers().get(0).getBoard().getTerritories().add(t0);
+		boolean x = this.specialAction1.isApplicable();
+		assertFalse(x);
+	}
+
 	
 	//action = activate played false
 	@Test
@@ -432,14 +462,99 @@ public class SpecialActionControllerTest {
 		cardCost.put(CardType.VENTURE, 0);
 		leaderCard.setCardCost(cardCost);
 		leaderCard.setResourceCost(resource);
-		leaderCard.setName("Aldo");
+		leaderCard.setName("Sisto IV");
 		leaderCard.setActive(false);
 		leaderCard.setPlayed(true);
-		this.specialAction1.setLeaderName("Giovanni");
+		this.specialAction1.setLeaderName("Sisto IV");
 		this.gameManager.getView().getGameModel().getPlayers().get(0).getBoard().getTerritories().add(t0);
 		boolean x = this.specialAction1.isApplicable();
 		assertFalse(x);
 	}
 	
+	//action = discard checkPlayAction = true Lucrezia Borgia Card player.getBoard().getResources().getResource().get(rt) < resourceCost.getResource().get(rt) 
+	@Test
+	public void testCheck16(){
+		v0 = new Venture("Blle", 1, 1);
+		v1 = new Venture("Blle", 1, 1);
+		v2 = new Venture("Blle", 1, 1);
+		
+		this.specialAction1.setActionType("play");
+		cardCost.put(CardType.TERRITORY, 8);
+		cardCost.put(CardType.BUILDING, 0);
+		cardCost.put(CardType.CHARACTER, 0);
+		cardCost.put(CardType.VENTURE, 0);
+		leaderCard.setCardCost(cardCost);
+		leaderCard.setResourceCost(resource1);
+		leaderCard.setName("Lucrezia Borgia");
+		this.specialAction1.setLeaderName("lucrezia borgia");
+		this.gameManager.getView().getGameModel().getPlayers().get(0).getLeaderCards().add(leaderCard1 );
+		this.gameManager.getView().getGameModel().getPlayers().get(0).getBoard().getVentures().add(v0);
+		this.gameManager.getView().getGameModel().getPlayers().get(0).getBoard().getVentures().add(v1);
+		this.gameManager.getView().getGameModel().getPlayers().get(0).getBoard().getVentures().add(v2);
+		boolean x = this.specialAction1.isApplicable();
+		assertFalse(x);
+	}
+
+	//action = discard checkPlayAction = true Lucrezia Borgia Card cost null 
+	@Test
+	public void testCheck17(){
+		v0 = new Venture("Blle", 1, 1);
+		v1 = new Venture("Blle", 1, 1);
+		v2 = new Venture("Blle", 1, 1);
+		
+		this.specialAction1.setActionType("play");
+		leaderCard.setCardCost(null);
+		leaderCard.setResourceCost(null);
+		leaderCard.setName("Lucrezia Borgia");
+		this.specialAction1.setLeaderName("lucrezia borgia");
+		this.gameManager.getView().getGameModel().getPlayers().get(0).getLeaderCards().add(leaderCard1 );
+		this.gameManager.getView().getGameModel().getPlayers().get(0).getBoard().getVentures().add(v0);
+		this.gameManager.getView().getGameModel().getPlayers().get(0).getBoard().getVentures().add(v1);
+		this.gameManager.getView().getGameModel().getPlayers().get(0).getBoard().getVentures().add(v2);
+		boolean x = this.specialAction1.isApplicable();
+		assertTrue(x);
+	}
+
+	//action = discard checkPlayAction = true Lucrezia Borgia Card player.getBoard().getResources().getResource().get(rt) = resourceCost.getResource().get(rt) 
+	@Test
+	public void testCheck18(){
+		v0 = new Venture("Blle", 1, 1);
+		v1 = new Venture("Blle", 1, 1);
+		v2 = new Venture("Blle", 1, 1);
+			
+		this.specialAction1.setActionType("play");
+		cardCost.put(CardType.TERRITORY, 8);
+		cardCost.put(CardType.BUILDING, 0);
+		cardCost.put(CardType.CHARACTER, 0);
+		cardCost.put(CardType.VENTURE, 0);
+		leaderCard.setCardCost(cardCost);
+		leaderCard.setResourceCost(resource);
+		leaderCard.setName("Lucrezia Borgia");
+		this.specialAction1.setLeaderName("lucrezia borgia");
+		this.gameManager.getView().getGameModel().getPlayers().get(0).getLeaderCards().add(leaderCard1 );
+		this.gameManager.getView().getGameModel().getPlayers().get(0).getBoard().getVentures().add(v0);
+		this.gameManager.getView().getGameModel().getPlayers().get(0).getBoard().getVentures().add(v1);
+		this.gameManager.getView().getGameModel().getPlayers().get(0).getBoard().getVentures().add(v2);
+		boolean x = this.specialAction1.isApplicable();
+		assertFalse(x);
+	}
+
+	//action = discard checkPlayAction = true Lucrezia Borgia Card cardCost=null
+	@Test
+	public void testCheck19() {
+		v0 = new Venture("Blle", 1, 1);
+		
+		this.specialAction1.setActionType("play");
+		cardCost.put(CardType.VENTURE, 1);
+		leaderCard.setCardCost(null);
+		leaderCard.setResourceCost(resource);
+		leaderCard.setName("Lucrezia Borgia");
+		this.specialAction1.setLeaderName("lucrezia borgia");
+		this.gameManager.getView().getGameModel().getPlayers().get(0).getLeaderCards().add(leaderCard1 );
+		this.gameManager.getView().getGameModel().getPlayers().get(0).getBoard().getVentures().add(v0);
+		boolean x = this.specialAction1.isApplicable();
+		assertTrue(x);
+	}
+
 	
 }
