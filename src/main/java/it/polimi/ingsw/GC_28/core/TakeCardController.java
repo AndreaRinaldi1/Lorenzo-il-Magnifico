@@ -114,6 +114,8 @@ public class TakeCardController {
 				return true;
 			}
 		break;
+		default:
+			
 		}
 		return false;
 	}
@@ -402,9 +404,9 @@ public class TakeCardController {
 		return false;
 	}
 	
-	protected void lookForPicoDellaMirandola(FamilyMember familyMember, Resource tmp, GameView game){
+	protected void lookForPicoDellaMirandola(FamilyMember familyMember, Resource tmp){
 		for(LeaderCard lc : familyMember.getPlayer().getLeaderCards()){//check if the player has the card and  if it's played and activate 
-			if(lc.getName().equalsIgnoreCase("Pico della Mirandola") && lc.getPlayed() && lc.getActive()){
+			if(("Pico della Mirandola").equalsIgnoreCase(lc.getName()) && lc.getPlayed() && lc.getActive()){
 				EnumMap<ResourceType, Integer> temp = new EnumMap<>(ResourceType.class);
 				temp.put(ResourceType.COIN, 3);
 				Resource tempResource = Resource.of(temp);

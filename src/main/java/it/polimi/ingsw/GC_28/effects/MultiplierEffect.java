@@ -46,12 +46,11 @@ public class MultiplierEffect extends Effect{
 	
 
 	public Resource multiplyResource(int times){
-		EnumMap<ResourceType, Integer> resource = new EnumMap<ResourceType, Integer>(ResourceType.class);
+		EnumMap<ResourceType, Integer> resource = new EnumMap<>(ResourceType.class);
 		for(ResourceType resType : resourceBonus.getResource().keySet()){
 			resource.put(resType, resourceBonus.getResource().get(resType) * times);
 		}
-		Resource amount = Resource.of(resource);
-		return amount;
+		return Resource.of(resource);
 	}
 	
 	@Override
@@ -61,7 +60,6 @@ public class MultiplierEffect extends Effect{
 	
 	@Override
 	public void apply(Player player, GameView game) {
-		System.out.println("apply di MultiplierEffect");
 		if(resourceCost == null){
 			switch(cardType){
 			case TERRITORY:
@@ -75,6 +73,8 @@ public class MultiplierEffect extends Effect{
 				break;
 			case VENTURE:
 				player.addResource(game.checkResourceExcommunication(multiplyResource(player.getBoard().getVentures().size())));
+				break;
+			default:
 				break;
 			}
 		}

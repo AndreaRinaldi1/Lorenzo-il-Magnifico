@@ -49,7 +49,6 @@ public class TakeCardEffect extends Effect{
 
 	@Override
 	public void apply(FamilyMember familyMember, GameView game) {
-		System.out.println("apply di TakeCardEffect");
 		boolean ok = false;
 		do{
 			ok = game.askCard(this);

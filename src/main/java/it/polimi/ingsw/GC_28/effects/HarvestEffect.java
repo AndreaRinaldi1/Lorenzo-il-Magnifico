@@ -42,7 +42,6 @@ public class HarvestEffect extends Effect{
 
 	@Override
 	public void apply(FamilyMember familyMember, GameView game) {
-		System.out.println("apply di HarvestEffect");
 		if(familyMember.getValue() >= harvestValue){
 			if(councilPrivilegeBonus != null){
 				councilPrivilegeBonus.apply(familyMember, game);

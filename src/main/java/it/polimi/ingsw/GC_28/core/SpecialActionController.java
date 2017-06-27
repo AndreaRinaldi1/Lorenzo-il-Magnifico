@@ -22,7 +22,7 @@ public class SpecialActionController {
 		this.action = action;
 	}
 	
-	public boolean check(Player player, GameModel gameModel, SpecialAction action){
+	public boolean check(GameModel gameModel, SpecialAction action){
 		
 		if(!checkForCardPresence()){
 			gameModel.notifyObserver(new Message("You don't have this LeaderCard", false));
@@ -131,7 +131,7 @@ public class SpecialActionController {
 	}
 
 	private boolean checkForLucreziaBorgiaCost(LeaderCard lc) {
-		if(lc.getName().equalsIgnoreCase("Lucrezia Borgia")){
+		if(("Lucrezia Borgia").equalsIgnoreCase(lc.getName())){
 			if(player.getBoard().getTerritories().size() == 6){
 				return true;
 			}else if(player.getBoard().getBuildings().size() == 6){

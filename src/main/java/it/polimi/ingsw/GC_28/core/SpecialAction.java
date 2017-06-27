@@ -42,7 +42,7 @@ public class SpecialAction extends Action{
 	
 	@Override
 	public boolean isApplicable() {
-		if(controller.check(player, gameModel, this)){
+		if(controller.check(gameModel, this)){
 			return true;
 		}
 		return false;

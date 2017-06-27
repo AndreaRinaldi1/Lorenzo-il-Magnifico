@@ -44,23 +44,18 @@ public class TakeCardAction extends Action{
 	public void setThroughEffect(TakeCardEffect throughEffect) {
 		this.throughEffect = throughEffect;
 	}
-	
+	@Override
 	public boolean isApplicable(){
 		return takeCardController.check(game, name, familyMember, throughEffect);
 	}
 	
+	@Override
 	public void apply(){
-		System.out.println("apply");
 		takeCardController.reduce3Coins(familyMember, false, null);
-		System.out.println("step 1");
 		takeCardController.lookForNoCellBonus(game, familyMember, false, null, name);
-		System.out.println("step 2");
 		takeCardController.lookForTakeCardDiscount(familyMember, false, null, game, throughEffect);
-		System.out.println("step 3");
 		takeCardController.lookForIncrementCardDiscount(familyMember, false, null, game);
-		System.out.println("step 4");
 		Cell cell = gameBoard.getTowers().get(takeCardController.cardType).findCard(name);
-		System.out.println("step 5");
 		Resource cardCost;
 		if(cell.getCard() instanceof Venture){
 			Venture venture = (Venture) cell.getCard();
@@ -69,11 +64,8 @@ public class TakeCardAction extends Action{
 		else{
 			cardCost = cell.getCard().getCost();
 		}
-		System.out.println("step 6");
-		takeCardController.lookForPicoDellaMirandola(familyMember, cardCost, game);//modify card cost if pico is present FIXME
-		System.out.println("step 7");
+		takeCardController.lookForPicoDellaMirandola(familyMember, cardCost);//modify card cost if this card is present
 		familyMember.getPlayer().reduceResources(cardCost);
-		System.out.println("step 8");
 		
 		
 		if(throughEffect == null){
@@ -87,13 +79,11 @@ public class TakeCardAction extends Action{
 			for(Effect e : territory.getImmediateEffect()){
 				e.apply(familyMember, game);
 			}
-			System.out.println("territory step");
 		}
 		else if(card instanceof Building){ 
 			Building building = (Building) card;
 			familyMember.getPlayer().getBoard().addCard(building);
 			building.getImmediateEffect().apply(familyMember, game);
-			System.out.println("building step");
 		}
 		else if(card instanceof Character){ 
 			Character character = (Character) card;
@@ -101,7 +91,6 @@ public class TakeCardAction extends Action{
 			for(Effect e : character.getImmediateEffect()){
 				e.apply(familyMember, game);
 			}
-			System.out.println("character step");
 		}
 		else if(card instanceof Venture){ 
 			Venture venture = (Venture) card;
@@ -109,12 +98,9 @@ public class TakeCardAction extends Action{
 			for(Effect e : venture.getImmediateEffect()){
 				e.apply(familyMember, game);
 			}
-			System.out.println("venture step");
 		}
-		System.out.println("step 9");
 		cell.setCard(null);
 		cell.setFree(false);
-		System.out.println("step 10");
 		gameModel.notifyObserver(new Message("Action completed successfully!", true));
 
 	}	

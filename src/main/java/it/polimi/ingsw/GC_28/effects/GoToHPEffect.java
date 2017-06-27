@@ -34,13 +34,11 @@ public class GoToHPEffect extends Effect{
 
 	@Override
 	public void apply(FamilyMember familyMember, GameView game){
-		System.out.println("apply di GoToHPEffect");
 		game.goToSpace(this);
 	}
 	
 	@Override
 	public void apply(Player player, GameView game) {
-		System.out.println("Leader Effect");
 		game.goToSpace(this);
 	}
 	

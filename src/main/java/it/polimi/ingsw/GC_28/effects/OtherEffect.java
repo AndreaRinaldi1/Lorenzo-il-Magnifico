@@ -28,7 +28,6 @@ public class OtherEffect extends Effect{
 
 	@Override
 	public void apply(FamilyMember familyMember, GameView game) {
-		System.out.println("apply di OtherEffect");
 		//Effettivamente questo effetto non ha molto senso perche quando in action faccio apply (dell'azione) se vedo che tra le carte ho un
 		//NoCellBonus, basta che chiamo isPresence per farlo, e se ritorna true, non prendo le risorse in 5 e 7
 	}

@@ -24,6 +24,7 @@ public class ModifyDiceEffect extends Effect{
 		this.reduce = reduce;
 	}
 	
+	@Override
 	public void apply(Player player, GameView game) {
 		for(FamilyMember fm : player.getFamilyMembers()){
 			for(DiceColor color : diceColor){
@@ -31,8 +32,7 @@ public class ModifyDiceEffect extends Effect{
 					fm.modifyValue(reduce);
 				}
 			}
-		}
-	
+		}	
 	}
 	
 }

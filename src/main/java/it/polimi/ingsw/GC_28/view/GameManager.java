@@ -38,7 +38,7 @@ public class GameManager implements Runnable{
 					for(currentTurn = 0; currentTurn < view.getGameModel().getPlayers().size(); currentTurn++){
 					
 						boolean timeEnded = false;
-						long time = System.currentTimeMillis() + 30000;
+						long time = System.currentTimeMillis() + 300000;
 						Thread t = new Thread(){
 							@Override
 							public void run(){
@@ -51,6 +51,7 @@ public class GameManager implements Runnable{
 									Logger.getAnonymousLogger().log(Level.SEVERE,"Cannot play that move in method run()" + e);
 								} catch (IndexOutOfBoundsException e){
 									view.getHandlers().get(currentPlayer).send("Sorry, the last message was not for you. Please go on!");
+									Logger.getAnonymousLogger().log(Level.SEVERE, e.getMessage());
 								}
 							}
 						};

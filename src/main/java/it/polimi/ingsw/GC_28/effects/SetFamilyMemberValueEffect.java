@@ -32,7 +32,8 @@ public class SetFamilyMemberValueEffect extends Effect {
 	public EffectType getType() {
 		return type;
 	}
-
+	
+	@Override
 	public void apply(Player player, GameView game){
 		if(colored){//check if it's federico da monferrato effect
 			for(LeaderCard lc : player.getLeaderCards()){
@@ -58,6 +59,7 @@ public class SetFamilyMemberValueEffect extends Effect {
 		}
 	}
 	
+	@Override
 	public void apply(FamilyMember familyMember, GameView game){
 		this.apply(familyMember.getPlayer(), game);
 	}
