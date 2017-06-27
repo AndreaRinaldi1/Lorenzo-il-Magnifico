@@ -160,4 +160,14 @@ public class SpecialActionTest {
 		assertEquals("Discard", this.specialAction.getActionType());
 	}
 
+	@Test
+	public void testApply3(){
+		this.specialAction1.setActionType("discard");
+		this.specialAction1.apply();
+		this.specialAction1.setActionType("play");
+		this.specialAction1.apply();
+		this.specialAction1.setActionType("activate");
+		this.specialAction1.apply();
+	}
+	
 }

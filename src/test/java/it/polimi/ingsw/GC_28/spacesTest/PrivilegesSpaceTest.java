@@ -12,6 +12,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import it.polimi.ingsw.GC_28.boards.GameBoard;
+import it.polimi.ingsw.GC_28.boards.PlayerBoard;
 import it.polimi.ingsw.GC_28.components.CouncilPrivilege;
 import it.polimi.ingsw.GC_28.components.DiceColor;
 import it.polimi.ingsw.GC_28.components.FamilyMember;
@@ -37,8 +38,42 @@ public class PrivilegesSpaceTest {
 	private	List<Player> players = new ArrayList<>();
 	
 	private GameBoard gameBoard;
-	private GameView game; 
+	private TestGame game; 
 	private GameModel gameModel;
+	
+	EnumMap<ResourceType, Integer> w = new EnumMap<ResourceType, Integer>(ResourceType.class);
+
+	
+	private class TestGame extends GameView{
+		public TestGame(GameModel gameModel) {
+			super(gameModel);
+		}
+		
+		@Override
+		public boolean askPermission(){
+			return true;
+		}
+		
+		@Override
+		public ArrayList<Character> askPrivilege(int numberOfCouncilPrivileges, boolean different){
+			ArrayList<Character> tmp = new ArrayList<>();
+			tmp.add('c');
+			return tmp;
+		}
+		
+		@Override
+		public Resource checkResourceExcommunication(Resource amount){
+			CouncilPrivilege councilPrivilege = CouncilPrivilege.instance();
+			councilPrivilege.setOptions(options);
+			return options.get('c');
+		}
+		
+		@Override
+		public int askAlternativeExchange(Resource firstCost, Resource firstBonus, Resource secondCost, Resource secondBonus){
+			return 1;
+		}
+	}
+	
 	
 	@Before
 	public void privilegesSpace(){
@@ -53,15 +88,22 @@ public class PrivilegesSpaceTest {
 		options.put('c', bonus);
 		cp.setOptions(options);
 		
+		for(ResourceType resType : ResourceType.values()){
+			w.put(resType, 5);
+		}
+		Resource res = Resource.of(w);
+		PlayerBoard pb = new PlayerBoard(null, res);
+	
 		
 		player = new Player("ciao", PlayerColor.GREEN);
 		familyMember = new FamilyMember(player , false, DiceColor.BLACK);
 		players.add(player);
 		gameBoard = new GameBoard();
 		gameModel = new GameModel(gameBoard, players);
-		game = new GameView(gameModel); 
+		game = new TestGame(gameModel); 
 		
 		ps.setBonus(pe);
+		player.setBoard(pb);
 	}
 	
 	
@@ -69,11 +111,11 @@ public class PrivilegesSpaceTest {
 	public static void tearDownAfterClass() throws Exception {
 	}
 
-/*	@Test
+	@Test
 	public void testApplyBonus() {
 		ps.applyBonus(game, familyMember);
 	}
-*/
+
 	@Test
 	public void testGetBonus() {
 		assertEquals(this.pe, 

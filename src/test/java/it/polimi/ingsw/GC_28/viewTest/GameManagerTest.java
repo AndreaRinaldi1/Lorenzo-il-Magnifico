@@ -72,6 +72,8 @@ public class GameManagerTest {
 	private BoardsInitializer bi = new BoardsInitializer();
 	private HashMap<Player, ClientHandler> handlers = new HashMap<>();
 
+	private GameView game;
+	private GameManager gameM;
 	
 	private class TestGameView extends GameView{
 		public TestGameView(GameModel gameModel) {
@@ -265,8 +267,8 @@ public class GameManagerTest {
 	@Test
 	public void testApplyFinalBonus() throws FileNotFoundException, IOException {
 		players.remove(0);
-		GameView game = bi.initializeBoard(players);
-		GameManager gameM = new GameManager();
+		game = bi.initializeBoard(players);
+		gameM = new GameManager();
 		gameM.setView(game);
 		BoardSetup bs = new BoardSetup(gameM);
 		bs.firstSetUpCards();
@@ -274,7 +276,8 @@ public class GameManagerTest {
 		.addCard((Territory) gameM.getView().getGameModel().getGameBoard().getTowers().get(CardType.TERRITORY).getCells()[0].getCard());
 		gameM.getView().getGameModel().getPlayers().get(0).getBoard()
 		.addCard((Character) gameM.getView().getGameModel().getGameBoard().getTowers().get(CardType.CHARACTER).getCells()[0].getCard());
-
+		
+		
 		try{
 			gameM.applyFinalBonus();
 		}

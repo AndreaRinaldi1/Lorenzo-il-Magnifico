@@ -141,7 +141,7 @@ public class SpecialActionController {
 			}else if(player.getBoard().getVentures().size() == 6){
 				return true;
 			}else{
-				gameModel.notifyObserver(new Message("You haven't enough card to play thi leader", false));
+				gameModel.notifyObserver(new Message("You haven't enough card to play this leader", false));
 				return false;
 			}
 		}

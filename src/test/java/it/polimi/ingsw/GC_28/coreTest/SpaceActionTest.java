@@ -261,7 +261,9 @@ public class SpaceActionTest {
 		incrementHPEffect.setIncrement(actionValue);
 		incrementHPEffect.setType(EffectType.INCREMENTPRODUCTIONEFFECT);
 		excommProduction.setEffect(incrementHPEffect);
-
+		characterCard.setPermanentEffect(incrementHPEffect );
+		familyMember.getPlayer().getBoard().getCharacters().add(characterCard );
+		
 		Building buildingCard = new Building("ciao", 2, 1);
 		ProductionEffect productionEffect = new ProductionEffect();
 		productionEffect.setResourceBonus(effect);
@@ -279,7 +281,8 @@ public class SpaceActionTest {
 		prodHarvSpace.setSecondarySpace(true);
 		spaceActionTest.setSpace(prodHarvSpace);
 		spaceActionTest.apply();
-		boolean x = this.familyMember.getValue()==6;
+		System.out.println(this.familyMember.getValue());
+		boolean x = this.familyMember.getValue()==9;
 		assertTrue(x);
 	}
 
