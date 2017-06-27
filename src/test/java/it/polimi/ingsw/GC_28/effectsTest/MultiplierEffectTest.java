@@ -194,6 +194,7 @@ public class MultiplierEffectTest {
 		assertTrue(x);
 	}
 	
+	
 	//TEST OF APPLY(PLAYER, GAME) CON RESOURCE COST
 	@Test
 	public void testApply4() {
@@ -207,6 +208,28 @@ public class MultiplierEffectTest {
 		assertTrue(x);
 	}
 
+	//TEST OF APPLY(PLAYER, GAME) CON RESOURCE COST = 0
+	@Test
+	public void testApply8() {
+		
+		EnumMap<ResourceType, Integer> w = new EnumMap<ResourceType, Integer>(ResourceType.class);
+		for(ResourceType resType : ResourceType.values()){
+			w.put(resType, 0);
+		}
+		resourceCost= Resource.of(w);
+		
+		
+		fm.getPlayer().addResource(resourceCost);
+		me.setResourceCost(resourceCost);
+		me.setResourceBonus(resourceBonus);
+
+		me.apply(player, g);
+		resourceBonus.modifyResource(resourceCost, true);
+		boolean x = resourceBonus.equals(player.getBoard().getResources());
+		assertFalse(x);
+	}
+
+	
 	@Test
 	public void testGetResourceCost() {
 		resource.put(ResourceType.COIN, 1);
@@ -215,6 +238,7 @@ public class MultiplierEffectTest {
 		assertEquals(this.resourceCost, this.me.getResourceCost());
 	}
 
+	
 	@Test
 	public void testGetResourceBonus() {
 		me.setResourceBonus(resourceBonus);

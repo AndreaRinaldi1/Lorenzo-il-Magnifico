@@ -170,4 +170,76 @@ public class SpecialActionTest {
 		this.specialAction1.apply();
 	}
 	
+	//special action "activate" nomi diversi
+	@Test
+	public void testApply4() throws FileNotFoundException, IOException{
+		player1.setBoard(playerBoard);
+		leaderCards.get(0).setName("Santa rita");
+		player1.setLeaderCards(leaderCards);
+		ServantEffect servantEffect = new ServantEffect();
+		player1.getLeaderCards().get(0).setEffect(servantEffect);
+		player1.getLeaderCards().get(0).setActive(false);
+		this.specialAction1.setActionType("play");
+		this.specialAction1.setLeaderName("gino");
+		this.specialAction1.apply();
+		this.specialAction1.setActionType("activate");
+		this.specialAction1.apply();
+	}
+		
+	//special action "discard" nomi incongruenti
+	@Test
+	public void testApply5() {
+		player1.setBoard(playerBoard);
+		player1.setLeaderCards(leaderCards);
+		this.specialAction1.setActionType("discard");
+		this.specialAction1.setLeaderName("Hoola");
+		this.specialAction1.apply();
+		
+	}
+
+	//special action "play" nomi incongruenti
+	@Test
+	public void testApply6() throws FileNotFoundException, IOException{
+		this.specialAction.setActionType("play");
+		GameView game = bi.initializeBoard(players);
+		GameManager gameM = new GameManager();
+		gameM.setView(game);
+		BoardSetup bs = new BoardSetup(gameM);
+		bs.firstSetUpCards();
+		this.specialAction.setLeaderName("Gerry");
+		this.specialAction.apply();		
+	}
+
+	//special action "activate" played = false
+	@Test
+	public void testApply7() throws FileNotFoundException, IOException{
+		player1.setBoard(playerBoard);
+		player1.setLeaderCards(leaderCards);
+		ServantEffect servantEffect = new ServantEffect();
+		player1.getLeaderCards().get(0).setEffect(servantEffect);
+		this.specialAction1.setActionType("play");
+		this.specialAction1.setLeaderName("Gino");
+		this.specialAction1.apply();
+		player1.getLeaderCards().get(0).setPlayed(false);
+		this.specialAction1.setActionType("activate");
+		this.specialAction1.apply();
+	}
+	
+	//special action "activate" qctive = true
+	@Test
+	public void testApply8() throws FileNotFoundException, IOException{
+		player1.setBoard(playerBoard);
+		player1.setLeaderCards(leaderCards);
+		ServantEffect servantEffect = new ServantEffect();
+		player1.getLeaderCards().get(0).setEffect(servantEffect);
+		player1.getLeaderCards().get(0).setActive(true);
+		this.specialAction1.setActionType("play");
+		this.specialAction1.setLeaderName("Gino");
+		this.specialAction1.apply();
+		this.specialAction1.setActionType("activate");
+		this.specialAction1.apply();
+	}
+		
+	
+	
 }

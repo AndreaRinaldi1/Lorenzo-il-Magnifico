@@ -78,12 +78,12 @@ public class SpecialAction extends Action{
 							if(!(("Sisto IV").equalsIgnoreCase(l.getName())) && !(("Santa Rita").equalsIgnoreCase(l.getName()))){
 								l.getEffect().apply(player, gameView);
 								return;
-								}
 							}
 						}
 					}
 				}
 			}
+		}
 	}
 	
 }

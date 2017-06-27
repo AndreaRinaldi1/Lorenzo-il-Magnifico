@@ -27,6 +27,7 @@ import it.polimi.ingsw.GC_28.effects.EffectType;
 import it.polimi.ingsw.GC_28.effects.GoToHPEffect;
 import it.polimi.ingsw.GC_28.effects.HarvestEffect;
 import it.polimi.ingsw.GC_28.effects.IncrementHPEffect;
+import it.polimi.ingsw.GC_28.effects.MultiplierEffect;
 import it.polimi.ingsw.GC_28.effects.OtherEffect;
 import it.polimi.ingsw.GC_28.effects.ProductionEffect;
 import it.polimi.ingsw.GC_28.effects.ResourceEffect;
@@ -253,7 +254,123 @@ public class SpaceActionTest {
 		assertTrue(x);
 	}
 
+	//HARVEST APPLY permanent effect != increment harvest
+	@Test	
+	public void testApplyHarvest5() {
+		familyMember.setValue(6);
+		MultiplierEffect effect = new MultiplierEffect();
+		excommHarvest.setEffect(effect);
+		characterCard.setPermanentEffect(incrementHPEffect );
+		familyMember.getPlayer().getBoard().getCharacters().add(characterCard );
+		
+		familyMember.getPlayer().getExcommunicationTile().add(excommHarvest);
+		
+		spaceActionTest.setFamilyMember(familyMember);
+		prodHarvSpace.setType(ProdHarvType.HARVEST);
+		prodHarvSpace.setFree(false);
+		prodHarvSpace.setSecondarySpace(true);
+		spaceActionTest.setSpace(prodHarvSpace);
+		spaceActionTest.setThroughEffect(throughEffect);
+		spaceActionTest.apply();
+		boolean x = this.familyMember.getValue()==9;
+		assertFalse(x);
+	}
 
+	
+	//HARVEST APPLY character.getPermanentEffect() != harvest effect
+	@Test	
+	public void testApplyHarvest4() {
+		familyMember.setValue(6);
+		incrementHPEffect.setIncrement(actionValue);
+		incrementHPEffect.setType(EffectType.COINDISCOUNTEFFECT);
+		excommHarvest.setEffect(incrementHPEffect);
+		characterCard.setPermanentEffect(incrementHPEffect );
+		familyMember.getPlayer().getBoard().getCharacters().add(characterCard );
+		
+		familyMember.getPlayer().getExcommunicationTile().add(excommHarvest);
+		
+		spaceActionTest.setFamilyMember(familyMember);
+		prodHarvSpace.setType(ProdHarvType.HARVEST);
+		prodHarvSpace.setFree(false);
+		prodHarvSpace.setSecondarySpace(true);
+		spaceActionTest.setSpace(prodHarvSpace);
+		spaceActionTest.setThroughEffect(throughEffect);
+		spaceActionTest.apply();
+		boolean x = this.familyMember.getValue()==9;
+		assertFalse(x);
+	}
+	
+	
+	//HARVEST APPLY
+	@Test	
+	public void testApplyHarvest1() {
+		familyMember.setValue(6);
+		incrementHPEffect.setIncrement(actionValue);
+		incrementHPEffect.setType(EffectType.INCREMENTHARVESTEFFECT);
+		excommHarvest.setEffect(incrementHPEffect);
+		characterCard.setPermanentEffect(incrementHPEffect );
+		familyMember.getPlayer().getBoard().getCharacters().add(characterCard );
+		
+		familyMember.getPlayer().getExcommunicationTile().add(excommHarvest);
+		
+		spaceActionTest.setFamilyMember(familyMember);
+		prodHarvSpace.setType(ProdHarvType.HARVEST);
+		prodHarvSpace.setFree(true);
+		prodHarvSpace.setSecondarySpace(true);
+		spaceActionTest.setSpace(prodHarvSpace);
+		spaceActionTest.setThroughEffect(throughEffect);
+		spaceActionTest.apply();
+		boolean x = this.familyMember.getValue()==9;
+		assertFalse(x);
+	}
+
+	//HARVEST APPLY
+	@Test	
+	public void testApplyHarvest2() {
+		familyMember.setValue(6);
+		incrementHPEffect.setIncrement(actionValue);
+		incrementHPEffect.setType(EffectType.INCREMENTHARVESTEFFECT);
+		excommHarvest.setEffect(incrementHPEffect);
+		characterCard.setPermanentEffect(incrementHPEffect );
+		familyMember.getPlayer().getBoard().getCharacters().add(characterCard );
+		
+		familyMember.getPlayer().getExcommunicationTile().add(excommHarvest);
+		
+		spaceActionTest.setFamilyMember(familyMember);
+		prodHarvSpace.setType(ProdHarvType.HARVEST);
+		prodHarvSpace.setFree(false);
+		prodHarvSpace.setSecondarySpace(false);
+		spaceActionTest.setSpace(prodHarvSpace);
+		spaceActionTest.setThroughEffect(throughEffect);
+		spaceActionTest.apply();
+		boolean x = this.familyMember.getValue()==9;
+		assertFalse(x);
+	}
+	
+	//HARVEST APPLY
+	@Test	
+	public void testApplyHarvest3() {
+		familyMember.setValue(6);
+		incrementHPEffect.setIncrement(actionValue);
+		incrementHPEffect.setType(EffectType.INCREMENTHARVESTEFFECT);
+		excommHarvest.setEffect(incrementHPEffect);
+		characterCard.setPermanentEffect(incrementHPEffect );
+		familyMember.getPlayer().getBoard().getCharacters().add(characterCard );
+		
+		familyMember.getPlayer().getExcommunicationTile().add(excommHarvest);
+		
+		spaceActionTest.setFamilyMember(familyMember);
+		prodHarvSpace.setType(ProdHarvType.HARVEST);
+		prodHarvSpace.setFree(true);
+		prodHarvSpace.setSecondarySpace(false);
+		spaceActionTest.setSpace(prodHarvSpace);
+		spaceActionTest.setThroughEffect(throughEffect);
+		spaceActionTest.apply();
+		boolean x = this.familyMember.getValue()==9;
+		assertFalse(x);
+	}
+
+	
 	//PRODUCTION APPLY
 	@Test	
 	public void testApplyProduction() {

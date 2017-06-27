@@ -109,6 +109,37 @@ public class ResourceEffectTest {
 		fm[0].getPlayer().getLeaderCards().add(santaRita);
 		re.apply(fm[0], game);
 	}
+
+	@Test
+	public void testApply1() {
+		santaRita.setName("gino");
+		santaRita.setActive(true);
+		santaRita.setPlayed(true);
+		fm[0].getPlayer().setBoard(playerBoard);
+		fm[0].getPlayer().getLeaderCards().add(santaRita);
+		re.apply(fm[0], game);
+	}
+	
+	@Test
+	public void testApply4() {
+		santaRita.setName("Santa Rita");
+		santaRita.setActive(false);
+		santaRita.setPlayed(true);
+		fm[0].getPlayer().setBoard(playerBoard);
+		fm[0].getPlayer().getLeaderCards().add(santaRita);
+		re.apply(fm[0], game);
+	}
+	
+	@Test
+	public void testApply5() {
+		santaRita.setName("Santa Rita");
+		santaRita.setActive(true);
+		santaRita.setPlayed(false);
+		fm[0].getPlayer().setBoard(playerBoard);
+		fm[0].getPlayer().getLeaderCards().add(santaRita);
+		re.apply(fm[0], game);
+	}
+	
 	
 	@Test
 	public void testApply2(){
@@ -116,6 +147,26 @@ public class ResourceEffectTest {
 		re.apply(p, game);
 	}
 
+	@Test
+	public void testApply3(){
+		santaRita.setName("Santa Rita");
+		santaRita.setActive(true);
+		santaRita.setPlayed(true);
+		fm[0].getPlayer().setBoard(playerBoard);
+		fm[0].getPlayer().getLeaderCards().add(santaRita);
+		p.setBoard(playerBoard);
+		EnumMap resource1 = new EnumMap<>(ResourceType.class);
+		resource1.put(ResourceType.FAITHPOINT, 1);
+		resource1.put(ResourceType.MILITARYPOINT, 1);
+		resource1.put(ResourceType.VICTORYPOINT, 1);
+		Resource resourceBonus1 = Resource.of(resource1);
+		re.setResourceBonus(resourceBonus1);
+			
+		re.apply(fm[0], game);
+	}
+
+	
+	
 	@Test
 	public void testGetResourceBonus() {
 		assertEquals(this.resourceBonus, this.re.getResourceBonus());

@@ -17,6 +17,7 @@ public class ResourceTest {
 	private EnumMap<ResourceType, Integer> resource;
 	private EnumMap<ResourceType, Integer> resource1;
 	private EnumMap<ResourceType, Integer> resource2;
+	private EnumMap<ResourceType, Integer> resource3 = new EnumMap<>(ResourceType.class);
 	private Resource bonus;
 	private Resource bonus1; 
 	private Resource bonus2;
@@ -28,14 +29,18 @@ public class ResourceTest {
 		resource = new EnumMap<ResourceType, Integer>(ResourceType.class);
 		resource.put(ResourceType.COIN, 2);
 		bonus = Resource.of(resource);
-		bonus3 = Resource.of(resource);
 		resource1 = new EnumMap<ResourceType, Integer>(ResourceType.class);
 		resource1.put(ResourceType.COIN, 6);
+		resource1.put(ResourceType.VICTORYPOINT, 2);
 		bonus1 = Resource.of(resource1);
 		resource2 = new EnumMap<ResourceType, Integer>(ResourceType.class);
 		bonus2 = Resource.of(resource2);
 		bonus2.modifyResource(bonus1, true);
 		prova = Resource.of(resource2);
+		
+		resource3.put(ResourceType.FAITHPOINT, 4);
+		bonus3 = Resource.of(resource3);
+		
 	}
 	
 	
@@ -70,6 +75,18 @@ public class ResourceTest {
 	@Test 
 	public void testEqualsNull(){
 		assertEquals(false, this.bonus.equals(null));
+	}
+	
+	//resource.size() > otherResource.getResource().size()
+	@Test
+	public void testEquals(){
+		boolean x = this.bonus1.equals(bonus3);
+		if(x){
+			assertTrue(x);
+		}
+		else{
+			assertFalse(x);
+		}
 	}
 	
 	//test with resource.size() <= otherResource.getResource().size()
