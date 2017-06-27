@@ -116,6 +116,27 @@ public class FinalReduceEffectTest {
 		assertEquals(this.p.getBoard().getResources(), this.p1.getBoard().getResources());
 	}
 
+	//apply with building card !(resourceCost.getResource().get(resType).equals(0)
+	@Test
+	public void testApplyPlayerGameBuilding1() {
+		int times1 = 0;
+		
+		pb.addCard(b);	//random card
+		p1.addResource(fre.multiplyResource(times));
+		
+		EnumMap<ResourceType, Integer> w = new EnumMap<ResourceType, Integer>(ResourceType.class);
+		for(ResourceType resType : ResourceType.values()){
+			w.put(resType, 0);
+		}
+		Resource resourceCost2 = Resource.of(w);
+		
+		this.fre.setResourceCost(resourceCost2);
+		fre.apply(p, g);
+
+		assertEquals(this.p.getBoard().getResources(), this.p1.getBoard().getResources());
+	}
+
+	
 	//apply with Character card
 	@Test
 	public void testApplyPlayerGameCharacter() {
@@ -126,6 +147,27 @@ public class FinalReduceEffectTest {
 
 		fre.apply(p1, g);
 	}
+	
+	//apply with Character card !(resourceCost.getResource().get(resType).equals(0)
+	@Test
+	public void testApplyPlayerGameCharacter1() {
+		fre.setCardType(CardType.CHARACTER);
+		pb.addCard(c);	//random card
+		
+		p1.addResource(fre.multiplyResource(times));
+
+
+		EnumMap<ResourceType, Integer> w = new EnumMap<ResourceType, Integer>(ResourceType.class);
+		for(ResourceType resType : ResourceType.values()){
+			w.put(resType, 0);
+		}
+		Resource resourceCost2 = Resource.of(w);
+		
+		this.fre.setResourceCost(resourceCost2);
+		
+		fre.apply(p1, g);
+	}
+	
 	
 	//apply with Other card
 	@Test

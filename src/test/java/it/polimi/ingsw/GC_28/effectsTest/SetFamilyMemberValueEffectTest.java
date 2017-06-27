@@ -105,6 +105,10 @@ public class SetFamilyMemberValueEffectTest {
 		setValueEffect.setValue(value);
 		FamilyMember[] familyMembers = new FamilyMember[1];
 		familyMembers[0] = familyMember2;
+		lc.setName("Chester");
+		ArrayList<LeaderCard> leaderCards = new ArrayList<>();
+		leaderCards.add(lc);
+		this.player1.setLeaderCards(leaderCards );
 		this.player1.setFamilyMembers(familyMembers);
 		this.setValueEffect.apply(player1, game);
 		boolean x = this.player1.getFamilyMembers()[0].getValue().equals(this.value);

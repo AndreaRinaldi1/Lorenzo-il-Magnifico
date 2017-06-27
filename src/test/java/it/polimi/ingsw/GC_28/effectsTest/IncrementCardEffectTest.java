@@ -80,6 +80,21 @@ public class IncrementCardEffectTest {
 		assertTrue(x);
 	}
 
+	//ic.setDiscountPresence(false);
+	@Test
+	public void testApply1() {
+		discountPresence = true;
+		ic.setIncrement(increment);
+		ic.setDiscountPresence(false);
+		ic.setCardType(CardType.BUILDING);
+		ic.setDiscount(discount);
+		ic.apply(this.fm, this.g);
+		fm2.modifyValue(increment);
+		boolean x = fm2.getValue().equals(fm.getValue());
+		assertTrue(x);
+	}
+
+	
 	@Test
 	public void testGetIncrement() {
 		ic.setIncrement(increment);

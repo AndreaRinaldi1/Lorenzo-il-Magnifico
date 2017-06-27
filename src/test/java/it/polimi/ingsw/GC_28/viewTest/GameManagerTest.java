@@ -75,6 +75,7 @@ public class GameManagerTest {
 	private GameView game;
 	private GameManager gameM;
 	
+	
 	private class TestGameView extends GameView{
 		public TestGameView(GameModel gameModel) {
 			super(gameModel);
@@ -92,37 +93,6 @@ public class GameManagerTest {
 		
 	}
 	
-	/*
-	private class TestBoardInitializer extends BoardsInitializer{
-		public TestBoardInitializer(){
-			super();
-		}
-		
-		@Override
-		public TestGameView initializeBoard(List<Player> players)throws FileNotFoundException,IOException{
-			//try {
-				this.players  = players;
-				initDices();
-				initCouncilPrivilege();
-				initGameBoard();
-				initSpaces();
-				//gameModel.setGameBoard(gameBoard);
-				initExcommunication();
-				initPlayerBoard();
-				initFinalBonus();
-				initFamilyMember();
-				gameModel = new GameModel(gameBoard, players);
-				placeBonusTile();
-				//gameModel.setPlayers(players);
-				completeExcommunicationArray();
-				initLeaderCard();
-			} catch (FileNotFoundException e) {
-				Logger.getAnonymousLogger().log(Level.SEVERE, "cannot start initialize" + e);
-			}
-			return new TestGameView(gameModel);
-		}
-	}
-	*/
 	
 	@Before
 	public void gameManagerTest(){
@@ -187,18 +157,7 @@ public class GameManagerTest {
 	@AfterClass
 	public static void tearDownAfterClass() throws Exception {
 	}
-/*
-	@Test 
-	public void testRun() throws FileNotFoundException, IOException{
-		GameView game = bi.initializeBoard(players);
-		game.setHandlers(handlers);
-		GameManager gameM = new GameManager();
-		gameM.setView(game);
-		BoardSetup bs = new BoardSetup(gameM);
-		bs.firstSetUpCards();
-		gameM.run();
-	}
-	*/
+
 	@Test
 	public void testGetCurrentPeriod() {
 		gameManager.setPeriod(time);
@@ -274,8 +233,9 @@ public class GameManagerTest {
 		bs.firstSetUpCards();
 		gameM.getView().getGameModel().getPlayers().get(0).getBoard()
 		.addCard((Territory) gameM.getView().getGameModel().getGameBoard().getTowers().get(CardType.TERRITORY).getCells()[0].getCard());
+		
 		gameM.getView().getGameModel().getPlayers().get(0).getBoard()
-		.addCard((Character) gameM.getView().getGameModel().getGameBoard().getTowers().get(CardType.CHARACTER).getCells()[0].getCard());
+		.addCard((Territory) gameM.getView().getGameModel().getGameBoard().getTowers().get(CardType.CHARACTER).getCells()[0].getCard());
 		
 		
 		try{
