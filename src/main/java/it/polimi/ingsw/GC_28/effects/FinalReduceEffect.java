@@ -29,14 +29,14 @@ public class FinalReduceEffect  extends Effect{
 	}
 
 	public Resource multiplyResource(int times){
-		EnumMap<ResourceType, Integer> resource = new EnumMap<ResourceType, Integer>(ResourceType.class);
+		EnumMap<ResourceType, Integer> resource = new EnumMap<>(ResourceType.class);
 		for(ResourceType resType : resourceBonus.getResource().keySet()){
 			resource.put(resType, resourceBonus.getResource().get(resType) * times);
 		}
-		Resource amount = Resource.of(resource);
-		return amount;
+		return Resource.of(resource);
 	}
 	
+	@Override
 	public void apply(Player player, GameView game){
 		int times = 0;
 		

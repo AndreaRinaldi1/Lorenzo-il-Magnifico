@@ -37,8 +37,6 @@ public class CellTest {
 		fm = new FamilyMember(player, false, DiceColor.ORANGE);
 		cell.setFamilyMember(fm);
 		cell.setFree(true);
-		cell.setActionValue(5);
-		cell.setBonus(bonus);
 	
 	}
 	

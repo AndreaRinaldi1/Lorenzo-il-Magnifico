@@ -31,8 +31,6 @@ public class IncrementHPEffect extends Effect{
 
 	@Override
 	public void apply(FamilyMember familyMember, GameView game) {
-		System.out.println("apply di IncrementProductionEffect");
-		
 		familyMember.modifyValue(increment);
 	}
 }

@@ -96,7 +96,7 @@ public class GameManagerTest {
 	
 	@Before
 	public void gameManagerTest(){
-		gameManager = new GameManager();
+		gameManager = new GameManager(300000);
 		
 		diceColors.add(DiceColor.BLACK);
 		
@@ -190,7 +190,7 @@ public class GameManagerTest {
 	@Test
 	public void testAssignBonusForMilitary() throws FileNotFoundException, IOException {
 		GameView game = bi.initializeBoard(players);
-		GameManager gameM = new GameManager();
+		GameManager gameM = new GameManager(300000);
 		gameM.setView(game);
 		BoardSetup bs = new BoardSetup(gameM);
 		bs.firstSetUpCards();
@@ -227,7 +227,7 @@ public class GameManagerTest {
 	public void testApplyFinalBonus() throws FileNotFoundException, IOException {
 		players.remove(0);
 		game = bi.initializeBoard(players);
-		gameM = new GameManager();
+		gameM = new GameManager(300000);
 		gameM.setView(game);
 		BoardSetup bs = new BoardSetup(gameM);
 		bs.firstSetUpCards();

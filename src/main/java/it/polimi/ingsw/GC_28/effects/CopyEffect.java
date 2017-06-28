@@ -10,7 +10,7 @@ import it.polimi.ingsw.GC_28.view.GameView;
 public class CopyEffect extends Effect {
 	
 	private Boolean copied = false;
-	private EffectType type = EffectType.COPYEFFECT;
+	public final EffectType type = EffectType.COPYEFFECT;
 	private Effect effect;
 	
 	private void setEffect(Effect effect){

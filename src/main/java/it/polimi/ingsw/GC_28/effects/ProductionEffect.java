@@ -63,7 +63,6 @@ public class ProductionEffect extends Effect{
 
 	@Override
 	public void apply(FamilyMember familyMember, GameView game) {
-		System.out.println("apply di ProductionEffect");
 		if(familyMember.getValue() >= productionValue){
 			if(resourceProductionBonus != null){
 				resourceProductionBonus.apply(familyMember, game);

@@ -1,37 +1,27 @@
 package it.polimi.ingsw.GC_28.serverTest;
 
 import java.io.BufferedReader;
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
+
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintStream;
 import java.net.InetAddress;
 import java.net.Socket;
 import java.net.UnknownHostException;
-import java.rmi.RemoteException;
+import java.rmi.AlreadyBoundException;
+
 import java.util.concurrent.ScheduledThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 
 import org.junit.Before;
 import org.junit.Test;
-import org.mockito.MockingDetails;
-import org.mockito.Mockito;
+
 
 import it.polimi.ingsw.GC_28.server.Server;
 
 public class ServerTest {
 	
-	private Server server; 
 	
-	public void initServer(){
-		try {
-			server = new Server();
-		} catch (RemoteException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	}
 	
 	public static InetAddress getLocalAddress(){
 		InetAddress addr = null;    
@@ -65,11 +55,9 @@ public class ServerTest {
 			@Override
 			public void run() {
 				try {
-					initServer();
-					server.startServer();
-				} catch (IOException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
+					Server.main(null);
+				} catch (IOException | AlreadyBoundException e) {
+					
 				};
 			}
 		};
@@ -79,17 +67,12 @@ public class ServerTest {
 			private Socket sock;
 			@Override
 			public void run() {
-				System.out.println("prova");
 				try {
 					sock = new Socket(getLocalAddress(), 1337);
-					System.out.println("connected");
 				} catch (IOException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
-				System.out.println("connected");
-				//String prova = "prova";
-				//System.setIn(new ByteArrayInputStream(prova.getBytes()));
 				try{
 					b = new BufferedReader(new InputStreamReader(sock.getInputStream()));
 					String socketLine = b.readLine();
@@ -122,13 +105,12 @@ public class ServerTest {
 			private Socket sock;
 			@Override
 			public void run() {
-				System.out.println("prova");
+				
 				try {
 					sock = new Socket(getLocalAddress(), 1337);
 					System.out.println("connected");
 				} catch (IOException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
+					
 				}
 				System.out.println("connected");
 				//String prova = "prova";

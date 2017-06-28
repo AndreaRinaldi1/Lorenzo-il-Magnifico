@@ -21,7 +21,6 @@ public class NoFinalBonusEffect extends Effect {
 
 	@Override
 	public void apply(Player player, GameView game) {
-		System.out.println("Apply di NoFinalBonusEffect");
 		FinalBonus finalBonus = FinalBonus.instance();
 		PlayerBoard pb = player.getBoard();
 		switch(cardType){

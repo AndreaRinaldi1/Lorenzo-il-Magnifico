@@ -8,6 +8,5 @@ public class NoEffect extends Effect{
 	
 	@Override
 	public void apply(FamilyMember familyMember, GameView game) {
-		System.out.println("apply di NoEffect");
 		}
 }

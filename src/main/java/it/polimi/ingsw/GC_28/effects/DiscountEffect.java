@@ -60,7 +60,6 @@ public class DiscountEffect extends Effect{
 
 	@Override
 	public void apply(Player player, GameView game){
-		System.out.println("apply di DiscountEffect");
 		if(alternativeDiscountPresence == true){
 			player.addResource(game.askAlternative(discount, alternativeDiscount, "discount")); 
 		}

@@ -1,7 +1,6 @@
 package it.polimi.ingsw.GC_28.server;
 
 import java.rmi.RemoteException;
-import java.rmi.server.RemoteObject;
 import java.util.NoSuchElementException;
 import java.util.logging.Level;
 import java.util.logging.Logger;

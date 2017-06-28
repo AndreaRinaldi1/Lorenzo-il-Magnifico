@@ -34,7 +34,6 @@ public class PrivilegesEffect extends Effect{
 	
 	@Override
 	public void apply(FamilyMember familyMember, GameView game) {
-		System.out.println("apply di PrivilegesEffect");
 		List<Character> choices = game.askPrivilege(numberOfCouncilPrivileges, different);
 		for(int i = 0; i < choices.size(); i++){
 			familyMember.getPlayer().addResource(game.checkResourceExcommunication(CouncilPrivilege.instance().getOptions().get(choices.get(i))));
@@ -43,7 +42,6 @@ public class PrivilegesEffect extends Effect{
 	
 	@Override
 	public void apply(Player player, GameView game) {
-		System.out.println("Ludovico Gonzaga Effect");
 		List<Character> choices = game.askPrivilege(numberOfCouncilPrivileges, different);
 		for(int i = 0; i<choices.size(); i++ ){
 			player.addResource(game.checkResourceExcommunication(CouncilPrivilege.instance().getOptions().get(choices.get(i))));

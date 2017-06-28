@@ -44,10 +44,11 @@ import it.polimi.ingsw.GC_28.view.GameView;
 public class Server extends UnicastRemoteObject implements ServerInt{
 
 	private static final long serialVersionUID = 1L;
-	private final int MIN_SIZE = 2;
-	private final int MAX_SIZE = 2;
-	private final int PORT = 1337;
-	transient private ServerSocket serverSocket;
+	private static final int MIN_SIZE = 2;
+	private static final int MAX_SIZE = 4;
+	private static final int PORT = 1337;
+	private int waitTime;
+	private transient ServerSocket serverSocket;
 	transient List<PlayerColor> usedColors = new ArrayList<>();
 	transient ExecutorService executor;
 	transient Map<Player, ClientHandler> handlers = new HashMap<>();
@@ -82,7 +83,7 @@ public class Server extends UnicastRemoteObject implements ServerInt{
 		executor = Executors.newCachedThreadPool();
 		serverSocket = new ServerSocket(PORT);
 		bonusList = initBonusTile(); 
-		//server.setReuseAddress(true);
+		waitTime = setWaitTime(0)*1000;
 		while(!noStop){
 			started = false;
 			
@@ -104,6 +105,7 @@ public class Server extends UnicastRemoteObject implements ServerInt{
 			Map<Player, ClientHandler> copy = createHandlerCopy(handlers);
 			handlers = new HashMap<>();
 			new Thread(){
+				@Override
 				public void run(){
 					startGame(copy);
 				}
@@ -123,13 +125,14 @@ public class Server extends UnicastRemoteObject implements ServerInt{
 						Map<Player, ClientHandler> copy = createHandlerCopy(handlers);
 						handlers = new HashMap<>();
 						new Thread(){
+							@Override
 							public void run(){
 								startGame(copy);
 							}
 						}.start();
 					}
 				}
-			}, 15000);
+			}, waitTime);
 		}
 	}
 	
@@ -166,8 +169,7 @@ public class Server extends UnicastRemoteObject implements ServerInt{
 		usedColors.clear();
 		BoardsInitializer bi = new BoardsInitializer();	
 		List<Player> players = new ArrayList<>(handler.keySet());
-		List<BonusTile> tileInstance = new ArrayList<BonusTile>();
-		System.out.println("in game");
+		List<BonusTile> tileInstance = new ArrayList<>();
 		for(Player p : handler.keySet()){
 			System.out.println(p.getName());
 		}
@@ -178,7 +180,8 @@ public class Server extends UnicastRemoteObject implements ServerInt{
 			GameView game = bi.initializeBoard(players);
 
 			game.setHandlers(handler);
-			GameManager gameManager = new GameManager();
+			int moveTimer = setWaitTime(1);
+			GameManager gameManager = new GameManager(moveTimer);
 			gameManager.setView(game);
 			BoardSetup bs = new BoardSetup(gameManager);
 			bs.firstSetUpCards();
@@ -278,8 +281,24 @@ public class Server extends UnicastRemoteObject implements ServerInt{
 		Gson gson = new GsonBuilder().create();
 		Type bonusTileListType = new TypeToken<ArrayList<BonusTile>>() {}.getType();
 		JsonReader reader = new JsonReader(new FileReader("bonusTile2.json"));
-		List<BonusTile> bonusList = gson.fromJson(reader, bonusTileListType);
-		return bonusList;
+		List<BonusTile> bonusTileList = gson.fromJson(reader, bonusTileListType);
+		return bonusTileList;
+	}
+	
+	
+	/*
+	 * SetWaitTime take the position of the timer in the array list: the first one (position 0) is 
+	 * the timer for the server, the second one(position 1) is the timer for the player move,
+	 * used in GameManager class.
+	 * Both integer in the timer.json file represent the time in seconds, so they both need to be multiply
+	 * by a 1000 factor to be used in milliseconds representation. 
+	 */
+	private int setWaitTime(int position) throws FileNotFoundException{
+		Gson gson = new GsonBuilder().create();
+		Type readType = new TypeToken<ArrayList<Integer>>() {}.getType();
+		JsonReader reader = new JsonReader( new FileReader("timer.json"));
+		List<Integer> waitTimeList = gson.fromJson(reader,readType);
+		return waitTimeList.get(position);
 	}
 
 }

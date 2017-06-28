@@ -79,6 +79,17 @@
     }
   ],
   "finalCharactersBonus": [
+      {
+        "resource": {
+          "COIN": 0,
+          "WOOD": 0,
+          "STONE": 0,
+          "SERVANT": 0,
+          "MILITARYPOINT": 0,
+          "VICTORYPOINT": 0,
+          "FAITHPOINT": 0
+        }
+      },
     {
       "resource": {
         "COIN": 0,
