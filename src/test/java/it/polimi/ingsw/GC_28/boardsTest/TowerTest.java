@@ -48,7 +48,6 @@ public class TowerTest {
 		cells[2] = new Cell(bonus, 1, free);
 		cells[3] = new Cell(bonus, 7, free);
 		tower = new Tower(cells);
-		tower.setAtLeastOne(atLeastOne);
 		p = new Player("ciao", PlayerColor.BLUE);
 		fm = new FamilyMember(p, false, DiceColor.BLACK);
 		fm1 = new FamilyMember(p, true, DiceColor.NEUTRAL);
@@ -96,27 +95,12 @@ public class TowerTest {
 		assertEquals(null, this.tower1.findCard("Tuborg"));
 	}
 
-	@Test
-	public void testIsThisPlayerPresent() {
-		assertEquals(this.fm.isUsed(), 
-				this.tower.isThisPlayerPresent(fm.getPlayer().getColor()));
-		assertEquals(this.fm1.isUsed(), 
-				this.tower.isThisPlayerPresent(fm1.getPlayer().getColor()));	
-		assertEquals(this.fm2.isUsed(), 
-				this.tower.isThisPlayerPresent(fm2.getPlayer().getColor()));
-		assertEquals(this.fm3.isUsed(), 
-				this.tower.isThisPlayerPresent(fm3.getPlayer().getColor()));
-		assertEquals(false, this.tower.isThisPlayerPresent(PlayerColor.GREEN));
-	}
 
 	@Test
 	public void testGetCells() {
 		assertArrayEquals(this.cells, this.tower.getCells());
 	}
 
-	@Test
-	public void testGetAtLeastOne() {
-		assertEquals(this.atLeastOne, this.tower.getAtLeastOne());
-	}
+
 
 }

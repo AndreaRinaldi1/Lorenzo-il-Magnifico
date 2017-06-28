@@ -1,16 +1,29 @@
 package it.polimi.ingsw.GC_28.boards;
 
-import it.polimi.ingsw.GC_28.model.PlayerColor;
+/**
+ * This class represent the Tower that is represented in the gameboard.
+ * Every tower is made of four cells where the cards are acually placed.
+ * @author andrearinaldi, nicoloscipione, robertoturi
+ * @version 1.0,  06/28/2017
+ * @see Cell
+ */
 
 public class Tower {
 	private static final int MAX_SIZE = 4;
 	private Cell[] cells = new Cell[MAX_SIZE];
-	private boolean atLeastOne;
 	
+	/**
+	 * The constructor builds a tower given the four cells that it is made up with.
+	 * @param cells The array of four cells where there are the bonus and where cards are placed
+	 */
 	public Tower(Cell[] cells){
 		this.cells = cells;
 	}
 
+	/**
+	 * @param cardName The name of the card the player wants to take
+	 * @return the cell in which the card with that name is placed, if any, null otherwise.
+	 */
 	public Cell findCard(String cardName){
 		for(Cell cell : cells){
 			if(cell.getCard() == null){
@@ -23,28 +36,17 @@ public class Tower {
 		return null;
 	}
 	
-	public boolean isThisPlayerPresent(PlayerColor playerColor){
-		for(int i = 0; i < MAX_SIZE; i++){
-			if(cells[i].getFamilyMember().getPlayer().getColor() == playerColor){
-				return true;
-			}
-		}
-		return false;
-	}
-	
+	/**
+	 * @return The array of four cells that make up this tower
+	 */
 	public Cell[] getCells() {
 		return cells;
 	}
 
+	/**
+	 * @param cells The array of four cells that make up this tower
+	 */
 	public void setCells(Cell[] cells) {
 		this.cells = cells;
-	}
-
-	public boolean getAtLeastOne() {
-		return atLeastOne;
-	}
-
-	public void setAtLeastOne(boolean atLeastOne) {
-		this.atLeastOne = atLeastOne;
 	}
 }

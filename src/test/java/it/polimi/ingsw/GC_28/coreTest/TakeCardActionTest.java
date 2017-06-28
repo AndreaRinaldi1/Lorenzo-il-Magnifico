@@ -960,12 +960,8 @@ public class TakeCardActionTest {
 		permanentCardEffect.setIncrement(1);
 		c.setPermanentEffect(permanentCardEffect);
 		
-		cell.setCard(c);
-		cell.setCard(c1);
-		cells[0] = cell;
-		cells[0].setActionValue(999);
-		cells[1] = cell1;
-		cells[1].setActionValue(999);
+		cells[0] = new Cell(null, 999, true);
+		cells[1] = new Cell(null, 999, true);
 		tower = new Tower(cells);
 		tower.setCells(cells);
 		towers.put(CardType.CHARACTER, tower);

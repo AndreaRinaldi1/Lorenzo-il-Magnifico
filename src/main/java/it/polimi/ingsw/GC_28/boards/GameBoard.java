@@ -2,17 +2,21 @@ package it.polimi.ingsw.GC_28.boards;
 
 import java.util.EnumMap;
 import java.util.Map;
-
 import de.vandermeer.asciitable.AsciiTable;
 import it.polimi.ingsw.GC_28.cards.*;
 import it.polimi.ingsw.GC_28.components.Dice;
 import it.polimi.ingsw.GC_28.components.FamilyMember;
-import it.polimi.ingsw.GC_28.components.Resource;
 import it.polimi.ingsw.GC_28.spaces.CouncilPalace;
 import it.polimi.ingsw.GC_28.spaces.MarketSpace;
 import it.polimi.ingsw.GC_28.spaces.PrivilegesSpace;
 import it.polimi.ingsw.GC_28.spaces.ProdHarvSpace;
 
+/**
+ * This class represents the gameboard along with all the spaces, the towers where cards are placed, the point tracks and dices reference.
+ * @author andrearinaldi, nicoloscipione
+ * @version 1.0, 06/28/2017
+ * @see ProdHarvSpace, MarketSpace, PrivilegesSpace, CouncilPalace, Dice, CardType, Tower, ExcommunicationTile
+ */
 
 public class GameBoard {
 	private static final int N_EXCOMMUNICATIONTILE = 3;
@@ -27,7 +31,6 @@ public class GameBoard {
 	private MarketSpace servantSpace;
 	private MarketSpace mixedSpace;
 	private PrivilegesSpace privilegesSpace;
-	private Resource bonusFaithPoints;
 	private CouncilPalace councilPalace = CouncilPalace.instance();
 	
 	private String emptySpace = "( )\n";
@@ -35,6 +38,11 @@ public class GameBoard {
 	private String bigOccupiedSpace = "XXXXXXX";
 
 
+	/**
+	 * This method displays the gameboard. It uses several AsciiTables to represent all the spaces, towers and point tracks
+	 * and appends them all as strings to a StringBuilder object that is returned as a string.
+	 * @return The representation of the gameboard 
+	 */
 	public String display(){
 		
 		StringBuilder ret = new StringBuilder();
@@ -145,100 +153,146 @@ public class GameBoard {
 
 	
 		return ret.toString();
-
-		
 	}
-
+	
+	/**
+	 * @return The four towers where cards are placed
+	 */
 	public Map<CardType, Tower> getTowers() {
 		return towers;
 	}
 	
+	/**
+	 * @param towers The four towers where cards are placed
+	 */
+	public void setTowers(Map<CardType,Tower> towers){
+		this.towers = towers;
+	}
 	
+	/**
+	 * @return The array of three excommunication tiles present on the gameboard
+	 */
 	public ExcommunicationTile[] getExcommunications() {
 		return excommunications;
 	}
 
-
+	/**
+	 * @param excommunications The array of three excommunication tiles present on the gameboard
+	 */
 	public void setExcommunications(ExcommunicationTile[] excommunications) {
 		this.excommunications = excommunications;
 	}
 
-
-	public void setTowers(Map<CardType,Tower> towers){
-		this.towers = towers;
-	}
-
-
+	/**
+	 * @return The array of three dices present on the gameboard
+	 */
 	public Dice[] getDices() {
 		return dices;
 	}
 
+	/**
+	 * @param dices The array of three dices present on the gameboard
+	 */
 	public void setDices(Dice[] dices) {
 		this.dices = dices;
 	}
 	
+	/**
+	 * @return The harvest space on the gameboard
+	 */
 	public ProdHarvSpace getHarvestSpace() {
 		return harvestSpace;
 	}
 
-	public void setHarvestSpace(ProdHarvSpace harvestSpace2) {
-		this.harvestSpace = harvestSpace2;
+	/**
+	 * @param harvestSpace The harvest space on the gameboard
+	 */
+	public void setHarvestSpace(ProdHarvSpace harvestSpace) {
+		this.harvestSpace = harvestSpace;
 	}
 
+	/**
+	 * @return The production space on the gameboard
+	 */
 	public ProdHarvSpace getProductionSpace() {
 		return productionSpace;
 	}
 
-	public void setProductionSpace(ProdHarvSpace productionSpace2) {
-		this.productionSpace = productionSpace2;
+	/**
+	 * @param productionSpace2 The production space on the gameboard
+	 */
+	public void setProductionSpace(ProdHarvSpace productionSpace) {
+		this.productionSpace = productionSpace;
 	}
 
+	/**
+	 * @return The Market space on the gameboard that gives coins
+	 */
 	public MarketSpace getCoinSpace() {
 		return coinSpace;
 	}
 
-	public void setCoinSpace(MarketSpace coinSpace2) {
-		this.coinSpace = coinSpace2;
+	/**
+	 * @param coinSpace The Market space on the gameboard that gives coins
+	 */
+	public void setCoinSpace(MarketSpace coinSpace) {
+		this.coinSpace = coinSpace;
 	}
 
+	/**
+	 * @return The Market space on the gameboard that gives servants
+	 */
 	public MarketSpace getServantSpace() {
 		return servantSpace;
 	}
 
-	public void setServantSpace(MarketSpace servantSpace2) {
-		this.servantSpace = servantSpace2;
+	/** 
+	 * @param servantSpace The Market space on the gameboard that gives servants
+	 */
+	public void setServantSpace(MarketSpace servantSpace) {
+		this.servantSpace = servantSpace;
 	}
 
+	/**
+	 * @return The Market space on the gameboard that gives military points and coins
+	 */
 	public MarketSpace getMixedSpace() {
 		return mixedSpace;
 	}
 
-	public void setMixedSpace(MarketSpace mixedSpace2) {
-		this.mixedSpace = mixedSpace2;
+	/**
+	 * @param mixedSpace The Market space on the gameboard that gives military points and coins
+	 */
+	public void setMixedSpace(MarketSpace mixedSpace) {
+		this.mixedSpace = mixedSpace;
 	}
 
+	/**
+	 * @return The Market space on the gameboard that gives two different council privileges
+	 */
 	public PrivilegesSpace getPrivilegesSpace() {
 		return privilegesSpace;
 	}
 
+	/** 
+	 * @param privilegesSpace The Market space on the gameboard that gives two different council privileges
+	 */
 	public void setPrivilegesSpace(PrivilegesSpace privilegesSpace) {
 		this.privilegesSpace = privilegesSpace;
 	}
 
-	public Resource getBonusFaithPoints() {
-		return bonusFaithPoints;
-	}
-
-	public void setBonusFaithPoints(Resource bonusFaithPoints) {
-		this.bonusFaithPoints = bonusFaithPoints;
-	}
-
+	/**
+	 * @return The Council Palace on the gameboard 
+	 */
 	public CouncilPalace getCouncilPalace() {
 		return councilPalace;
 	}
 
-	public void setCouncilPalace(CouncilPalace councilPalace2) {
-		this.councilPalace = councilPalace2;
+	/**
+	 * @param councilPalace The Council Palace on the gameboard
+	 */
+	public void setCouncilPalace(CouncilPalace councilPalace) {
+		this.councilPalace = councilPalace;
 	}
 	
 }

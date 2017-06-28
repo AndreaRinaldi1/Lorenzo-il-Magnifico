@@ -96,7 +96,6 @@ public class GameBoardTest {
 		gb.setMixedSpace(mixedSpace);
 		gb.setPrivilegesSpace(privilegesSpace);
 		gb.setCouncilPalace(councilPalace);
-		gb.setBonusFaithPoints(bonusFaithPoints);
 	
 		Cell[] cells = new Cell[4];
 		for(int i = 0; i < cells.length; i++){
@@ -135,7 +134,6 @@ public class GameBoardTest {
 		gb1.setMixedSpace(mixedSpace1);
 		gb1.setPrivilegesSpace(privilegesSpace1);
 		gb1.setCouncilPalace(councilPalace1);
-		gb1.setBonusFaithPoints(bonusFaithPoints1);
 		for(int l = 0; l < CardType.values().length; l++){
 			this.towers1.put(CardType.values()[l], tower);
 		}
@@ -266,12 +264,6 @@ public class GameBoardTest {
 	@Test
 	public void testGetPrivilegesSpace() {
 		assertEquals(this.privilegesSpace, this.gb.getPrivilegesSpace());
-		//fail("Not yet implemented");
-	}
-
-	@Test
-	public void testGetBonusFaithPoints() {
-		assertEquals(this.bonusFaithPoints, this.gb.getBonusFaithPoints());
 		//fail("Not yet implemented");
 	}
 
