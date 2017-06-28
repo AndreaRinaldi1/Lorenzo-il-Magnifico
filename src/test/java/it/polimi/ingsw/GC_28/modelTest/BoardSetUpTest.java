@@ -55,7 +55,7 @@ public class BoardSetUpTest {
 		} catch (IOException e) {
 			Logger.getAnonymousLogger().log(Level.SEVERE, e.getMessage());
 		}
-		GameManager gameM = new GameManager();
+		GameManager gameM = new GameManager(300000);
 		gameM.setView(g);
 		bs = new BoardSetup(gameM);
 	}

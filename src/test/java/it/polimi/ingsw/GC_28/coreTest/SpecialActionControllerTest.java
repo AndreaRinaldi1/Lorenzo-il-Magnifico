@@ -117,7 +117,7 @@ public class SpecialActionControllerTest {
 		gameModel = new GameModel(gameBoard, players);
 		gameView = new GameView(gameModel);
 		gameView = bi.initializeBoard(players);
-		gameManager = new GameManager();
+		gameManager = new GameManager(60000);
 		gameManager.setView(gameView);
 		BoardSetup bs = new BoardSetup(gameManager);
 		bs.firstSetUpCards();
