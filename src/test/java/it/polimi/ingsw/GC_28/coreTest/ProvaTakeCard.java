@@ -68,7 +68,7 @@ public class ProvaTakeCard {
 		} catch (IOException e) {
 			Logger.getAnonymousLogger().log(Level.SEVERE, e.getMessage());
 		}
-		GameManager gameM = new GameManager();
+		GameManager gameM = new GameManager(60000);
 		gameM.setView(g);
 		g.setCurrentPlayer(p1);
 		bs = new BoardSetup(gameM);

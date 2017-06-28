@@ -187,7 +187,7 @@ public class TakeCardActionApplyTest {
 		
 		
 		GameView game = bi.initializeBoard(players);
-		GameManager gameM = new GameManager();
+		GameManager gameM = new GameManager(60000);
 		gameM.setView(game);
 		BoardSetup bs = new BoardSetup(gameM);
 		bs.firstSetUpCards();
@@ -263,7 +263,7 @@ public class TakeCardActionApplyTest {
 		
 		
 		GameView game = bi.initializeBoard(players);
-		GameManager gameM = new GameManager();
+		GameManager gameM = new GameManager(60000);
 		gameM.setView(game);
 		BoardSetup bs = new BoardSetup(gameM);
 		bs.firstSetUpCards();
@@ -415,7 +415,7 @@ public class TakeCardActionApplyTest {
 		
 		
 		GameView game = bi.initializeBoard(players);
-		GameManager gameM = new GameManager();
+		GameManager gameM = new GameManager(60000);
 		gameM.setView(game);
 		BoardSetup bs = new BoardSetup(gameM);
 		bs.firstSetUpCards();
@@ -489,7 +489,7 @@ public class TakeCardActionApplyTest {
 		
 		
 		GameView game = bi.initializeBoard(players);
-		GameManager gameM = new GameManager();
+		GameManager gameM = new GameManager(60000);
 		gameM.setView(game);
 		BoardSetup bs = new BoardSetup(gameM);
 		bs.firstSetUpCards();

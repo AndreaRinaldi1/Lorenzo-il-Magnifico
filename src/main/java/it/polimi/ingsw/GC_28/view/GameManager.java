@@ -1,5 +1,6 @@
 package it.polimi.ingsw.GC_28.view;
 
+
 import java.io.IOException;
 import java.util.List;
 import java.util.logging.Level;
@@ -22,9 +23,15 @@ public class GameManager implements Runnable{
 	private int currentPeriod = 1;
 	private int currentRound = 1;
 	private int currentTurn = 0;
+	private int waitMoveTimer;
 	private Player currentPlayer;
-
+	
 	private GameView view;
+	
+	public GameManager(int timer){
+		super();
+		this.waitMoveTimer = timer;
+	}
 	
 	@Override
 	public void run() {
@@ -38,7 +45,7 @@ public class GameManager implements Runnable{
 					for(currentTurn = 0; currentTurn < view.getGameModel().getPlayers().size(); currentTurn++){
 					
 						boolean timeEnded = false;
-						long time = System.currentTimeMillis() + 300000;
+						long time = System.currentTimeMillis() + (waitMoveTimer*1000);
 						Thread t = new Thread(){
 							@Override
 							public void run(){

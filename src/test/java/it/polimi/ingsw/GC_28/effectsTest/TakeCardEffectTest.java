@@ -144,7 +144,7 @@ public class TakeCardEffectTest {
 						for(int i = 0; i < bonusList.size(); i++){
 							tileInstance.add(bonusList.get(i));
 						}
-						GameManager gm = new GameManager();
+						GameManager gm = new GameManager(60000);
 						GameView game = bi.initializeBoard(players);
 						gm.setView(game);
 						game.setHandlers(handlers);

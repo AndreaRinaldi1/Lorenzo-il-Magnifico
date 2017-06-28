@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 import java.util.concurrent.ThreadLocalRandom;
+
 import it.polimi.ingsw.GC_28.cards.CardReader;
 import it.polimi.ingsw.GC_28.cards.CardType;
 import it.polimi.ingsw.GC_28.cards.Deck;
@@ -12,6 +13,7 @@ import it.polimi.ingsw.GC_28.cards.LeaderCard;
 import it.polimi.ingsw.GC_28.cards.Territory;
 import it.polimi.ingsw.GC_28.cards.Venture;
 import it.polimi.ingsw.GC_28.components.Dice;
+
 import it.polimi.ingsw.GC_28.components.FamilyMember;
 import it.polimi.ingsw.GC_28.model.Player;
 import it.polimi.ingsw.GC_28.view.GameManager;
@@ -250,16 +252,13 @@ public class BoardSetup {
 	}
 	
 	private void deActiveLeaderCard(){
-		System.out.println("entro deactivateLeader");
 		for(Player p : gameModel.getPlayers()){
 			System.out.println(p.getName());
 			for(LeaderCard lc : p.getLeaderCards()){
 				if(!(lc.getPermanent()) && lc.getPlayed()){
-					System.out.println("disattivo"+ lc.getName());
 					lc.setActive(false);
 				}
 				else if(lc.getPermanent() && lc.getPlayed() && !lc.getName().equalsIgnoreCase("Sisto IV") && lc.getName().equalsIgnoreCase("Santa Rita")){
-					System.out.println("applico perchè permanente" + lc.getName());
 					lc.getEffect().apply(p, game);
 				}
 			}

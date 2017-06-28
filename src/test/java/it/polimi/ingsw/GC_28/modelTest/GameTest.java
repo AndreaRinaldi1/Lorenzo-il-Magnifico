@@ -20,7 +20,7 @@ import java.util.Scanner;
 import java.util.concurrent.ScheduledThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 
-import org.junit.Before;
+
 import org.junit.Test;
 
 import com.google.gson.Gson;
@@ -33,7 +33,7 @@ import it.polimi.ingsw.GC_28.cards.CardReader;
 import it.polimi.ingsw.GC_28.cards.Deck;
 import it.polimi.ingsw.GC_28.cards.LeaderCard;
 import it.polimi.ingsw.GC_28.cards.LeaderCardReader;
-import it.polimi.ingsw.GC_28.client.Client;
+
 import it.polimi.ingsw.GC_28.client.SocketClient;
 import it.polimi.ingsw.GC_28.components.Resource;
 import it.polimi.ingsw.GC_28.components.ResourceType;
@@ -43,7 +43,7 @@ import it.polimi.ingsw.GC_28.model.Player;
 import it.polimi.ingsw.GC_28.model.PlayerColor;
 import it.polimi.ingsw.GC_28.server.ClientHandler;
 import it.polimi.ingsw.GC_28.server.Controller;
-import it.polimi.ingsw.GC_28.server.Server;
+
 import it.polimi.ingsw.GC_28.server.SocketClientHandler;
 import it.polimi.ingsw.GC_28.view.GameManager;
 import it.polimi.ingsw.GC_28.view.GameView;
@@ -86,7 +86,7 @@ public class GameTest {
 						}
 						GameView game = bi.initializeBoard(players);
 						game.setHandlers(handlers);
-						GameManager gameM = new GameManager();
+						GameManager gameM = new GameManager(60000);
 						gameM.setView(game);
 						BoardSetup bs = new BoardSetup(gameM);
 						bs.firstSetUpCards();
@@ -111,8 +111,7 @@ public class GameTest {
 						e.printStackTrace();
 					}
 				} catch (IOException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
+					
 				};
 			}
 			private PlayerColor enterColor(){
@@ -181,12 +180,10 @@ public class GameTest {
 					sock = new Socket(SocketClient.getLocalAddress(), 1339);
 					System.out.println("connected");
 				} catch (IOException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
+					
 				}
 				System.out.println("connected");
-				//String prova = "prova";
-				//System.setIn(new ByteArrayInputStream(prova.getBytes()));
+				
 				try{
 					p = new PrintStream(sock.getOutputStream());
 					b = new BufferedReader(new InputStreamReader(sock.getInputStream()));
@@ -238,8 +235,7 @@ public class GameTest {
 		try {
 			s.awaitTermination(1, TimeUnit.SECONDS);
 		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+		
 		}
 	}
 	
@@ -279,7 +275,7 @@ public class GameTest {
 						}
 						GameView game = bi.initializeBoard(players);
 						game.setHandlers(handlers);
-						GameManager gameM = new GameManager();
+						GameManager gameM = new GameManager(60000);
 						gameM.setView(game);
 						BoardSetup bs = new BoardSetup(gameM);
 						bs.firstSetUpCards();
@@ -304,8 +300,7 @@ public class GameTest {
 						e.printStackTrace();
 					}
 				} catch (IOException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
+					
 				};
 			}
 			private PlayerColor enterColor(){
@@ -374,8 +369,7 @@ public class GameTest {
 					sock = new Socket(SocketClient.getLocalAddress(), 1340);
 					System.out.println("connected");
 				} catch (IOException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
+					
 				}
 				System.out.println("connected");
 				//String prova = "prova";
@@ -431,8 +425,7 @@ public class GameTest {
 		try {
 			s.awaitTermination(1, TimeUnit.SECONDS);
 		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			
 		}
 	}
 	
@@ -472,7 +465,7 @@ public class GameTest {
 						}
 						GameView game = bi.initializeBoard(players);
 						game.setHandlers(handlers);
-						GameManager gameM = new GameManager();
+						GameManager gameM = new GameManager(60000);
 						gameM.setView(game);
 						BoardSetup bs = new BoardSetup(gameM);
 						bs.firstSetUpCards();
@@ -498,8 +491,7 @@ public class GameTest {
 						e.printStackTrace();
 					}
 				} catch (IOException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
+				
 				};
 			}
 			private PlayerColor enterColor(){
@@ -568,12 +560,10 @@ public class GameTest {
 					sock = new Socket(SocketClient.getLocalAddress(), 1341);
 					System.out.println("connected");
 				} catch (IOException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
+				
 				}
 				System.out.println("connected");
-				//String prova = "prova";
-				//System.setIn(new ByteArrayInputStream(prova.getBytes()));
+				
 				try{
 					p = new PrintStream(sock.getOutputStream());
 					b = new BufferedReader(new InputStreamReader(sock.getInputStream()));
@@ -625,8 +615,7 @@ public class GameTest {
 		try {
 			s.awaitTermination(1, TimeUnit.SECONDS);
 		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+		
 		}
 	}
 	
@@ -666,7 +655,7 @@ public class GameTest {
 						}
 						GameView game = bi.initializeBoard(players);
 						game.setHandlers(handlers);
-						GameManager gameM = new GameManager();
+						GameManager gameM = new GameManager(60000);
 						gameM.setView(game);
 						BoardSetup bs = new BoardSetup(gameM);
 						bs.firstSetUpCards();
@@ -696,8 +685,7 @@ public class GameTest {
 						e.printStackTrace();
 					}
 				} catch (IOException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
+				
 				};
 			}
 			private PlayerColor enterColor(){
@@ -766,8 +754,7 @@ public class GameTest {
 					sock = new Socket(SocketClient.getLocalAddress(), 1342);
 					System.out.println("connected");
 				} catch (IOException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
+				
 				}
 				System.out.println("connected");
 				//String prova = "prova";
@@ -823,8 +810,7 @@ public class GameTest {
 		try {
 			s.awaitTermination(1, TimeUnit.SECONDS);
 		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+		
 		}
 	}
 	
@@ -864,7 +850,7 @@ public class GameTest {
 						}
 						GameView game = bi.initializeBoard(players);
 						game.setHandlers(handlers);
-						GameManager gameM = new GameManager();
+						GameManager gameM = new GameManager(60000);
 						gameM.setView(game);
 						BoardSetup bs = new BoardSetup(gameM);
 						bs.firstSetUpCards();
@@ -901,8 +887,7 @@ public class GameTest {
 						e.printStackTrace();
 					}
 				} catch (IOException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
+				
 				};
 			}
 			private PlayerColor enterColor(){
@@ -971,8 +956,7 @@ public class GameTest {
 					sock = new Socket(SocketClient.getLocalAddress(), 1343);
 					System.out.println("connected");
 				} catch (IOException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
+					
 				}
 				System.out.println("connected");
 				//String prova = "prova";
@@ -1032,8 +1016,7 @@ public class GameTest {
 		try {
 			s.awaitTermination(1, TimeUnit.SECONDS);
 		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			
 		}
 	}
 	
@@ -1073,7 +1056,7 @@ public class GameTest {
 						}
 						GameView game = bi.initializeBoard(players);
 						game.setHandlers(handlers);
-						GameManager gameM = new GameManager();
+						GameManager gameM = new GameManager(60000);
 						gameM.setView(game);
 						BoardSetup bs = new BoardSetup(gameM);
 						bs.firstSetUpCards();
@@ -1100,7 +1083,7 @@ public class GameTest {
 						
 						System.out.println(ld.get(ld.size()-4));
 						
-						EnumMap<ResourceType, Integer> res = new EnumMap<>(ResourceType.class);//TODO remove this
+						EnumMap<ResourceType, Integer> res = new EnumMap<>(ResourceType.class);
 						res.put(ResourceType.COIN, 20);
 						res.put(ResourceType.WOOD, 20);
 						res.put(ResourceType.STONE, 20);
@@ -1124,8 +1107,7 @@ public class GameTest {
 						e.printStackTrace();
 					}
 				} catch (IOException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
+					
 				};
 			}
 			private PlayerColor enterColor(){
@@ -1194,12 +1176,9 @@ public class GameTest {
 					sock = new Socket(SocketClient.getLocalAddress(), 1343);
 					System.out.println("connected");
 				} catch (IOException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
+									}
 				System.out.println("connected");
-				//String prova = "prova";
-				//System.setIn(new ByteArrayInputStream(prova.getBytes()));
+				
 				try{
 					p = new PrintStream(sock.getOutputStream());
 					b = new BufferedReader(new InputStreamReader(sock.getInputStream()));
@@ -1251,12 +1230,10 @@ public class GameTest {
 		};
 		s.execute(g);
 		s.schedule(client, 100, TimeUnit.MILLISECONDS);
-		//s.schedule(client2, 2, TimeUnit.SECONDS);
 		try {
 			s.awaitTermination(1, TimeUnit.SECONDS);
 		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+
 		}
 	}
 }

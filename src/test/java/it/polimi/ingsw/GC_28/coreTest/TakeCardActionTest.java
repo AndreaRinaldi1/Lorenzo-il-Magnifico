@@ -345,7 +345,7 @@ public class TakeCardActionTest {
 		towers.put(CardType.TERRITORY, tower);
 			
 		game1 = bi.initializeBoard(players);
-		GameManager gameM = new GameManager();
+		GameManager gameM = new GameManager(60000);
 		gameM.setView(game1);
 		bs = new BoardSetup(gameM);
 		bs.firstSetUpCards();
@@ -390,7 +390,7 @@ public class TakeCardActionTest {
 		towers.put(CardType.TERRITORY, tower);
 			
 		game1 = bi.initializeBoard(players);
-		GameManager gameM = new GameManager();
+		GameManager gameM = new GameManager(60000);
 		gameM.setView(game1);
 		bs = new BoardSetup(gameM);
 		bs.firstSetUpCards();
@@ -437,7 +437,7 @@ public class TakeCardActionTest {
 		towers.put(CardType.VENTURE, tower);
 				
 		GameView game = bi.initializeBoard(players);
-		GameManager gameM = new GameManager();
+		GameManager gameM = new GameManager(60000);
 		gameM.setView(game);
 		BoardSetup bs = new BoardSetup(gameM);
 		bs.firstSetUpCards();
@@ -488,7 +488,7 @@ public class TakeCardActionTest {
 		towers.put(CardType.VENTURE, tower);
 				
 		GameView game = bi.initializeBoard(players);
-		GameManager gameM = new GameManager();
+		GameManager gameM = new GameManager(60000);
 		gameM.setView(game);
 		BoardSetup bs = new BoardSetup(gameM);
 		bs.firstSetUpCards();
@@ -538,7 +538,7 @@ public class TakeCardActionTest {
 		towers.put(CardType.VENTURE, tower);
 				
 		GameView game = bi.initializeBoard(players);
-		GameManager gameM = new GameManager();
+		GameManager gameM = new GameManager(60000);
 		gameM.setView(game);
 		BoardSetup bs = new BoardSetup(gameM);
 		bs.firstSetUpCards();
@@ -594,7 +594,7 @@ public class TakeCardActionTest {
 		towers.put(CardType.VENTURE, tower);
 				
 		GameView game = bi.initializeBoard(players);
-		GameManager gameM = new GameManager();
+		GameManager gameM = new GameManager(60000);
 		gameM.setView(game);
 		BoardSetup bs = new BoardSetup(gameM);
 		bs.firstSetUpCards();
@@ -646,7 +646,7 @@ public class TakeCardActionTest {
 		towers.put(CardType.VENTURE, tower);
 				
 		GameView game = bi.initializeBoard(players);
-		GameManager gameM = new GameManager();
+		GameManager gameM = new GameManager(60000);
 		gameM.setView(game);
 		BoardSetup bs = new BoardSetup(gameM);
 		bs.firstSetUpCards();
@@ -698,7 +698,7 @@ public class TakeCardActionTest {
 		towers.put(CardType.VENTURE, tower);
 				
 		GameView game = bi.initializeBoard(players);
-		GameManager gameM = new GameManager();
+		GameManager gameM = new GameManager(60000);
 		gameM.setView(game);
 		BoardSetup bs = new BoardSetup(gameM);
 		bs.firstSetUpCards();
@@ -751,7 +751,7 @@ public class TakeCardActionTest {
 		towers.put(CardType.CHARACTER, tower);
 				
 		GameView game = bi.initializeBoard(players);
-		GameManager gameM = new GameManager();
+		GameManager gameM = new GameManager(60000);
 		gameM.setView(game);
 		BoardSetup bs = new BoardSetup(gameM);
 		bs.firstSetUpCards();
@@ -806,7 +806,7 @@ public class TakeCardActionTest {
 		towers.put(CardType.VENTURE, tower);
 				
 		GameView game = bi.initializeBoard(players);
-		GameManager gameM = new GameManager();
+		GameManager gameM = new GameManager(60000);
 		gameM.setView(game);
 		BoardSetup bs = new BoardSetup(gameM);
 		bs.firstSetUpCards();
@@ -861,7 +861,7 @@ public class TakeCardActionTest {
 		towers.put(CardType.VENTURE, tower);
 				
 		GameView game = bi.initializeBoard(players);
-		GameManager gameM = new GameManager();
+		GameManager gameM = new GameManager(60000);
 		gameM.setView(game);
 		BoardSetup bs = new BoardSetup(gameM);
 		bs.firstSetUpCards();
@@ -913,7 +913,7 @@ public class TakeCardActionTest {
 		towers.put(CardType.CHARACTER, tower);
 				
 		GameView game = bi.initializeBoard(players);
-		GameManager gameM = new GameManager();
+		GameManager gameM = new GameManager(60000);
 		gameM.setView(game);
 		BoardSetup bs = new BoardSetup(gameM);
 		bs.firstSetUpCards();
@@ -967,7 +967,7 @@ public class TakeCardActionTest {
 		towers.put(CardType.CHARACTER, tower);
 				
 		GameView game = bi.initializeBoard(players);
-		GameManager gameM = new GameManager();
+		GameManager gameM = new GameManager(60000);
 		gameM.setView(game);
 		BoardSetup bs = new BoardSetup(gameM);
 		bs.firstSetUpCards();

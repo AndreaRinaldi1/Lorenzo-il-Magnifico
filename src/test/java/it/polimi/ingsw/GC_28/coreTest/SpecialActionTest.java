@@ -80,7 +80,7 @@ public class SpecialActionTest {
 		gameModel = new GameModel(gameBoard, players);
 		gameView = new GameView(gameModel);
 		gameView = bi.initializeBoard(players);
-		gameManager = new GameManager();
+		gameManager = new GameManager(60000);
 		gameManager.setView(gameView);
 		BoardSetup bs = new BoardSetup(gameManager);
 		bs.firstSetUpCards();
@@ -123,7 +123,7 @@ public class SpecialActionTest {
 	public void testApply1() throws FileNotFoundException, IOException{
 		this.specialAction.setActionType("play");
 		GameView game = bi.initializeBoard(players);
-		GameManager gameM = new GameManager();
+		GameManager gameM = new GameManager(60000);
 		gameM.setView(game);
 		BoardSetup bs = new BoardSetup(gameM);
 		bs.firstSetUpCards();
@@ -202,7 +202,7 @@ public class SpecialActionTest {
 	public void testApply6() throws FileNotFoundException, IOException{
 		this.specialAction.setActionType("play");
 		GameView game = bi.initializeBoard(players);
-		GameManager gameM = new GameManager();
+		GameManager gameM = new GameManager(60000);
 		gameM.setView(game);
 		BoardSetup bs = new BoardSetup(gameM);
 		bs.firstSetUpCards();
