@@ -23,6 +23,13 @@ import it.polimi.ingsw.GC_28.boards.GameBoard;
 import it.polimi.ingsw.GC_28.cards.Building;
 import it.polimi.ingsw.GC_28.cards.Character;
 
+
+/**
+ * This class prepare the board to the next period. It has two main method firstSetUpCards and setUpBoard, the first one
+ * has to be used before the first turn of the first period of the game, the second one is necessary after every period of game 
+ * @author nicoloscipione, andrearinaldi
+ *
+ */
 public class BoardSetup {
 	private GameManager gameManager;
 	private GameView game ;
@@ -30,19 +37,31 @@ public class BoardSetup {
 	private GameModel gameModel;
 	private static Deck deck = new Deck(); 
 	
-	public BoardSetup(GameManager g){
-		this.gameManager = g;
-		this.game = g.getView();
+	/**
+	 * The constructor sets gameManager, gameView, gameModel and gameBoard. 
+	 * @param gameManager The gameManager on which the class' method will effect
+	 */
+	public BoardSetup(GameManager gameManager){
+		this.gameManager = gameManager;
+		this.game = gameManager.getView();
 		this.gameModel = game.getGameModel();
 		gameBoard = gameModel.getGameBoard();
 		
 	}
 	
+	/**
+	 * This method prepare the deck for the game and set the cards to the tower for the first time in game
+	 * @throws FileNotFoundException
+	 */
 	public void firstSetUpCards()throws FileNotFoundException {
 		prepareDeck();
 		prepareTowers();
 	}
 	
+	/**
+	 * This method prepare the board to the next period. It clears the board from the left of the last period, resets
+	 * family members value, dices values, free the spaces, deactivates leader card and set the new order for players. 
+	 */
 	public void setUpBoard(){
 		getNextPlayerOrder();
 		freeFamilyMember();
@@ -56,11 +75,18 @@ public class BoardSetup {
 		deActiveLeaderCard();
 	}
 	
+	/**
+	 * This method read all cards from a file and set the deck
+	 * @throws FileNotFoundException
+	 */
 	private static void prepareDeck()throws FileNotFoundException{
 		CardReader cardReader = new CardReader();
 		deck =  cardReader.startRead();
 	}
 	
+	/**
+	 * This method reset the territories card Type tower. It frees cells and sets randomly a new card.
+	 */
 	private void setUpTerritoriesTower(){
 		Cell [] cell = gameBoard.getTowers().get(CardType.TERRITORY).getCells();
 		for(int i = 0; i < cell.length; i++){
@@ -82,6 +108,9 @@ public class BoardSetup {
 		}
 	}
 	
+	/**
+	 * This method reset the buildings card Type tower. It frees cells and sets randomly a new card.
+	 */
 	private void setUpBuildingsTower(){
 		Cell [] cell = gameBoard.getTowers().get(CardType.BUILDING).getCells();
 		for(int i = 0; i < cell.length; i++){
@@ -103,6 +132,9 @@ public class BoardSetup {
 		}
 	}
 	
+	/**
+	 * This method reset the characters card Type tower. It frees cells and sets randomly a new card.
+	 */
 	private  void setUpCharacterTower(){
 		Cell [] cell = gameBoard.getTowers().get(CardType.CHARACTER).getCells();
 		for(int i = 0; i < cell.length; i++){
@@ -124,6 +156,9 @@ public class BoardSetup {
 		}
 	}
 	
+	/**
+	 * This method reset the ventures card Type tower. It frees cells and sets randomly a new card.
+	 */
 	private void setUpVentureTower(){
 		Cell [] cell = gameBoard.getTowers().get(CardType.VENTURE).getCells();
 		for(int i = 0; i < cell.length; i++){
@@ -146,7 +181,9 @@ public class BoardSetup {
 	}
 	
 	
-	
+	/**
+	 * This method recall all setUp tower method, thus to prepare all towers for the new game period.
+	 */
 	private void prepareTowers(){
 		setUpTerritoriesTower();
 		setUpBuildingsTower();
@@ -154,6 +191,10 @@ public class BoardSetup {
 		setUpVentureTower();	
 	}
 	
+	/**
+	 * This method take the new player order from the council palace and set it as move order for the new period, at the end
+	 * if a players is not in the next order list it's add as the last one.
+	 */
 	private void getNextPlayerOrder(){
 		List<FamilyMember> inCouncil = gameBoard.getCouncilPalace().getPlayerOrder();
 		List<Player> nextOrder = new ArrayList<>();
@@ -174,6 +215,9 @@ public class BoardSetup {
 		}
 	}
 	
+	/**
+	 * This method frees all space in gameboard that are used in every game independently from players number in game.
+	 */
 	private void freeSpace(){
 		if(!(gameBoard.getCoinSpace().isFree())){
 			gameBoard.getCoinSpace().getPlayer().remove(0);
@@ -200,6 +244,9 @@ public class BoardSetup {
 		}
 	}
 	
+	/**
+	 * This method frees spaces which presence depends upon the number of players in game
+	 */
 	private void freeSpaceMoreThanTwoPlayer(){
 		if(gameModel.getPlayers().size() > 2){
 			for(FamilyMember fm : gameBoard.getProductionSpace().getPlayer()){
@@ -220,7 +267,10 @@ public class BoardSetup {
 			}
 		}
 	}
-		
+	
+	/**
+	 * This method resets each family member as not used for every player
+	 */
 	private void freeFamilyMember(){
 		for(Player p : gameModel.getPlayers()){
 			for(int i = 0; i < p.getFamilyMembers().length; i++){
@@ -229,6 +279,10 @@ public class BoardSetup {
 		}
 	}
 	
+	/**
+	 * This method rolls dices for the new period and set them in gameboard.
+	 * @param dices The gameboard Dices
+	 */
 	private void setDicesValue(Dice[] dices){
 		for(int i = 0; i < 3 ; i++){
 			dices[i].rollDice();
@@ -236,6 +290,9 @@ public class BoardSetup {
 		gameBoard.setDices(dices);
 	}
 	
+	/**
+	 * This method set the value of family members according to dice value.
+	 */
 	private void setFamilyMember(){
 		for(Player p : gameModel.getPlayers()){
 			FamilyMember[] f = p.getFamilyMembers();
@@ -251,6 +308,9 @@ public class BoardSetup {
 		}
 	}
 	
+	/**
+	 * This method reset as not activate the value of all played leader cards which effect is not permanent
+	 */
 	private void deActiveLeaderCard(){
 		for(Player p : gameModel.getPlayers()){
 			System.out.println(p.getName());
@@ -258,7 +318,7 @@ public class BoardSetup {
 				if(!(lc.getPermanent()) && lc.getPlayed()){
 					lc.setActive(false);
 				}
-				else if(lc.getPermanent() && lc.getPlayed() && !lc.getName().equalsIgnoreCase("Sisto IV") && lc.getName().equalsIgnoreCase("Santa Rita")){
+				else if(lc.getPermanent() && lc.getPlayed() && !("Sisto IV").equalsIgnoreCase(lc.getName()) && !("Santa Rita").equalsIgnoreCase(lc.getName())){
 					lc.getEffect().apply(p, game);
 				}
 			}
