@@ -10,6 +10,11 @@ import it.polimi.ingsw.GC_28.model.GameModel;
 import it.polimi.ingsw.GC_28.model.Player;
 import it.polimi.ingsw.GC_28.server.Message;
 
+/**
+ * This class wrap all the control to check, before apply a special action
+ * @author nicolo
+ * @version 1.0, 30/06/2017
+ */
 public class SpecialActionController {
 	
 	private GameModel gameModel;
@@ -22,6 +27,12 @@ public class SpecialActionController {
 		this.action = action;
 	}
 	
+	/**
+	 * 
+	 * @param gameModel 
+	 * @param action
+	 * @return true if the action respect all requested parameters of game, false if it's not applicable. 
+	 */
 	public boolean check(GameModel gameModel, SpecialAction action){
 		
 		if(!checkForCardPresence()){
@@ -46,6 +57,10 @@ public class SpecialActionController {
 		
 	}
 	
+	/**
+	 * Check if player really has the card
+	 * @return true if the player really has that leader card, false otherwise.
+	 */
 	private boolean checkForCardPresence(){
 		for(LeaderCard ld : player.getLeaderCards()){
 			if(ld.getName().equalsIgnoreCase(action.getLeaderName())){
@@ -55,6 +70,10 @@ public class SpecialActionController {
 		return false;
 	}
 	
+	/**
+	 * check if player respect the necessary parameters to play a certain leader card. 
+	 * @return true if the player can play the leader card, false otherwise.
+	 */
 	private boolean checkPlayAction(){
 		for(LeaderCard l : player.getLeaderCards()){
 			if(l.getName().equalsIgnoreCase(action.getLeaderName())){
@@ -71,6 +90,10 @@ public class SpecialActionController {
 		return false;
 	}
 	
+	/**
+	 * check if player can activate a certain leader card
+	 * @return true if the player can activate a leader card, false otherwise
+	 */
 	private boolean checkActivateAction(){
 		for(LeaderCard l : player.getLeaderCards()){
 			if(l.getName().equalsIgnoreCase(action.getLeaderName())){
@@ -93,7 +116,11 @@ public class SpecialActionController {
 	}
 	
 	
-
+	/**
+	 * 
+	 * @param resourceCost the necessary amount of resources to play a leader card
+	 * @return true if the player has the resources requested, false otherwise.
+	 */
 	boolean enoughResources(Resource resourceCost){
 		if(resourceCost == null){
 			return true;
@@ -107,6 +134,11 @@ public class SpecialActionController {
 		return true;
 	}
 
+	/**
+	 * 
+	 * @param cardCost the necessary number of card to play a leader card.
+	 * @return true if the player has at least the minimum  number of card requested, false otherwise.
+	 */
 	boolean enoughCard(Map<CardType,Integer> cardCost) {
 		if(cardCost == null){
 			return true;
@@ -129,7 +161,13 @@ public class SpecialActionController {
 		}
 		return true;
 	}
-
+	
+	/**
+	 * This method check if the card is Lucrezia Borgia if so, it check the cost conditions that are different from any other
+	 *  leader card. 
+	 * @param lc the leader card to check
+	 * @return true if it is Lucrezia Borgia and the player can play it, false otherwise.
+	 */
 	private boolean checkForLucreziaBorgiaCost(LeaderCard lc) {
 		if(("Lucrezia Borgia").equalsIgnoreCase(lc.getName())){
 			if(player.getBoard().getTerritories().size() == 6){
