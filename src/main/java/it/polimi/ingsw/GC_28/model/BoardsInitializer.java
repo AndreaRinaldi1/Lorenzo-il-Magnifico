@@ -352,15 +352,15 @@ public class BoardsInitializer {
 	
 
 class EnumMapInstanceCreator<K extends Enum<K>, V> implements InstanceCreator<EnumMap<K, V>> {
-private final Class<K> enumClazz;
+private final Class<K> enumClass;
 
-	public EnumMapInstanceCreator(final Class<K> enumClazz) {
+	public EnumMapInstanceCreator(final Class<K> enumClass) {
 		super();
-		this.enumClazz = enumClazz;
+		this.enumClass = enumClass;
 	}
 
 	@Override
 	public EnumMap<K, V> createInstance(final Type type) {
-		return new EnumMap<>(enumClazz);
+		return new EnumMap<>(enumClass);
 	}
 }

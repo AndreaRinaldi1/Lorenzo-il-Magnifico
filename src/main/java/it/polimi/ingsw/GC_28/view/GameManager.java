@@ -3,6 +3,7 @@ package it.polimi.ingsw.GC_28.view;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -58,7 +59,11 @@ public class GameManager implements Runnable{
 									Logger.getAnonymousLogger().log(Level.SEVERE,"Cannot play that move in method run()" + e);
 								} catch (IndexOutOfBoundsException e){
 									view.getHandlers().get(currentPlayer).send("Sorry, the last message was not for you. Please go on!");
-									Logger.getAnonymousLogger().log(Level.SEVERE, e.getMessage());
+								} catch(NoSuchElementException e){
+									view.getSuspended().add(currentPlayer);
+									for(Player p : view.getHandlers().keySet()){
+										view.getHandlers().get(p).send("Player " + currentPlayer.getName() + " left the game!");
+									}
 								}
 							}
 						};
@@ -71,8 +76,15 @@ public class GameManager implements Runnable{
 						}
 						if(timeEnded){
 							t.interrupt();
-							view.getHandlers().get(currentPlayer).send("\nYou have been suspended.");
-							view.getHandlers().get(currentPlayer).send("suspended");
+							for(Player p : view.getHandlers().keySet()){
+								if(p.equals(currentPlayer)){
+									view.getHandlers().get(p).send("\nYou have been suspended.");
+									view.getHandlers().get(p).send("suspended");
+								}
+								else{
+									view.getHandlers().get(p).send("Player " + currentPlayer.getName() + " has been suspended");
+								}
+							}
 							view.getSuspended().add(currentPlayer);
 							new Thread(new Listener(view.getSuspended() ,currentPlayer, view.getHandlers().get(currentPlayer))).start();
 						}
@@ -97,7 +109,10 @@ public class GameManager implements Runnable{
 		sortBy(view.getGameModel().getPlayers(), ResourceType.MILITARYPOINT);
 		assignBonusForMilitary();
 		sortBy(view.getGameModel().getPlayers(), ResourceType.VICTORYPOINT);
-		view.declareWinner();		
+		view.declareWinner();	
+		for(Player p : view.getHandlers().keySet()){
+			view.getHandlers().get(p).send("close");
+		}
 	}
 	
 	public int getCurrentPeriod() {

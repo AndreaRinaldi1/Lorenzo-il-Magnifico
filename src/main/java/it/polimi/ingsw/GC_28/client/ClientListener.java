@@ -25,6 +25,9 @@ public class ClientListener implements Runnable{
 				if("suspended".equals(socketLine)){
 					System.out.println("Type 'reconnect' to play again");
 				}
+				else if("close".equals(socketLine)){
+					System.out.println("THE END");
+				}
 				else{
 					System.out.println(socketLine);
 				}

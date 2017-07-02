@@ -34,6 +34,7 @@ public class SocketClientHandler implements ClientHandler{
 	@Override
 	public String receive() {
 		return in.nextLine();
+		
 	}
 
 }

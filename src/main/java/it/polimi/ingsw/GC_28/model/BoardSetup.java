@@ -314,7 +314,6 @@ public class BoardSetup {
 	 */
 	private void deActiveLeaderCard(){
 		for(Player p : gameModel.getPlayers()){
-			System.out.println(p.getName());
 			for(LeaderCard lc : p.getLeaderCards()){
 				if(!(lc.getPermanent()) && lc.getPlayed()){
 					lc.setActive(false);
