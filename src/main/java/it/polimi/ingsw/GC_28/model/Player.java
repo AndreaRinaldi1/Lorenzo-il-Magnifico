@@ -13,7 +13,12 @@ import it.polimi.ingsw.GC_28.components.FamilyMember;
 import it.polimi.ingsw.GC_28.components.Resource;
 import it.polimi.ingsw.GC_28.components.ResourceType;
 
-
+/**
+ * This class rappresent Player with its playerboard, excommunication tile, family member and leader cards.
+ * @author nicoloscipioen ,andrearinaldi
+ * @version 1.0, 30/06/2017
+ * @see FamilyMember,LeaderCard, PlayerBoard,ExcommunicationTile
+ */
 
 public class Player {
 	private String name;
@@ -28,64 +33,115 @@ public class Player {
 		this.color = color;
 	}
 
-	
+	/**
+	 * 
+	 * @return Return the name of the player
+	 */
 	public String getName() {
 		return name;
 	}
-
+	
+	/**
+	 * 
+	 * @return The player's playerBoard
+	 */
 	public PlayerBoard getBoard() {
 		return this.board;
 	}
-
+	
+	/**
+	 * 
+	 * @return The player's family member
+	 */
 	public FamilyMember[] getFamilyMembers() {
 		return familyMembers;
 	}
 	
+	/**
+	 * 
+	 * @return The player's excommunicationTile
+	 */
 	public List<ExcommunicationTile> getExcommunicationTile() {
 		return excommunicationTile;
 	}
 	
+	/**
+	 * 
+	 * @param excommunicationTile. The list of excommunicationTile for the player
+	 */
 	public void setExcommunicationTile(List<ExcommunicationTile> excommunicationTile) {
 		this.excommunicationTile = excommunicationTile;
 	}
 
-
+	/**
+	 * 
+	 * @param familyMembers. The player's family member.
+	 */
 	public void setFamilyMembers(FamilyMember[] familyMembers) {
 		this.familyMembers = familyMembers;
 	}
-
+	
+	/**
+	 * 
+	 * @param board. The player's playerboard.
+	 */
 	public void setBoard(PlayerBoard board) {
 		this.board = board;
 	}
-
+	
+	/**
+	 * 
+	 * @return  Player's color.
+	 */
 	public PlayerColor getColor() {
 		return color;
 	}
 
-	
+	/**
+	 * This method add resources to player's resource.
+	 * @param amount. The resource to add to player's resource.
+	 */
 	public void addResource(Resource amount){
 		this.getBoard().getResources().modifyResource(amount, true);
 	}
 	
-	
+	/**
+	 * This method subtract the given amount of resource from player's resource 
+	 * @param amount.The amount of resource to subtract from player's resource.
+	 */
 	public void reduceResources(Resource amount){
 		this.getBoard().getResources().modifyResource(amount, false);
 	}
 	
+	/**
+	 * This method set player's color to given color.
+	 * @param color to set to the player.
+	 */
 	public void setColor(PlayerColor color) {
 		this.color = color;
 	}
 	
+	/**
+	 * 
+	 * @return The player's list of leader cards.
+	 */
 	public List<LeaderCard> getLeaderCards() {
 		return leaderCards;
 	}
 
-
+	/**
+	 * 
+	 * @param leaderCards. The list of leader cards to set to player.
+	 */
 	public void setLeaderCards(List<LeaderCard> leaderCards) {
 		this.leaderCards = leaderCards;
 	}
 
-
+	/**
+	 *  This method displays the excommunicationTile. It uses AsciiTable to represent the excommunicationTile
+	 *   and appends it as strings to a StringBuilder object that is returned as a string.
+	 * @return The representation of excommunicationTile
+	 */
 	public String displayExcommunication(){
 		AsciiTable tab = new AsciiTable();
 		tab.addRule();
@@ -99,6 +155,11 @@ public class Player {
 		return e;
 	}
 	
+	/**
+	 * This method displays the familyMember. It uses AsciiTable to represent and
+	 * appends them as strings to a StringBuilder object that is returned as a string.
+	 * @return The representation of familyMember
+	 */
 	public String displayFamilyMember(){
 		StringBuilder s = new StringBuilder();
 		s.append("Family Members:\n");
@@ -115,10 +176,15 @@ public class Player {
 		return s.toString();
 	}
 	
+	/**
+	 * This method displays the Leadercards. It uses AsciiTable to represent and
+	 * appends them as strings to a StringBuilder object that is returned as a string.
+	 * @return The representation of leader cards.
+	 */
 	public String displayLeader(){
 		AsciiTable leadTab = new AsciiTable();
 		leadTab.addRule();
-		leadTab.addRow("Leader", "played" ,"active");//, "resource Cost", "CardCost" );
+		leadTab.addRow("Leader", "played" ,"active");
 		leadTab.addRule();
 		for(LeaderCard lc : leaderCards){
 			leadTab.addRow(lc.getName(),lc.getPlayed(),lc.getActive());
@@ -129,6 +195,12 @@ public class Player {
 		String ret = leadTab.render();
 		return ret;
 	}
+	
+	/**
+	 * This method displays the Leadercard's cost. It uses AsciiTable to represent and
+	 * appends them as strings to a StringBuilder object that is returned as a string.
+	 * @return The Leader card's cost.
+	 */
 	public String displayLeaderCost(){
 		AsciiTable costTab = new AsciiTable();
 		costTab.addRule();
@@ -144,6 +216,11 @@ public class Player {
 		return ret;
 	}
 	
+	/**
+	 * This method take a leader card as input and return its Resource cost as a string.
+	 * @param lc. Leader card
+	 * @return The cost of the leader card as a string
+	 */
 	private String resourceCost(LeaderCard lc){
 		StringBuilder r = new StringBuilder();
 		for(ResourceType rt : lc.getResourceCost().getResource().keySet()){
@@ -152,6 +229,11 @@ public class Player {
 		return r.toString();
 	}
 	
+	/**
+	 * This method take a leader card as parameter and return its card cost as a string.
+	 * @param lc. Leader card
+	 * @return The Leadercard's card cost as a String.
+	 */
 	private String cardCost(LeaderCard lc){
 		StringBuilder s = new StringBuilder();
 		for(CardType ct : lc.getCardCost().keySet()){

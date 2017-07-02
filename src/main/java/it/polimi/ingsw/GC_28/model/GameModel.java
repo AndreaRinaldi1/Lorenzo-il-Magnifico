@@ -7,6 +7,13 @@ import it.polimi.ingsw.GC_28.boards.GameBoard;
 import it.polimi.ingsw.GC_28.server.Message;
 import it.polimi.ingsw.GC_28.server.Observable;
 
+/**
+ * This class keep together the list of players and gameboard 
+ * @author nicoloscipione, andrearinaldi
+ * @version 1.0 , 30/06/2017
+ * @see Player, GameBoard
+ */ 
+
 public class GameModel extends Observable<Message> {
 	
 	private GameBoard gameBoard;
@@ -17,22 +24,24 @@ public class GameModel extends Observable<Message> {
 		this.gameBoard = gameBoard;
 		this.players = players;
 	}
-
+	
+	/**
+	 * 
+	 * @return return the gameboard.
+	 */
 	public GameBoard getGameBoard() {
 		return gameBoard;
 	}
 	
-	/*public void setGameBoard(GameBoard gameBoard) {
-		this.gameBoard = gameBoard;
-	}*/
 	
+	/**
+	 * 
+	 * @return return the list of players.
+	 */
 	public List<Player> getPlayers() {
 		return players;
 	}
 	
-	/*public void setPlayers(List<Player> players) {
-		this.players = players;
-	}*/
 	
 	
 
