@@ -25,9 +25,21 @@ import it.polimi.ingsw.GC_28.effects.OtherEffect;
 import it.polimi.ingsw.GC_28.effects.ModifyDiceEffect;
 import it.polimi.ingsw.GC_28.effects.ServantEffect;
 
+/**
+ * This class read the json file excommunication.json and create a list of all the  excommunication of the game
+ * @author nicoloscipione
+ * @version 1.0, 03/072017
+ * @see ExcommunicationTile
+ */
+
 public class ExcommunicationReader {
 
-	
+	/**
+	 * This method create a list of all excommunicationTile of the game. It use a Runtimetypeadapterfactory to let
+	 * gson api recognize all effect and associate the excommunicationTile to its effect, while it reads the json file.
+	 * @return The list of all excommunicationTile
+	 * @throws IOException
+	 */
 	public List<ExcommunicationTile> startRead()throws IOException{
 		List<ExcommunicationTile> excomm;
 
