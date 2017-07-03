@@ -7,15 +7,27 @@ import java.util.Scanner;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+/**
+ * This class allows the socket client to be always able to responds to the server interrogations
+ * @author andreaRinaldi
+ * @version 1.0, 07/03/2017
+ */
 public class ClientWriter implements Runnable{
 	Socket socket;
 	PrintWriter socketOut;
-	 
+	
+	/**
+	 * This constructor builds the object out of the socket with which it's connected to the server
+	 * @param socket the socket with which it's connected to the server
+	 */
 	public ClientWriter(Socket socket){
 		this.socket = socket;
 	}
 	
-	
+	/**
+	 * this method sends to the server the player inputs from the keyboard.
+	 * Finally it closes the connection.
+	 */
 	@Override
 	public void run(){
 		Scanner stdin = null;

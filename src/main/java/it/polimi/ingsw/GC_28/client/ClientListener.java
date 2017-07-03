@@ -7,13 +7,26 @@ import java.util.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+/**
+ * This class allows the socket client to be always listening to the input coming from the server
+ * @author andreaRinaldi
+ * @version 1.0, 07/03/2017
+ */
 public class ClientListener implements Runnable{
 	Socket socket;
 	
+	/**
+	 * This constructor builds the object out of the socket with which it's connected to the server
+	 * @param socket the socket with which it's connected to the server
+	 */
 	public ClientListener(Socket socket){
 		this.socket = socket;
 	}
 	
+	/**
+	 * this method is always listening and showing on display what the server writes.
+	 * Finally it closes the connection and the bufferedReader.
+	 */
 	@Override
 	public void run(){
 		BufferedReader socketIn = null;

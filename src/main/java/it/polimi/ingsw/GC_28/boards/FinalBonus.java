@@ -18,7 +18,6 @@ public class FinalBonus {
 	private List<Resource> faithPointTrack = new ArrayList<>();
 	
 	private int resourceFactor;
-	
 	private static FinalBonus instance;
 	
 	private FinalBonus(){}
@@ -31,7 +30,6 @@ public class FinalBonus {
 	}
 	
 	/**
-	 * 
 	 * @return The bonus for the position in military track
 	 */
 	public List<Resource> getFinalMilitaryTrack() {
@@ -39,15 +37,13 @@ public class FinalBonus {
 	}
 
 	/**
-	 * 
-	 * @param finalMilitaryTrack2 The bonus to give at the end of the game for the military track position
+	 * @param finalMilitaryTrack The bonus to give at the end of the game for the military track position
 	 */
-	public void setFinalMilitaryTrack(List<Resource> finalMilitaryTrack2) {
-		finalMilitaryTrack = finalMilitaryTrack2;
+	public void setFinalMilitaryTrack(List<Resource> finalMilitaryTrack) {
+		this.finalMilitaryTrack = finalMilitaryTrack;
 	}
 	
 	/**
-	 * 
 	 * @return The factor to use,when compute the final bonus for resources
 	 */
 	public int getResourceFactor() {
@@ -55,7 +51,6 @@ public class FinalBonus {
 	}
 	
 	/**
-	 * 
 	 * @return The bonus for the territories card owned
 	 */
 	public List<Resource> getFinalTerritoriesBonus() {
@@ -67,7 +62,6 @@ public class FinalBonus {
 	}
 	
 	/**
-	 * 
 	 * @return the quantity of resources requested to get another territory card
 	 */
 	public List<Resource> getResourceForTerritories() {
@@ -75,7 +69,6 @@ public class FinalBonus {
 	}
 	
 	/**
-	 * 
 	 * @param r the factor to use ,when compute the final bonus for resources
 	 */
 	public void setResourceFactor(int r){
@@ -83,7 +76,6 @@ public class FinalBonus {
 	}
 	
 	/**
-	 * 
 	 * @param f the final bonus
 	 */
 	public static void setFinalBonus(FinalBonus f){
@@ -93,7 +85,6 @@ public class FinalBonus {
 	}
 	
 	/**
-	 * 
 	 * @param finalTerritoriesBonus The List of Resource  to give,depending number of territory cards, 
 	 * at the end of the game 
 	 */
@@ -102,7 +93,6 @@ public class FinalBonus {
 	}
 	
 	/**
-	 * 
 	 * @param finalCharactersBonus The List of Resource  to give,depending number of character cards, 
 	 * at the end of the game 
 	 */
@@ -111,7 +101,6 @@ public class FinalBonus {
 	}
 	
 	/**
-	 * 
 	 * @param resourceForTerritories The list of Resource bonus at the end of game, depending on the number of territory card.
 	 */
 	public void setResourceForTerritories(List<Resource> resourceForTerritories) {
@@ -119,7 +108,6 @@ public class FinalBonus {
 	}
 	
 	/**
-	 * 
 	 * @return The List of Resource bonus for faithpoint paid after the end of an era.
 	 */
 	public List<Resource> getFaithPointTrack() {
@@ -127,7 +115,6 @@ public class FinalBonus {
 	}
 	
 	/**
-	 * 
 	 * @param faithPointTrack The List of Resource bonus for faithpoint paid after the end of an era.
 	 */
 	public void setFaithPointTrack(List<Resource> faithPointTrack) {
