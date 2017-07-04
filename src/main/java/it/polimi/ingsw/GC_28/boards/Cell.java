@@ -7,7 +7,7 @@ import it.polimi.ingsw.GC_28.components.Resource;
 /**
  * This class represent the cell that make up the towers. Every cell has a resource bonus associated, a card
  * and it's where the player gets located once it decides to take the card that is placed here
- * @author andrearinadli, nicoloscipione, robertoturi
+ * @author andrearinaldi, nicoloscipione, robertoturi
  * @version 1.0, 06/28/2017
  * @see Resource, FamilyMember
  */
