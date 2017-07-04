@@ -29,13 +29,33 @@ import java.lang.reflect.Type;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-public class CardReader{
+/**
+ * This class read the json file which contains all development cards and group all them in a deck.
+ * For reading the json file it uses the gson api.
+ * @author nicolo
+ * @version 1.0, 03/07/2017
+ */
 
+public class CardReader{
+	/**
+	 * The main method create an instance of this class and use it to start the method startRead().
+	 * @param args
+	 * @throws FileNotFoundException
+	 */
     public static void main(String[] args) throws FileNotFoundException{
         CardReader reader = new CardReader();
         reader.startRead();
     }
-
+    
+    /**
+     * This method create an instance of the class deck everytime it is called. After create a RuntimeTypeAdapterFactory
+     * of every effect presence in the development cards, in this way gson can convert the information present in the json file("cards.json),
+     * to the correct class of effect. The runtimetypeadapterfactory is not includes in standar gson api, but it's available
+     * in gson extras, presence in various github account. At last the method parse all json file and create 
+     * the devolepment cards that will return.
+     * @return Deck. The complete deck of development cards.
+     * @throws FileNotFoundException 
+     */
     public Deck startRead() throws FileNotFoundException{
         Deck deck = new Deck();
         

@@ -6,7 +6,12 @@ import java.util.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-
+/**
+ * This interface is the starting point for a player to enter the game. It allows to select the type of connection and 
+ * therefore it launch the specific kind of client.
+ * @author andreaRinaldi
+ * @version 1.0 07/03/2017
+ */
 public interface Client{
 	Scanner input = new Scanner(System.in);
 
@@ -28,10 +33,16 @@ public interface Client{
 		}
 	}
 	
-	
+	/**
+	 * this method needs to be overwritten by the subclass;
+	 * @throws IOException due to the scanner interaction 
+	 */
 	public void startClient() throws IOException;
 	
-
+	/**
+	 * This method asks the client for the preferred connection (RMI or Socket)
+	 * @return the player's choice
+	 */
 	public static String askConnectionType(){
 		String connection;
 		do{

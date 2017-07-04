@@ -28,7 +28,7 @@ import it.polimi.ingsw.GC_28.cards.Character;
  * This class prepare the board to the next period. It has two main method firstSetUpCards and setUpBoard, the first one
  * has to be used before the first turn of the first period of the game, the second one is necessary after every period of game 
  * @author nicoloscipione
- * @version 1.0, 28/06/2017
+ * @version 1.0, 06/28/2017
  * @see GameView,GameManager, GameModel, GameBoard, Excommunication, BonusTile, Dice,Space,PlayerBoard 
  */
 public class BoardSetup {
@@ -314,7 +314,6 @@ public class BoardSetup {
 	 */
 	private void deActiveLeaderCard(){
 		for(Player p : gameModel.getPlayers()){
-			System.out.println(p.getName());
 			for(LeaderCard lc : p.getLeaderCards()){
 				if(!(lc.getPermanent()) && lc.getPlayed()){
 					lc.setActive(false);

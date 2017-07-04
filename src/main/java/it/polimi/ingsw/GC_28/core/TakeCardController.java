@@ -23,6 +23,11 @@ import it.polimi.ingsw.GC_28.cards.ExcommunicationTile;
 import it.polimi.ingsw.GC_28.cards.LeaderCard;
 import it.polimi.ingsw.GC_28.cards.Venture;
 
+/**
+ * This class controls if the action of taking the card that the player selected is applicable or not
+ * @author andreaRinaldi
+ * @version 1.0, 07/03/2017
+ */
 public class TakeCardController {
 	private GameModel gameModel;
 	private GameBoard gameBoard;
@@ -34,6 +39,15 @@ public class TakeCardController {
 		this.gameBoard = gameModel.getGameBoard();
 	}
 	
+	/**
+	 * this method is the general check for every possible situation that could go wrong
+	 * 
+	 * @param game the view of the game
+	 * @param name the name of the card
+	 * @param familyMember the family member the player decided to use for this action
+	 * @param throughEffect indicates if the action is carried out by means of an immediate effect of a card or not
+	 * @return true if it's ok, false otherwise
+	 */
 	public boolean check(GameView game, String name, FamilyMember familyMember, TakeCardEffect throughEffect){
 		if(!(checkCardExistance(name, throughEffect))){
 			gameModel.notifyObserver(new Message("this card doesn't exist", false));
@@ -64,27 +78,27 @@ public class TakeCardController {
 	}
 	
 	/**
-	 * @param cardType
-	 * @param name
+	 * @param cardType the type of the card
+	 * @param name the name of the card
 	 * @return true if the card exists, false otherwise.
 	 */
 	private boolean checkCardExistance(String name, TakeCardEffect throughEffect){
 		for(CardType ct : gameBoard.getTowers().keySet()){
-			if(gameBoard.getTowers().get(ct).findCard(name) != null){ //se ho trovato la carta
-				if(!(throughEffect == null)){ //se ho l'effetto
-					if(throughEffect.getCardType() == null){ //se posso prendere qualunque cardType
+			if(gameBoard.getTowers().get(ct).findCard(name) != null){ //if I found the card
+				if(!(throughEffect == null)){ 
+					if(throughEffect.getCardType() == null){ //if I can take a card of any cardType
 						cardType = ct;
 						return true; 
 					}
 					else{
-						if(throughEffect.getCardType().equals(ct)){ //se posso prendere un cardTYpe specifico e coincide
+						if(throughEffect.getCardType().equals(ct)){ //if I can take only a card of a specific cardType, and it is equals to the one i've chosen
 							cardType = ct;
 							return true;
 						}
 					}
 				}
 				else{
-					cardType = ct; //se non ho l'effetto e ho trovato la cella
+					cardType = ct;
 					return true;
 				}
 			}
@@ -92,6 +106,10 @@ public class TakeCardController {
 		return false;
 	}
 	
+	/**
+	 * @param familyMember the family member the player decided to use for this action
+	 * @return true if I already have six cards of the type of card I wanto to take
+	 */
 	private boolean checkMoreThanSix(FamilyMember familyMember){
 		switch(cardType){
 		case TERRITORY:
@@ -122,8 +140,8 @@ public class TakeCardController {
 	
 	
 	/**
-	 * @param cardType
-	 * @param familyMember
+	 * @param cardType the type of the card I chose to take
+	 * @param familyMember the family member the player decided to use for this action
 	 * @return true if any familyMember (not neutral) of this player is on the tower, false otherwise.
 	 */
 	private boolean checkThisPlayerPresent(FamilyMember familyMember){
@@ -140,7 +158,7 @@ public class TakeCardController {
 	}
 	
 	/**
-	 * @param cardType
+	 * @param cardType the type of the card I chose to take
 	 * @return true if any player is on the tower, false otherwise.
 	 */
 	protected boolean checkAnyPlayerPresent(){
@@ -155,8 +173,8 @@ public class TakeCardController {
 	}
 	
 	/**
-	 * @param familyMember
-	 * @param cardType
+	 * @param familyMember the family member the player decided to use for this action
+	 * @param cardType the type of the card I chose to take
 	 * @return true if the player has enough resources to take the card
 	 */
 	private boolean checkResource(GameView game, String cardName, FamilyMember familyMember, TakeCardEffect throughEffect){
@@ -167,6 +185,7 @@ public class TakeCardController {
 					if(!active){
 
 						int size = familyMember.getPlayer().getBoard().getTerritories().size();
+						//I look at the resources indicated on the playerboard necessary to take a territory
 						for(ResourceType resType : FinalBonus.instance().getResourceForTerritories().get(size).getResource().keySet()){
 							if(familyMember.getPlayer().getBoard().getResources().getResource().get(resType) < FinalBonus.instance().getResourceForTerritories().get(size+1).getResource().get(resType)){
 								gameModel.notifyObserver(new Message("You don'have the requested resources to take another " + cardType.name().toLowerCase() , false));
@@ -209,30 +228,30 @@ public class TakeCardController {
 					break;
 				}
 			}
-			if(venture.getAlternativeCostPresence() && costNotZeros){//ho due alternative di costo
+			if(venture.getAlternativeCostPresence() && costNotZeros){ //if I have two cost alternatives
 				if(venture.getMinimumRequiredMilitaryPoints() <= familyMember.getPlayer().getBoard().getResources().getResource().get(ResourceType.MILITARYPOINT)){
-					//qui se avesse un numero adeguato di military points tale da chiedere quale alternativa vuole
+					//if I have enough military points
 					chosenCost = game.askAlternative(venture.getCost(), venture.getAlternativeCost(), "cost");
 					tmp.modifyResource(chosenCost, false);
 				}
-				else{
+				else{ //if I don't have the necesary military points
 					chosenCost = venture.getCost();
-					tmp.modifyResource(venture.getCost(), false); //se non ha suff. military points gli sottraggo cost
+					tmp.modifyResource(venture.getCost(), false); 
 				}
 			}
-			else if(!venture.getAlternativeCostPresence()){//ho cost ma non l'alternativa coi pti militari
+			else if(!venture.getAlternativeCostPresence()){ //I have the resource cost and not the cost with military points
 				chosenCost = venture.getCost();
 				tmp.modifyResource(venture.getCost(), false); 
 			}
-			else{//ho il costo (alternativa) coi punti militari ma non il costo normale (tutti 0)
+			else{ // i have the military points cost but not the resource cost
 				if(venture.getMinimumRequiredMilitaryPoints() <= familyMember.getPlayer().getBoard().getResources().getResource().get(ResourceType.MILITARYPOINT)){
-					//qui se avesse un numero adeguato di military points 
+					//if I have enough military points
 					chosenCost = venture.getAlternativeCost();
 					tmp.modifyResource(venture.getAlternativeCost(), false);
 				}
 				else{
 					gameModel.notifyObserver(new Message("You don't have the necessary military points to pay for this card" , false));
-					return false; //se non ha suff. military points non può prendere la carta
+					return false; 
 				}
 			}
 			venture.setChosenCost(chosenCost);
@@ -249,8 +268,11 @@ public class TakeCardController {
 		}
 		return true;
 	}
-	/*check if Cesare Borgia leader is active for the currentPlayer,
-	 *  if so skip the check of his resources requested for territories
+	
+	/**
+	 * This method checks if Cesare Borgia leader is active for the currentPlayer,
+	 * if so skip the check of his resources requested for territories
+	 * @return true if the player can avoid to have the military points in order to take another territory
 	 */
 	private boolean checkForNoMilitaryForTerritoryEffect(Player player){
 		for(LeaderCard ls : player.getLeaderCards()){
@@ -264,6 +286,11 @@ public class TakeCardController {
 		return false;
 	}
 	
+	/**
+	 * This method checks if the player can avoid to pay the 3 coins thanks to an activated leader effect
+	 * @param player the currentPlayer
+	 * @return true if the player can avoid to pay the 3 coins, false otherwise
+	 */
 	private boolean checkForNoExtraCostInTowerEffect(Player player){
 		for(LeaderCard lc : player.getLeaderCards()){ //check if current player can avoid to pay the 3 coins 
 			if(lc.getEffect().getClass().equals(OtherEffect.class)){
@@ -276,7 +303,12 @@ public class TakeCardController {
 		return false;
 	}
 	
-	
+	/**
+	 * This method reduces the player resources by three coins dince there is already another player on the tower
+	 * @param familyMember the family member the player decided to use for this action
+	 * @param check if this method is called in the controller or in the application of the action
+	 * @param tmp the temporary resources of the player if the action was executed
+	 */
 	protected void reduce3Coins(FamilyMember familyMember, boolean check, Resource tmp){
 		if(checkAnyPlayerPresent()){
 			EnumMap<ResourceType, Integer> minus3Coin = new EnumMap<>(ResourceType.class);
@@ -292,6 +324,15 @@ public class TakeCardController {
 
 	}
 	
+	/**
+	 * this method controls if, in the player characters, there is a card that prevent from taking the
+	 * bonuses on the tower when picking a card
+	 * @param game the view of the game
+	 * @param familyMember the family member the player decided to use for this action
+	 * @param check if this method is called in the controller or in the application of the action
+	 * @param tmp the temporary resources of the player if the action was executed
+	 * @param cardName the name of the chosen card
+	 */
 	protected void lookForNoCellBonus(GameView game, FamilyMember familyMember, boolean check, Resource tmp, String cardName){
 		boolean noCellBonus = false;
 		for(Character character : familyMember.getPlayer().getBoard().getCharacters()){
@@ -313,10 +354,17 @@ public class TakeCardController {
 		}
 	}
 	
-	
+	/**
+	 * This method control, if I am taking a card thanks to an immediate effect of another card, if I also have a discount on the cost
+	 * @param familyMember the family member the player decided to use for this action
+	 * @param check if this method is called in the controller or in the application of the action
+	 * @param tmp the temporary resources of the player if the action was executed
+	 * @param game the view of the game
+	 * @param throughEffect indicates if the action is carried out by means of an immediate effect of a card or not
+	 */
 	protected void lookForTakeCardDiscount(FamilyMember familyMember, boolean check, Resource tmp, GameView game, TakeCardEffect throughEffect){
 		if(!(throughEffect == null)){
-			if(throughEffect.isDiscountPresence()){ //discount di takecardeffect
+			if(throughEffect.isDiscountPresence()){ 
 				if(throughEffect.getDiscount().getAlternativeDiscountPresence()){
 					if(check){
 						throughEffect.getDiscount().setChosenAlternativeDiscount(game.askAlternative(throughEffect.getDiscount().getDiscount(), throughEffect.getDiscount().getAlternativeDiscount(), "discount"));
@@ -338,12 +386,19 @@ public class TakeCardController {
 		}
 	}
 	
+	/**
+	 * This method controls if the current player has a character that has a discount for the cost of the card it wants to take
+	 * @param familyMember the family member the player decided to use for this action
+	 * @param check if this method is called in the controller or in the application of the action
+	 * @param tmp the temporary resources of the player if the action was executed
+	 * @param game the view of the game
+	 */
 	protected void lookForIncrementCardDiscount(FamilyMember familyMember, boolean check, Resource tmp, GameView game){
 		for(Character character : familyMember.getPlayer().getBoard().getCharacters()){
 			if(character.getPermanentEffect() instanceof IncrementCardEffect){
 				IncrementCardEffect eff = (IncrementCardEffect) character.getPermanentEffect();
 				if(cardType.equals(eff.getCardType()) || eff.getCardType() == null){
-					if(eff.isDiscountPresence()){ //discount di incrementCardEffect
+					if(eff.isDiscountPresence()){ 
 						if(eff.getDiscount().getAlternativeDiscountPresence()){ 
 							if(check){
 								eff.getDiscount().setChosenAlternativeDiscount(game.askAlternative(eff.getDiscount().getDiscount(), eff.getDiscount().getAlternativeDiscount(), "discount"));
@@ -370,13 +425,15 @@ public class TakeCardController {
 	}
 	
 	/**
-	 * @param cardType
-	 * @param familyMember
+	 * This method controls if the value of the action exploited by the player is high enough to do this action
+	 * @param cardType the type of the chosen card
+	 * @param familyMember the family member the player decided to use for this action
 	 * @return true if the familyMember has actionvalue >= required cell action value
 	 */
 	private boolean checkActionValue(GameView game, String cardName, FamilyMember familyMember){
 		IncrementCardEffect eff;
 		int tmp = familyMember.getValue();
+		//I control if there is a character among my cards that increments the action value
 		for(Character character : familyMember.getPlayer().getBoard().getCharacters()){
 			if(character.getPermanentEffect() instanceof IncrementCardEffect){
 				eff = (IncrementCardEffect) character.getPermanentEffect();
@@ -386,11 +443,11 @@ public class TakeCardController {
 			}
 		}
 		
-		
-		for(ExcommunicationTile t : familyMember.getPlayer().getExcommunicationTile()){ //guardo se tra le scomuniche ha incrementcardeff
+		//I control if, among my excommunications, I have one that lowers the action value 
+		for(ExcommunicationTile t : familyMember.getPlayer().getExcommunicationTile()){ 
 			if(t.getEffect() instanceof IncrementCardEffect){
 				eff = (IncrementCardEffect) t.getEffect();
-				if(eff.getCardType().equals(cardType)){ //se il cardType coincide allora gli tolgo il valore della scomun
+				if(eff.getCardType().equals(cardType)){ 
 					tmp += eff.getIncrement();
 				}
 			}
@@ -404,6 +461,11 @@ public class TakeCardController {
 		return false;
 	}
 	
+	/**
+	 * This method reduces the cost of the chosen card by 3 coins if Pico della Mirandola is played and active
+	 * @param familyMember the family member the player decided to use for this action
+	 * @param tmp the card cost
+	 */
 	protected void lookForPicoDellaMirandola(FamilyMember familyMember, Resource tmp){
 		for(LeaderCard lc : familyMember.getPlayer().getLeaderCards()){//check if the player has the card and  if it's played and activate 
 			if(("Pico della Mirandola").equalsIgnoreCase(lc.getName()) && lc.getPlayed() && lc.getActive()){

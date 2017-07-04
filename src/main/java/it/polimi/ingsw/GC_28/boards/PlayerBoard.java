@@ -13,6 +13,12 @@ import it.polimi.ingsw.GC_28.components.Resource;
 import it.polimi.ingsw.GC_28.components.ResourceType;
 
 
+/**
+ * This class represents the playerboard of each player along with his/her cards, the resources and the lateral bonus tile 
+ * @author andrearinaldi, nicoloscipione
+ * @version 1.0, 07/03/2017
+ * @see Territory, Venture, Building, Character, BonusTile, Resource
+ */
 public class PlayerBoard {
 	private List<Territory> territories = new ArrayList<>();
 	private List<Building> buildings = new ArrayList<>();
@@ -22,12 +28,20 @@ public class PlayerBoard {
 	private Resource resources;
 	private String retLine = "------------------------\n";
 	
+	/**
+	 * @param bonusTile the lateral Bonus tile that gives bonuses when the player goes to production or harvest spaces
+	 * @param resources the initial resources available to the player
+	 */
 	public PlayerBoard(BonusTile bonusTile, Resource resources){
 		this.bonusTile = bonusTile;
 		this.resources = resources;
 	}
 	
-	
+	/**
+	 * This method displays the playerboard. It uses several AsciiTables to represent all the cards and resources
+	 * and appends them all as strings to a StringBuilder object that is returned as a string.
+	 * @return The representation of the playerboard 
+	 */
 	public String display(){
 		StringBuilder ret = new StringBuilder();
 		ret.append("\n" + retLine +"\n");
@@ -94,51 +108,86 @@ public class PlayerBoard {
 		
 	}
 	
+	/**
+	 * @param t the Territory card that we want to add to the playerboard
+	 */
 	public void addCard(Territory t){ 
 		territories.add(t);
 	}
 	
+	/**
+	 * @param b the Building card that we want to add to the playerboard
+	 */
 	public void addCard(Building b){
 		buildings.add(b);
 	}
 	
+	/**
+	 * @param c the Character card that we want to add to the playerboard
+	 */
 	public void addCard(Character c){
 		characters.add(c);
 	}
 	
+	/**
+	 * @param v the Venture card that we want to add to the playerboard
+	 */
 	public void addCard(Venture v){
 		ventures.add(v);
 	}
 	
-
+	/**
+	 * @return the Territory cards the player has
+	 */
 	public List<Territory> getTerritories() {
 		return territories;
 	}
 
+	/**
+	 * @return the Building cards the player has
+	 */
 	public List<Building> getBuildings() {
 		return buildings;
 	}
 
+	/**
+	 * @return the Character cards the player has
+	 */
 	public List<Character> getCharacters() {
 		return characters;
 	}
 
+	/**
+	 * @return the Venture cards the player has
+	 */
 	public List<Venture> getVentures() {
 		return ventures;
 	}
 
+	/**
+	 * @return the bonusTile of the player
+	 */
 	public BonusTile getBonusTile() {
 		return bonusTile;
 	}
 
+	/**
+	 * @return the resources of the player
+	 */
 	public Resource getResources() {
 		return resources;
 	}
 
+	/**
+	 * @param resources the resources we want to set in the player's playerboard
+	 */
 	public void setResources(Resource resources) {
 		this.resources = resources;
 	}
 	
+	/**
+	 * @param bonusTile the Bonus Tile we want to set for the player
+	 */
 	public void setBonusTile(BonusTile bonusTile){
 		this.bonusTile = bonusTile;
 	}

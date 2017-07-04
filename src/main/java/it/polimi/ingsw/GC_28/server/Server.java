@@ -45,7 +45,7 @@ public class Server extends UnicastRemoteObject implements ServerInt{
 
 	private static final long serialVersionUID = 1L;
 	private static final int MIN_SIZE = 2;
-	private static final int MAX_SIZE = 4;
+	private static final int MAX_SIZE = 3;
 	private static final int PORT = 1337;
 	private int waitTime;
 	private transient ServerSocket serverSocket;
@@ -68,7 +68,6 @@ public class Server extends UnicastRemoteObject implements ServerInt{
         Registry reg = LocateRegistry.getRegistry(8080);
         Server server = new Server();
         reg.bind("rmiServer", server);
-        System.out.println("ChatServer RMI up and running...");
             
 		try{
 			server.startServer();
@@ -120,7 +119,6 @@ public class Server extends UnicastRemoteObject implements ServerInt{
 			timer.schedule(new TimerTask(){
 				@Override
 				public void run() {
-					System.out.println("passati 15 sec");
 					if(!started){
 						Map<Player, ClientHandler> copy = createHandlerCopy(handlers);
 						handlers = new HashMap<>();
@@ -170,9 +168,7 @@ public class Server extends UnicastRemoteObject implements ServerInt{
 		BoardsInitializer bi = new BoardsInitializer();	
 		List<Player> players = new ArrayList<>(handler.keySet());
 		List<BonusTile> tileInstance = new ArrayList<>();
-		for(Player p : handler.keySet()){
-			System.out.println(p.getName());
-		}
+		
 		try{
 			for(int i = 0; i < bonusList.size(); i++){
 				tileInstance.add(bonusList.get(i));
@@ -222,8 +218,6 @@ public class Server extends UnicastRemoteObject implements ServerInt{
 	
 	
 	private PlayerColor enterColor(ClientHandler ch){
-
-
 		boolean found = false;
 		do{
 			ch.send("Enter the color you prefer: [red / blue / green / yellow] ");
@@ -261,7 +255,6 @@ public class Server extends UnicastRemoteObject implements ServerInt{
 				Integer bonusTile = Integer.parseInt(handlers.get(p).receive());
 				if(0 < bonusTile && bonusTile <= bonusList.size()){
 					BonusTile bt = bonusList.get(bonusTile-1);
-					System.out.println(bt.toString());
 					p.getBoard().setBonusTile(bt);
 					bonusList.remove(bt);
 					found = true;
