@@ -5,7 +5,11 @@ import it.polimi.ingsw.GC_28.components.Resource;
 
 import it.polimi.ingsw.GC_28.view.GameView;
 
-
+/**
+ * This class represent the effect that allow the player to exchange some resources for others
+ * @author andreaRinaldi
+ * @version 1.0, 07/04/2017
+ */
 public class ExchangeEffect extends Effect{
 	private Resource firstCost;
 	private Resource secondCost;
@@ -20,7 +24,6 @@ public class ExchangeEffect extends Effect{
 	public ExchangeEffect(){
 		super();
 	}
-	
 	
 	public Resource getFirstCost() {
 		return firstCost;
@@ -81,6 +84,13 @@ public class ExchangeEffect extends Effect{
 	}
 
 
+	/**
+	 * This method firstly ask the player if he/she wants to apply the effect and, in case of positive answer, 
+	 * reduces the resources on the left side of the effect and add the ones on the right. 
+	 * In case of more than one possible exchanges, the player is asked which one he/she wants to apply.
+	 * @param player the current player 
+	 * @param game the view of the game
+	 */	
 	@Override
 	public void apply(FamilyMember familyMember, GameView game) {
 		if(game.askPermission()){
