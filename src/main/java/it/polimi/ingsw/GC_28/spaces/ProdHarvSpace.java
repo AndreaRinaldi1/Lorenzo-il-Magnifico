@@ -20,7 +20,7 @@ public class ProdHarvSpace extends Space{
 	}
 	
 	/**
-	 * This method return the player's family member which is in the single harvest or production space.
+	 * 
 	 * @return FamilyMember
 	 */
 	public FamilyMember getFirstPlayer() {
@@ -28,14 +28,14 @@ public class ProdHarvSpace extends Space{
 	}
 	
 	/**
-	 * This method check if is possible to go to the larger space
+	 * 
 	 * @return boolean.(true if is available, false otherwise)  
 	 */
 	public boolean isSecondarySpace() {
 		return secondarySpace;
 	}
 	/**
-	 * This method set larger space availability
+	 * 
 	 * @param secondarySpace
 	 */
 	public void setSecondarySpace(boolean secondarySpace) {
@@ -50,7 +50,7 @@ public class ProdHarvSpace extends Space{
 	}
 	
 	/**
-	 * This method get the specific type of the space(production or harvest type).
+	 * 
 	 * @return ProdHarvType. The specific type of the space
 	 */
 	public ProdHarvType getType() {
@@ -58,7 +58,7 @@ public class ProdHarvSpace extends Space{
 	}
 	
 	/**
-	 * This method set the specific type of the space.
+	 * 
 	 * @param type. ProdHarvType, specific type to set.
 	 */
 	public void setType(ProdHarvType type) {
