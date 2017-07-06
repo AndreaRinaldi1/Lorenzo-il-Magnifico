@@ -40,7 +40,12 @@ import it.polimi.ingsw.GC_28.model.PlayerColor;
 import it.polimi.ingsw.GC_28.view.GameManager;
 import it.polimi.ingsw.GC_28.view.GameView;
 
-
+/**
+ * This class represents the server and is responsible for the initialization of the connections of the clients
+ * and for preparing and starting the actual game with the connected clients.
+ * @author andreaRinaldi, nicoloScipione
+ * @version 1.0, 07/04/2017
+ */
 public class Server extends UnicastRemoteObject implements ServerInt{
 
 	private static final long serialVersionUID = 1L;
@@ -61,9 +66,14 @@ public class Server extends UnicastRemoteObject implements ServerInt{
 	public Server() throws RemoteException {
 		super();
 	}
-	
+
+	/**
+	 * In this method the RMI registry is created and published. 
+	 * @param args
+	 * @throws RemoteException
+	 * @throws AlreadyBoundException
+	 */
 	public static void main(String[] args) throws RemoteException, AlreadyBoundException {
-		
 		LocateRegistry.createRegistry(8080);
         Registry reg = LocateRegistry.getRegistry(8080);
         Server server = new Server();
@@ -77,8 +87,12 @@ public class Server extends UnicastRemoteObject implements ServerInt{
 		}
 	}
 
+	/**
+	 * This method accepts the incoming socket connection requests, controls if the maximum number of players has been reached, 
+	 * or if the timer expired; if so, the game starts, else it continues accepting socket connection requests.
+	 * @throws IOException
+	 */
 	public void startServer() throws IOException{
-
 		executor = Executors.newCachedThreadPool();
 		serverSocket = new ServerSocket(PORT);
 		bonusList = initBonusTile(); 
@@ -113,6 +127,9 @@ public class Server extends UnicastRemoteObject implements ServerInt{
 	}
 	
 
+	/**
+	 * This method checks if the minimum number of players to start the game has been reached and, if so, it schedules a timer.
+	 */
 	private void checkNumOfPlayers(){
 		if(handlers.size() == MIN_SIZE){
 			timer = new Timer();
@@ -134,6 +151,12 @@ public class Server extends UnicastRemoteObject implements ServerInt{
 		}
 	}
 	
+	/**
+	 * This method creates a copy of the map containing players and the respective client handlers, 
+	 * so that we don't share the original map.
+	 * @param original the original map
+	 * @return a copy of the original map
+	 */
 	private Map<Player, ClientHandler> createHandlerCopy(Map<Player, ClientHandler> original){
 		Map<Player, ClientHandler> handlersCopy = new HashMap<>();
 		for(Player p : original.keySet()){
@@ -143,6 +166,11 @@ public class Server extends UnicastRemoteObject implements ServerInt{
 	}
 
 
+	/**
+	 * This method enables the RMI client to connect to the server and be correctly initialized
+	 * @param cli the interface of the RMI client visible to the server
+	 * @throws RemoteException
+	 */
 	@Override
 	public void join(RMIClientInt cli) throws RemoteException {
 		ClientHandler ch = new RMIClientHandler(cli);
@@ -161,7 +189,10 @@ public class Server extends UnicastRemoteObject implements ServerInt{
 		}
 	}
 
-	
+	/**
+	 * This method prepares the actual game (i.e. towers, spaces, players, playerboards...) and starts it.
+	 * @param handler the map containing the players and the respective client handlers
+	 */
 	public void startGame(Map<Player, ClientHandler> handler){
 		started = true;
 		usedColors.clear();
@@ -210,13 +241,19 @@ public class Server extends UnicastRemoteObject implements ServerInt{
 		noStop = true;
 	}
 	
-
+	/**
+	 * @param ch the client handler of the player we want to set the name
+	 * @return the name chosen by the client
+	 */
 	public String enterName(ClientHandler ch){
 		ch.send("Enter your name: ");
 		return ch.receive();
 	}
 	
-	
+	/**
+	 * @param ch the client handler of the player we want to set the color
+	 * @return the color chosen by the player
+	 */
 	private PlayerColor enterColor(ClientHandler ch){
 		boolean found = false;
 		do{
@@ -241,6 +278,13 @@ public class Server extends UnicastRemoteObject implements ServerInt{
 		}while(true);
 	}
 	
+	/**
+	 * This method allows the player to choose the bonus tile they prefer (if available)
+	 * @param bonusList the list of available bonus tiles 
+	 * @param handlers the map containing the players and the respective client handlers
+	 * @param p the player we are interacting with 
+	 * @throws RemoteException
+	 */
 	private void enterBonusTile(List<BonusTile> bonusList,Map<Player,ClientHandler> handlers, Player p) throws RemoteException{
 		boolean found = false;
 		do{
@@ -270,6 +314,11 @@ public class Server extends UnicastRemoteObject implements ServerInt{
 		}while(!found);
 	}
 	
+	/**
+	 * This method reads the json file containing all the personalized bonus tiles
+	 * @return a list of the bonus tiles
+	 * @throws FileNotFoundException
+	 */
 	public List<BonusTile> initBonusTile() throws FileNotFoundException{
 		Gson gson = new GsonBuilder().create();
 		Type bonusTileListType = new TypeToken<ArrayList<BonusTile>>() {}.getType();
@@ -285,6 +334,13 @@ public class Server extends UnicastRemoteObject implements ServerInt{
 	 * used in GameManager class.
 	 * Both integer in the timer.json file represent the time in seconds, so they both need to be multiply
 	 * by a 1000 factor to be used in milliseconds representation. 
+	 */
+	/**
+	 * This method reads the json file containing the two timer (one for the connection time limit once the minimum number of
+	 * players is reached, and the other for the maximum time for the player move)
+	 * @param position the reference to the specific timer
+	 * @return the timer in milliseconds
+	 * @throws FileNotFoundException
 	 */
 	private int setWaitTime(int position) throws FileNotFoundException{
 		Gson gson = new GsonBuilder().create();

@@ -5,6 +5,11 @@ import it.polimi.ingsw.GC_28.components.Resource;
 import it.polimi.ingsw.GC_28.model.Player;
 import it.polimi.ingsw.GC_28.view.GameView;
 
+/**
+ * This class represent the effect that provide a resource discount when taking a card
+ * @author andreaRinaldi
+ * @version 1.0, 07/04/2017
+ */
 public class DiscountEffect extends Effect{
 	private boolean alternativeDiscountPresence;
 	private Resource discount;
@@ -17,7 +22,6 @@ public class DiscountEffect extends Effect{
 		super();
 	}
 
-	
 	public Resource getAlternativeDiscount() {
 		return alternativeDiscount;
 	}
@@ -43,11 +47,9 @@ public class DiscountEffect extends Effect{
 		this.discount = discount;
 	}
 	
-	
 	public Resource getChosenAlternativeDiscount() {
 		return chosenAlternativeDiscount;
 	}
-
 
 	public void setChosenAlternativeDiscount(Resource chosenAlternativeDiscount) {
 		this.chosenAlternativeDiscount = chosenAlternativeDiscount;
@@ -58,6 +60,11 @@ public class DiscountEffect extends Effect{
 		apply(familyMember.getPlayer(), game);
 	}
 
+	/**
+	 * This method apply the effect by adding the discount resource to the player ones
+	 * @param player the current player 
+	 * @param game the view of the game
+	 */
 	@Override
 	public void apply(Player player, GameView game){
 		if(alternativeDiscountPresence == true){
