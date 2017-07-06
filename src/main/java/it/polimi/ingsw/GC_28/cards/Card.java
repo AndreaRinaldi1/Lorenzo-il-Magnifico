@@ -5,8 +5,8 @@ import java.awt.Color;
 import it.polimi.ingsw.GC_28.components.Resource;
 
 /**
- * This class allows to make a new card. Every card has a name, an ID number, an era, a resource cost,
- * that it has to be paied to take the card, and a color that define the type of the card. 
+ * This class allows to create a new card. Every card has a name, an ID number, an era, a resource cost
+ * (that has to be paied to take the card), and a color that define the card's type. 
  * @author robertoturi
  * @version 1.0, 07/04/2017
  */
@@ -21,7 +21,7 @@ public class Card {
 	
 	
 	/**
-	 * This constructor builds a card out of the name, the ID number and the era
+	 * This constructor creates a card out of the name, the ID number and the era
 	 * @param name of the card selected
 	 * @param idNumber of the card selected
 	 * @param era of the card selected
@@ -103,7 +103,7 @@ public class Card {
 	}
 	
 	/**
-	 * It allows to describe the card that you select with its name
+	 * It allows to describe the selected card with its name
 	 */
 	@Override
 	public String toString(){
