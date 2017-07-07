@@ -9,7 +9,11 @@ import it.polimi.ingsw.GC_28.components.Resource;
 import it.polimi.ingsw.GC_28.components.ResourceType;
 import it.polimi.ingsw.GC_28.model.Player;
 import it.polimi.ingsw.GC_28.view.GameView;
-
+/**
+ * This class represent the basic effect that increases the amount of resources of a player.
+ * @author andreaRinaldi, nicoloScipione
+ * @version 1.0, 07/04/2017
+ */
 public class ResourceEffect extends Effect{	
 	private Resource resourceBonus;
 	public final EffectType type = EffectType.RESOURCEEFFECT;
@@ -26,6 +30,10 @@ public class ResourceEffect extends Effect{
 		this.resourceBonus = resourceBonus;
 	}
 
+	/**
+	 * This method increases the resources of the player by the specified amount and, if the Leader card Santa Rita is played and active, 
+	 * the increment is done twice due to this leader effect.
+	 */
 	@Override
 	public void apply(FamilyMember familyMember, GameView game) {
 		familyMember.getPlayer().addResource(game.checkResourceExcommunication(resourceBonus));
@@ -46,6 +54,7 @@ public class ResourceEffect extends Effect{
 			}
 		}
 	}
+	
 	@Override
 	public void apply(Player player, GameView game) {
 		player.addResource(game.checkResourceExcommunication(resourceBonus));

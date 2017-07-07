@@ -4,7 +4,11 @@ package it.polimi.ingsw.GC_28.effects;
 import it.polimi.ingsw.GC_28.components.FamilyMember;
 
 import it.polimi.ingsw.GC_28.view.GameView;
-
+/**
+ * This class represent the effect that is exploited when a player goes to production.
+ * @author andreaRinaldi
+ * @version 1.0, 07/04/2017
+ */
 public class ProductionEffect extends Effect{
 	private int productionValue;
 	private ResourceEffect resourceProductionBonus;
@@ -61,6 +65,11 @@ public class ProductionEffect extends Effect{
 	}
 	
 
+	/**
+	 * This method controls if the action value of the player is high enough to activate a specific card effect. If so, it either
+	 * activate a privileges effect (asks for the desired privilege) or resource effect (increases player resources), or 
+	 * an exchange effect or a multiplier effect, according to the specific Building card permanent effect.
+	 */
 	@Override
 	public void apply(FamilyMember familyMember, GameView game) {
 		if(familyMember.getValue() >= productionValue){
@@ -77,9 +86,5 @@ public class ProductionEffect extends Effect{
 				exchangeBonus.apply(familyMember, game);
 			}
 		}
-		else{
-			System.out.println("You don't have the necessary action value to activate this effect");
-		}
-		
 	}
 }

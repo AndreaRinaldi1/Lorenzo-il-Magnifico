@@ -8,7 +8,11 @@ import it.polimi.ingsw.GC_28.components.Resource;
 import it.polimi.ingsw.GC_28.components.ResourceType;
 import it.polimi.ingsw.GC_28.model.Player;
 import it.polimi.ingsw.GC_28.view.GameView;
-
+/**
+ * This class represent the effect that allows to gain a certain amount of resources depending on how many cards of a certain type or resources he have.
+ * @author andreaRinaldi
+ * @version 1.0, 07/04/2017
+ */
 public class MultiplierEffect extends Effect{
 	private Resource resourceBonus;
 	private CardType cardType;
@@ -45,6 +49,12 @@ public class MultiplierEffect extends Effect{
 	}
 	
 
+	/**
+	 * This method multiplies the resources that has to be added (per unit) 
+	 * for the gain factor represented in the specification of the effect.
+	 * @param times the multiplication factor
+	 * @return the total amount of resources to be added
+	 */
 	public Resource multiplyResource(int times){
 		EnumMap<ResourceType, Integer> resource = new EnumMap<>(ResourceType.class);
 		for(ResourceType resType : resourceBonus.getResource().keySet()){
@@ -58,6 +68,10 @@ public class MultiplierEffect extends Effect{
 		apply(familyMember.getPlayer(), game);
 	}
 	
+	/**
+	 * This method applies the effect by adding the resources specified by the effect, according to the amount of cards of a certain type I have.
+	 * Otherwise also resources can be used, instead of card types, as for multiplication factor.
+	 */
 	@Override
 	public void apply(Player player, GameView game) {
 		if(resourceCost == null){
