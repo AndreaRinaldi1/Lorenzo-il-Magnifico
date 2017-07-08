@@ -5,8 +5,8 @@ import it.polimi.ingsw.GC_28.effects.PrivilegesEffect;
 import it.polimi.ingsw.GC_28.view.GameView;
 
 /**
- * This class represent a particolar space, which gives two different council privilege to whom occupy this space.
- * @author andrearinaldi,nicoloscipione
+ * This class represent a particular space, which gives two different council privilege to whom occupy this space.
+ * @author andreaRinaldi,nicoloScipione
  * @see Space,CouncilPrivilege,PrivilegesEffect
  * @version 1.0, 03/07/2017
  */

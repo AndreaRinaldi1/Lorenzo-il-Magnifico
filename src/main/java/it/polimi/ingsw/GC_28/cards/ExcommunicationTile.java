@@ -6,7 +6,7 @@ import it.polimi.ingsw.GC_28.effects.Effect;
  * This class allows to create a new excommunication tile. Every excommunication tile has an era and an effect.
  * If the player at the end of the era hasn't enough faith point to avoid the excommunication, 
  * he receives a malus effect that is set on the excommunication tile that he takes.    
- * @author robertoturi
+ * @author robertoTuri
  * @version 1.0, 07/06/2017
  */
 

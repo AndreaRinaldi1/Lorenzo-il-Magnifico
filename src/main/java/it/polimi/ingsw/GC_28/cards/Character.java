@@ -10,7 +10,7 @@ import java.util.List;
  * This class is a subclass of the class "Card" and it characterizes the character cards (blue), 
  * with the immediate effect, a list of effect that it's immediately activated when you take the card, 
  * and the permanent effect, an effect that it has activate for the rest of the game.
- * @author robertoturi
+ * @author robertoTuri
  * @version 1.0, 07/04/2017
  */
 

@@ -9,7 +9,7 @@ import it.polimi.ingsw.GC_28.effects.*;
  * and the permanent effect, a production effect that it has an action value, activable only if
  * the value of the family member that is set on the production space is equal or greater than the 
  * action value of the permanent effect.
- * @author robertoturi
+ * @author robertoTuri
  * @version 1.0, 07/04/2017
  */
 

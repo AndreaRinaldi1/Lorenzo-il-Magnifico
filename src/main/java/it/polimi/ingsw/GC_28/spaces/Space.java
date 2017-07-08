@@ -8,7 +8,7 @@ import it.polimi.ingsw.GC_28.view.GameView;
 
 /**
  * This class represent all common methods and attributes of game spaces.
- * @author nicoloscipione, andrearinaldi
+ * @author nicoloScipione, andreaRinaldi
  * @version 1.0, 03/07/2017
  *
  */
@@ -55,7 +55,7 @@ public abstract class Space {
 	}
 	
 	/**
-	 * This method a player to a space,if it's possibile and  changing the space'status.
+	 * This method a player to a space,if it's possible and  changing the space'status.
 	 * @param player. Family member that represent the player to add.
 	 */
 	public void addPlayer(FamilyMember player){

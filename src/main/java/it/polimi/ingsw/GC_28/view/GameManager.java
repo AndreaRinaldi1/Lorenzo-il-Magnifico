@@ -19,6 +19,13 @@ import it.polimi.ingsw.GC_28.model.BoardSetup;
 import it.polimi.ingsw.GC_28.model.Listener;
 import it.polimi.ingsw.GC_28.model.Player;
 
+/**
+ * This class contains methods that handle the flow of the game
+ * @author andreaRinaldi,nicoloScipione
+ * @version 1.0, 06/07/2017
+ *
+ */
+
 public class GameManager implements Runnable{
 	private int currentEra = 1;
 	private int currentPeriod = 1;
@@ -34,6 +41,11 @@ public class GameManager implements Runnable{
 		this.waitMoveTimer = timer;
 	}
 	
+	/**
+	 * This is the implementation of the method run. In this method is handled the flow of the game,
+	 * the sequence of turn, period and era. It calls the method necessary to update the gameboard and reset 
+	 * all players characteristic that change during the game.
+	 */
 	@Override
 	public void run() {
 		setCurrentPlayer(view.getGameModel().getPlayers().get(0));
@@ -117,42 +129,83 @@ public class GameManager implements Runnable{
 		}
 	}
 	
+	/**
+	 * 
+	 * @return int, that represent the current period
+	 */
 	public int getCurrentPeriod() {
 		return currentPeriod;
 	}
 	
+	/**
+	 * 
+	 * @return player. The player from whom the server is waiting the input.
+	 */
 	public Player getCurrentPlayer(){
 		return currentPlayer;
 	}
 	
+	/**
+	 * 
+	 * @param player. The player who has to play his turn
+	 */
 	public void setCurrentPlayer(Player player){
 		this.currentPlayer = player;
 	}
 	
+	/**
+	 * 
+	 * @param period. The period to play.
+	 */
 	public void setPeriod(int period) {
 		this.currentPeriod = period;
 	}
 	
+	/**
+	 * 
+	 * @return the gameview related to this class.
+	 */
 	public GameView getView() {
 		return view;
 	}
 
+	/**
+	 * 
+	 * @param view. set the view related to this class.
+	 */
 	public void setView(GameView view) {
 		this.view = view;
 	}
 
+	/**
+	 * 
+	 * @return int. The current era
+	 */
 	public int getCurrentEra() {
 		return currentEra;
 	}
 
+	/**
+	 * 
+	 * @param currentEra. The era to play in the next period.
+	 */
 	public void setCurrentEra(int currentEra) {
 		this.currentEra = currentEra;
 	}
 	
+	/**
+	 * This method sort players from max to min, in the list players, by a certain Resource type
+	 * @param players. List of players of the game
+	 * @param type. The resource type which the order is requested.
+	 */
 	public void sortBy(List<Player> players, ResourceType type){
 		players.sort((p1, p2) -> p2.getBoard().getResources().getResource().get(type) - p1.getBoard().getResources().getResource().get(type));
 	}
-
+	
+	/**
+	 * This method assign the bonus for the military points' rank. It uses two while loops to check if more players
+	 * has the same position in rank.
+	 */
 	public void assignBonusForMilitary(){
 		FinalBonus finalBonus = FinalBonus.instance();
 		List<Player> players = view.getGameModel().getPlayers();
@@ -171,7 +224,10 @@ public class GameManager implements Runnable{
 		}
 	}
 	
-	
+	/**
+	 * This method check if a player has a particular excommunication that force him to skip the first turn of every round,
+	 * if so, the method adds the player to a List that contains this players.
+	 */
 	public void skipPlayers(){
 		for(Player p : view.getGameModel().getPlayers()){
 			for(ExcommunicationTile t : p.getExcommunicationTile()){
@@ -186,6 +242,9 @@ public class GameManager implements Runnable{
 		
 	}
 	
+	/**
+	 * This method checks if any players has to skip the first move of the round, checking the list of skipped players.
+	 */
 	public void checkSkippedPlayers(){ // se i giocatori hanno saltato il primo turno ora possono rifare il turno che gli spetta alla fine
 		for(Player p : view.getSkipped()){
 			currentPlayer = p;
@@ -201,7 +260,9 @@ public class GameManager implements Runnable{
 		}
 	}
 	
-	
+	/**
+	 * This method checks if a player has an excommunication that reduce his family member value.
+	 */
 	public void checkDiceReduction(){  //se i giocatori tra le scomuniche hanno reducedice applico effetto
 		for(Player p : view.getGameModel().getPlayers()){
 			for(ExcommunicationTile t : p.getExcommunicationTile()){
@@ -212,6 +273,10 @@ public class GameManager implements Runnable{
 		}
 	}
 	
+	/**
+	 * This method apply the final bonus to every player. It reads the number of cards of each type and the resources
+	 * of every player and attributes the right bonus of victory points decided at the beginning of the game and read from a json file. 
+	 */
 	public void applyFinalBonus(){
 		FinalBonus finalBonus = FinalBonus.instance();
 		for(Player p : view.getGameModel().getPlayers()){
@@ -235,6 +300,10 @@ public class GameManager implements Runnable{
 		}
 	}
 	
+	/**
+	 * This method checks if any player has an excommunication that change the bonus that the player would receive,
+	 * if so it apply the malus.
+	 */
 	public void applyFinalMalus(){
 		ExcommunicationTile t;
 		for(Player p : view.getGameModel().getPlayers()){

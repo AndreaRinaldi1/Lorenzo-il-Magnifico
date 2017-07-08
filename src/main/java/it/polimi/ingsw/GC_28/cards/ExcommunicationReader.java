@@ -27,7 +27,7 @@ import it.polimi.ingsw.GC_28.effects.ServantEffect;
 
 /**
  * This class read the json file excommunication.json and create a list of all the  excommunication of the game
- * @author nicoloscipione
+ * @author nicoloScipione
  * @version 1.0, 03/072017
  * @see ExcommunicationTile
  */

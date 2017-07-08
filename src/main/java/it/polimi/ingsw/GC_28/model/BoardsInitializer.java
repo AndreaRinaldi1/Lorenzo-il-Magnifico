@@ -46,7 +46,7 @@ import com.google.gson.reflect.TypeToken;
 
 /**
  * This class initialize gameBoard and playerBoard for the given game and players
- * @author nicoloscipione
+ * @author nicoloScipione
  * @version 1.0, 05/23/2017
  * @see GameView,GameManager, GameModel, GameBoard, Excommunication, BonusTile, Dice,Space,PlayerBoard 
  */

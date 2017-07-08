@@ -25,7 +25,7 @@ import it.polimi.ingsw.GC_28.effects.ResourceEffect;
 import it.polimi.ingsw.GC_28.effects.SetFamilyMemberValueEffect;
 /**
  * This class read all leader cards from leader.json file, using gson api.
- * @author nicolo
+ * @author nicoloScipione
  * @see Leadercard
  * @version 1.0, 03/07/2017
  */

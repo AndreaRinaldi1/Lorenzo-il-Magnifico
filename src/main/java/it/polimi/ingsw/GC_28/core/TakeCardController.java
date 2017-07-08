@@ -25,7 +25,7 @@ import it.polimi.ingsw.GC_28.cards.Venture;
 
 /**
  * This class controls if the action of taking the card that the player selected is applicable or not
- * @author andreaRinaldi
+ * @author andreaRinaldi,nicoloScipione
  * @version 1.0, 07/03/2017
  */
 public class TakeCardController {

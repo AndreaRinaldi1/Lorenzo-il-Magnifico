@@ -14,8 +14,8 @@ import it.polimi.ingsw.GC_28.components.Resource;
 import it.polimi.ingsw.GC_28.components.ResourceType;
 
 /**
- * This class rappresent Player with its playerboard, excommunication tile, family member and leader cards.
- * @author nicoloscipioen ,andrearinaldi
+ * This class represent Player with its playerboard, excommunication tile, family member and leader cards.
+ * @author nicoloScipione ,andreaRinaldi
  * @version 1.0, 30/06/2017
  * @see FamilyMember,LeaderCard, PlayerBoard,ExcommunicationTile
  */

@@ -8,8 +8,8 @@ import it.polimi.ingsw.GC_28.server.Message;
 import it.polimi.ingsw.GC_28.server.Observable;
 
 /**
- * This class keep together the list of players and gameboard 
- * @author nicoloscipione, andrearinaldi
+ * This class keep together the list of players and gameboard.
+ * @author nicoloScipione, andreaRinaldi
  * @version 1.0 , 30/06/2017
  * @see Player, GameBoard
  */ 
