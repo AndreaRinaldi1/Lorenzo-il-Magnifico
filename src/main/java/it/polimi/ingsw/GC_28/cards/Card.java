@@ -6,8 +6,8 @@ import it.polimi.ingsw.GC_28.components.Resource;
 
 /**
  * This class allows to create a new card. Every card has a name, an ID number, an era, a resource cost
- * (that has to be paied to take the card), and a color that define the card's type. 
- * @author robertoturi
+ * (that has to be paid to take the card), and a color that define the card's type. 
+ * @author robertoTuri
  * @version 1.0, 07/04/2017
  */
 

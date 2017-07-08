@@ -12,7 +12,7 @@ import it.polimi.ingsw.GC_28.server.Message;
 
 /**
  * This class wrap all the control to check, before apply a special action
- * @author nicolo
+ * @author nicoloScipione
  * @version 1.0, 30/06/2017
  */
 public class SpecialActionController {
@@ -28,7 +28,7 @@ public class SpecialActionController {
 	}
 	
 	/**
-	 * 
+	 * This method check if special move respect all necessary parameters.
 	 * @param gameModel 
 	 * @param action
 	 * @return true if the action respect all requested parameters of game, false if it's not applicable. 

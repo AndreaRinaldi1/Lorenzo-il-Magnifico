@@ -2,8 +2,8 @@ package it.polimi.ingsw.GC_28.boards;
 
 /**
  * This class represent the Tower that is represented in the gameboard.
- * Every tower is made of four cells where the cards are acually placed.
- * @author andrearinaldi, nicoloscipione, robertoturi
+ * Every tower is made of four cells where the cards are actually placed.
+ * @author andreaRinaldi, nicoloScipione, robertoTuri
  * @version 1.0,  06/28/2017
  * @see Cell
  */

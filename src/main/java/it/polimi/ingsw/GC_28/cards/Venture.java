@@ -10,11 +10,11 @@ import java.util.List;
 /**
  * This class is a subclass of the class "Card" and characterizes the venture cards (pink), 
  * with the immediate effect, an arraylist of effect that it's immediately activated when you take the card, 
- * and the permanent effect, it is a sum of victory point that will be added to the player's victory points at the end of the game.
+ * and the permanent effect, it is an amount of victory point that will be added to the player's victory points at the end of the game.
  * Every venture card has also an resource's cost and, if the boolean value "alternativeCostPresence" is true, there is also
  * an alternative cost, it requires a minimum military point value to be chosen and reduces the player's military point
  * of alternative cost value. 
- * @author robertoturi
+ * @author robertoTuri
  * @version 1.0, 07/06/2017
  */
 
@@ -68,14 +68,14 @@ public class Venture extends Card{
 	}
 
 	/**
-	 * @return the permanent effect that is a sum of victory points that will be added to player's victory points at the end of the game
+	 * @return the permanent effect that is an amount of victory points that will be added to player's victory points at the end of the game
 	 */
 	public ResourceEffect getPermanentEffect() {
 		return permanentEffect;
 	}
 
 	/**
-	 * @param permanentEffect it is the sum of victory points that will be added to player's victory points
+	 * @param permanentEffect it is the amount of victory points that will be added to player's victory points
 	 */
 	public void setPermanentEffect(ResourceEffect permanentEffect) {
 		this.permanentEffect = permanentEffect;
@@ -96,14 +96,14 @@ public class Venture extends Card{
 	}
 
 	/**
-	 * @return the sum of military points that the player has to pay to take the card 
+	 * @return the amount of military points that the player has to pay to take the card 
 	 */
 	public Resource getAlternativeCost() {
 		return alternativeCost;
 	}
 
 	/**
-	 * @param alternativeCost the sum of military points that the player has to pay to take the card
+	 * @param alternativeCost the amount of military points that the player has to pay to take the card
 	 */
 	public void setAlternativeCost(Resource alternativeCost) {
 		this.alternativeCost = alternativeCost;

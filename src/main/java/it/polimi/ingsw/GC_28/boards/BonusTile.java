@@ -6,7 +6,7 @@ import it.polimi.ingsw.GC_28.effects.ProductionEffect;
 /**
  * This class represent the Bonus Tile that has to be appended to the playerboard during the game. 
  * It is equipped with a production and an harvest effect that are applied when the player goes to the production and harvest space respectively.
- * @author nicoloscipione
+ * @author nicoloScipione
  * @version 1.0, 06/28/2017
  * @see ProductionEffect, HarvestEffect
  */

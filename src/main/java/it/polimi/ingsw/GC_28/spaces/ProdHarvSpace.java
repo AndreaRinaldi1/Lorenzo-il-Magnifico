@@ -6,7 +6,7 @@ import it.polimi.ingsw.GC_28.components.FamilyMember;
 import it.polimi.ingsw.GC_28.view.GameView;
 /**
  * This class represent production and harvest space of gameboard.
- * @author andrearinaldi,nicoloscipione
+ * @author andreaRinaldi,nicoloScipione
  * @version 1.0 , 03/07/2017
  *
  */
