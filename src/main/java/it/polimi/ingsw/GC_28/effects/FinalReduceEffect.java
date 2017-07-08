@@ -13,7 +13,7 @@ import it.polimi.ingsw.GC_28.cards.Character;
 /**
  * This class represents the excommunication effect in which the resources of the player are reduced according to
  * the costs of the building or character cards that he/she has on the playerboard. 
- * @author andreaRinaldi
+ * @author andreaRinaldi, nicoloScipione
  * @version 1.0, 07/04/2017
  */
 public class FinalReduceEffect  extends Effect{

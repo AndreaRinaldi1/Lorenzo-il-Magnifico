@@ -4,7 +4,13 @@ import it.polimi.ingsw.GC_28.cards.*;
 import it.polimi.ingsw.GC_28.components.FamilyMember;
 import it.polimi.ingsw.GC_28.view.GameView;
 
-
+/**
+ * This class represent the effect that allows to increment (or reducing, for excommunications) 
+ * the value of an action of taking a card. It could also have a discount 
+ * on the resource cost of the card.
+ * @author andreaRinaldi
+ * @version 1.0, 07/04/2017
+ */
 public class IncrementCardEffect extends Effect{
 	private int increment;
 	private CardType cardType;
@@ -48,11 +54,11 @@ public class IncrementCardEffect extends Effect{
 		this.discount = discount;
 	}
 	
+	/**
+	 * This method modifies the action value of the family member selected, and, if there is a discount it increments the player resources of that amount.
+	 */
 	@Override
 	public void apply(FamilyMember familyMember, GameView game){
-		//Quando un controller, prima di effettuare l'azione di takeCard da tower, deve controllare se ci sono incrementcard effects
-		//chiama (per ogni incrementCard effect che trova) getCardType e guarda se è uguale al cardType della carta scelta dal giocatore. 
-		//Se sì chiama questo apply (che quindi non fa controlli su cardType ma aumenta solo actionValue del familyMember), se no non lo chiama.
 		familyMember.modifyValue(increment);
 		if(discountPresence){
 			discount.apply(familyMember, game);

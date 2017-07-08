@@ -102,7 +102,9 @@ public class GameManager implements Runnable{
 					currentPlayer = view.getGameModel().getPlayers().get(0);
 				}
 			}
+			
 			view.giveExcommunication(currentEra);
+			
 		}
 		applyFinalBonus();
 		applyFinalMalus();

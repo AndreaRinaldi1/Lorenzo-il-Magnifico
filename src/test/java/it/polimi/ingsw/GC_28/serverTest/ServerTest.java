@@ -150,7 +150,7 @@ public class ServerTest {
 		System.out.println("partito");
 		s.schedule(b, 2, TimeUnit.SECONDS);
 		try {
-			s.awaitTermination(17, TimeUnit.SECONDS);
+			s.awaitTermination(5, TimeUnit.SECONDS);
 		} catch (InterruptedException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

@@ -8,7 +8,7 @@ import java.util.logging.Logger;
 
 /**
  * This interface is the starting point for a player to enter the game. It allows to select the type of connection and 
- * therefore it launch the specific kind of client.
+ * therefore it launches the specific kind of client.
  * @author andreaRinaldi
  * @version 1.0 07/03/2017
  */

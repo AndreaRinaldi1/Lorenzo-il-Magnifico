@@ -3,7 +3,13 @@ package it.polimi.ingsw.GC_28.effects;
 import it.polimi.ingsw.GC_28.cards.CardType;
 import it.polimi.ingsw.GC_28.components.FamilyMember;
 import it.polimi.ingsw.GC_28.view.GameView;
-
+/**
+ * This class represent the effect that allows a player to take another card of a certain type (or any type) that is 
+ * positioned in the gameboard in a tower and needing an action value less or equal to the one defined by the effect.
+ * This effect can also present a discount on the cost of the card that the player is going to take.
+ * @author andreaRinaldi
+ * @version 1.0, 07/04/2017
+ */
 public class TakeCardEffect extends Effect{
 	private int actionValue;
 	private CardType cardType;
@@ -47,6 +53,10 @@ public class TakeCardEffect extends Effect{
 		this.discount = discount;
 	}
 
+	/**
+	 * This effect asks the player for the card he/she wants to take, and it's here that the action of taking another card starts.
+	 * If the action turns out to be unsuccessful, the player has an "emergency exit" if he/she cant't take any card.
+	 */
 	@Override
 	public void apply(FamilyMember familyMember, GameView game) {
 		boolean ok = false;

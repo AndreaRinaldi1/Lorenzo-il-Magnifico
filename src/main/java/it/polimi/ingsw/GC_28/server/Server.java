@@ -50,7 +50,7 @@ public class Server extends UnicastRemoteObject implements ServerInt{
 
 	private static final long serialVersionUID = 1L;
 	private static final int MIN_SIZE = 2;
-	private static final int MAX_SIZE = 3;
+	private static final int MAX_SIZE = 2;
 	private static final int PORT = 1337;
 	private int waitTime;
 	private transient ServerSocket serverSocket;
