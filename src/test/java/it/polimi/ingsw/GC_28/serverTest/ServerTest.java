@@ -78,10 +78,10 @@ public class ServerTest {
 					String socketLine = b.readLine();
 					System.out.println(socketLine);
 					p = new PrintStream(sock.getOutputStream());
-					p.println("rmi");
-					p.flush();
-					String faw = b.readLine();
-					System.out.println(faw);
+					//p.println("rmi");
+					//p.flush();
+					//String faw = b.readLine();
+					//System.out.println(faw);
 					p.println("Bart");
 					p.flush();
 					String fawd = b.readLine();
@@ -120,10 +120,6 @@ public class ServerTest {
 					String socketLine = b.readLine();
 					System.out.println(socketLine);
 					p = new PrintStream(sock.getOutputStream());
-					p.println("soc");
-					p.flush();
-					String faw = b.readLine();
-					System.out.println(faw);
 					p.println("Lisa");
 					p.flush();
 					String fawd = b.readLine();
@@ -152,8 +148,7 @@ public class ServerTest {
 		try {
 			s.awaitTermination(5, TimeUnit.SECONDS);
 		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			
 		}
 	}
 }

@@ -13,7 +13,7 @@ import it.polimi.ingsw.GC_28.spaces.ProdHarvSpace;
 
 /**
  * This class represents the gameboard along with all the spaces, the towers where cards are placed, the point tracks and dices reference.
- * @author andrearinaldi, nicoloscipione
+ * @author andreaRinaldi, nicoloScipione
  * @version 1.0, 06/28/2017
  * @see ProdHarvSpace, MarketSpace, PrivilegesSpace, CouncilPalace, Dice, CardType, Tower, ExcommunicationTile
  */

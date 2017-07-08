@@ -4,7 +4,7 @@ import it.polimi.ingsw.GC_28.effects.ResourceEffect;
 import it.polimi.ingsw.GC_28.view.GameView;
 /**
  * This class represent the market space of the game.
- * @author nicoloscipione,andrearinaldi
+ * @author nicoloScipione,andreaRinaldi
  * @see Space,ResourceEffect
  * @version 1.0, 03/07/2017
  */

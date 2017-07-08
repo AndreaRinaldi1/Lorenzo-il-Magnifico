@@ -6,7 +6,7 @@ import java.util.List;
  * This class builds a deck that collects all the cards that are written on the json file "cards.json".
  * This deck is used to take the cards to put on the towers of the game board.
  * The deck is divided in four lists for each card type (Territory, building, Character and Venture).
- * @author robertoturi
+ * @author robertoTuri
  * @version 1.0, 07/06/2017
  */
 

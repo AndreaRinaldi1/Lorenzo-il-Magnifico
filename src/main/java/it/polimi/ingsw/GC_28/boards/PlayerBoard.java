@@ -15,7 +15,7 @@ import it.polimi.ingsw.GC_28.components.ResourceType;
 
 /**
  * This class represents the playerboard of each player along with his/her cards, the resources and the lateral bonus tile 
- * @author andrearinaldi, nicoloscipione
+ * @author andreaRinaldi, nicoloScipione
  * @version 1.0, 07/03/2017
  * @see Territory, Venture, Building, Character, BonusTile, Resource
  */

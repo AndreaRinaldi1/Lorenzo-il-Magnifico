@@ -18,7 +18,7 @@ import it.polimi.ingsw.GC_28.effects.Effect;
  * The cost will not be scaled after activated the card.
  * The player can activate the card once for round, so the effect of the leader card is activated and, if the 
  * boolean value "permanent" is true, it is activated for all the rest of the game.
- * @author robertoturi
+ * @author robertoTuri
  * @version 1.0, 07/06/2017
  */
 

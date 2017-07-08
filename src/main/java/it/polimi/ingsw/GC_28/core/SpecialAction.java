@@ -11,8 +11,8 @@ import it.polimi.ingsw.GC_28.model.Player;
 import it.polimi.ingsw.GC_28.view.GameView;
 
 /**
- * This class rappresent all the actions related to leader cards. 
- * @author nicolo
+ * This class represent all the actions related to leader cards. 
+ * @author nicoloScipione
  * @version 1.0, 30/06/2017
  * @see LeaderCard,Action,SpecialActionController
  */

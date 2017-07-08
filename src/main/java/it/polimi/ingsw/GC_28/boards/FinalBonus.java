@@ -6,7 +6,7 @@ import java.util.List;
 import it.polimi.ingsw.GC_28.components.Resource;
 /**
  * This class wrap all bonus that need to be handle and given at the end of the game
- * @author nicolo
+ * @author nicoloScipione
  * @version 1.0, 30/06/2017
  */
 public class FinalBonus {

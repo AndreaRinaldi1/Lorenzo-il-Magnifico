@@ -14,7 +14,7 @@ import java.util.List;
  * Every venture card has also an resource's cost and, if the boolean value "alternativeCostPresence" is true, there is also
  * an alternative cost, it requires a minimum military point value to be chosen and reduces the player's military point
  * of alternative cost value. 
- * @author robertoturi
+ * @author robertoTuri
  * @version 1.0, 07/06/2017
  */
 

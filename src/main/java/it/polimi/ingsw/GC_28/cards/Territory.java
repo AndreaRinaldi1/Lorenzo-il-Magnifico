@@ -11,7 +11,7 @@ import java.util.List;
  * and the permanent effect, an harvest effect that it has an action value, activable only if
  * the value of the family member that is set on the harvest space is equal or greater than the 
  * action value of the permanent effect.
- * @author robertoturi
+ * @author robertoTuri
  * @version 1.0, 07/06/2017
  */
 
