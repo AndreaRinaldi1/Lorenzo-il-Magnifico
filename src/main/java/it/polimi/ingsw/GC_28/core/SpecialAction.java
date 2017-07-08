@@ -65,6 +65,9 @@ public class SpecialAction extends Action{
 		this.actionType = actionType;
 	}
 	
+	/**
+	 * This method controls if the application of this special action is possible
+	 */
 	@Override
 	public boolean isApplicable() {
 		if(controller.check(gameModel, this)){
@@ -73,6 +76,9 @@ public class SpecialAction extends Action{
 		return false;
 	}
 	
+	/**
+	 * This method allows the player to actually discard, acivate or play a leader
+	 */
 	@Override
 	public void apply() {
 		if("discard".equalsIgnoreCase(actionType)){

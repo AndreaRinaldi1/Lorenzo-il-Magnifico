@@ -26,7 +26,6 @@ public class GameModel extends Observable<Message> {
 	}
 	
 	/**
-	 * 
 	 * @return return the gameboard.
 	 */
 	public GameBoard getGameBoard() {
@@ -35,7 +34,6 @@ public class GameModel extends Observable<Message> {
 	
 	
 	/**
-	 * 
 	 * @return return the list of players.
 	 */
 	public List<Player> getPlayers() {

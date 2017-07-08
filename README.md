@@ -36,7 +36,7 @@ Firstly, the current player will be asked what kind of action he/she would like 
 - Take a card from the available ones shown into the towers. You will, then, be asked the name of the card you want to take, the family member you want to exploit for this action and if you want to increment its value by paying servants. If you want to know the cost of a card, before deciding to take it, you can answer "askcost" to the first question.
 - Go to one of the available spaces (listed above) on the game board and, just like before, you will be asked which family member you want to use and if you want to increment its value.
 - In case you are not able to exploit any kind of action (e.g. you only have the neutral family member availabe and you don't have servants to increment its value) you can skip.
-- Play and Ativate a Leader card (this action is labelled as Special Action and it will be asked at the end of every turn anyway). After that, you will also be able to do an usual action, of course. Just like what happens with the action of taking a card, you can also ask what is the cost for playing a leader, by typing "askLeaderCost".
+- Play, discard or activate a Leader card (this action is labelled as Special Action and it will be asked at the end of every turn anyway). After that, you will also be able to do an usual action, of course. Just like what happens with the action of taking a card, you can also ask what is the cost for playing a leader, by typing "askLeaderCost".
 
 If you are hungry for more information, you can also have a look at the excommunications you received and the current status of you leaders, if they are either played or active, both, or any of the two.
 
@@ -48,3 +48,5 @@ Otherwise, the players that did not reach the minimum faith points, will receive
 - The suspension state, from which a player can join the game again, differs from the actual disconnection of the client. Infact, if a player closes the console, he/she won't be able to start playin again in the game he/she left. Also in case of disconnection all the remaining players are notified of the event, and they can keep playing (unfortunately, if the abandoning player used RMI, the next player has to wait for the timer to expire, while for Socket, as soon as a player leaves the game, the following player can immediatly start his/her turn). 
 - Every interaction between client and server is done through strings exchange.
 
+
+HAVE FUN!
