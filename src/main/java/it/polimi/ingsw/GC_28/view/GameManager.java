@@ -102,7 +102,14 @@ public class GameManager implements Runnable{
 					currentPlayer = view.getGameModel().getPlayers().get(0);
 				}
 			}
-			view.giveExcommunication(currentEra);
+			try{
+				view.giveExcommunication(currentEra);
+			}catch(NoSuchElementException e){
+				view.getSuspended().add(currentPlayer);
+				for(Player p : view.getHandlers().keySet()){
+					view.getHandlers().get(p).send("Player " + currentPlayer.getName() + " left the game!");
+				}
+			}
 		}
 		applyFinalBonus();
 		applyFinalMalus();

@@ -730,7 +730,6 @@ public class GameView extends Observable<Action> implements  Observer<Message>{
 	 */
 	protected void giveExcommunication(int currentEra) {
 		for(Player p : gameModel.getPlayers()){
-				handlers.get(p).send(p.displayExcommunication());
 				int faith = p.getBoard().getResources().getResource().get(ResourceType.FAITHPOINT);
 				if(faith < (2+ currentEra)){
 					handlers.get(p).send("You recive an Excommunication, because you cannot pay to avoid it");
@@ -752,6 +751,7 @@ public class GameView extends Observable<Action> implements  Observer<Message>{
 						}
 					}
 				}
+				handlers.get(p).send(p.displayExcommunication());
 			}
 	}
 	

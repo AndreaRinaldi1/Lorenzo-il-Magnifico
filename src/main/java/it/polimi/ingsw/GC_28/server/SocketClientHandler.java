@@ -3,6 +3,7 @@ package it.polimi.ingsw.GC_28.server;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.net.Socket;
+import java.util.NoSuchElementException;
 import java.util.Scanner;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -48,7 +49,7 @@ public class SocketClientHandler implements ClientHandler{
 	 * @return the answer given by the client
 	 */
 	@Override
-	public String receive() {
+	public String receive() throws NoSuchElementException{
 		return in.nextLine();
 		
 	}
