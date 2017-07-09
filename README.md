@@ -2,7 +2,7 @@
 
 
 ## Game Initialization
-In order to start playing the game, firsly, you have to run the Server class that you can find inside the server package.
+In order to start playing the game, firstly, you have to run the Server class that you can find inside the server package.
 Secondly, run the Client interface that you find in the client package to create a new player. 
 
 The game initialization proceeds as follows:
@@ -10,10 +10,10 @@ when a new player connects to the server, if there is not a game in the launchin
 
 When a new player is created, you will be asked which type of networking interface, between RMI and Socket, you would like to use. 
 After that, it's time to customize your player: you should provide the player Name and Color. 
-Finally, all the players will have to decide - in reverse order of the order of play - which personalized bonus tile (i.e. the thin tab placed next to the player board) they prefer, among the available ones.
+Lastly, all the players will have to decide - in reverse order of the order of play - which personalized bonus tile (i.e. the thin tab placed next to the player board) they prefer, among the available ones.
 
 ## Game Representation
-On the console it is now shown the graphic (CLI) representation of the game board and the player boar for each player respectively. 
+On the console it is now shown the graphic (CLI) representation of the game board and the player board for each player respectively. 
 The Game Board comprises:
 - The four towers, one for each type of development card (e.g. Territory, Character, Building, Venture). Into the four cells of each tower the name of the card is shown. Otherwise, if the card has already been taken through a family member, the color of the corresponing player is shown, while if it has been taken as an effect of another card the cell will be empty.
 - The Council Palace, with a list of the players (identified with name and color) in there.
