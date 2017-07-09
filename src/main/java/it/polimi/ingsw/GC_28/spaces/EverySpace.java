@@ -1,5 +1,12 @@
 package it.polimi.ingsw.GC_28.spaces;
 
+/**
+ * This class represent all the spaces present on the gameboard and contains only setters and getters
+ * common to every space.
+ * @author andreaRinaldi, nicoloScipione
+ * @version 1.0 , 08/07/2017
+ *
+ */
 public class EverySpace {
 	private MarketSpace coinSpace;
 	private MarketSpace servantSpace;
@@ -13,24 +20,31 @@ public class EverySpace {
 	public PrivilegesSpace getPrivilegesSpace() {
 		return privilegesSpace;
 	}
+	
 	public void setPrivilegesSpace(PrivilegesSpace privilegesSpace) {
 		this.privilegesSpace = privilegesSpace;
 	}
+	
 	public CouncilPalace getCouncilPalace() {
 		return councilPalace;
 	}
+	
 	public void setCouncilPalace(CouncilPalace councilPalace) {
 		this.councilPalace = councilPalace;
 	}
+	
 	public ProdHarvSpace getProduction() {
 		return productionSpace;
 	}
+	
 	public void setProduction(ProdHarvSpace production) {
 		this.productionSpace = production;
 	}
+	
 	public ProdHarvSpace getHarvest() {
 		return harvestSpace;
 	}
+	
 	public void setHarvest(ProdHarvSpace harvest) {
 		this.harvestSpace = harvest;
 	}

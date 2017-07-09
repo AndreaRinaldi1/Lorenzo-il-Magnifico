@@ -352,7 +352,11 @@ public class BoardsInitializer {
 	
 
 class EnumMapInstanceCreator<K extends Enum<K>, V> implements InstanceCreator<EnumMap<K, V>> {
-private final Class<K> enumClass;
+	/**
+	 * This class is necessary to let gson api recognize an enummap from  the json file. We found this solution
+	 * on stack overflow and we use it.
+	 */
+	private final Class<K> enumClass;
 
 	public EnumMapInstanceCreator(final Class<K> enumClass) {
 		super();
