@@ -47,6 +47,6 @@ Otherwise, the players that did not reach the minimum faith points, will receive
 - Every player has a maximum time for completing an action (5 min). If the timer expires before the player finished the action, it will not been applied. Moreover, the player will be prompted in a suspension state, from which he/she can return to play by typing reconnect. Until he/she does not reconnect the game will go on with the remaining players. Every player will be notified when a player has been suspended and, in case a player is still suspended when the game ends, he/she will be considered in the final points count anyway.
 - The suspension state, from which a player can join the game again, differs from the actual disconnection of the client. Infact, if a player closes the console, he/she won't be able to start playin again in the game he/she left. Also in case of disconnection all the remaining players are notified of the event, and they can keep playing (unfortunately, if the abandoning player used RMI, the next player has to wait for the timer to expire, while for Socket, as soon as a player leaves the game, the following player can immediatly start his/her turn). 
 - Every interaction between client and server is done through strings exchange.
-
+- The whole game is highly configurable: from the cards cost and effects, to the spaces, towers and player board bonuses, everything that concerns gaining and loosing resources, the timeouts, the bonus tiles and so on...
 
 HAVE FUN!
