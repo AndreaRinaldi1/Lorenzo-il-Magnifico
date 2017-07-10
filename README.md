@@ -2,7 +2,7 @@
 
 
 ## Game Initialization
-In order to start playing the game, firsly, you have to run the Server class that you can find inside the server package.
+In order to start playing the game, firstly, you have to run the Server class that you can find inside the server package.
 Secondly, run the Client interface that you find in the client package to create a new player. 
 
 The game initialization proceeds as follows:
@@ -10,10 +10,10 @@ when a new player connects to the server, if there is not a game in the launchin
 
 When a new player is created, you will be asked which type of networking interface, between RMI and Socket, you would like to use. 
 After that, it's time to customize your player: you should provide the player Name and Color. 
-Finally, all the players will have to decide - in reverse order of the order of play - which personalized bonus tile (i.e. the thin tab placed next to the player board) they prefer, among the available ones.
+Lastly, all the players will have to decide - in reverse order of the order of play - which personalized bonus tile (i.e. the thin tab placed next to the player board) they prefer, among the available ones.
 
 ## Game Representation
-On the console it is now shown the graphic (CLI) representation of the game board and the player boar for each player respectively. 
+On the console it is now shown the graphic (CLI) representation of the game board and the player board for each player respectively. 
 The Game Board comprises:
 - The four towers, one for each type of development card (e.g. Territory, Character, Building, Venture). Into the four cells of each tower the name of the card is shown. Otherwise, if the card has already been taken through a family member, the color of the corresponing player is shown, while if it has been taken as an effect of another card the cell will be empty.
 - The Council Palace, with a list of the players (identified with name and color) in there.
@@ -47,6 +47,6 @@ Otherwise, the players that did not reach the minimum faith points, will receive
 - Every player has a maximum time for completing an action (5 min). If the timer expires before the player finished the action, it will not been applied. Moreover, the player will be prompted in a suspension state, from which he/she can return to play by typing reconnect. Until he/she does not reconnect the game will go on with the remaining players. Every player will be notified when a player has been suspended and, in case a player is still suspended when the game ends, he/she will be considered in the final points count anyway.
 - The suspension state, from which a player can join the game again, differs from the actual disconnection of the client. Infact, if a player closes the console, he/she won't be able to start playin again in the game he/she left. Also in case of disconnection all the remaining players are notified of the event, and they can keep playing (unfortunately, if the abandoning player used RMI, the next player has to wait for the timer to expire, while for Socket, as soon as a player leaves the game, the following player can immediatly start his/her turn). 
 - Every interaction between client and server is done through strings exchange.
-
+- The whole game is highly configurable: from the cards cost and effects, to the spaces, towers and player board bonuses, everything that concerns gaining and loosing resources, the timeouts, the bonus tiles and so on...
 
 HAVE FUN!
